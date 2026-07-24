@@ -1,0 +1,38 @@
+AFL Match Context Integration Report:
+
+Merge Keys Used
+The datasets were merged using the composite key:
+1. Season
+2. Round
+3. Team
+4. Opponent
+A composite key was necessary because no individual column uniquely identified a match
+
+AFL Match Context Integration Report
+Merge Keys Used
+The datasets were merged using the composite key:
+1. Season
+2. Round
+3. Team
+4. Opponent
+A composite key was necessary because no individual column uniquely identified a match
+
+Challenges Encountered
+- 2,345 of 15,808 rows (~15%) in home_away_match_df's opponent column were inconsistently lowercased.
+- The Western Bulldogs were recorded as "W. Bulldogs" in the match data vs. "Western Bulldogs" in player stats.
+- 10 rows in rounds_stats_df were exact duplicates prior to merging, unrelated to the join.
+
+Data Quality Issues
+- Team/opponent naming inconsistencies caused 55,000 unmatched records (~20%) before normalization; resolved via case-normalization and a manual name mapping.
+- 398 of 15,808 match records had genuinely missing crowd attendance, kept as NaN rather than imputed as 0.
+- 10 pre-existing duplicate rows were identified and removed post-merge.
+
+Validation Results
+1. Player record count unchanged immediately after the merge (274,089 → 274,089) — confirms the join introduced no duplication.
+2. 10 pre-existing duplicate rows (unrelated to the merge) were identified and removed separately, bringing the final dataset to 274,079 rows.
+3. Unmatched records were reduced from 55,000 to 0 after resolving the naming issues above.
+
+ Assumptions
+1. Team names are consistent across datasets.
+2. Each team plays only one match per round.
+3. The combination of Season + Round + Team + Opponent uniquely identifies a match.
