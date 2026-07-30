@@ -94,11 +94,11 @@ PARTITION BY keeps all rows but performs calculations separately within each gro
 
 Example:
 
-SELECT employee_name,
-       department_id,
-       salary,
-       AVG(salary) OVER (PARTITION BY department_id) AS dept_avg
-FROM employees;
+    SELECT employee_name,
+        department_id,
+        salary,
+        AVG(salary) OVER (PARTITION BY department_id) AS dept_avg
+    FROM employees;
 
 GROUP BY reduces rows.
 PARTITION BY keeps all rows.
