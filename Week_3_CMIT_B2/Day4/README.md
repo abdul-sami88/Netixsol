@@ -10,12 +10,22 @@ These are safely joined at the customer grain, ensuring all subsequent tasks hav
 
 ## Task 2: Segmentation Logic & Justification
 
-Customers are categorized into four segments based on purchasing behavior:
+CCustomer segments are determined by a weighted loyalty score incorporating five key metrics converted into quartiles via NTILE(4):
 
-- **Platinum**: Total Spend > $41 AND Unique Artists >= 5. *Justification*: These are high-value whales who show broad tastes across many artists, making them perfect targets for wide-scale, premium catalog releases.
-- **Gold**: Total Spend > $39 AND Unique Genres >= 4. *Justification*: Captures consistent buyers who explore a lot of different genres (genre diversity). They keep the lights on and provide steady cash flow.
-- **Silver**: Total Spend > $37 OR Unique Artists >= 4. *Justification*: Average spenders or low-spenders who explore a lot of different artists (artist diversity). Their curiosity shows high potential for future targeted marketing to convert them to Gold.
-- **Bronze**: Everyone else. *Justification*: Low engagement or one-time purchasers.
+Metric Weight
+Total Spending 3
+Invoice Count 2
+Purchase Frequency 2
+Genre Diversity 1
+Artist Diversity 1
+Loyalty Score Formula & Segments
+Loyalty Score = (Spending *3) + (Invoice* 2) + (Frequency * 2) + Genre + Artist
+
+Loyalty Score Segment
+24 and above Platinum
+18 – 23 Gold
+11 – 17 Silver
+Below 11 Bronze
 
 ## Task 3: Marketing Recommendation Strategy
 
@@ -23,33 +33,24 @@ Using the favorite genre calculated via `ROW_NUMBER()`,  dynamically assign camp
 
 - **Platinum**: Early access to new releases in their favorite genre (Rewards loyalty).
 - **Gold**: Exclusive Album Bundles in their favorite genre (Encourages larger cart sizes).
-- **Silver**: 15% Off all tracks in their favorite genre (Incentivizes moving up to Gold).
+- **Silver**: 20% Off all tracks in their favorite genre (Incentivizes moving up to Gold).
 - **Bronze**: First purchase coupon for their favorite genre (Lowers the barrier to entry for their next purchase).
 
 ## Task 4: Country Ranking Methodology
 
-The expansion score is a 100-point index calculated via Window Functions using six critical metrics:
+To identify expansion opportunities, a Country Expansion Score balances market size and customer quality using normalized metrics:
 
-- **Total Revenue (30%)**: The primary indicator of market size and health.
-- **Total Customers (20%)**: Indicates market penetration and scale.
-- **Average Revenue per Customer (20%)**: Indicates the purchasing power of the average user in that region.
-- **Average Invoice Value (10%)**: Shows how much users spend per individual transaction.
-- **Number of Genres Purchased (10%)**: Measures the breadth of content consumption in the region.
-- **Customer Diversity (10%)**: A count of distinct customer segments present, ensuring the market has a healthy mix of casual and VIP buyers.
-*Methodology*: Each metric is normalized against the global maximum value using `MAX() OVER()` before weights are applied. The output of the pipeline highlights the top 3 countries as the safest bets for targeted physical/digital expansion.
+Expansion Score = (0.30 *Avg Rev/Cust) + (0.25* Total Rev) + (0.15 *Total Cust) + (0.10* Avg Invoice) + (0.10 *Genre Breadth) + (0.10* Cust Diversity)
+
+Countries are ranked using the RANK() window function based on this final score.
 
 ## Task 5 & Bonus Challenge: Executive Dashboard Pipeline
 
-To solve the final executive reporting requirement, the entire analysis has been refactored into a **single, chained data pipeline**. 
-Instead of running isolated, disconnected queries, the script uses a continuous chain of 19 Common Table Expressions (CTEs) that dynamically build upon each other:
+The final report consolidates pipeline insights into a single view without redundant calculations, featuring:
 
-1. **Customer Profile** (`Invoice_Agg`, `Track_Agg`)
-2. **Customer Segments**
-3. **Favorite Genres** (`Genre_Counts`)
-4. **Country Metrics & Ranking**
-5. **Executive Aggregations** (`Employee_Revenue`, `Artist_Revenue`, `Album_Revenue`, `Segment_Agg`)
-
-**Final Output**: The pipeline culminates in a single `UNION ALL` query that generates a unified Executive Dashboard containing all required metrics (Top Artist, Top Album, Segment Revenue, Country Contribution, etc.) in a standardized format without duplicating aggregate calculations.
+Customer Segment Summary & Revenue Contribution
+Top Customers, Genres, Artists, and Albums by Revenue
+Top Employees and Top Three Expansion Countries
 
 ## 5 Actionable Recommendations
 
@@ -61,7 +62,7 @@ Instead of running isolated, disconnected queries, the script uses a continuous 
 
 ## Challenges Faced
 
-- **Challenge**: Avoiding duplicated aggregate values (Cartesian products) when joining `customer`, `invoice`, and `invoice_line` tables simultaneously. 
-- **Solution**: Split the aggregations into two separate CTEs (`Invoice_Agg` and `Track_Agg`) and then joined them cleanly at the `customer_id` grain in `Customer_Profile`.
-- **Challenge**: Normalizing scores in SQL without using nested subqueries in the `SELECT` clause, which can be inefficient and hard to read.
-- **Solution**: Leveraged Window Functions (`MAX() OVER()`) to dynamically find the max value across the dataset and calculate relative percentages on the fly for the Country Ranking.
+Redundant Calculations: Solved by utilizing modular, chained CTEs across pipeline stages.
+Accurate Customer Segmentation: Replaced spending-only metrics with a multi-variable weighted scoring model using NTILE().
+Favorite Genre Identification: Leveraged ROW_NUMBER() to rank and isolate top music preferences per customer.
+Objective Country Ranking: Developed a normalized 6-variable weighted expansion model.
