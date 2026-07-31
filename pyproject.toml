@@ -7,5 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "matplotlib>=3.11.0",
     "pandas>=3.0.3",
+    "psycopg2>=2.9.12",
     "seaborn>=0.13.2",
+    "sqlalchemy>=2.0.51",
 ]
