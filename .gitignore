@@ -1,3 +1,7 @@
+# Ignored data set folder
+
+C:\Users\MEE\Netixsol_intern_projects\Week_3_CMIT_B2\Day5\enterprise_analytics_hackathon\dataset
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
