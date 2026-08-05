@@ -5,7 +5,6 @@ CREATE SCHEMA IF NOT EXISTS analytics;
 -- LAYER 1: Core Dimensions
 -- ==========================================
 
--- dim_product
 DROP VIEW IF EXISTS analytics.dim_product CASCADE;
 CREATE VIEW analytics.dim_product AS
 SELECT 
@@ -23,7 +22,6 @@ FROM production.product p
 LEFT JOIN production.productsubcategory ps ON p.productsubcategoryid = ps.productsubcategoryid
 LEFT JOIN production.productcategory pc ON ps.productcategoryid = pc.productcategoryid;
 
--- dim_customer
 DROP VIEW IF EXISTS analytics.dim_customer CASCADE;
 CREATE VIEW analytics.dim_customer AS
 SELECT 
@@ -38,7 +36,6 @@ FROM sales.customer c
 LEFT JOIN person.person p ON c.personid = p.businessentityid
 LEFT JOIN sales.store s ON c.storeid = s.businessentityid;
 
--- dim_territory
 DROP VIEW IF EXISTS analytics.dim_territory CASCADE;
 CREATE VIEW analytics.dim_territory AS
 SELECT 
@@ -50,7 +47,6 @@ SELECT
 FROM sales.salesterritory t
 LEFT JOIN person.countryregion cr ON t.countryregioncode = cr.countryregioncode;
 
--- dim_employee
 DROP VIEW IF EXISTS analytics.dim_employee CASCADE;
 CREATE VIEW analytics.dim_employee AS
 SELECT 
@@ -66,7 +62,6 @@ FROM humanresources.employee e
 INNER JOIN person.person p ON e.businessentityid = p.businessentityid
 LEFT JOIN sales.salesperson sp ON e.businessentityid = sp.businessentityid;
 
--- dim_vendor
 DROP VIEW IF EXISTS analytics.dim_vendor CASCADE;
 CREATE VIEW analytics.dim_vendor AS
 SELECT 
@@ -78,7 +73,6 @@ SELECT
     v.activeflag
 FROM purchasing.vendor v;
 
--- dim_date
 DROP VIEW IF EXISTS analytics.dim_date CASCADE;
 CREATE VIEW analytics.dim_date AS
 SELECT 
@@ -96,7 +90,6 @@ FROM generate_series('2000-01-01'::timestamp, '2030-12-31'::timestamp, '1 day'::
 -- LAYER 2: Core Facts
 -- ==========================================
 
--- fact_sales
 DROP VIEW IF EXISTS analytics.fact_sales CASCADE;
 CREATE VIEW analytics.fact_sales AS
 SELECT 
@@ -122,7 +115,6 @@ FROM sales.salesorderheader soh
 INNER JOIN sales.salesorderdetail sod ON soh.salesorderid = sod.salesorderid
 INNER JOIN production.product p ON sod.productid = p.productid;
 
--- fact_inventory
 DROP VIEW IF EXISTS analytics.fact_inventory CASCADE;
 CREATE VIEW analytics.fact_inventory AS
 SELECT 
@@ -135,7 +127,6 @@ SELECT
 FROM production.productinventory i
 INNER JOIN production.location l ON i.locationid = l.locationid;
 
--- fact_purchases
 DROP VIEW IF EXISTS analytics.fact_purchases CASCADE;
 CREATE VIEW analytics.fact_purchases AS
 SELECT 
@@ -161,7 +152,6 @@ INNER JOIN purchasing.purchaseorderdetail pod ON poh.purchaseorderid = pod.purch
 -- LAYER 3: Analytical Aggregations 
 -- ==========================================
 
--- customer_metrics
 DROP VIEW IF EXISTS analytics.customer_metrics CASCADE;
 CREATE VIEW analytics.customer_metrics AS
 SELECT 
@@ -181,7 +171,6 @@ FROM analytics.dim_customer c
 INNER JOIN analytics.fact_sales fs ON c.customerid = fs.customerid
 GROUP BY c.customerid, c.customer_name, c.persontype;
 
--- product_metrics
 DROP VIEW IF EXISTS analytics.product_metrics CASCADE;
 CREATE VIEW analytics.product_metrics AS
 SELECT 
@@ -197,9 +186,6 @@ FROM analytics.dim_product p
 LEFT JOIN analytics.fact_sales fs ON p.productid = fs.productid
 GROUP BY p.productid, p.product_name, p.category_name, p.subcategory_name;
 
-
-
--- employee_performance
 DROP VIEW IF EXISTS analytics.employee_performance CASCADE;
 CREATE VIEW analytics.employee_performance AS
 SELECT 
@@ -214,7 +200,6 @@ FROM analytics.dim_employee e
 INNER JOIN analytics.fact_sales fs ON e.employeeid = fs.salespersonid
 GROUP BY e.employeeid, e.employee_name, e.jobtitle, e.salesquota;
 
--- regional_analysis
 DROP VIEW IF EXISTS analytics.regional_analysis CASCADE;
 CREATE VIEW analytics.regional_analysis AS
 SELECT 
