@@ -1,0 +1,27 @@
+{
+  "laptop_a": {
+    "name": "Laptop A (Budget)",
+    "price_usd": 550,
+    "category": "laptop"
+  },
+  "laptop_b": {
+    "name": "Laptop B (Mid-range)",
+    "price_usd": 950,
+    "category": "laptop"
+  },
+  "laptop_c": {
+    "name": "Laptop C (Premium)",
+    "price_usd": 1800,
+    "category": "laptop"
+  },
+  "monitor_a": {
+    "name": "Monitor A (24-inch)",
+    "price_usd": 180,
+    "category": "monitor"
+  },
+  "monitor_b": {
+    "name": "Monitor B (27-inch 4K)",
+    "price_usd": 420,
+    "category": "monitor"
+  }
+}
