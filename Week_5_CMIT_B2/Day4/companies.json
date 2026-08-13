@@ -1,0 +1,19 @@
+{
+  "technova": {
+    "name": "TechNova",
+    "market_share_pct": 18.5,
+    "pricing_tier": "premium",
+    "avg_price_usd": 1200,
+    "strengths": [
+      "strong brand recognition",
+      "fast shipping",
+      "large enterprise sales team"
+    ],
+    "weaknesses": [
+      "no budget product line",
+      "slow to add new features",
+      "mixed support reviews"
+    ],
+    "recent_news": "TechNova raised prices 8% last quarter and lost some small-business customers."
+  }
+}
