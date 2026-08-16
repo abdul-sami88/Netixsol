@@ -10,7 +10,7 @@
 Three role-scoped agents were used in both CrewAI runs:
 
 | Agent | Responsibility | Tool |
-|---|---|---|
+| --- | --- | --- |
 | Competitive Researcher | Pull raw competitor facts | `company_lookup` |
 | Insights Analyst | Turn facts into ranked, numbered insights | `calculator` |
 | Marketing Strategist | Draft one on-brand marketing angle | `brand_voice_guidelines` |
@@ -21,7 +21,7 @@ Three role-scoped agents were used in both CrewAI runs:
 ## 2. Results, from the actual executed run in the notebook
 
 | Metric | Sequential | Hierarchical |
-|---|---|---|
+| --- | --- | --- |
 | Total tokens | 11,220 | 81,184 |
 | Prompt tokens | 10,005 | 69,776 |
 | Completion tokens | 1,215 | 11,408 |
@@ -41,7 +41,7 @@ Hierarchical used **~7x the tokens and ~8x the cost** of sequential for the iden
 ### Manual scoring (1 = fails, 3 = fully meets)
 
 | Run | Factual grounding | Completeness | Tone |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Sequential | 3 — cites $1,200 and $650 | 2 — pricing only, never surfaces the 9.5-point market-share gap | 3 — short sentences, concrete numbers, no banned jargon |
 | Hierarchical | 3 — also cites the computed $550 gap | 2 — same gap: market share never makes it into the final copy | 3 — on-tone, "sit fat and happy" leans further into "irreverent" |
 
@@ -50,7 +50,7 @@ Note: only one run per process was actually executed and captured, so this is n=
 ## 3. Sequential vs. hierarchical — pros, cons, when to use each
 
 | | Sequential | Hierarchical |
-|---|---|---|
+| --- | --- | --- |
 | **Quality** | Consistent — pipeline order is fixed and matches the task's natural dependency chain | Can be *higher* if the manager catches and re-delegates a bad output, but can also be *lower* if it mis-routes or skips a step |
 | **Latency / cost** | Low — exactly 3 agent calls, no manager overhead | High — manager planning/review calls stack on top of the 3 worker calls (measured ~8x cost here) |
 | **Reliability** | High — same 3 steps every run, easy to debug | Lower — delegation order isn't guaranteed, and a manager mistake compounds downstream |
