@@ -1,0 +1,26 @@
+Week 5 Day 5 CM-IT
+Capstone — Production-Ready Agent System, Evaluation & Deployment
+:pushpin: Scenario Bring the week together: design and ship an end-to-end agent system using whichever framework(s) best fit the problem (LangGraph for control-heavy workflows, CrewAI for role-based collaboration, or a hybrid), wrap it behind an API, add evaluation, and prepare a stakeholder-ready presentation. This is your mini capstone — show architectural judgment, not just framework fluency.
+Task 1: System Design
+ Pick (or extend) a real use case relevant to Web3Geeks or a freelancing/business scenario (e.g., a client-onboarding agent, a content-research-and-draft crew, a support-ticket triage agent).
+ Produce an architecture diagram: agents/nodes, tools, data sources, state, and human checkpoints.
+ Justify your framework choice(s) in 3–4 sentences — why LangGraph, CrewAI, a raw loop, or a combination for this specific problem?
+Task 2: Build the End-to-End System
+ Implement the full system, reusing components from Days 1–4 where sensible (tools, memory, self-correction loop, role design).
+ Include at least one external tool/data source (real API, file, or small local database) and one human-in-the-loop or approval checkpoint for a consequential action.
+ Add input validation and graceful handling for at least 2 failure scenarios (bad input, tool timeout/error, model refusal).
+Task 3: Evaluation Framework
+ Define 4–6 evaluation criteria for your agent (task success rate, factual accuracy, latency, cost per run, tone/quality, safety).
+ Run your agent on at least 8 varied test cases (include 2 edge cases / adversarial inputs). Score each against your criteria in a results table.
+ Identify the most common failure pattern across your test runs and one concrete fix.
+Task 4: Wrap as an API & Add Monitoring
+ Expose your agent via a simple FastAPI endpoint that accepts a request and returns the agent's structured output (reuse patterns from your earlier web dev work if useful).
+ Add basic logging (inputs, tool calls, latency, token usage, errors) suitable for later monitoring.
+ Write a one-page monitoring checklist: what to track in production (error rate, cost drift, latency, output quality drift), alert thresholds, and a re-evaluation cadence.
+Task 5: Final Deliverables & Presentation
+ Write a concise executive report (2 pages): business goal → architecture → framework choice rationale → evaluation results → known limitations → recommended next steps (scaling, guardrails, human oversight).
+ Prepare a short 5–7 minute slide outline (or bullet points) for presenting the agent system to stakeholders.
+:package: Deliverable
+ Final codebase (agent system + FastAPI wrapper), clean and runnable
+ Evaluation results table (test cases → scores)
+ A 2-page executive report (PDF)
