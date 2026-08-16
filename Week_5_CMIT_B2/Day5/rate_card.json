@@ -1,0 +1,32 @@
+{
+  "web_development": {
+    "label": "Web Development",
+    "hourly_usd": 45,
+    "keywords": ["website", "web app", "landing page", "web development", "wordpress", "shopify", "frontend", "backend"]
+  },
+  "smart_contract": {
+    "label": "Smart Contract / Web3 Engineering",
+    "hourly_usd": 75,
+    "keywords": ["smart contract", "solidity", "web3", "blockchain", "nft", "token", "dapp", "defi"]
+  },
+  "content_writing": {
+    "label": "Content Writing",
+    "hourly_usd": 25,
+    "keywords": ["blog", "article", "content writing", "copywriting", "seo content", "whitepaper"]
+  },
+  "consulting": {
+    "label": "Technical Consulting",
+    "hourly_usd": 90,
+    "keywords": ["consulting", "audit", "architecture review", "advisory", "security review"]
+  },
+  "design": {
+    "label": "UI/UX Design",
+    "hourly_usd": 40,
+    "keywords": ["ui design", "ux design", "figma", "prototype", "branding", "logo"]
+  },
+  "default": {
+    "label": "Custom Project",
+    "hourly_usd": 50,
+    "keywords": []
+  }
+}
