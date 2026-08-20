@@ -216,9 +216,18 @@ def predict_match_winner(
             confidence = 'medium'
         else:
             confidence = 'low'
-        
+
+        # Map prediction outcome to team name
+        if y_pred_class == 'Win':
+            winner_name = home_team
+        elif y_pred_class == 'Loss':
+            winner_name = away_team
+        else:  # 'Draw'
+            winner_name = 'Draw'
+            
         result = {
-            'winner': y_pred_class,
+            'winner': winner_name,  # ← Now returns team name
+            'prediction_outcome': y_pred_class,
             'probability': win_prob,
             'confidence': confidence,
             'home_team': home_team,
