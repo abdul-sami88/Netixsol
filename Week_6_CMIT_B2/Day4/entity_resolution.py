@@ -1,154 +1,101 @@
 """
 entity_resolution.py
 ---------------------
-Task 3 (input resolution) + Task 4 (fail closed, not silently).
+Team-name resolution for the router/prediction path.
 
-Resolves free-text team nicknames ("Pies", "the Cats") to your dataset's
-canonical team keys, and resolves relative date phrases ("this week",
-"last round") to a concrete fixture / round number.
+INTEGRATION STATUS
+-------------------
+This does NOT reimplement nickname/partial-name matching -- it reuses your
+real `ai_chat_afl._resolve_team_name`, which already handles "Cats" ->
+"Geelong Cats", "Geelong" -> "Geelong Cats", exact full names, and
+ambiguous-nickname errors, resolved against whatever teams actually appear
+in `afl_match_features_v2.csv`.
 
-INTEGRATION POINT
-------------------
-Replace `CANONICAL_TEAMS` and `TEAM_ALIASES` with whatever your Day 2
-dataset actually uses as team keys (e.g. the exact strings your model's
-encoder/one-hot columns expect). Replace `_get_fixtures()` with a real
-lookup against your fixture table / API.
+For PREDICTION requests specifically, the resolved name is then cross-checked
+against `predict.py`'s own `valid_teams` (from Day 2's artifacts/valid_teams.joblib)
+since the prediction models can only score teams they were trained on. In the
+(expected) common case both datasets use the same club-name convention
+("Melbourne Demons", "Collingwood Magpies", ...) this cross-check is a no-op;
+it exists as a safety net in case the two datasets ever drift, so a
+prediction never silently fires on a team-name variant the model wasn't
+fitted on.
 
-Everything here fails LOUD (returns None + a reason) rather than guessing,
-per Task 4's "loop back to ask instead of guessing" requirement.
+Fixture/date resolution: the historical match-feature CSVs described in this
+project are completed-match records (every row has a final score/result), so
+there's no "future fixture calendar" to resolve "this week" against. The
+prediction models don't need one either -- predict.py always predicts against
+each team's LATEST known rolling state, i.e. "if these two played next" --
+so `resolve_when` below is intentionally a no-op passthrough that just
+records what the user said, for logging/trace purposes only. If your Day 2
+artifacts later include a real fixture list, wire it in here.
 """
 
 from __future__ import annotations
 
-import difflib
-from dataclasses import dataclass
-from datetime import date, datetime, timedelta
 from typing import Optional
 
-# ---------------------------------------------------------------------------
-# TODO(you): swap this for the canonical team keys your Day 2 model was
-# trained on (e.g. df["team"].unique() from your dataset).
-# ---------------------------------------------------------------------------
-CANONICAL_TEAMS = [
-    "Collingwood", "Geelong", "Carlton", "Essendon", "Richmond",
-    "West Coast", "Fremantle", "Adelaide", "Port Adelaide", "Sydney",
-    "GWS", "Brisbane", "Gold Coast", "St Kilda", "Melbourne",
-    "North Melbourne", "Western Bulldogs", "Hawthorn",
-]
+import day2_interface
 
-TEAM_ALIASES: dict[str, str] = {
-    # Collingwood
-    "pies": "Collingwood", "magpies": "Collingwood", "collingwood": "Collingwood",
-    # Geelong
-    "cats": "Geelong", "geelong": "Geelong",
-    # Carlton
-    "blues": "Carlton", "carlton": "Carlton",
-    # Essendon
-    "bombers": "Essendon", "dons": "Essendon", "essendon": "Essendon",
-    # Richmond
-    "tigers": "Richmond", "richmond": "Richmond",
-    # West Coast
-    "eagles": "West Coast", "west coast": "West Coast",
-    # Fremantle
-    "dockers": "Fremantle", "freo": "Fremantle", "fremantle": "Fremantle",
-    # Adelaide
-    "crows": "Adelaide", "adelaide": "Adelaide",
-    # Port Adelaide
-    "power": "Port Adelaide", "port": "Port Adelaide", "port adelaide": "Port Adelaide",
-    # Sydney
-    "swans": "Sydney", "sydney": "Sydney",
-    # GWS
-    "giants": "GWS", "gws": "GWS",
-    # Brisbane
-    "lions": "Brisbane", "brisbane": "Brisbane",
-    # Gold Coast
-    "suns": "Gold Coast", "gold coast": "Gold Coast",
-    # St Kilda
-    "saints": "St Kilda", "st kilda": "St Kilda",
-    # Melbourne
-    "demons": "Melbourne", "dees": "Melbourne", "melbourne": "Melbourne",
-    # North Melbourne
-    "roos": "North Melbourne", "kangaroos": "North Melbourne", "north melbourne": "North Melbourne",
-    # Western Bulldogs
-    "bulldogs": "Western Bulldogs", "dogs": "Western Bulldogs", "western bulldogs": "Western Bulldogs",
-    # Hawthorn
-    "hawks": "Hawthorn", "hawthorn": "Hawthorn",
-}
+try:
+    from ai_chat_afl import _resolve_team_name as _resolve_against_chat_dataset
+    CHAT_TEAM_RESOLUTION_AVAILABLE = True
+    _chat_import_error = None
+except Exception as exc:  # noqa: BLE001
+    CHAT_TEAM_RESOLUTION_AVAILABLE = False
+    _chat_import_error = str(exc)
+
+    def _resolve_against_chat_dataset(team: str):  # type: ignore
+        return None, f"chat dataset unavailable: {_chat_import_error}"
 
 
-def resolve_team(raw: Optional[str]) -> tuple[Optional[str], Optional[str]]:
-    """Return (canonical_team_or_None, failure_reason_or_None)."""
+def _fuzzy_against_predict_teams(raw: str) -> Optional[str]:
+    """Fallback: substring/nickname match directly against predict.py's valid_teams,
+    used only if ai_chat_afl's resolver isn't available or its answer isn't in
+    predict.py's set."""
+    valid = day2_interface.list_valid_teams()
+    if not valid:
+        return None
+    normalized = raw.strip().casefold()
+    for name in valid:
+        if name.casefold() == normalized:
+            return name
+    hits = [name for name in valid if normalized in name.casefold() or name.casefold().split()[-1].rstrip("s") == normalized.rstrip("s")]
+    if len(hits) == 1:
+        return hits[0]
+    return None
+
+
+def resolve_team(raw: Optional[str], *, for_prediction: bool = False) -> tuple[Optional[str], Optional[str]]:
+    """Return (canonical_team_or_None, failure_reason_or_None).
+
+    for_prediction=True additionally requires the resolved name to be one
+    predict.py's models were trained on.
+    """
     if not raw or not raw.strip():
         return None, "no team text was extracted from the query"
 
-    key = raw.strip().lower()
-    key = key.removeprefix("the ").strip()
+    try:
+        resolved, reason = _resolve_against_chat_dataset(raw)
+    except Exception as exc:  # e.g. afl_match_features_v2.csv missing in this environment
+        resolved, reason = None, f"team-name dataset unavailable ({exc})"
 
-    if key in TEAM_ALIASES:
-        return TEAM_ALIASES[key], None
+    if for_prediction:
+        valid_teams = set(day2_interface.list_valid_teams())
+        if resolved and (not valid_teams or resolved in valid_teams):
+            return resolved, None
+        # try a direct fuzzy match against predict.py's own team list as a fallback
+        fallback = _fuzzy_against_predict_teams(raw)
+        if fallback:
+            return fallback, None
+        if resolved and valid_teams:
+            return None, f"'{resolved}' isn't one of the teams the prediction model was trained on"
+        return None, reason or f"'{raw}' didn't match a known team"
 
-    # exact canonical match (case-insensitive)
-    for team in CANONICAL_TEAMS:
-        if team.lower() == key:
-            return team, None
-
-    # fuzzy fallback (handles typos like "colingwood") -- but require a high
-    # cutoff so we don't silently guess between two plausible teams (Task 4).
-    candidates = difflib.get_close_matches(key, list(TEAM_ALIASES.keys()), n=1, cutoff=0.8)
-    if candidates:
-        return TEAM_ALIASES[candidates[0]], None
-
-    return None, f"'{raw}' didn't match any known team or nickname"
-
-
-# ---------------------------------------------------------------------------
-# Fixture / round resolution
-# TODO(you): replace with a real fixture-table lookup keyed on your DB/CSV.
-# This stub deterministically synthesises an "upcoming round" so the graph
-# is runnable end-to-end without your real data.
-# ---------------------------------------------------------------------------
-@dataclass
-class Fixture:
-    fixture_id: str
-    round_number: int
-    home: str
-    away: str
-    kickoff: date
+    return resolved, reason
 
 
-def _get_fixtures() -> list[Fixture]:
-    today = date.today()
-    # Fabricate a small round of fixtures anchored on "today" for demo purposes.
-    next_saturday = today + timedelta(days=(5 - today.weekday()) % 7 or 7)
-    return [
-        Fixture("R99-1", 99, "Collingwood", "Geelong", next_saturday),
-        Fixture("R99-2", 99, "Carlton", "Essendon", next_saturday),
-        Fixture("R99-3", 99, "Richmond", "Hawthorn", next_saturday + timedelta(days=1)),
-        Fixture("R98-1", 98, "Geelong", "Adelaide", today - timedelta(days=6)),
-    ]
-
-
-def resolve_fixture(
-    team_a: Optional[str],
-    team_b: Optional[str],
-    when_raw: Optional[str],
-) -> tuple[Optional[Fixture], Optional[str]]:
-    """Resolve 'this week' / 'next round' style phrases + two teams to a fixture."""
-    if not team_a or not team_b:
-        return None, "need both teams resolved before a fixture can be found"
-
-    fixtures = _get_fixtures()
-    teams = {team_a, team_b}
-
-    when_raw = (when_raw or "").lower()
-    upcoming_only = any(p in when_raw for p in ["this week", "next round", "upcoming", "coming up", ""])
-
-    matches = [
-        f for f in fixtures
-        if {f.home, f.away} == teams and (not upcoming_only or f.kickoff >= date.today() - timedelta(days=1))
-    ]
-    if not matches:
-        return None, f"no scheduled fixture found between {team_a} and {team_b}"
-
-    matches.sort(key=lambda f: f.kickoff)
-    return matches[0], None
+def resolve_when(round_or_date_raw: Optional[str]) -> dict:
+    """No-op passthrough -- see module docstring. Kept as a function (not a
+    constant) so a real fixture-calendar lookup can be dropped in later
+    without touching call sites in nodes.py."""
+    return {"round_or_date_raw": round_or_date_raw, "resolved_fixture": None}

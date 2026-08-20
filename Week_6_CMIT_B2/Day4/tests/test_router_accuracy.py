@@ -13,27 +13,31 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from router import classify_rule_based  # noqa: E402
 
 # (query, expected_intent)
+# Team names used here match the synthetic Day3 CSV shipped in this repo
+# (afl_match_features_v2.csv) so `_extract_single_team` can actually find
+# them -- swap for your real team names once you drop in the real CSV.
 TEST_CASES = [
-    ("who will win Collingwood vs Geelong this week", "prediction_match"),
-    ("will the Pies beat the Cats this week", "prediction_match"),
-    ("who's going to win the Carlton v Essendon game", "prediction_match"),
-    ("predict the winner of Richmond vs Hawthorn", "prediction_match"),
-    ("what are the chances of Fremantle winning next round", "prediction_match"),
-    ("who will top-score for Collingwood this week", "prediction_player"),
+    ("who will win Melbourne Demons vs Richmond Tigers this week", "prediction_match"),
+    ("will the Demons beat the Tigers this week", "prediction_match"),
+    ("who's going to win the Collingwood v Geelong game", "prediction_match"),
+    ("predict the winner of Carlton vs Richmond", "prediction_match"),
+    ("what are the chances of Geelong winning next round", "prediction_match"),
+    ("who will top-score for Melbourne Demons this week", "prediction_player"),
     ("who is the best player likely to top score for the Cats", "prediction_player"),
-    ("who's the leading goalkicker going to be for Sydney", "prediction_player"),
-    ("what were Collingwood's stats last round", "retrieval"),
+    ("who's the leading goalkicker going to be for Collingwood", "prediction_player"),
+    ("what were the Demons' stats last round", "retrieval"),
     ("how many disposals did Geelong average last round", "retrieval"),
-    ("what was Geelong's ladder position last round", "retrieval"),
-    ("how many tackles did the Cats get last round", "retrieval"),
+    ("what was Collingwood's ladder position last round", "retrieval"),
+    ("how many tackles did the Tigers get last round", "retrieval"),
     ("what's the highest attendance in AFL grand final history", "factual"),
     ("who has won the most brownlow medals", "factual"),
     ("explain the AFL finals system", "factual"),
+    ("what does holding the ball mean", "factual"),
     ("what's the weather like today", "off_topic"),
     ("can you write me some python code", "off_topic"),
     ("what's the capital of France", "off_topic"),
     ("tell me a joke", "off_topic"),
-    ("predict the exact final score of Collingwood vs Geelong", "unsupported"),
+    ("predict the exact final score of Melbourne Demons vs Richmond Tigers", "unsupported"),
 ]
 
 

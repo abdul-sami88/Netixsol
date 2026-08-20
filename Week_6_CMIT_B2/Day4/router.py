@@ -26,7 +26,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from entity_resolution import TEAM_ALIASES, resolve_team
+from entity_resolution import resolve_team
 from state import AFLState, Intent
 
 
@@ -56,7 +56,7 @@ _PREDICTION_PLAYER_HINTS = [
 
 _PREDICTION_MATCH_HINTS = [
     "who will win", "will beat", "who wins", "predict", "chances of winning",
-    "chances of", "will win", "beat the", " vs ", " v ", "who's going to win",
+    "chances of", "will win", "beat ", " vs ", " v ", "who's going to win",
     "winning next round", "winning this week",
 ]
 
@@ -120,12 +120,29 @@ def _extract_teams(text: str) -> tuple[Optional[str], Optional[str]]:
     return None, None
 
 
-def _extract_single_team(text: str) -> Optional[str]:
-    """Find the longest known team-alias substring mentioned in free text."""
-    hits = [alias for alias in TEAM_ALIASES if alias in text]
-    if not hits:
+def _extract_single_team(q: str) -> Optional[str]:
+    """Find a raw team-name substring in free text using the REAL canonical
+    team list from ai_chat_afl (so this stays consistent with the actual
+    resolver -- no hardcoded alias dict to maintain separately)."""
+    try:
+        from ai_chat_afl import _canonical_teams
+        canonical = _canonical_teams()
+    except Exception:
         return None
-    return max(hits, key=len)  # prefer "port adelaide" over "port", etc.
+
+    q_cf = q.casefold()
+    candidates: list[tuple[int, str]] = []
+    for name in canonical:
+        name_cf = name.casefold()
+        nickname = name_cf.split()[-1].rstrip("s")
+        first_word = name_cf.split()[0]
+        for token in (name_cf, nickname, first_word):
+            if token and re.search(rf"\b{re.escape(token)}\b", q_cf):
+                candidates.append((len(token), token))
+    if not candidates:
+        return None
+    candidates.sort(reverse=True)  # prefer the longest / most specific match
+    return candidates[0][1]
 
 
 def classify_rule_based(query: str) -> RouterDecision:
@@ -161,8 +178,13 @@ def classify_rule_based(query: str) -> RouterDecision:
 
     # AFL-ish default: treat as factual if it mentions a known team/league term,
     # otherwise off_topic.
-    afl_terms = ["afl", "footy", "grand final", "brownlow", "ladder", "premiership"]
-    if any(t in q for t in afl_terms) or resolve_team(q.split()[0] if q.split() else "")[0]:
+    afl_terms = [
+        "afl", "footy", "grand final", "brownlow", "ladder", "premiership",
+        "holding the ball", "high tackle", "free kick", "umpire", "ruck",
+        "50m penalty", "50 metre", "out of bounds", "interchange", "spoil",
+        "mark", "behind", "quarter", "coach", "australian football", "australian rules",
+    ]
+    if any(t in q for t in afl_terms) or _extract_single_team(q):
         return RouterDecision(intent="factual", confidence=0.55)
 
     return RouterDecision(intent="off_topic", confidence=0.5)
@@ -174,14 +196,24 @@ def classify_rule_based(query: str) -> RouterDecision:
 
 def classify_llm(query: str, history_summary: str = "") -> RouterDecision:
     """
-    Structured-output LLM router. Requires ANTHROPIC_API_KEY in the
-    environment. Not exercised by the offline tests in this repo, but this
-    is the version to actually deploy -- it generalises far better than the
-    keyword rules above to novel phrasing.
+    Structured-output LLM router using Gemini 3.5 Flash Lite (same provider
+    already used by ai_chat_afl.py's chat agent, so only one API key
+    -- GEMINI_API_KEY -- is needed for the whole project). Not exercised by
+    the offline tests in this repo (they use the deterministic rule-based
+    classifier), but this is the version to actually deploy -- it
+    generalises far better than the keyword rules above to novel phrasing
+    and to coreference across turns ("their stats" -> resolves via
+    history_summary).
     """
-    from langchain_anthropic import ChatAnthropic  # local import: optional dep
+    import os
 
-    llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
+    from langchain_google_genai import ChatGoogleGenerativeAI  # local import: optional dep
+
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3.5-flash-lite",
+        api_key=os.getenv("GEMINI_API_KEY"),
+        temperature=0,
+    )
     structured_llm = llm.with_structured_output(RouterDecision)
 
     system = (
@@ -195,7 +227,9 @@ def classify_llm(query: str, history_summary: str = "") -> RouterDecision:
         "- off_topic: not about AFL at all\n\n"
         "Also extract any team names, player names, and time references "
         "(e.g. 'this week', 'last round') mentioned, verbatim as written by the user "
-        "(do not normalize team names yourself -- that happens downstream)."
+        "(do not normalize team names yourself -- that happens downstream). "
+        "Use the conversation history to resolve pronouns/references like "
+        "'their', 'that team', or 'his' back to a concrete team/player name."
     )
     return structured_llm.invoke(
         [("system", system), ("human", f"Conversation so far: {history_summary}\nQuery: {query}")]
@@ -216,6 +250,13 @@ def router_node(state: AFLState) -> dict:
     query = state["user_query"]
     decision = classify(query)
 
+    # Reset per-turn volatile fields explicitly. Without this, a multi-turn
+    # conversation on the same thread_id would leak a PREVIOUS turn's
+    # tool_result/validation_status into this turn's state (the checkpointer
+    # persists state across invocations on a thread; fields this turn's
+    # nodes don't touch simply keep their last value otherwise) -- caught by
+    # the Task 5 multi-turn e2e test, where a prediction's tool_result was
+    # bleeding into the *next* turn's unrelated retrieval question.
     entities = dict(state.get("entities") or {})
     entities.update({
         "team_a_raw": decision.team_a,
@@ -223,6 +264,7 @@ def router_node(state: AFLState) -> dict:
         "player_raw": decision.player,
         "round_or_date_raw": decision.round_or_date,
         "stat_type": decision.stat_type,
+        "unresolved_reason": None,
     })
 
     trace = list(state.get("trace") or [])
@@ -235,17 +277,28 @@ def router_node(state: AFLState) -> dict:
         "intent": decision.intent,
         "router_confidence": decision.confidence,
         "entities": entities,
+        "tool_result": None,
+        "validation_status": None,
+        "clarification_question": None,
+        "final_response": None,
         "trace": trace,
     }
 
 
 def route_from_intent(state: AFLState) -> str:
-    """Conditional-edge function: maps intent -> next node name."""
+    """Conditional-edge function: maps intent -> next node name.
+
+    factual / retrieval / off_topic all delegate to `chat_agent` (the real
+    Day 3 ai_chat_afl agent), which already has its own retrieval tools,
+    scope guardrails, and refusal wording -- no need to reimplement that
+    here. Only prediction-shaped intents get routed to our new tool node,
+    and only prediction-shaped-but-unsupported queries get the fallback.
+    """
     return {
-        "factual": "direct_answer",
-        "retrieval": "retrieval_tool",
+        "factual": "chat_agent",
+        "retrieval": "chat_agent",
         "prediction_match": "prediction_tool",
         "prediction_player": "prediction_tool",
-        "off_topic": "refusal",
+        "off_topic": "chat_agent",
         "unsupported": "fallback",
     }[state["intent"]]

@@ -1,37 +1,37 @@
 """
 graph.py
 --------
-Task 1 (sketch) realised as an actual compiled LangGraph.
+Task 1 (sketch) realised as an actual compiled LangGraph, now wired to the
+REAL Day 2 (predict.py) and Day 3 (ai_chat_afl.py) artifacts.
 
     START
       |
       v
-   router  ------------------------------------------------------.
-      |                 |                   |                    |
-      | factual         | retrieval         | prediction_*       | off_topic/unsupported
-      v                 v                   v                    v
- direct_answer     retrieval_tool     prediction_tool      refusal / fallback
-      |                 |                   |                    |
-      |                 v                   v                    |
-      |            validation ---------------                    |
-      |               |     \\__needs_clarification__> clarification
-      |               |ok                                        |
-      |               v                                          |
-      '---------> response_formatter <---------------------------'
-                        |
-                        v
-                       END
+   router
+      |               |                              |
+      | prediction_*   | factual/retrieval/off_topic  | unsupported
+      v               v                              v
+ prediction_tool   chat_agent (ai_chat_afl)        fallback
+      |               |                              |
+      v               |                              |
+  validation           |                              |
+   |ok    (needs_clarification branch)-> clarification    |
+   v                                                    |
+response_formatter <-----------------------------------'
+      |
+      v
+     END
 
-Why explicit LangGraph routing instead of one free-form agent?
-- Predictions MUST always carry a probability + disclaimer. A single agent
-  deciding tool-by-tool can forget the disclaimer on some turns; a router
-  that always funnels prediction_* intents through response_formatter's
-  prediction branch makes that a structural guarantee, not a prompting hope.
-- Entity resolution failures need a *deterministic* clarification loop
-  rather than an agent creatively guessing a team name.
-- Debuggability: state.trace gives an exact node-by-node path per request,
-  which a single ReAct-style agent's freeform tool-call log doesn't give
-  you as cleanly (Task 5 log/annotate requirement).
+Why explicit LangGraph routing instead of one free-form agent handling
+prediction too? The Day 3 agent (`ai_chat_afl.create_afl_agent`) has NO
+prediction tools -- if a prediction-shaped query reached it directly, it
+would either refuse (wrong -- we DO support predictions) or worse, try to
+answer from "knowledge" and hallucinate a winner (very wrong for a stats
+assistant whose whole premise is grounded numbers). The router's job is to
+catch prediction-shaped queries BEFORE they reach that agent and force them
+through a path that always attaches a probability + disclaimer. Everything
+the Day 3 agent is already good at (retrieval, factual Q&A, off-topic
+refusal, multi-turn memory) is left entirely to it rather than reimplemented.
 """
 
 from __future__ import annotations
@@ -40,15 +40,13 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
 from nodes import (
+    chat_agent_node,
     clarification_node,
-    direct_answer_node,
     fallback_node,
     prediction_node,
-    refusal_node,
     response_formatter_node,
-    retrieval_node,
-    route_after_validation,
     validation_node,
+    route_after_validation,
 )
 from router import route_from_intent, router_node
 from state import AFLState
@@ -58,10 +56,8 @@ def build_graph(with_memory: bool = True):
     g = StateGraph(AFLState)
 
     g.add_node("router", router_node)
-    g.add_node("direct_answer", direct_answer_node)
-    g.add_node("retrieval_tool", retrieval_node)
+    g.add_node("chat_agent", chat_agent_node)
     g.add_node("prediction_tool", prediction_node)
-    g.add_node("refusal", refusal_node)
     g.add_node("fallback", fallback_node)
     g.add_node("validation", validation_node)
     g.add_node("clarification", clarification_node)
@@ -73,21 +69,18 @@ def build_graph(with_memory: bool = True):
         "router",
         route_from_intent,
         {
-            "direct_answer": "direct_answer",
-            "retrieval_tool": "retrieval_tool",
+            "chat_agent": "chat_agent",
             "prediction_tool": "prediction_tool",
-            "refusal": "refusal",
             "fallback": "fallback",
         },
     )
 
-    # direct_answer / refusal / fallback go straight to formatting or END
-    g.add_edge("direct_answer", "response_formatter")
-    g.add_edge("refusal", END)
+    # chat_agent already produces a complete final_response (incl. its own
+    # off-topic refusal wording) -- still pass through response_formatter so
+    # the trace/observability path is uniform across all branches.
+    g.add_edge("chat_agent", "response_formatter")
     g.add_edge("fallback", END)
 
-    # tool nodes are validated before formatting
-    g.add_edge("retrieval_tool", "validation")
     g.add_edge("prediction_tool", "validation")
 
     g.add_conditional_edges(
@@ -121,7 +114,7 @@ def run_query(app, query: str, thread_id: str = "default") -> dict:
 
 if __name__ == "__main__":
     app = build_graph()
-    out = run_query(app, "will the Pies beat the Cats this week")
+    out = run_query(app, "will Melbourne Demons beat Richmond Tigers this week")
     print(out["final_response"])
     print("\n--- trace ---")
     for line in out["trace"]:
