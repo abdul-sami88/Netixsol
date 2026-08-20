@@ -1,0 +1,37 @@
+Week 6 Day 4 CM-IT-Batch-02
+LangGraph Integration — Routing Between Chat, Retrieval & Prediction
+:pushpin: Scenario Today you connect everything: the chat agent from Day 3 and the prediction models from Day 2, orchestrated through LangGraph so the system can correctly route between "answer a factual AFL question," "retrieve a stat," and "make a prediction" — each needing different tools and different response framing (predictions should always be framed as probabilistic, not certain).
+
+Task 1: Graph Design for the Full System
+
+Design a State schema covering: user query, conversation history, detected intent (factual / retrieval / prediction / off-topic), tool results, and final response.
+Sketch the graph: an intent-classification/router node, branching to a retrieval-tool node, a prediction-tool node, or a direct-answer node, converging to a response-formatting node.
+Justify why routing explicitly (LangGraph) is safer here than letting one generic agent freely decide — especially for prediction requests, which need consistent disclaimers.
+
+Task 2: Build the Router Node
+
+Implement an intent classifier node (can be a small LLM call with structured output, or a lightweight classifier) that routes: "who will win X vs Y" / "who will top-score" → prediction node; "what were X's stats last round" → retrieval node; off-topic → refusal node.
+Test routing accuracy on 15–20 varied queries and report a simple accuracy table; fix misroutes by refining the router prompt/logic.
+
+Task 3: Wire Prediction Models as LangGraph Tools
+
+Wrap your Day 2 predict_match_winner and predict_top_player functions as tools callable from the prediction node.
+Handle input resolution: the user says "will the Pies beat the Cats this week" — the node must resolve team nicknames/aliases to your dataset's exact team keys, and resolve "this week" to the correct upcoming fixture/date.
+Ensure every prediction response includes the probability/confidence and a short grounding explanation (e.g., top 2–3 features driving the prediction), not just a bare answer.
+
+Task 4: Self-Correction & Fallbacks
+
+Add a validation node after prediction/retrieval: check the tool actually returned a result (not an error), and if a team/player can't be resolved, loop back to ask the user for clarification instead of guessing.
+Add a fallback path for genuinely ambiguous or unsupported queries (e.g., predicting a stat type you don't model) that clearly tells the user what's out of scope, rather than hallucinating.
+
+Task 5: End-to-End Testing
+
+Run at least 10 full conversations exercising all paths: factual retrieval, prediction (match + player), off-topic refusal, ambiguous input requiring clarification, and multi-turn follow-ups.
+Log the full state trace for 2–3 of these runs (router decision → tool called → validation → final response) and annotate them.
+Write 2–3 sentences comparing this LangGraph orchestration to a single monolithic LangChain agent trying to do everything — what specifically improved?
+
+
+:package: Deliverable
+
+A working LangGraph application integrating chat, retrieval, and prediction with routing, validation, and fallback handling
+Annotated state traces for 2–3 representative conversations + a routing accuracy table
