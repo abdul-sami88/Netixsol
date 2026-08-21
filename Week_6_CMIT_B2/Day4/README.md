@@ -25,9 +25,7 @@ export GEMINI_API_KEY=your_key_here
 ### 4. Run
 
 ```bash
-python3 graph.py                          # single demo query
-python3 tests/test_router_accuracy.py     # Task 2 deliverable — routing accuracy table
-python3 tests/test_e2e.py                 # Task 5 deliverable — 12 full conversations, annotated traces
+python3 chat_cli.py   
 ```
 
 ---
