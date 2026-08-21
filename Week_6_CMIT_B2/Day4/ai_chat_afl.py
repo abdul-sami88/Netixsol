@@ -83,12 +83,21 @@ Tool-use requirements:
 - Use get_team_match_in_round to find who a team played (and the score) in a given
 	season round, get_top_player_in_match to find which player led a team in a stat
 	for one match, get_player_match_stats for a named player's stats in one round,
-	get_player_season_stats for a named player's season totals/averages, and
-	get_team_matches_record for an all-time head-to-head record between two teams.
+	get_player_season_stats for a named player's totals/averages in ONE season,
+	get_player_season_stat_total for a named player's stat TOTAL summed across
+	MULTIPLE seasons (e.g. "combined across 2022 and 2023"),
+	compare_players_season_stat for a head-to-head comparison between TWO named
+	players on one stat in one season (season-total or per-game via the
+	per_game flag), and get_team_matches_record for an all-time head-to-head
+	record between two teams.
 - A "which team did X play in round N" question typically needs
 	get_team_match_in_round; a "who had the most disposals/goals for X" question
 	typically needs get_top_player_in_match; only call get_player_match_stats or
-	get_player_season_stats once you already know the player's name.
+	get_player_season_stats once you already know the player's name. A question
+	naming TWO players and asking who had more of a stat needs
+	compare_players_season_stat, not two separate get_player_season_stats calls.
+	A question about a stat "across" or "combined over" multiple years needs
+	get_player_season_stat_total, not repeated single-season lookups.
 - Team names may be given as full club names or common nicknames/partial names
 	(e.g. "Cats", "Geelong", "Geelong Cats"); pass what the user said and let the
 	tool resolve it, rather than guessing the full name yourself.
@@ -250,6 +259,112 @@ def _resolve_player_id(player: str | int, players: pd.DataFrame) -> tuple[int | 
 		ids = ", ".join(str(player_id) for player_id in matches["player_id"])
 		return None, f"More than one player named '{player}' was found. Ask for the player's numeric ID ({ids})."
 	return int(matches.iloc[0]["player_id"]), None
+
+
+try:
+	from player_stats_query import (
+		QueryError as _StatsQueryError,
+	)
+	from player_stats_query import load_data as _stats_load_data
+	from player_stats_query import per_game_stat as _stats_per_game
+	from player_stats_query import resolve_player as _stats_resolve_player
+	from player_stats_query import resolve_stat as _stats_resolve_stat
+	from player_stats_query import total_stat as _stats_total
+	_PLAYER_STATS_TOOL_AVAILABLE = True
+except ImportError:
+	_PLAYER_STATS_TOOL_AVAILABLE = False
+
+
+@lru_cache(maxsize=1)
+def _read_merged_players_full() -> pd.DataFrame | None:
+	"""Load the full player-season aggregate table (merged_players.csv) used
+	for multi-year totals and head-to-head comparisons (see
+	player_stats_query.py). Tries the same candidate paths as the
+	player_id -> player_name lookup above, since it's the same file --
+	merged_players.csv carries both the name column and the season stat
+	columns (tackles, disposals, kicks, games_played, is_finals, ...)."""
+	if not _PLAYER_STATS_TOOL_AVAILABLE:
+		return None
+	for path in PLAYER_NAMES_CANDIDATES:
+		if not path.exists():
+			continue
+		try:
+			return _stats_load_data(path)
+		except Exception:
+			continue
+	return None
+
+
+@tool
+def get_player_season_stat_total(player: str, stat: str, years: list[int]) -> str:
+	"""Get a player's TOTAL for one stat summed across one or more seasons.
+
+	Use this for questions like "how many total tackles did X get across 2022
+	and 2023 combined" -- i.e. a multi-year sum for ONE player. ``player`` is
+	the player's name. ``stat`` accepts natural phrasing: "tackles",
+	"disposals", "kicks", "marks", "handballs", "goals", "hitouts",
+	"clearances", "inside 50s", "contested possessions", "fantasy points",
+	etc. ``years`` is a list of one or more season years, e.g. [2022, 2023].
+	Sums across any split regular-season/finals rows for those years. Returns
+	a clear no-data or ambiguous-name message if the player or stat cannot be
+	resolved -- report that to the user rather than guessing.
+	"""
+	df = _read_merged_players_full()
+	if df is None:
+		return "Player season-stat data (merged_players.csv) is unavailable in this environment."
+	try:
+		resolved_player = _stats_resolve_player(player, df)
+		stat_col = _stats_resolve_stat(stat)
+		total = _stats_total(df, resolved_player, stat_col, years)
+	except _StatsQueryError as exc:
+		return str(exc)
+	years_text = " and ".join(str(y) for y in years)
+	return f"player={resolved_player}, stat={stat_col}, years={years_text}, total={total:.0f}."
+
+
+@tool
+def compare_players_season_stat(
+	player_a: str, player_b: str, stat: str, year: int, per_game: bool = False
+) -> str:
+	"""Compare two named players on one stat for a single season.
+
+	Use this for head-to-head questions like "compare disposals between X and
+	Y in 2024" or "who had more kicks per game, X or Y, in 2023". Set
+	``per_game=True`` for a games-weighted per-game rate comparison (correct
+	even when a player has separate regular-season and finals rows with
+	different games played -- never average two precomputed rates). Leave
+	``per_game=False`` (default) for a season-total comparison. ``stat``
+	accepts natural phrasing, same as get_player_season_stat_total. Returns a
+	clear no-data or ambiguous-name message if either player or the stat
+	cannot be resolved -- report that to the user rather than guessing.
+	"""
+	df = _read_merged_players_full()
+	if df is None:
+		return "Player season-stat data (merged_players.csv) is unavailable in this environment."
+	try:
+		resolved_a = _stats_resolve_player(player_a, df)
+		resolved_b = _stats_resolve_player(player_b, df)
+		stat_col = _stats_resolve_stat(stat)
+		if per_game:
+			val_a = _stats_per_game(df, resolved_a, stat_col, year)
+			val_b = _stats_per_game(df, resolved_b, stat_col, year)
+		else:
+			val_a = _stats_total(df, resolved_a, stat_col, [year])
+			val_b = _stats_total(df, resolved_b, stat_col, [year])
+	except _StatsQueryError as exc:
+		return str(exc)
+
+	mode = "per_game" if per_game else "total"
+	if val_a > val_b:
+		leader = resolved_a
+	elif val_b > val_a:
+		leader = resolved_b
+	else:
+		leader = "tied"
+	return (
+		f"stat={stat_col}, mode={mode}, year={year}, "
+		f"{resolved_a}={val_a:.2f}, {resolved_b}={val_b:.2f}, leader={leader}."
+	)
 
 
 @lru_cache(maxsize=1)
@@ -468,6 +583,8 @@ STRUCTURED_TOOLS = [
 	get_player_match_stats,
 	get_player_season_stats,
 	get_team_matches_record,
+	get_player_season_stat_total,
+	compare_players_season_stat,
 ]
 
 
