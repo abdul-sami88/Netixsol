@@ -51,13 +51,18 @@ _OFF_TOPIC_HINTS = [
 
 _PREDICTION_PLAYER_HINTS = [
     "top score", "top-score", "top scorer", "who will top", "best player",
-    "most disposals will", "leading goalkicker",
+    "most disposals will", "leading goalkicker", "kick the most goals",
+    "most goals", "highest disposals", "most disposals", "top disposal",
+    "top-disposal", "best disposal getter", "who's likely to top",
 ]
 
 _PREDICTION_MATCH_HINTS = [
     "who will win", "will beat", "who wins", "predict", "chances of winning",
     "chances of", "will win", "beat ", " vs ", " v ", "who's going to win",
-    "winning next round", "winning this week",
+    "winning next round", "winning this week", "would win", "who would win",
+    "will win against", "win against", "wins against", "favoured in",
+    "favourite in", "favored in", "going to beat", "gonna beat",
+    "who is favoured", "who's favoured", "your prediction for",
 ]
 
 _RETRIEVAL_HINTS = [
@@ -72,13 +77,33 @@ _UNSUPPORTED_HINTS = [
     "exact margin", "by how much",
 ]
 
+# Season/finals-outcome questions ("who wins the flag", "who wins the AFL
+# 2026 final") are prediction-shaped but genuinely out of scope for a
+# single-match model -- it can't simulate an entire finals series to know
+# who even plays in the decider. These are NOT a "which two teams do you
+# mean" clarification case (naming teams wouldn't make the question
+# answerable). Checked only once a query already matched a "who will win"
+# style hint AND no two explicit teams were found -- so a real single-match
+# question like "who will win Geelong vs Collingwood in the grand final"
+# still resolves normally, and unrelated retrieval questions that happen to
+# contain the word "final" (e.g. "stats in the final round") are untouched.
+_SEASON_LEVEL_WORDS = ["final", "premiership", "flag", "the cup", "wooden spoon"]
+
 
 _LEADING_PHRASES = [
-    r"who('?s| is| will)? (going to )?win(s)?( the game between)?",
+    r"(sorry,? )?i meant( to say)?",
+    r"actually,?",
+    r"(is|does|do|did)",
+    r"who('?s| is| will| would)? (going to |likely to )?win(s)?( the game between)?",
     r"predict(ed|ing)? the winner of",
+    r"give me a prediction for",
+    r"what'?s your prediction for",
+    r"do you think",
     r"predict",
     r"what are the chances of",
     r"chances of",
+    r"who('?s| is)? (favoured|favourite|favored) (in|to win)?",
+    r"between",  # "who would win between X and Y" -- leaves "X and Y"
 ]
 
 
@@ -92,6 +117,10 @@ _TRAILING_PHRASES = [
     r"\s+this (week|weekend|round)\b.*",
     r"\s+next (week|weekend|round)\b.*",
     r"\s+(the )?game\b.*",
+    r"\s+in the (grand final|finals?|premiership)\b.*",
+    r"\s+in (round|the round)\s+\d+\b.*",
+    r",.*$",                       # ", who wins?" / ", any thoughts?" etc.
+    r"\s+(prediction|predictions|forecast)\b.*",
     r"[?.!]+$",
 ]
 
@@ -102,21 +131,46 @@ def _strip_trailing_phrase(text: str) -> str:
     return text.strip()
 
 
+def _clean_team_fragment(text: str) -> str:
+    """Apply both leading- and trailing-phrase stripping to one extracted
+    team fragment. Used on BOTH halves of a match extraction -- team_a used
+    to only get leading-stripped and team_b only trailing-stripped, which
+    missed cases like 'who's favoured in Melbourne' (junk stuck to team_a)
+    or 'Richmond, who wins?' (junk stuck to team_b)."""
+    return _strip_trailing_phrase(_strip_leading_phrase(text))
+
+
 def _extract_teams(text: str) -> tuple[Optional[str], Optional[str]]:
-    """Small heuristic: strip leading/trailing filler, then split on 'vs'/'v'/'beat'."""
+    """Heuristic: strip leading/trailing filler, then split on one of several
+    common match-framing patterns ('vs'/'v', 'beat', 'win(s) against',
+    'between X and Y')."""
     cleaned = _strip_leading_phrase(text)
 
     m = re.search(r"(.+?)\s+(?:vs\.?|v\.?)\s+(.+)", cleaned, re.I)
     if m:
-        team_a, team_b = m.group(1).strip(), m.group(2).strip()
-        return team_a, _strip_trailing_phrase(team_b)
+        return _clean_team_fragment(m.group(1)), _clean_team_fragment(m.group(2))
 
     m = re.search(
-        r"(?:will|can)\s+(?:the\s+)?(.+?)\s+beat\s+(?:the\s+)?(.+?)(?:\s+this|\s+next|\?|$)",
+        r"(?:will|can|would|is going to|going to|gonna)?\s*(?:the\s+)?(.+?)\s+"
+        r"(?:will\s+|can\s+|would\s+|is going to\s+|going to\s+|gonna\s+)?"
+        r"beat\s+(?:the\s+)?(.+?)(?:\s+this|\s+next|\?|$)",
         cleaned, re.I,
     )
     if m:
-        return m.group(1).strip(), m.group(2).strip()
+        return _clean_team_fragment(m.group(1)), _clean_team_fragment(m.group(2))
+
+    m = re.search(
+        r"(?:the\s+)?(.+?)\s+(?:will\s+)?wins?\s+against\s+(?:the\s+)?(.+?)"
+        r"(?:\s+this|\s+next|\?|$)",
+        cleaned, re.I,
+    )
+    if m:
+        return _clean_team_fragment(m.group(1)), _clean_team_fragment(m.group(2))
+
+    m = re.search(r"(.+?)\s+and\s+(.+)", cleaned, re.I)  # "between X and Y" (leading "between" already stripped)
+    if m:
+        return _clean_team_fragment(m.group(1)), _clean_team_fragment(m.group(2))
+
     return None, None
 
 
@@ -160,6 +214,13 @@ def classify_rule_based(query: str) -> RouterDecision:
 
     if any(h in q for h in _PREDICTION_MATCH_HINTS):
         team_a, team_b = _extract_teams(q)
+
+        if not (team_a and team_b) and any(w in q for w in _SEASON_LEVEL_WORDS):
+            # e.g. "who will win the AFL 2026 final" -- no two teams named,
+            # and it's asking about a season/finals-level outcome the model
+            # can't produce (see _SEASON_LEVEL_WORDS comment above).
+            return RouterDecision(intent="unsupported", confidence=0.8)
+
         when = "this week" if "this week" in q or "this weekend" in q else (
             "next round" if "next round" in q else None
         )
@@ -183,6 +244,8 @@ def classify_rule_based(query: str) -> RouterDecision:
         "holding the ball", "high tackle", "free kick", "umpire", "ruck",
         "50m penalty", "50 metre", "out of bounds", "interchange", "spoil",
         "mark", "behind", "quarter", "coach", "australian football", "australian rules",
+        "guernsey", "jumper", "specky", "draft", "tribunal", "match review",
+        "the g", "mcg", "trade period", "recruit",
     ]
     if any(t in q for t in afl_terms) or _extract_single_team(q):
         return RouterDecision(intent="factual", confidence=0.55)

@@ -1,176 +1,47 @@
+"""
+ui.py — AFL Assistant Streamlit UI
+====================================
+
+Chat interface for the AFL assistant.
+
+Usage:
+    streamlit run ui.py
+
+FIXED (vs. the earlier version):
+- Enter now sends the message. `st.text_area` + a separate Send button
+  never submits on Enter (Enter just inserts a newline in a text area).
+  Switched to `st.chat_input`, the widget Streamlit specifically built for
+  chat-style "type and press Enter" input.
+- The input box now actually clears after sending. The old code tried to
+  reset it by setting `st.session_state.user_input = ""`, but the
+  `text_area`'s real displayed value lives in `st.session_state["input_area"]`
+  (bound automatically via its `key=`), which that line never touched --
+  a classic Streamlit gotcha. `st.chat_input` clears itself automatically
+  on submit, so there's nothing to manually manage.
+"""
+
 import streamlit as st
 import requests
 import uuid
 from datetime import datetime
 
-
-# ============================================================
+# ============================================================================
 # PAGE CONFIG
-# ============================================================
+# ============================================================================
 
 st.set_page_config(
     page_title="AFL Assistant",
     page_icon="🏈",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
+st.title("🏈 AFL Assistant")
+st.markdown("**Ask me about AFL matches, predictions, statistics, and more.**")
 
-# ============================================================
-# CSS
-# ============================================================
-
-st.markdown("""
-<style>
-
-/* ---------- APP ---------- */
-
-.stApp {
-    background-color: #0b1117;
-}
-
-.block-container {
-    max-width: 1400px;
-    padding-top: 2rem;
-    padding-bottom: 5rem;
-}
-
-
-/* ---------- SIDEBAR ---------- */
-
-section[data-testid="stSidebar"] {
-    background-color: #0d151d;
-    border-right: 1px solid #202c36;
-}
-
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3 {
-    color: white;
-}
-
-
-/* ---------- HEADER ---------- */
-
-.header-box {
-    background: linear-gradient(
-        135deg,
-        #123f35,
-        #102d40
-    );
-
-    border: 1px solid #245247;
-    border-radius: 18px;
-
-    padding: 28px 32px;
-
-    margin-bottom: 28px;
-}
-
-.header-title {
-    font-size: 34px;
-    font-weight: 750;
-    color: white;
-}
-
-.header-subtitle {
-    color: #aebbc5;
-    font-size: 15px;
-    margin-top: 5px;
-}
-
-.status {
-    display: inline-block;
-
-    margin-top: 15px;
-
-    padding: 5px 12px;
-
-    border-radius: 20px;
-
-    background-color: #173c33;
-    border: 1px solid #2c6657;
-
-    color: #65d8ac;
-
-    font-size: 12px;
-    font-weight: 600;
-}
-
-
-/* ---------- SECTION HEADINGS ---------- */
-
-.section-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-
-    margin-bottom: 14px;
-}
-
-
-/* ---------- INFO CARDS ---------- */
-
-.info-card {
-    background-color: #111a23;
-
-    border: 1px solid #22303b;
-
-    border-radius: 14px;
-
-    padding: 18px;
-
-    margin-bottom: 12px;
-}
-
-.info-label {
-    font-size: 11px;
-
-    color: #7f8c98;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.08em;
-}
-
-.info-value {
-    font-size: 21px;
-
-    font-weight: 700;
-
-    color: white;
-
-    margin-top: 4px;
-}
-
-
-/* ---------- BUTTONS ---------- */
-
-.stButton > button {
-    border-radius: 10px;
-    min-height: 42px;
-}
-
-
-/* ---------- CHAT INPUT ---------- */
-
-.stChatInput {
-    padding-bottom: 1rem;
-}
-
-
-/* ---------- DIVIDER ---------- */
-
-hr {
-    border-color: #202c36 !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-
-# ============================================================
+# ============================================================================
 # SESSION STATE
-# ============================================================
+# ============================================================================
 
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = str(uuid.uuid4())
@@ -178,623 +49,171 @@ if "conversation_id" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+if "pending_query" not in st.session_state:
+    st.session_state.pending_query = None
 
-# ============================================================
-# SIDEBAR
-# ============================================================
+# ============================================================================
+# SIDEBAR CONFIG
+# ============================================================================
 
 with st.sidebar:
-
-    st.markdown("## 🏈 AFL Assistant")
-
-    st.caption("Domain-scoped AFL AI assistant")
-
-    st.divider()
-
-    st.markdown("### ⚙️ API Configuration")
-
+    st.header("Settings")
     api_url = st.text_input(
         "API URL",
         value="http://localhost:8000",
+        help="Base URL of the AFL Assistant API",
     )
 
     st.divider()
-
-    st.markdown("### 💡 Example Questions")
-
+    st.markdown("### Examples")
+    st.caption("Click to ask immediately.")
     examples = [
         "Will Melbourne beat Richmond this week?",
         "Who will top-score for Geelong?",
         "What's the Brownlow Medal?",
-        "How many disposals did West Coast average?",
+        "How many disposals did West Coast average this season?",
         "Tell me about the Grand Final.",
     ]
-
-    for i, example in enumerate(examples):
-
-        if st.button(
-            example,
-            key=f"example_{i}",
-            use_container_width=True,
-        ):
-
-            st.session_state.pending_question = example
-            st.rerun()
+    for ex in examples:
+        # Example buttons queue the query the same way a typed-and-submitted
+        # chat_input message would, rather than trying to pre-fill a text
+        # box (st.chat_input can't be pre-filled -- it's designed to be
+        # typed into directly). Clicking immediately asks the question,
+        # which is actually better for a live demo than "fill box, then
+        # still have to click Send".
+        if st.button(ex, key=ex, use_container_width=True):
+            st.session_state.pending_query = ex
 
     st.divider()
-
-    if st.button(
-        "🔄 New Conversation",
-        use_container_width=True,
-    ):
-
+    if st.button("New Chat 🔄", use_container_width=True):
         st.session_state.messages = []
         st.session_state.conversation_id = str(uuid.uuid4())
-
-        if "pending_question" in st.session_state:
-            del st.session_state.pending_question
-
+        st.session_state.pending_query = None
         st.rerun()
 
+# ============================================================================
+# SEND LOGIC (shared by chat_input submissions and example-button clicks)
+# ============================================================================
 
-# ============================================================
-# HEADER
-# ============================================================
+def send_message(user_input: str) -> None:
+    user_input = user_input.strip()
+    if not user_input:
+        return
 
-st.markdown(
-    """
-    <div class="header-box">
-        <div class="header-title">
-            🏈 AFL Assistant
-        </div>
+    st.session_state.messages.append({"role": "user", "content": user_input})
 
-        <div class="header-subtitle">
-            Your AI assistant for AFL statistics,
-            matches, players, teams and predictions.
-        </div>
-
-        <div class="status">
-            ● Assistant Online
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
-# MAIN LAYOUT
-# ============================================================
-
-chat_col, info_col = st.columns(
-    [3.2, 1],
-    gap="large",
-)
-
-
-# ============================================================
-# CHAT AREA
-# ============================================================
-
-with chat_col:
-
-    st.markdown(
-        '<div class="section-title">💬 Conversation</div>',
-        unsafe_allow_html=True,
-    )
-
-    # --------------------------------------------------------
-    # WELCOME
-    # --------------------------------------------------------
-
-    if not st.session_state.messages:
-
-        st.info(
-            "👋 Welcome! Ask me anything about AFL."
+    try:
+        response = requests.post(
+            f"{api_url}/chat",
+            json={
+                "message": user_input,
+                "conversation_id": st.session_state.conversation_id,
+            },
+            timeout=30,
         )
 
-        st.markdown("**Try one of these:**")
-
-        col1, col2, col3 = st.columns(3)
-
-        with col1:
-
-            if st.button(
-                "🏆 Match Prediction",
-                use_container_width=True,
-            ):
-                st.session_state.pending_question = (
-                    "Will Melbourne beat Richmond this week?"
-                )
-                st.rerun()
-
-        with col2:
-
-            if st.button(
-                "📊 Player Statistics",
-                use_container_width=True,
-            ):
-                st.session_state.pending_question = (
-                    "Who will top-score for Geelong?"
-                )
-                st.rerun()
-
-        with col3:
-
-            if st.button(
-                "📚 AFL Knowledge",
-                use_container_width=True,
-            ):
-                st.session_state.pending_question = (
-                    "What's the Brownlow Medal?"
-                )
-                st.rerun()
-
-
-    # --------------------------------------------------------
-    # CHAT HISTORY
-    # --------------------------------------------------------
-
-    for message in st.session_state.messages:
-
-        if message["role"] == "user":
-
-            with st.chat_message(
-                "user",
-                avatar="👤",
-            ):
-
-                st.markdown(message["content"])
-
+        if response.status_code == 200:
+            data = response.json()
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": data["response"],
+                "metadata": {
+                    "intent": data.get("intent"),
+                    "confidence": data.get("confidence"),
+                    "latency_ms": int(data.get("latency_sec", 0) * 1000),
+                    "tools": [t["name"] for t in data.get("tools_called", [])],
+                },
+            })
         else:
-
-            with st.chat_message(
-                "assistant",
-                avatar="🏈",
-            ):
-
-                st.markdown(message["content"])
-
-                metadata = message.get(
-                    "metadata"
-                )
-
-                if metadata:
-
-                    with st.expander(
-                        "📊 Response details"
-                    ):
-
-                        if metadata.get("intent"):
-
-                            st.write(
-                                "**Intent:**",
-                                metadata["intent"],
-                            )
-
-                        if metadata.get("confidence") is not None:
-
-                            st.write(
-                                "**Confidence:**",
-                                f"{metadata['confidence']:.0%}",
-                            )
-
-                        if metadata.get("latency_ms"):
-
-                            st.write(
-                                "**Response time:**",
-                                f"{metadata['latency_ms']} ms",
-                            )
-
-                        if metadata.get("tools"):
-
-                            st.write(
-                                "**Tools:**",
-                                ", ".join(
-                                    metadata["tools"]
-                                ),
-                            )
-
-
-# ============================================================
-# CHAT INPUT
-# ============================================================
-
-# Enter = Send
-# Shift + Enter = New Line
-
-pending = st.session_state.get(
-    "pending_question",
-    None,
-)
-
-if pending:
-
-    # We can't programmatically insert into
-    # st.chat_input, so show it as a small hint.
-    st.caption(f"Selected: **{pending}**")
-
-
-question = st.chat_input(
-    "Ask about AFL...  (Enter to send)",
-)
-
-
-# ============================================================
-# EXAMPLE QUESTION HANDLING
-# ============================================================
-
-if pending and not question:
-
-    question = pending
-
-    del st.session_state.pending_question
-
-
-# ============================================================
-# SEND TO API
-# ============================================================
-
-if question:
-
-    question = question.strip()
-
-    if question:
-
-        # Add user message
-        st.session_state.messages.append(
-            {
-                "role": "user",
-                "content": question,
-            }
-        )
-
-        # ----------------------------------------------------
-        # API REQUEST
-        # ----------------------------------------------------
-
-        with st.spinner(
-            "🏈 AFL Assistant is thinking..."
-        ):
-
             try:
+                detail = response.json().get("detail", "Unknown error")
+            except Exception:
+                detail = response.text[:200]
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": f"❌ API Error ({response.status_code}): {detail}",
+            })
 
-                response = requests.post(
-                    f"{api_url.rstrip('/')}/chat",
-
-                    json={
-                        "message": question,
-                        "conversation_id":
-                            st.session_state.conversation_id,
-                    },
-
-                    timeout=30,
-                )
-
-
-                # ============================================
-                # SUCCESS
-                # ============================================
-
-                if response.status_code == 200:
-
-                    data = response.json()
-
-                    tools_called = data.get(
-                        "tools_called",
-                        [],
-                    )
-
-                    tool_names = []
-
-                    for tool in tools_called:
-
-                        if isinstance(
-                            tool,
-                            dict,
-                        ):
-
-                            name = tool.get(
-                                "name"
-                            )
-
-                            if name:
-                                tool_names.append(
-                                    name
-                                )
-
-                        elif isinstance(
-                            tool,
-                            str,
-                        ):
-
-                            tool_names.append(
-                                tool
-                            )
+    except requests.exceptions.ConnectionError:
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": f"❌ Could not connect to API at {api_url}. "
+                       f"Make sure the API is running: `python api.py`",
+        })
+    except requests.exceptions.Timeout:
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": "❌ The request timed out. The assistant took too long to respond -- try again.",
+        })
+    except Exception as e:
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": f"❌ Unexpected error: {e}",
+        })
 
 
-                    confidence = data.get(
-                        "confidence"
-                    )
+# Process a query queued by an example button (see sidebar above)
+if st.session_state.pending_query:
+    q = st.session_state.pending_query
+    st.session_state.pending_query = None
+    with st.spinner("Thinking..."):
+        send_message(q)
 
-                    latency = data.get(
-                        "latency_sec",
-                        0,
-                    )
+# ============================================================================
+# CHAT DISPLAY + INPUT
+# ============================================================================
 
+col1, col2 = st.columns([0.7, 0.3])
 
-                    metadata = {
-                        "intent":
-                            data.get("intent"),
+with col1:
+    st.markdown("### Conversation")
 
-                        "confidence":
-                            confidence,
+    chat_container = st.container(height=450, border=True)
+    with chat_container:
+        for msg in st.session_state.messages:
+            avatar = "🧑" if msg["role"] == "user" else "🏈"
+            with st.chat_message(msg["role"], avatar=avatar):
+                st.markdown(msg["content"])
+                if msg.get("metadata"):
+                    with st.expander("📊 Details"):
+                        st.json(msg["metadata"])
 
-                        "latency_ms":
-                            int(latency * 1000),
-
-                        "tools":
-                            tool_names,
-                    }
-
-
-                    st.session_state.messages.append(
-                        {
-                            "role": "assistant",
-
-                            "content":
-                                data.get(
-                                    "response",
-                                    "No response received.",
-                                ),
-
-                            "metadata":
-                                metadata,
-                        }
-                    )
-
-
-                # ============================================
-                # API ERROR
-                # ============================================
-
-                else:
-
-                    try:
-
-                        error_data = response.json()
-
-                        detail = error_data.get(
-                            "detail",
-                            "Unknown API error",
-                        )
-
-                    except Exception:
-
-                        detail = response.text
-
-
-                    st.session_state.messages.append(
-                        {
-                            "role": "assistant",
-
-                            "content":
-                                f"❌ **API Error "
-                                f"{response.status_code}**\n\n"
-                                f"{detail}",
-                        }
-                    )
-
-
-            # ================================================
-            # CONNECTION ERROR
-            # ================================================
-
-            except requests.exceptions.ConnectionError:
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-
-                        "content":
-                            "❌ **Could not connect to the API.**\n\n"
-                            f"Make sure your API is running at:\n"
-                            f"`{api_url}`",
-                    }
-                )
-
-
-            # ================================================
-            # TIMEOUT
-            # ================================================
-
-            except requests.exceptions.Timeout:
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-
-                        "content":
-                            "⏱️ **Request timed out.**\n\n"
-                            "The API took too long to respond.",
-                    }
-                )
-
-
-            # ================================================
-            # OTHER ERROR
-            # ================================================
-
-            except Exception as e:
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-
-                        "content":
-                            f"❌ **Unexpected error:**\n\n"
-                            f"`{str(e)}`",
-                    }
-                )
-
-
+    # st.chat_input: Enter (or the built-in send arrow) submits, and the
+    # box clears itself automatically afterwards -- no manual state
+    # management needed, which is exactly what was broken before.
+    typed = st.chat_input("Ask about a match, a prediction, or a stat...")
+    if typed:
+        with st.spinner("Thinking..."):
+            send_message(typed)
         st.rerun()
 
+# ============================================================================
+# RIGHT SIDEBAR: STATS
+# ============================================================================
 
-# ============================================================
-# RIGHT PANEL
-# ============================================================
+with col2:
+    st.markdown("### Chat Info")
+    st.metric("Conversation ID", st.session_state.conversation_id[:8])
+    st.metric("Messages", len(st.session_state.messages))
 
-with info_col:
+    if st.session_state.messages and st.session_state.messages[-1]["role"] == "assistant":
+        metadata = st.session_state.messages[-1].get("metadata", {})
 
-    st.markdown(
-        '<div class="section-title">📊 Session</div>',
-        unsafe_allow_html=True,
-    )
-
-    # Conversation ID
-
-    st.markdown(
-        f"""
-        <div class="info-card">
-            <div class="info-label">
-                Conversation
-            </div>
-
-            <div class="info-value">
-                #{st.session_state.conversation_id[:8]}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
-    # Message count
-
-    st.markdown(
-        f"""
-        <div class="info-card">
-            <div class="info-label">
-                Messages
-            </div>
-
-            <div class="info-value">
-                {len(st.session_state.messages)}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
-    # --------------------------------------------------------
-    # LAST RESPONSE
-    # --------------------------------------------------------
-
-    if (
-        st.session_state.messages
-        and
-        st.session_state.messages[-1]["role"]
-        == "assistant"
-    ):
-
-        metadata = st.session_state.messages[-1].get(
-            "metadata",
-            {},
-        )
-
-        st.markdown("### 🧠 Last Response")
-
-
-        # Intent
+        st.divider()
+        st.markdown("### Last Response")
 
         if metadata.get("intent"):
+            st.write(f"**Intent:** `{metadata['intent']}`")
+        if metadata.get("confidence") is not None:
+            st.write(f"**Confidence:** {metadata['confidence']:.0%}")
+        if metadata.get("latency_ms") is not None:
+            st.write(f"**Latency:** {metadata['latency_ms']}ms")
+        if metadata.get("tools"):
+            st.write(f"**Tools:** {', '.join(metadata['tools']) or 'N/A'}")
 
-            st.markdown(
-                f"""
-                <div class="info-card">
-
-                    <div class="info-label">
-                        Intent
-                    </div>
-
-                    <div class="info-value">
-                        {metadata["intent"]}
-                    </div>
-
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-
-        # Confidence
-
-        confidence = metadata.get(
-            "confidence"
-        )
-
-        if confidence is not None:
-
-            st.markdown("**Confidence**")
-
-            st.progress(
-                max(
-                    0.0,
-                    min(
-                        1.0,
-                        float(confidence),
-                    ),
-                )
-            )
-
-            st.caption(
-                f"{confidence:.0%}"
-            )
-
-
-        # Latency
-
-        latency = metadata.get(
-            "latency_ms"
-        )
-
-        if latency:
-
-            st.metric(
-                "Response time",
-                f"{latency} ms",
-            )
-
-
-        # Tools
-
-        tools = metadata.get(
-            "tools",
-            [],
-        )
-
-        if tools:
-
-            st.markdown("**🔧 Tools used**")
-
-            for tool in tools:
-
-                st.code(
-                    tool,
-                    language=None,
-                )
-
-
-# ============================================================
+# ============================================================================
 # FOOTER
-# ============================================================
+# ============================================================================
 
 st.divider()
-
-st.caption(
-    "🏈 AFL Assistant v1.0  •  "
-    "Domain-Scoped AI  •  "
-    f"{datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC"
-)
+st.caption(f"AFL Assistant v1.0 | {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")

@@ -189,10 +189,13 @@ def fallback_node(state: AFLState) -> dict:
     trace = _push_trace(state, "[fallback] unsupported prediction type")
     return {
         "final_response": (
-            "I can predict match winners (with a win probability) and a likely "
-            "top disposal-getter, but I don't have a model for that specific "
-            "request (e.g. an exact score or margin). Try asking who I think "
-            "will win a match, or who's likely to lead a team in disposals."
+            "I can predict the winner of a single upcoming match between two named "
+            "teams (with a win probability), and a likely top disposal-getter for a "
+            "team -- but I can't predict things like an exact score/margin, or who "
+            "wins the Grand Final/premiership (that would mean simulating an entire "
+            "finals series, not just one match). Try asking who I think will win a "
+            "specific match (e.g. 'who will win Geelong vs Collingwood'), or who's "
+            "likely to lead a team in disposals."
         ),
         "trace": trace,
     }
@@ -219,7 +222,14 @@ def validation_node(state: AFLState) -> dict:
         return {"validation_status": "unsupported", "trace": trace}
 
     reason = state.get("entities", {}).get("unresolved_reason") or result.get("error", "unknown error")
-    question = f"I couldn't resolve that -- {reason}. Could you clarify which team/player you mean?"
+    if "no team text was extracted" in (reason or ""):
+        question = (
+            "I need two team names to predict a match winner (or one team for a "
+            "top-scorer prediction) -- which teams/team did you mean? "
+            "e.g. 'who will win Geelong vs Collingwood'."
+        )
+    else:
+        question = f"I couldn't resolve that -- {reason}. Could you clarify which team/player you mean?"
     trace.append(f"[validation] tool_result failed ({reason}) -> needs_clarification")
     return {
         "validation_status": "needs_clarification",
@@ -264,7 +274,7 @@ def response_formatter_node(state: AFLState) -> dict:
     if kind == "match_prediction":
         text = (
             f"**Prediction (not a certainty):** {data['winner']} "
-            f"({data['probability']:.0%} estimated win probability, "
+            f"({data.get('winner_probability', data['probability']):.0%} estimated win probability, "
             f"{data['confidence']} confidence)\n\n"
             "Key factors:\n" + "\n".join(f"- {g}" for g in grounding)
             + "\n\n_Model: Logistic Regression, ~63% test accuracy. "
