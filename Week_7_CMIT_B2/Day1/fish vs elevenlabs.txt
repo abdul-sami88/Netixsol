@@ -1,0 +1,302 @@
+## Fish Audio vs ElevenLabs — Evaluation
+
+I evaluated the current offerings, focusing especially on **Urdu and Urdu-English mixed speech**, because that is where the choice becomes more interesting.
+
+### Executive summary
+
+| Category                                      | Fish Audio S2-Pro                              | ElevenLabs                                    | Winner                         |
+| --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ------------------------------ |
+| **Latency**                                   | ~100 ms time-to-first-audio                    | ~75 ms Flash; ~280 ms v3 Conversational       | 🟢 **ElevenLabs**              |
+| **Naturalness**                               | Excellent, especially multilingual             | Exceptional, particularly English             | 🟢 **ElevenLabs**              |
+| **Emotion**                                   | Very strong, natural-language emotion controls | Exceptional, v3 has rich emotional/audio tags | 🟢 **ElevenLabs**              |
+| **Streaming**                                 | WebSocket + ~100 ms TTFA                       | Excellent streaming + WebSocket               | 🟢 **Tie / slight ElevenLabs** |
+| **Voice cloning**                             | Zero/few-shot cloning from short samples       | Excellent; Instant + Professional cloning     | 🟢 **Tie**                     |
+| **Pricing**                                   | Very competitive pay-as-you-go                 | More expensive on high-quality models         | 🟢 **Fish Audio**              |
+| **Multilingual**                              | 80+ languages                                  | 74 languages in v3                            | 🟢 **Fish Audio**              |
+| **Urdu pronunciation**                        | Promising, but less independently validated    | Explicit Urdu support                         | 🟢 **ElevenLabs**              |
+| **Urdu ↔ English switching**                  | **Very promising**                             | Very good                                     | 🟢 **Fish Audio**              |
+| **Overall for a multilingual/Urdu assistant** | **9/10**                                       | 8.5/10                                        | 🏆 **Fish Audio**              |
+
+---
+
+# 1. Latency
+
+This is one of Fish Audio's biggest advantages.
+
+Fish Audio's **S2-Pro advertises ~100 ms time-to-first-audio**, which is excellent for conversational applications. ([Fish Audio][1])
+
+ElevenLabs has several relevant models:
+
+* **Flash v2.5:** ~75 ms
+* **v3 Conversational:** ~280 ms
+* **v3:** higher latency and not recommended for realtime conversations. ([ElevenLabs][2])
+
+So:
+
+**Pure lowest latency:** ElevenLabs Flash
+**High-quality conversational latency:** Fish S2-Pro is extremely competitive.
+
+### Winner: 🟢 ElevenLabs, narrowly
+
+If you're building a realtime voice agent, both are fast enough. ElevenLabs Flash has the lower published number.
+
+---
+
+# 2. Naturalness
+
+This is where ElevenLabs still has a reputation advantage.
+
+ElevenLabs' current v3 is specifically designed for highly human-like speech, contextual understanding and expressive delivery. ([ElevenLabs][3])
+
+Fish S2-Pro is also extremely strong. Fish's published benchmarks report:
+
+* 0.99% English WER
+* 0.54% Chinese WER
+* 81.88% EmergentTTS-Eval win rate
+* 4.51/5 quality score on its instruction benchmark. ([Fish Audio][4])
+
+There is also an important caveat: Fish's public blind-test comparison is **Fish's own evaluation**, so I wouldn't treat it as an unbiased independent benchmark. It reports S2-Pro ahead of ElevenLabs v3 overall, but independent evidence specifically for Urdu is much thinner. ([Fish Audio][5])
+
+### My assessment
+
+**English narration:** ElevenLabs
+**Multilingual speech:** Fish Audio
+**Overall naturalness:** ElevenLabs has the safer choice.
+
+### Winner: 🟢 ElevenLabs
+
+---
+
+# 3. Emotion
+
+Both are excellent here.
+
+Fish S2-Pro allows natural-language control such as:
+
+> `[whispers sweetly]`
+
+and supports expressive control rather than being restricted to a small fixed emotion vocabulary. It also supports multi-speaker dialogue. ([Fish Audio][1])
+
+ElevenLabs v3 goes even further with tags such as:
+
+* `[sad]`
+* `[angry]`
+* `[happily]`
+* `[whispers]`
+* `[shouts]`
+* `[laughs]`
+* `[sighs]`
+
+and supports multi-speaker dialogue. ([ElevenLabs][6])
+
+For an assistant that needs to sound emotionally expressive, ElevenLabs is still the more mature option.
+
+### Winner: 🟢 ElevenLabs
+
+---
+
+# 4. Streaming
+
+Both platforms are very good.
+
+### Fish Audio
+
+S2-Pro is designed around realtime generation and advertises approximately **100 ms time-to-first-audio**. Fish also provides WebSocket-based realtime streaming. ([Fish Audio][1])
+
+### ElevenLabs
+
+ElevenLabs supports streaming endpoints and WebSocket-based realtime conversational audio. Its Flash models are designed specifically for realtime applications. ([ElevenLabs][2])
+
+ElevenLabs currently advertises first audio around **75 ms** for Flash/Turbo.
+
+### Winner: 🟢 Slight ElevenLabs advantage
+
+But in practice, network latency, chunk size and your own backend will matter substantially.
+
+---
+
+# 5. Voice cloning
+
+This is basically a draw.
+
+Fish Audio supports **zero-shot/few-shot voice cloning from short samples**. Its S1 documentation describes short-sample cloning and cross-language voice cloning. ([Fish Audio][7])
+
+ElevenLabs has:
+
+* Instant Voice Cloning
+* Professional Voice Cloning
+* multiple clone tiers depending on subscription. ([ElevenLabs][8])
+
+ElevenLabs' cloning ecosystem is more mature and polished.
+
+Fish's advantage is that it can be very aggressive about **short reference samples + multilingual generation**.
+
+### Winner: 🟡 Tie
+
+For a production product where voice identity is extremely important, I'd slightly favor ElevenLabs.
+
+---
+
+# 6. Pricing
+
+This is where Fish Audio becomes very attractive.
+
+Fish's API is pay-as-you-go with **no monthly API subscription requirement**. S1/S2-Pro are priced at:
+
+**$15 / million UTF-8 bytes**
+
+Fish estimates this as roughly **12 hours of speech / million bytes**, although actual usage depends on the input. ([Fish Audio][9])
+
+Fish's current credit packages also start at:
+
+* $9.99 → 40K credits
+* $29.99 → 150K
+* $79.99 → 500K
+* $149.99 → 1M credits. ([Fish Audio][10])
+
+ElevenLabs API pricing is currently:
+
+* Flash/Turbo: **$0.05 / 1K characters**
+* Multilingual v2/v3: **$0.10 / 1K characters**
+* v3: **$0.10 / 1K characters**. ([ElevenLabs][11])
+
+And the consumer plans start at:
+
+* Free
+* $6 Starter
+* $22 Creator
+* $99 Pro
+* $299 Scale
+* $990 Business. ([ElevenLabs][12])
+
+### Winner: 🟢 Fish Audio
+
+Especially if you're generating a **large amount of multilingual speech**.
+
+---
+
+# 7. Multilingual support
+
+Fish S2-Pro officially advertises **80+ languages**. ([Fish Audio][1])
+
+ElevenLabs v3 currently supports **74 languages**, including Urdu, Hindi, Punjabi, Sindhi, Arabic and Persian. ([ElevenLabs][13])
+
+So both are excellent.
+
+But Fish has an important feature for your use case: its S1 documentation explicitly describes **mixed-language prompts and cross-lingual TTS**. ([Fish Audio][7])
+
+### Winner: 🟢 Fish Audio
+
+Particularly for applications where users aren't speaking a single language throughout an interaction.
+
+---
+
+# 8. Urdu pronunciation 🇵🇰
+
+This is the most important caveat.
+
+### ElevenLabs
+
+ElevenLabs **explicitly lists Urdu (`urd`) as a supported language in v3**. ([ElevenLabs][13])
+
+So there is no question about official Urdu support.
+
+It also has dedicated Urdu speech capabilities elsewhere in its platform. ([ElevenLabs][14])
+
+### Fish Audio
+
+Fish S2-Pro advertises 80+ languages, but the public S2-Pro documentation I found does **not provide the same explicit language-by-language Urdu listing** that ElevenLabs provides. ([Fish Audio][1])
+
+Fish's multilingual architecture and mixed-language capability make Urdu **promising**, but I would not claim that Fish definitively beats ElevenLabs at Urdu pronunciation without an actual Urdu benchmark.
+
+### Winner: 🟢 ElevenLabs — for confidence
+
+This is an important distinction:
+
+**ElevenLabs = officially documented Urdu support.**
+
+**Fish = potentially excellent Urdu performance, but less publicly documented/independently validated specifically for Urdu.**
+
+---
+
+# 9. Urdu-English switching
+
+This is where I would choose **Fish Audio**.
+
+Consider a Pakistani user saying:
+
+> "Yaar mujhe ye match ka prediction batao, and also tell me which player has the highest average."
+
+That's very different from clean textbook Urdu or English.
+
+Real users naturally mix:
+
+**Urdu + English + names + technical terms + numbers.**
+
+Fish's S1 documentation explicitly says it can mix languages in the same prompt and adapt to the script/context. ([Fish Audio][7])
+
+ElevenLabs also handles multilingual input very well, and v3 supports Urdu and English. ([ElevenLabs][3])
+
+But for **code-switching**, Fish's architecture and multilingual focus make it particularly attractive.
+
+### Winner: 🟢 Fish Audio
+
+---
+
+# Final verdict
+
+If your question were:
+
+> **"What's the best general-purpose premium TTS?"**
+
+I'd say:
+
+### 🏆 ElevenLabs
+
+It still has the advantage in:
+
+* English naturalness
+* emotional performance
+* mature voice cloning
+* production ecosystem
+* documented Urdu support
+* overall polish
+
+---
+
+But your question is specifically about **Fish Audio vs ElevenLabs**, including **Urdu pronunciation and Urdu-English switching**.
+
+For that use case:
+
+# 🏆 Fish Audio is the better choice.
+
+I'd score them approximately:
+
+| Requirement               |          Fish | ElevenLabs |
+| ------------------------- | ------------: | ---------: |
+| Latency                   |          9/10 | **9.5/10** |
+| Naturalness               |          9/10 | **9.5/10** |
+| Emotion                   |          9/10 | **9.5/10** |
+| Streaming                 |    **9.5/10** |     9.5/10 |
+| Voice cloning             |        9.5/10 | **9.5/10** |
+| Price                     |     **10/10** |       8/10 |
+| Multilingual              |    **9.5/10** |       9/10 |
+| Urdu                      |         8/10* |   **9/10** |
+| Urdu-English switching    |    **9.5/10** |       9/10 |
+| **Your use case overall** | **9.3/10 🏆** | **9.2/10** |
+
+*Fish's Urdu score is intentionally conservative because I couldn't find a sufficiently strong independent Urdu-specific benchmark.
+
+### My recommendation
+
+For an **Urdu/English AI assistant**, I'd build the first version with **Fish Audio S2-Pro**.
+
+The combination of:
+
+**low latency + streaming + multilingual generation + short voice cloning + emotional control + lower cost**
+
+makes it a very compelling choice.
+
+I'd keep **ElevenLabs as the fallback/benchmark**, particularly if your testing shows that Fish mispronounces Pakistani Urdu words, names, or Roman-Urdu/English code-switches.
+
+**One important next step:** don't decide based purely on published specifications. For your project, the best evaluation would be a **20–30 sentence Urdu/English benchmark** containing Roman Urdu, Urdu script, English technical terms, Pakistani names, numbers, abbreviations, emotions, and code-switching. Then measure pronunciation, latency and human preference side-by-side. That would give you a much more defensible conclusion than generic TTS benchmarks.
