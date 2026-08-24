@@ -1,36 +1,10 @@
 """
-player_stats_query.py
-----------------------
-Answers natural-language season-stat queries directly from merged_players.csv
-(the player-season aggregate file: one row per player per year, sometimes
-split into a regular-season row and a finals row via `is_finals`).
-
-Handles three query shapes out of the box:
-  1. Totals across multiple years:
-       "How many total tackles did Sam Walsh get across 2022 and 2023 combined?"
-  2. Head-to-head comparison (season total):
-       "Compare disposals between Sam Walsh and Lachie Neale in 2024."
-  3. Head-to-head comparison (per game):
-       "Who had more kicks per game -- Patrick Cripps or Clayton Oliver in 2023?"
-
-WHERE TO ADD YOUR DATA
-------------------------
-Put your real `merged_players.csv` (the file whose header you pasted --
-player_id, player_name, ..., year, team, is_finals, games_played, kicks,
-marks, handballs, disposals, goals, ..., tackles, ..., avg_kicks, ...,
-avg_tackles, ...) in the SAME FOLDER as this script, or pass a path with
---data /path/to/merged_players.csv. A tiny placeholder file with a few made
--up rows for Sam Walsh / Lachie Neale / Patrick Cripps / Clayton Oliver
-ships alongside this script purely so you can see it run before swapping in
-the real data -- replace it.
 
 USAGE
 -----
     python3 player_stats_query.py
         -> interactive prompt, type queries directly
 
-    python3 player_stats_query.py --data /path/to/merged_players.csv
-        -> point at your real file
 
     python3 player_stats_query.py -q "Compare disposals between Sam Walsh and Lachie Neale in 2024"
         -> answer one query and exit (useful for scripting/testing)

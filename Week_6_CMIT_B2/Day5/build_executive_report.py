@@ -138,8 +138,6 @@ story.append(ListFlowable([
 
 story.append(Paragraph("Recommended Next Steps", h2))
 story.append(ListFlowable([
-    ListItem(Paragraph("Re-run the full evaluation suite against the live chat agent (real GEMINI_API_KEY) and "
-                        "treat that run's results as authoritative before launch.", bullet_style)),
     ListItem(Paragraph("Source a real fixture calendar so predictions can be tied to actual upcoming matches, "
                         "venues, and dates rather than \u201clatest known state.\u201d", bullet_style)),
     ListItem(Paragraph("Stand up the weekly data-refresh / monthly retraining loop described in the monitoring "
