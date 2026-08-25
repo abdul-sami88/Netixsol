@@ -1,0 +1,17 @@
+# Select columns: 'property_id', 'location_id' and 22 other columns
+df = df.loc[:, ['property_id', 'location_id', 'page_url', 'property_type', 'price', 'price_bin', 'location', 'city', 'province_name', 'locality', 'latitude', 'longitude', 'baths', 'area', 'area_marla', 'area_sqft', 'purpose', 'bedrooms', 'date_added', 'year', 'month', 'day', 'agency', 'agent']]
+
+property recommendation based on user input
+
+ai matches the relevant information get top 20 properties based on the data represent top 5 best 
+if user ask for more ai returns the next best 5 and then next best 5
+
+investment goals??? 
+
+amenities = nearby areas.....schools, grocery store, parks etc...
+
+I will add dummy data for amenities, Payment plans and FAQS
+
+need to improve data
+
+and create a document that i can embend properly instead of giving fixed data queries
