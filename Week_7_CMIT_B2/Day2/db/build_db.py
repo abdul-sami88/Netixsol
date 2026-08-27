@@ -79,13 +79,14 @@ CREATE TABLE developers (
 );
 
 CREATE TABLE faqs (
-    faq_id INTEGER PRIMARY KEY,
-    question TEXT, answer TEXT, category TEXT
+    faq_id TEXT PRIMARY KEY,
+    category TEXT, question TEXT, answer TEXT, language TEXT
 );
 
 CREATE TABLE descriptions (
-    property_id INTEGER PRIMARY KEY REFERENCES properties(property_id),
-    description TEXT
+    id TEXT PRIMARY KEY,
+    property_id INTEGER REFERENCES properties(property_id),
+    text TEXT
 );
 """
 

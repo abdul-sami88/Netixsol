@@ -49,22 +49,49 @@ HOSPITAL_POOL = ["Shifa International Hospital", "Jinnah Hospital", "South City 
                  "Ittefaq Hospital", "Fatima Memorial Hospital", "Kulsum International Hospital"]
 
 FAQ_TEMPLATES = [
-    ("What documents are required to buy a property in Pakistan?",
-     "You typically need a CNIC copy, proof of funds / bank statement, and (for non-residents) a NICOP or passport. "
-     "The seller provides the original title/registry documents, a fard (record of rights), and a no-demand certificate "
-     "from the relevant housing authority before transfer."),
-    ("How does the installment / payment plan process work?",
-     "Most developers require a down payment (typically 10-30% of total price) followed by quarterly or monthly "
-     "installments over a fixed period (commonly 2-4 years), with a final possession-linked payment."),
-    ("Is property purchase in Pakistan subject to tax?",
-     "Yes. Buyers generally pay withholding tax (under Section 236K), stamp duty, and registration fees; sellers pay "
-     "capital gains tax (under Section 37) depending on the holding period. Rates vary by filer status and province."),
-    ("Can overseas Pakistanis buy property remotely?",
-     "Yes, through a Power of Attorney (POA) executed at a Pakistani embassy/consulate, authorizing a representative "
-     "in Pakistan to complete the transaction on their behalf."),
-    ("What is the difference between a Marla and a Kanal?",
-     "1 Kanal = 20 Marla = approximately 605 square yards = about 5,445 square feet. 1 Marla is roughly 272 square feet, "
-     "though exact conversions vary slightly by region/province."),
+    # (category, question, answer, language)
+    ("payment", "Down payment kitna hota hai?",
+     "Ye property se property vary karta hai, generally 20% se 50% tak. Poori detail property ki payment plan mein mil jayegi.", "urdulish"),
+    ("payment", "Kya installment plan available hai har property par?",
+     "Zyadatar under-construction aur naye launch properties par installment plans available hain. Ready-to-move properties par aksar full payment required hoti hai.", "urdulish"),
+    ("payment", "Installment plan kitne saal ka hota hai?",
+     "Zyadatar plans 2 se 4 saal ke tenure mein hote hain, quarterly installments ke saath. Exact tenure property ki payment plan mein confirm ho jata hai.", "urdulish"),
+    ("payment", "Kya late installment par penalty lagti hai?",
+     "Ye policy developer se developer alag hoti hai. Ye detail mere paas abhi nahi hai, mein confirm kar ke aap ko bata deta hoon.", "urdulish"),
+    ("legal", "Kya property clear title hai?",
+     "Sab humari listings verified aur clear title ke saath hoti hain, documentation site visit ke waqt dikhayi jati hai.", "urdulish"),
+    ("legal", "Kya aap registry aur transfer mein madad karte hain?",
+     "Jee haan, humari legal team registry aur transfer ke pure process mein madad karti hai, advisory ke liye koi extra charge nahi hai.", "urdulish"),
+    ("legal", "Buy karne ke liye kaun se documents chahiye?",
+     "CNIC copy aur proof of funds required hoti hai. Overseas Pakistanis ke liye Power of Attorney ke zariye bhi transaction complete ho sakta hai.", "urdulish"),
+    ("legal", "Kya overseas Pakistani property remotely buy kar sakte hain?",
+     "Jee bilkul, Power of Attorney embassy ya consulate se attest kara ke Pakistan mein representative ke through poora process ho jata hai.", "urdulish"),
+    ("legal", "Property transfer par tax lagta hai kya?",
+     "Jee haan, buyer ko withholding tax dena hota hai aur seller ko capital gains tax, rate filer status aur holding period par depend karta hai.", "urdulish"),
+    ("amenities", "Community mein kya amenities available hain?",
+     "Har property alag hoti hai — kuch mein security, park, gym, aur club house shamil hain. Exact list property ki detail mein confirm ho jayegi.", "urdulish"),
+    ("amenities", "Kya property mein swimming pool hai?",
+     "Ye har listing par depend karta hai. Mein retrieved data check kar ke bata sakta hoon ke is specific property mein pool available hai ya nahi.", "urdulish"),
+    ("location", "School aur hospital kitni door hain?",
+     "Zyadatar humari listings mein nearby schools aur hospitals ki distance record hoti hai, 1 se 5 kilometer ke andar. Specific property ke liye mein confirm kar deta hoon.", "urdulish"),
+    ("location", "Ye area safe hai kya?",
+     "Har location ka apna security setup hota hai — gated societies mein aksar 24/7 security available hoti hai. Mein aap ko exact details retrieved data se bata sakta hoon.", "urdulish"),
+    ("investment", "Kya ye acha investment hai?",
+     "Mein guaranteed returns ka wada nahi kar sakta, lekin agar historical price trend data available ho to mein woh aap ko share kar deta hoon.", "urdulish"),
+    ("investment", "Property ki value future mein barhegi kya?",
+     "Ye prediction mere paas nahi hai — hum sirf historical listing data rakhte hain, future price ka andaza nahi laga sakte.", "urdulish"),
+    ("builder", "Ye builder acha hai?",
+     "Kuch developers ka track record hamare paas record hota hai — jaise active projects aur founding year. Specific developer ke baare mein mein confirm kar ke bata deta hoon.", "urdulish"),
+    ("maintenance", "Maintenance charges kitne hain?",
+     "Ye har society aur property ke hisaab se different hoti hai. Ye detail mere paas abhi nahi hai, mein confirm kar ke aap ko bata deta hoon.", "urdulish"),
+    ("booking", "Site visit kaise book kar sakte hain?",
+     "Jee bilkul, mein aap ke liye convenient din aur time check kar ke visit schedule kar deta hoon.", "urdulish"),
+    ("booking", "Kya visit cancel ya reschedule ho sakti hai?",
+     "Jee haan, koi masla nahi — mein aap ki booking reschedule ya cancel kar sakta hoon, bas mujhe naya time bata dijiye.", "urdulish"),
+    ("company", "Aap logo par bharosa kyun karoon?",
+     "Ye sawal bilkul jayez hai jab itni bari investment ki baat ho. Humare paas registered properties aur verified listings hain, aur mein aap ko specific details share kar sakta hoon.", "urdulish"),
+    ("pricing", "Kya listed price se kam mein deal ho sakta hai?",
+     "Listed price se neeche quote karne ke liye human agent ki approval chahiye hoti hai. Mein ye request aage forward kar sakta hoon.", "urdulish"),
 ]
 
 
@@ -230,27 +257,50 @@ def gen_developers():
 
 def gen_faqs():
     rows = []
-    for i, (q, a) in enumerate(FAQ_TEMPLATES, 1):
-        rows.append(dict(faq_id=i, question=q, answer=a, category="General"))
+    for i, (category, q, a, lang) in enumerate(FAQ_TEMPLATES, 1):
+        rows.append(dict(faq_id=f"faq_{i:03d}", category=category, question=q, answer=a, language=lang))
     return rows
 
 
-def gen_descriptions(properties):
-    """Synthetic brochure/marketing description text per property - the
-    unstructured corpus used for semantic (vector) retrieval."""
+DESC_ADJECTIVES = ["Modern", "Luxury", "Elegant", "Spacious", "Charming", "Contemporary", "Well-maintained"]
+DESC_TYPE_NOUN = {
+    "House": "Bungalow", "Flat": "Apartment", "Upper Portion": "Upper Portion",
+    "Lower Portion": "Lower Portion", "Room": "Room", "Farm House": "Farm House",
+    "Penthouse": "Penthouse",
+}
+DESC_SECOND_SENTENCE = [
+    "Freshly built with contemporary finishes, located close to main boulevards and markets.",
+    "Located within a gated community with dedicated security and well-planned streets.",
+    "Corner plot design allows extra sunlight and cross-ventilation throughout the home.",
+    "Situated in a quiet residential block, ideal for families seeking a peaceful environment.",
+    "Recently renovated with modern fittings and ample natural light in every room.",
+]
+DESC_CLOSING = [
+    "Ideal for a small to mid-size family looking for a ready-to-move residential option.",
+    "Full amenities access is available within walking distance of the property.",
+    "A great pick for investors seeking a well-located, well-maintained property.",
+    "Suitable for both end-users and investors given its location and condition.",
+    "Close proximity to schools, hospitals, and commercial areas adds to its convenience.",
+]
+
+
+def gen_descriptions(properties, amenities_by_property):
+    """Synthetic brochure/marketing description text per property, formatted
+    as retrieval-ready chunks: {id, property_id, text}."""
+    random.seed(11)
     rows = []
     for p in properties:
-        amenity_hint = random.sample(AMENITY_POOL, 3)
-        purpose_txt = "for sale" if p["purpose"] == "For Sale" else "for rent"
+        adj = random.choice(DESC_ADJECTIVES)
+        noun = DESC_TYPE_NOUN.get(p["property_type"], p["property_type"])
+        second = random.choice(DESC_SECOND_SENTENCE)
+        closing = random.choice(DESC_CLOSING)
+        amen = amenities_by_property.get(p["property_id"], [])
+        amen_sentence = f" Amenities include {', '.join(amen[:3])}." if amen else ""
         text = (
-            f"This {p['bedrooms']}-bedroom {p['property_type']} is available {purpose_txt} in "
-            f"{p['locality']}, {p['city']}. Spread over {p['area']} ({p['area_sqft']} sqft), the property "
-            f"features {p['baths']} bathroom(s) and is listed by {p['agency']} through agent {p['agent']}. "
-            f"Residents enjoy access to {', '.join(amenity_hint)}. The location offers convenient access to "
-            f"schools, hospitals, and main boulevards, making it a great option for families and investors alike. "
-            f"Listed on {p['date_added']}."
+            f"{adj} {p['bedrooms']}-Bed {noun} in {p['locality']}, {p['city']}. "
+            f"{second}{amen_sentence} {closing}"
         )
-        rows.append(dict(property_id=p["property_id"], description=text))
+        rows.append(dict(id=f"desc_prop_{p['property_id']:03d}", property_id=p["property_id"], text=text))
     return rows
 
 
@@ -268,10 +318,14 @@ if __name__ == "__main__":
     properties = gen_properties(300)
     write_csv("properties.csv", properties)
     write_csv("locations.csv", gen_locations(properties))
-    write_csv("amenities.csv", gen_amenities(properties))
+    amenities = gen_amenities(properties)
+    write_csv("amenities.csv", amenities)
     write_csv("schools.csv", gen_schools(properties))
     write_csv("hospitals.csv", gen_hospitals(properties))
     write_csv("payment_plans.csv", gen_payment_plans(properties))
     write_csv("developers.csv", gen_developers())
     write_csv("faqs.csv", gen_faqs())
-    write_csv("descriptions.csv", gen_descriptions(properties))
+    amenities_by_property = {}
+    for a in amenities:
+        amenities_by_property.setdefault(a["property_id"], []).append(a["amenity_name"])
+    write_csv("descriptions.csv", gen_descriptions(properties, amenities_by_property))

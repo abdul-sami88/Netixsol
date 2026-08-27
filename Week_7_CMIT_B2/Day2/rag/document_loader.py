@@ -25,7 +25,7 @@ def load_documents(db_path: str) -> list[Document]:
     # Property descriptions/brochures, enriched with amenity + nearby-facility
     # context so semantic search can surface "brochure-style" answers.
     cur.execute("""
-        SELECT d.property_id, d.description, p.city, p.locality, p.property_type,
+        SELECT d.property_id, d.text, p.city, p.locality, p.property_type,
                p.price, p.purpose, p.bedrooms, p.area
         FROM descriptions d JOIN properties p ON p.property_id = d.property_id
     """)
@@ -34,7 +34,9 @@ def load_documents(db_path: str) -> list[Document]:
             "SELECT amenity_name FROM amenities WHERE property_id=?", (row["property_id"],)
         ).fetchall()
         amen_txt = ", ".join(a["amenity_name"] for a in amen)
-        text = row["description"] + (f" Amenities include: {amen_txt}." if amen_txt else "")
+        text = row["text"]
+        if amen_txt and "Amenities include" not in text:
+            text += f" Amenities include: {amen_txt}."
         docs.append(Document(
             doc_id=f"property_{row['property_id']}",
             text=text,
@@ -43,12 +45,12 @@ def load_documents(db_path: str) -> list[Document]:
         ))
 
     # FAQs
-    cur.execute("SELECT faq_id, question, answer, category FROM faqs")
+    cur.execute("SELECT faq_id, question, answer, category, language FROM faqs")
     for row in cur.fetchall():
         docs.append(Document(
-            doc_id=f"faq_{row['faq_id']}",
+            doc_id=str(row["faq_id"]),
             text=f"Q: {row['question']} A: {row['answer']}",
-            metadata={"type": "faq", "category": row["category"]},
+            metadata={"type": "faq", "category": row["category"], "language": row["language"]},
         ))
 
     conn.close()

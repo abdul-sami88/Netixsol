@@ -49,10 +49,44 @@ it's internally consistent:
 | hospitals | 60 | dummy, real Pakistani hospital brand names |
 | payment_plans | 82 | dummy, realistic down-payment/installment structures |
 | developers | 8 | dummy, real developer names (Bahria Town, DHA, Emaar, etc.) |
-| faqs | 5 | dummy, but factually accurate general PK real-estate FAQs |
-| descriptions | 300 | dummy brochure-style text, one per property |
+| faqs | 21 | dummy, Urdulish (Roman-script) — matches the RealEstate Hub voice-agent persona's language, category-tagged (payment/legal/amenities/location/investment/builder/maintenance/booking/company/pricing) |
+| descriptions (property_description_chunks) | 300 | dummy brochure-style narrative chunks, one per property, format `{id, property_id, text}` |
 
 Run `python3 data/generate_data.py` then `python3 db/build_db.py` to rebuild.
+
+## Postgres (production schema)
+
+`db/schema_postgres.sql` — a Postgres port of the dev SQLite schema, keeping
+your original `properties` DDL exactly as given, plus all supporting tables
+and indexes:
+
+```sql
+CREATE INDEX idx_properties_purpose    ON properties(purpose);   -- see note below
+CREATE INDEX idx_properties_type       ON properties(property_type);
+CREATE INDEX idx_properties_price      ON properties(price);
+CREATE INDEX idx_properties_location   ON properties(location_id);
+CREATE INDEX idx_properties_bedrooms   ON properties(bedrooms);
+-- plus city/locality/agent indexes and a composite (city, price) index,
+-- since "properties in <city> under <price>" is the agent's most common query
+```
+
+Your example indexed `listing_status`, but this schema doesn't have that
+column — the closest real equivalent is `purpose` (`For Sale` / `For Rent`),
+so the index is built on that instead. If you later add a finer-grained
+status column (`Available` / `Under Offer` / `Sold` / `Rented`), add
+`idx_properties_status` alongside it.
+
+`db/build_postgres_db.py` loads the same CSVs into a live Postgres instance
+via `psycopg2`. **This sandbox has no network access to an external
+Postgres server**, so — unlike `build_db.py`/SQLite, which has been run and
+verified end-to-end here — this script is written correctly but untested
+against a live DB. Test it against your own instance before relying on it:
+
+```bash
+pip install psycopg2-binary
+export PG_DSN="postgresql://user:password@host:5432/dbname"
+python3 db/build_postgres_db.py
+```
 
 ## Task 2 — RAG Pipeline
 
