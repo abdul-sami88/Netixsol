@@ -8,7 +8,7 @@ concatenated for evaluation purposes (chunk_experiment.py). This module
 still implements a real chunker so it generalizes to longer brochures.
 """
 from dataclasses import dataclass
-from .document_loader import Document
+from document_loader import Document
 
 
 @dataclass

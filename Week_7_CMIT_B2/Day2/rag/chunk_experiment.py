@@ -17,10 +17,10 @@ Run: python3 -m rag.chunk_experiment
 """
 import os
 import random
-from .document_loader import load_documents, Document
-from .chunking import chunk_documents
-from .embeddings import get_embedder
-from .vector_store import VectorStore
+from document_loader import load_documents, Document
+from chunking import chunk_documents
+from embeddings import get_embedder
+from vector_store import VectorStore
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(HERE, "..", "db", "real_estate.db")

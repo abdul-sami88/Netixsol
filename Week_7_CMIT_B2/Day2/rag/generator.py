@@ -13,7 +13,7 @@ Not called in this offline demo (no LLM API reachable from this sandbox);
 the templated generator below is what's actually executed and evaluated.
 """
 from __future__ import annotations
-from .retriever import RetrievalResult
+from retriever import RetrievalResult
 
 NO_EVIDENCE_MSG = (
     "I couldn't find this in our verified property data, so I can't answer "

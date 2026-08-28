@@ -4,13 +4,13 @@ store -> hybrid retriever -> generator, exposed as one `RAGPipeline` object.
 """
 from __future__ import annotations
 import os
-from .document_loader import load_documents
-from .chunking import chunk_documents
-from .embeddings import get_embedder
-from .vector_store import VectorStore
-from .retriever import StructuredRetriever, SemanticRetriever, HybridRetriever
-from .generator import generate_answer
-from .query_understanding import extract_filters
+from document_loader import load_documents
+from chunking import chunk_documents
+from embeddings import get_embedder
+from vector_store import VectorStore
+from retriever import StructuredRetriever, SemanticRetriever, HybridRetriever
+from generator import generate_answer
+from query_understanding import extract_filters
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DB = os.path.join(HERE, "..", "db", "real_estate.db")

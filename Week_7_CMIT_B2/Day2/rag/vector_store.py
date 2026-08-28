@@ -7,7 +7,7 @@ either way (`add`, `search`).
 """
 from __future__ import annotations
 import numpy as np
-from .chunking import Chunk
+from chunking import Chunk
 
 
 class VectorStore:
