@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealEstate Hub | UrduLish AI Voice Executive (Zara) & CRM Store</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon-512.png">
+
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: rgba(18, 26, 44, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-emerald: #10b981;
+      --accent-gold: #fbbf24;
+      --accent-blue: #3b82f6;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --user-bubble: #1e293b;
+      --agent-bubble: #064e3b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.85);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand i {
+      font-size: 1.8rem;
+      color: var(--accent-emerald);
+    }
+
+    .brand h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #34d399, #fbbf24);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      color: var(--accent-emerald);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-gold);
+    }
+
+    /* Chat Simulator */
+    .chat-container {
+      height: 520px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      max-width: 90%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .user-message {
+      align-self: flex-end;
+      background-color: var(--user-bubble);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom-right-radius: 4px;
+    }
+
+    .agent-message {
+      align-self: flex-start;
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.9), rgba(15, 118, 110, 0.8));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .context-toggle-btn {
+      margin-top: 0.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--accent-gold);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .context-box {
+      display: none;
+      margin-top: 0.5rem;
+      background: #060a12;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: #34d399;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    input[type="text"], input[type="email"] {
+      flex: 1;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus {
+      border-color: var(--accent-emerald);
+    }
+
+    button {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.1s, filter 0.2s;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Right Column - Intelligence & Metrics */
+    .tabs {
+      display: flex;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.55rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.45rem 0.75rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--accent-emerald);
+      font-weight: 600;
+    }
+
+    .tab-content {
+      display: none;
+      height: 520px;
+    }
+
+    .tab-content.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-emerald);
+    }
+
+    .prop-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .prop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .prop-price {
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .code-block {
+      background: #090d16;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #34d399;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .btn-sm {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .crm-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .crm-table th, .crm-table td {
+      padding: 0.6rem;
+      border: 1px solid var(--card-border);
+      text-align: left;
+    }
+
+    .crm-table th {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+    }
+
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <i class="fa-solid fa-building-user"></i>
+      <h1>RealEstate Hub <span style="font-size: 0.8rem; opacity: 0.7; color: white;">UrduLish Voice AI & CRM Logging Store</span></h1>
+    </div>
+    <div class="status-badge">
+      <div class="dot"></div>
+      <span>CRM Store Online</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Column: Voice / Chat Simulator -->
+    <div class="glass-card">
+      <div class="card-title">
+        <i class="fa-solid fa-microphone"></i> Live UrduLish Voice & Chat Executive (Zara)
+      </div>
+
+      <div class="chat-container" id="chatContainer">
+        <div class="message agent-message">
+          Assalam-o-Alaikum sir! RealEstate Hub se Zara baat kar rahi hoon. Main aap ki kis tarah madad kar sakti hoon?
+          <div class="chat-meta">
+            <span>Agent: Zara</span>
+            <span>Latency: 0.01s</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" id="userInput" placeholder="Type e.g. 'appointment book kr dyn ahmed@example.com'..." onkeypress="handleKeyPress(event)" />
+        <button onclick="sendMessage()">
+          <i class="fa-solid fa-paper-plane"></i> Send
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column: CRM Logging Store & Dashboards (Split into 7 Clean Tabs) -->
+    <div class="glass-card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('tab-transcripts', this)"><i class="fa-solid fa-receipt"></i> Call Logs</button>
+        <button class="tab-btn" onclick="switchTab('tab-preferences', this)"><i class="fa-solid fa-user-circle"></i> Client Profiles</button>
+        <button class="tab-btn" onclick="switchTab('tab-followups', this)"><i class="fa-solid fa-list-check"></i> Follow-ups</button>
+        <button class="tab-btn" onclick="switchTab('tab-appointments', this)"><i class="fa-solid fa-calendar-days"></i> Appointments</button>
+        <button class="tab-btn" onclick="switchTab('tab-memory', this)"><i class="fa-solid fa-brain"></i> Memory</button>
+        <button class="tab-btn" onclick="switchTab('tab-eval', this)"><i class="fa-solid fa-bolt"></i> Benchmarks</button>
+        <button class="tab-btn" onclick="switchTab('tab-properties', this)"><i class="fa-solid fa-house"></i> Properties (52)</button>
+      </div>
+
+      <!-- Tab 1: Call Transcripts -->
+      <div id="tab-transcripts" class="tab-content active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-microphone-lines"></i> Call Transcripts Store (STT & AI Responses)</h4>
+          <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh Logs</button>
+        </div>
+        <div style="flex: 1; overflow-y: auto; border: 1px solid var(--card-border); border-radius: 10px;">
+          <table class="crm-table" id="crmTranscriptsTable">
+            <thead>
+              <tr><th>Session / Time</th><th>Raw Input</th><th>Normalized STT</th><th>Zara Response</th><th>Latency</th></tr>
+            </thead>
+            <tbody><tr><td colspan="5">Loading call transcripts...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Client Profiles -->
+      <div id="tab-preferences" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-id-card"></i> Client Preferences Profile Store</h4>
+          <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh Profiles</button>
+        </div>
+        <div id="crmPreferencesCards" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">Loading preferences...</div>
+      </div>
+
+      <!-- Tab 3: Follow-up Tasks -->
+      <div id="tab-followups" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-tasks"></i> Follow-up Reminders & Tasks Manager</h4>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn-sm btn-warning" onclick="createManualFollowup()"><i class="fa-solid fa-plus"></i> Add Task</button>
+            <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh</button>
+          </div>
+        </div>
+        <div id="crmFollowupsList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">Loading follow-ups...</div>
+      </div>
+
+      <!-- Tab 4: Appointments & Business Workflows -->
+      <div id="tab-appointments" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-calendar-check"></i> Booked Appointments & Google Calendar Sync</h4>
+          <button class="btn-sm btn-blue" onclick="loadAppointments()"><i class="fa-solid fa-sync"></i> Refresh</button>
+        </div>
+        <div id="appointmentsList" style="flex: 1; overflow-y: auto;">Loading appointments...</div>
+      </div>
+
+      <!-- Tab 5: Context Memory -->
+      <div id="tab-memory" class="tab-content">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+          Real-time state tracking extracted from multi-turn conversations:
+        </p>
+        <div class="code-block" id="memorySummary" style="margin-bottom: 0.75rem;">No conversation state recorded yet. Send a message to see context extraction!</div>
+        <h4 style="margin: 0.5rem 0; color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-database"></i> Retrieved RAG & SQL Context</h4>
+        <div class="code-block" id="ragContextDisplay" style="flex: 1; font-size: 0.78rem;">Context will be injected here during chat...</div>
+      </div>
+
+      <!-- Tab 6: Evaluation Benchmarks -->
+      <div id="tab-eval" class="tab-content">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <button onclick="runHallucinationEval()" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+            <i class="fa-solid fa-vial"></i> Run 20-Question Hallucination Test
+          </button>
+          <button onclick="runVoiceEval()" style="font-size: 0.85rem; padding: 0.5rem 1rem; background: #3b82f6;">
+            <i class="fa-solid fa-headset"></i> Run Voice Benchmark
+          </button>
+        </div>
+        <div class="code-block" id="evalResults" style="flex: 1; font-size: 0.8rem;">Click buttons above to trigger automated evaluation benchmarks.</div>
+      </div>
+
+      <!-- Tab 7: Properties DB -->
+      <div id="tab-properties" class="tab-content">
+        <div id="propertiesList" style="flex: 1; overflow-y: auto;">Loading properties from SQLite...</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const sessionId = "session_" + Math.floor(Math.random() * 100000);
+    let msgCounter = 0;
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function toggleContext(boxId) {
+      const box = document.getElementById(boxId);
+      box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatContainer = document.getElementById('chatContainer');
+      
+      const userDiv = document.createElement('div');
+      userDiv.className = 'message user-message';
+      userDiv.innerText = text;
+      chatContainer.appendChild(userDiv);
+
+      input.value = '';
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      const t0 = performance.now();
+      msgCounter++;
+      const boxId = `ctx_box_${msgCounter}`;
+
+      try {
+        const response = await fetch('/api/v1/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId, message: text })
+        });
+        const data = await response.json();
+        const latency = ((performance.now() - t0) / 1000).toFixed(3);
+
+        const ragContextText = data.retrieved_rag_context || "No context retrieved.";
+
+        const agentDiv = document.createElement('div');
+        agentDiv.className = 'message agent-message';
+        agentDiv.innerHTML = `
+          <div>${data.reply}</div>
+          <button class="context-toggle-btn" onclick="toggleContext('${boxId}')">
+            <i class="fa-solid fa-database"></i> View Retrieved SQL & RAG Context
+          </button>
+          <div class="context-box" id="${boxId}">${escapeHtml(ragContextText)}</div>
+          <div class="chat-meta">
+            <span>Agent: Zara</span>
+            <span>Latency: ${latency}s</span>
+          </div>
+        `;
+        chatContainer.appendChild(agentDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        document.getElementById('memorySummary').innerText = data.memory_summary || "No specific filters recorded.";
+        document.getElementById('ragContextDisplay').innerText = ragContextText;
+
+        loadAppointments();
+        loadCRMData();
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function escapeHtml(text) {
+      return (text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function loadCRMData() {
+      try {
+        // 1. Transcripts
+        const resT = await fetch('/api/v1/crm/transcripts');
+        const dataT = await resT.json();
+        const tbody = document.querySelector('#crmTranscriptsTable tbody');
+        if (dataT.transcripts && dataT.transcripts.length > 0) {
+          tbody.innerHTML = dataT.transcripts.map(t => `
+            <tr>
+              <td><strong>${t.session_id}</strong><br><small style="color:#9ca3af;">${t.timestamp}</small></td>
+              <td>${escapeHtml(t.raw_transcript)}</td>
+              <td style="color:#34d399;">${escapeHtml(t.normalized_transcript)}</td>
+              <td>${escapeHtml(t.agent_response.substring(0, 80))}...</td>
+              <td>${t.latency_sec}s</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="5">No call transcripts logged yet. Send a message to see CRM logging!</td></tr>`;
+        }
+
+        // 2. Preferences
+        const resP = await fetch('/api/v1/crm/preferences');
+        const dataP = await resP.json();
+        const prefDiv = document.getElementById('crmPreferencesCards');
+        if (dataP.preferences && dataP.preferences.length > 0) {
+          prefDiv.innerHTML = dataP.preferences.map(p => `
+            <div class="prop-card">
+              <div class="prop-header">
+                <strong style="color:#fbbf24;">👤 ${p.client_email}</strong>
+                <span style="font-size:0.75rem; color:#9ca3af;">Updated: ${p.last_updated}</span>
+              </div>
+              <div style="font-size:0.82rem;">
+                📍 <strong>City/Area:</strong> ${p.preferred_city || 'Any'} (${p.preferred_area || 'Any'}) | 
+                💰 <strong>Budget:</strong> ${p.max_budget_pkr ? (p.max_budget_pkr/10000000).toFixed(2) + ' Cr' : 'Flexible'} | 
+                🛏️ <strong>Beds:</strong> ${p.bedrooms || 'Any'} | 
+                🏠 <strong>Type/Purpose:</strong> ${p.property_type || 'Any'} (${p.purpose || 'Any'})
+              </div>
+            </div>
+          `).join('');
+        } else {
+          prefDiv.innerHTML = `<div style="font-size:0.85rem; color:#9ca3af;">No client preferences recorded yet.</div>`;
+        }
+
+        // 3. Follow-ups
+        const resF = await fetch('/api/v1/crm/followups');
+        const dataF = await resF.json();
+        const fDiv = document.getElementById('crmFollowupsList');
+        if (dataF.followups && dataF.followups.length > 0) {
+          fDiv.innerHTML = dataF.followups.map(f => `
+            <div class="prop-card">
+              <div class="prop-header">
+                <strong style="color:#10b981;">📌 ${f.reminder_type} (${f.client_name})</strong>
+                <span class="status-badge" style="font-size:0.75rem;">${f.status}</span>
+              </div>
+              <div style="font-size:0.82rem; color:#f3f4f6; margin-bottom:0.4rem;">
+                📧 <strong>Email:</strong> ${f.client_email} | 📅 <strong>Due Date:</strong> ${f.reminder_date}<br>
+                📝 <strong>Notes:</strong> ${f.notes || 'None'}
+              </div>
+              ${f.status === 'PENDING' ? `<button class="btn-sm btn-blue" onclick="completeFollowup(${f.id})"><i class="fa-solid fa-check"></i> Mark Completed</button>` : ''}
+            </div>
+          `).join('');
+        } else {
+          fDiv.innerHTML = `<div style="font-size:0.85rem; color:#9ca3af;">No follow-up reminders scheduled.</div>`;
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function createManualFollowup() {
+      const type = prompt("Enter Reminder Type (e.g. Pre-Visit Call Reminder):", "Pre-Visit Call Reminder");
+      const date = prompt("Enter Due Date (e.g. Tomorrow 10:00 AM):", "Tomorrow 10:00 AM");
+      if (!type || !date) return;
+
+      try {
+        await fetch('/api/v1/crm/followups/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            client_email: "samiworkspace11@gmail.com",
+            client_name: "Valued Client",
+            reminder_type: type,
+            reminder_date: date,
+            notes: "Manual CRM follow-up task added from dashboard."
+          })
+        });
+        alert("Follow-up reminder created!");
+        loadCRMData();
+      } catch (err) {
+        alert("Error creating reminder.");
+      }
+    }
+
+    async function completeFollowup(id) {
+      try {
+        await fetch('/api/v1/crm/followups/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reminder_id: id })
+        });
+        alert("Follow-up reminder marked as COMPLETED!");
+        loadCRMData();
+      } catch (err) {
+        alert("Error completing reminder.");
+      }
+    }
+
+    async function loadAppointments() {
+      try {
+        const res = await fetch('/api/v1/appointments');
+        const data = await res.json();
+        const container = document.getElementById('appointmentsList');
+        if (!data.appointments || data.appointments.length === 0) {
+          container.innerHTML = `<div style="font-size: 0.85rem; color: #9ca3af;">No appointments booked yet.</div>`;
+          return;
+        }
+
+        container.innerHTML = data.appointments.map(a => `
+          <div class="prop-card">
+            <div class="prop-header">
+              <strong style="color: #fbbf24;">${a.property_title}</strong>
+              <span class="status-badge" style="font-size:0.75rem;">${a.status}</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #f3f4f6; margin-bottom: 0.4rem;">
+              👤 <strong>Client:</strong> ${a.client_name} (${a.client_email})<br>
+              👔 <strong>Assigned Employee:</strong> ${a.employee_name} (${a.employee_email})<br>
+              🕒 <strong>Time:</strong> ${a.appointment_date} at ${a.appointment_time}
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadProperties() {
+      try {
+        const res = await fetch('/api/v1/properties');
+        const data = await res.json();
+        const container = document.getElementById('propertiesList');
+        container.innerHTML = data.properties.map(p => `
+          <div class="prop-card">
+            <div class="prop-header">
+              <strong style="color: #34d399;">${p.title}</strong>
+              <span class="prop-price">${p.price_formatted}</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #9ca3af;">
+              ${p.area}, ${p.city} | ${p.size_val} ${p.size_unit} | ${p.bedrooms} Beds | Dev: ${p.developer}
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function runHallucinationEval() {
+      document.getElementById('evalResults').innerText = "Running 20-Question Hallucination Test across Gemini & Groq...";
+      try {
+        const res = await fetch('/api/v1/eval/hallucination');
+        const data = await res.json();
+        document.getElementById('evalResults').innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById('evalResults').innerText = "Error running evaluation.";
+      }
+    }
+
+    async function runVoiceEval() {
+      document.getElementById('evalResults').innerText = "Running Voice Latency & Naturalness Benchmark...";
+      try {
+        const res = await fetch('/api/v1/eval/voice');
+        const data = await res.json();
+        document.getElementById('evalResults').innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById('evalResults').innerText = "Error running benchmark.";
+      }
+    }
+
+    // On Load
+    loadCRMData();
+    loadAppointments();
+    loadProperties();
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  voice-agent-api:
+    build:
+      context: ../..
+      dockerfile: production_eval_and_deployment/deployment/Dockerfile
+    container_name: real_estate_voice_agent_api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=INFO
+    env_file:
+      - .env.production
+    volumes:
+      - sqlite_data:/app/real_estate.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  sqlite_data:
+    driver: local

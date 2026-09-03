@@ -1,6 +1,11 @@
 # Ignored data set folder
 Week_3_CMIT_B2/Day5/enterprise_analytics_hackathon/dataset/
 
+#real_state_data set 
+RealEstate_Hub_AI_Voice_Agent_Handover.pptx
+real_estate.db
+google_ai_service_account.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

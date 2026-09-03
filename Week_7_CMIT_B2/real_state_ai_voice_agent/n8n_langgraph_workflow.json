@@ -1,0 +1,326 @@
+{
+  "name": "UrduLish Real Estate LangGraph AI Agent Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vapi-langgraph-agent",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook Trigger (Vapi / REST)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "id": "node_webhook_trigger"
+    },
+    {
+      "parameters": {
+        "functionCode": "// STT Normalization & Request Pre-processing\nconst inputData = $json.body || $json;\nlet rawMsg = '';\nif (inputData.messages && inputData.messages.length > 0) {\n  rawMsg = inputData.messages[inputData.messages.length - 1].content;\n} else if (inputData.message) {\n  rawMsg = inputData.message;\n}\n\nlet normalized = rawMsg.trim();\nconst textLower = normalized.toLowerCase();\n\n// Intent Detection Logic\nlet intent = 'recommendation';\nif (/salam|assalam|hello|hi|kaun|kon/i.test(textLower)) {\n  intent = 'greeting';\n} else if (/bye|khuda hafiz|allah hafiz|shukriya|thanks/i.test(textLower)) {\n  intent = 'goodbye';\n} else if (/reschedule|time change|postpone/i.test(textLower)) {\n  intent = 'reschedule';\n} else if (/cancel|mansookh/i.test(textLower)) {\n  intent = 'cancel';\n} else if (/book|booking|appointment|visit|schedule|meeting|email|mail|بک|وزٹ|سائیڈ|سکیجول|ای میل/i.test(textLower)) {\n  intent = 'booking';\n} else if (/noc|transfer|installment|document|legal|dha procedure/i.test(textLower)) {\n  intent = 'rag';\n}\n\n// City Extraction\nlet city = null;\nif (/lahore|لاہور/i.test(textLower)) city = 'Lahore';\nelse if (/islamabad|اسلام آباد/i.test(textLower)) city = 'Islamabad';\nelse if (/karachi|کراچی/i.test(textLower)) city = 'Karachi';\n\nreturn [{\n  json: {\n    session_id: inputData.session_id || 'n8n_session_1',\n    raw_message: rawMsg,\n    normalized_message: normalized,\n    intent: intent,\n    extracted_city: city,\n    user_email: 'samiworkspace11@gmail.com'\n  }\n}];"
+      },
+      "name": "Task 1 & 2: STT Normalization & Intent Detection",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        320,
+        300
+      ],
+      "id": "node_intent_detection"
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json.intent}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "greeting",
+              "output": 0
+            },
+            {
+              "value2": "recommendation",
+              "output": 1
+            },
+            {
+              "value2": "rag",
+              "output": 2
+            },
+            {
+              "value2": "booking",
+              "output": 3
+            },
+            {
+              "value2": "goodbye",
+              "output": 4
+            }
+          ]
+        }
+      },
+      "name": "LangGraph Intent Router",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        550,
+        300
+      ],
+      "id": "node_intent_router"
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{\n  json: {\n    reply: 'Assalam-o-Alaikum sir! RealEstate Hub se Zara baat kar rahi hoon. Main aap ki kis tarah madad kar sakti hoon? Aap kaun se city (Lahore, Islamabad, ya Karachi) aur budget mein property dekh rahe hain?',\n    intent: 'greeting'\n  }\n}];"
+      },
+      "name": "Greeting Node",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        800,
+        100
+      ],
+      "id": "node_greeting"
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:8000/api/v1/agent/chat",
+        "options": {},
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "session_id",
+              "value": "={{$json.session_id}}"
+            },
+            {
+              "name": "message",
+              "value": "={{$json.normalized_message}}"
+            }
+          ]
+        },
+        "jsonParameters": true
+      },
+      "name": "Task 3 & 4: SQL Property Recommendation & Guardrail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        800,
+        250
+      ],
+      "id": "node_property_recommendation"
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:8000/api/v1/agent/chat",
+        "options": {},
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "session_id",
+              "value": "={{$json.session_id}}"
+            },
+            {
+              "name": "message",
+              "value": "={{$json.normalized_message}}"
+            }
+          ]
+        },
+        "jsonParameters": true
+      },
+      "name": "Task 3: RAG Search Node (Knowledge Vector Index)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        800,
+        400
+      ],
+      "id": "node_rag_search"
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:8000/api/v1/appointments/book",
+        "options": {},
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "session_id",
+              "value": "={{$json.session_id}}"
+            },
+            {
+              "name": "client_name",
+              "value": "Valued Client"
+            },
+            {
+              "name": "client_email",
+              "value": "samiworkspace11@gmail.com"
+            },
+            {
+              "name": "city",
+              "value": "={{$json.extracted_city || 'Lahore'}}"
+            },
+            {
+              "name": "property_title",
+              "value": "Real Estate Consultation & Site Visit"
+            }
+          ]
+        },
+        "jsonParameters": true
+      },
+      "name": "Task 3 & 4: Slot Checker, Calendar & Dual Email Booking Node",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        800,
+        550
+      ],
+      "id": "node_booking_calendar_email"
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{\n  json: {\n    reply: 'Bohat shukriya sir! RealEstate Hub se rabta karne ka shukriya. Apna khayal rakhyega, Allah Hafiz!',\n    intent: 'goodbye'\n  }\n}];"
+      },
+      "name": "Goodbye Node",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        800,
+        700
+      ],
+      "id": "node_goodbye"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Response Formatter for Vapi OpenAI-Compatible Chat Completion Format\nconst lastReply = $json.reply || ($json.body && $json.body.reply) || 'Assalam-o-Alaikum sir! Main aap ki kis tarah madad kar sakti hoon?';\nconst createdTs = Math.floor(Date.now() / 1000);\n\nreturn [{\n  json: {\n    id: 'chatcmpl-n8n-' + createdTs,\n    object: 'chat.completion',\n    created: createdTs,\n    model: 'n8n-langgraph-agent',\n    choices: [\n      {\n        index: 0,\n        message: {\n          role: 'assistant',\n          content: lastReply\n        },\n        finish_reason: 'stop'\n      }\n    ],\n    usage: {\n      prompt_tokens: 50,\n      completion_tokens: 30,\n      total_tokens: 80\n    }\n  }\n}];"
+      },
+      "name": "Task 5: Vapi Response Formatter & Telemetry Log",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        400
+      ],
+      "id": "node_vapi_response_formatter"
+    }
+  ],
+  "connections": {
+    "Webhook Trigger (Vapi / REST)": {
+      "main": [
+        [
+          {
+            "node": "Task 1 & 2: STT Normalization & Intent Detection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task 1 & 2: STT Normalization & Intent Detection": {
+      "main": [
+        [
+          {
+            "node": "LangGraph Intent Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LangGraph Intent Router": {
+      "main": [
+        [
+          {
+            "node": "Greeting Node",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Task 3 & 4: SQL Property Recommendation & Guardrail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Task 3: RAG Search Node (Knowledge Vector Index)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Task 3 & 4: Slot Checker, Calendar & Dual Email Booking Node",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Goodbye Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Greeting Node": {
+      "main": [
+        [
+          {
+            "node": "Task 5: Vapi Response Formatter & Telemetry Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task 3 & 4: SQL Property Recommendation & Guardrail": {
+      "main": [
+        [
+          {
+            "node": "Task 5: Vapi Response Formatter & Telemetry Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task 3: RAG Search Node (Knowledge Vector Index)": {
+      "main": [
+        [
+          {
+            "node": "Task 5: Vapi Response Formatter & Telemetry Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task 3 & 4: Slot Checker, Calendar & Dual Email Booking Node": {
+      "main": [
+        [
+          {
+            "node": "Task 5: Vapi Response Formatter & Telemetry Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Goodbye Node": {
+      "main": [
+        [
+          {
+            "node": "Task 5: Vapi Response Formatter & Telemetry Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
