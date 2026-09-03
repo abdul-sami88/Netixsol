@@ -10,6 +10,11 @@ Attack Scenarios Tested:
 """
 
 import time
+import os
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 from typing import Dict, Any, List
 from langgraph_agent.graph import run_agent_graph
 

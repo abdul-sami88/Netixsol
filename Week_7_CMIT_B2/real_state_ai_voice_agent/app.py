@@ -18,7 +18,7 @@ from system_prompt import get_system_prompt_with_context
 from llm_client import llm_client
 from stt import STTProcessor
 from appointment_manager import appointment_manager
-from email_service import HARDCODED_RECEIVER_EMAIL
+from email_service import DEFAULT_MANAGER_EMAIL
 from crm_store import crm_store
 from eval_hallucination import run_hallucination_evaluation
 from eval_voice import evaluate_voice_pipeline_convo
@@ -42,6 +42,133 @@ app.add_middleware(
 rag_engine = RAGEngine(chunk_size=128)
 rec_engine = RecommendationEngine(rag_engine=rag_engine)
 
+def process_appointment_interaction(session_id: str, mem, normalized_msg: str) -> Dict[str, Any]:
+    """
+    Production Appointment Interaction Controller:
+    1. Checks intents: Booking, Rescheduling, Cancellation.
+    2. Enforces client email, date, and time requirements.
+    3. Performs calendar slot availability check.
+    4. If slot is occupied, generates same-date alternative recommendations.
+    5. Dispatches real emails directly to client's email (never hardcoded).
+    6. For repeat callers: looks up existing appointments by client email.
+    """
+    reschedule_keywords = ["reschedule", "time change", "change time", "postpone", "doosra time", "time badal"]
+    cancel_keywords = ["cancel", "cancellation", "mansookh", "khatam"]
+    booking_keywords = ["book", "booking", "appointment", "visit", "schedule", "meeting", "email", "mail", "confirm", "bhej", "بک", "وزٹ", "سائیڈ", "سکیجول", "ای میل", "اپوائنٹمنٹ", "کل", "شام", "کنفرم", "ٹائم", "میل"]
+
+    is_reschedule = (mem.appointment_action == "RESCHEDULE") or any(w in normalized_msg.lower() for w in reschedule_keywords)
+    is_cancel = (mem.appointment_action == "CANCEL") or any(w in normalized_msg.lower() for w in cancel_keywords)
+    is_booking_intent = not (is_reschedule or is_cancel) and ((mem.appointment_action == "BOOK") or any(w in normalized_msg.lower() for w in booking_keywords) or ("@" in normalized_msg or "gmail" in normalized_msg.lower()))
+
+    context_banner = ""
+    auto_booked_appointment = None
+
+    # 1. Repeat Caller: Reschedule or Cancel using Client Email
+    if is_reschedule or is_cancel:
+        if mem.client_email and "@" in mem.client_email:
+            existing_app = appointment_manager.get_latest_appointment_by_email(mem.client_email)
+            if existing_app:
+                if is_cancel:
+                    appointment_manager.cancel_appointment(existing_app["id"])
+                    mem.appointment_action = None
+                    context_banner += (
+                        f"\n=== APPOINTMENT CANCELLED FOR {mem.client_email} ===\n"
+                        f"Found appointment for {existing_app['property_title']}. It has been successfully CANCELLED.\n"
+                        f"Confirmation cancellation email has been dispatched to {mem.client_email}.\n"
+                        f"Inform the client politely that their appointment has been cancelled and confirmation sent to {mem.client_email}.\n"
+                    )
+                elif is_reschedule:
+                    if mem.appointment_date and mem.appointment_time:
+                        avail = appointment_manager.check_availability(mem.appointment_date, mem.appointment_time)
+                        if avail["is_available"]:
+                            appointment_manager.reschedule_appointment(existing_app["id"], mem.appointment_date, mem.appointment_time)
+                            mem.appointment_action = None
+                            context_banner += (
+                                f"\n=== APPOINTMENT RESCHEDULED ===\n"
+                                f"Appointment successfully RESCHEDULED to {mem.appointment_date} at {mem.appointment_time}.\n"
+                                f"Updated Calendar and confirmation email sent to {mem.client_email}.\n"
+                            )
+                        else:
+                            alt_slots = appointment_manager.get_available_slots(mem.appointment_date)
+                            alt_slots = [s for s in alt_slots if s.lower() != mem.appointment_time.lower()]
+                            alt_str = ", ".join(alt_slots[:3])
+                            context_banner += (
+                                f"\n=== RESCHEDULE SLOT BUSY ===\n"
+                                f"Requested slot {mem.appointment_time} on {mem.appointment_date} is already booked.\n"
+                                f"Available alternatives on same date: {alt_str}.\n"
+                                f"Inform client that {mem.appointment_time} is busy and recommend {alt_str} on {mem.appointment_date}.\n"
+                            )
+                    else:
+                        context_banner += (
+                            f"\n=== EXISTING APPOINTMENT FOUND ===\n"
+                            f"Booking: {existing_app['property_title']} on {existing_app['appointment_date']} at {existing_app['appointment_time']}.\n"
+                            f"Ask client: 'Kis new date aur time par reschedule karna chahte hain sir?'\n"
+                        )
+            else:
+                context_banner += (
+                    f"\n=== NO ACTIVE APPOINTMENT FOUND ===\n"
+                    f"No active booking found for email {mem.client_email}.\n"
+                    f"Inform the client politely that no appointment was found under this email.\n"
+                )
+        else:
+            context_banner += (
+                f"\n=== REPEAT CALLER LOOKUP REQUIRED ===\n"
+                f"Client wants to {'reschedule' if is_reschedule else 'cancel'} an appointment.\n"
+                f"MANDATORY: Ask the client for their registered email address to locate their booking details.\n"
+            )
+
+    # 2. Booking Intent: Email, Date, Time & Calendar Availability
+    elif is_booking_intent:
+        if not mem.client_email:
+            context_banner += (
+                "\n=== APPOINTMENT BOOKING: EMAIL & TIME REQUIRED ===\n"
+                "Client wants to book an appointment/visit.\n"
+                "MANDATORY: Ask the client for their Name, Email address, and Preferred Date & Time.\n"
+            )
+        elif not mem.appointment_date or not mem.appointment_time:
+            context_banner += (
+                f"\n=== APPOINTMENT BOOKING: DATE & TIME REQUIRED ===\n"
+                f"Client Email provided: {mem.client_email}\n"
+                f"MANDATORY: Confirm the email address with client ('Aap ka email {mem.client_email} sahi hai sir?') and ask for their preferred Date and Time slot.\n"
+            )
+        elif not mem.appointment_booked:
+            avail = appointment_manager.check_availability(mem.appointment_date, mem.appointment_time)
+            if not avail["is_available"]:
+                alt_slots = appointment_manager.get_available_slots(mem.appointment_date)
+                alt_slots = [s for s in alt_slots if s.lower() != mem.appointment_time.lower()]
+                alt_str = ", ".join(alt_slots[:3])
+                context_banner += (
+                    f"\n=== CALENDAR SLOT UNAVAILABLE (CONFLICT DETECTED) ===\n"
+                    f"Requested slot: {mem.appointment_date} at {mem.appointment_time} is ALREADY OCCUPIED.\n"
+                    f"Available alternative slots on SAME DATE ({mem.appointment_date}): {alt_str}\n"
+                    f"MANDATORY: Inform the client that {mem.appointment_time} is busy, and proactively suggest {alt_str} on the same date.\n"
+                )
+            else:
+                last_prop_title = mem.last_recommended_properties[0]["title"] if mem.last_recommended_properties else "Real Estate Consultation"
+                auto_booked_appointment = appointment_manager.book_appointment(
+                    session_id=session_id,
+                    client_name=mem.client_name or "Valued Client",
+                    client_email=mem.client_email,
+                    city=mem.city or "Lahore",
+                    property_title=last_prop_title,
+                    appointment_date=mem.appointment_date,
+                    appointment_time=mem.appointment_time
+                )
+                if auto_booked_appointment.get("success"):
+                    mem.appointment_booked = True
+                    mem.appointment_action = None
+                    context_banner += (
+                        f"\n=== APPOINTMENT BOOKED SUCCESSFULLY ===\n"
+                        f"Slot: {mem.appointment_date} at {mem.appointment_time} is confirmed.\n"
+                        f"Confirmation email and Calendar invite sent to {mem.client_email}.\n"
+                        f"Confirm this clearly to the client and mention their email address {mem.client_email}.\n"
+                    )
+
+    return {
+        "context_banner": context_banner,
+        "auto_booked_appointment": auto_booked_appointment
+    }
+
 # Pydantic Schemas
 class ChatRequest(BaseModel):
     session_id: Optional[str] = "default_session"
@@ -50,7 +177,7 @@ class ChatRequest(BaseModel):
 
 class BookAppointmentRequest(BaseModel):
     session_id: Optional[str] = "api_session"
-    client_name: str
+    client_name: Optional[str] = "Valued Client"
     client_email: str
     client_phone: Optional[str] = "Email Priority Client"
     city: Optional[str] = "Lahore"
@@ -68,7 +195,7 @@ class CancelAppointmentRequest(BaseModel):
     appointment_id: int
 
 class CreateFollowupRequest(BaseModel):
-    client_email: Optional[str] = HARDCODED_RECEIVER_EMAIL
+    client_email: Optional[str] = "client@realestatehub.pk"
     client_name: Optional[str] = "Valued Client"
     reminder_type: str = "Pre-Visit Call Reminder"
     reminder_date: str = "Tomorrow"
@@ -201,50 +328,19 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     # Update memory with normalized text
     mem.add_turn("user", normalized_msg)
 
-    # Trigger Live Email Dispatch for BOOKING, RESCHEDULING, and CANCELLATION!
-    reschedule_keywords = ["reschedule", "time change", "change time", "postpone", "doosra time", "time badal"]
-    cancel_keywords = ["cancel", "cancellation", "mansookh", "khatam"]
-    booking_keywords = ["book", "booking", "appointment", "visit", "schedule", "meeting", "email", "mail", "confirm", "bhej", "بک", "وزٹ", "سائیڈ", "سکیجول", "ای میل", "اپوائنٹمنٹ", "کل", "شام", "کنفرم", "ٹائم", "میل"]
-
-    is_reschedule = (mem.appointment_action == "RESCHEDULE") or any(w in normalized_msg.lower() for w in reschedule_keywords)
-    is_cancel = (mem.appointment_action == "CANCEL") or any(w in normalized_msg.lower() for w in cancel_keywords)
-    is_booking_intent = not (is_reschedule or is_cancel) and ((mem.appointment_action == "BOOK") or any(w in normalized_msg.lower() for w in booking_keywords) or ("@" in normalized_msg or "gmail" in normalized_msg.lower()))
-
-    auto_booked_appointment = None
-    if is_reschedule:
-        latest_app = appointment_manager.get_latest_appointment_for_session(vapi_call_id, mem.client_email)
-        if latest_app:
-            appointment_manager.reschedule_appointment(
-                appointment_id=latest_app["id"],
-                new_date=mem.appointment_date or "Tomorrow",
-                new_time=mem.appointment_time or "3:00 PM"
-            )
-            mem.appointment_action = None
-    elif is_cancel:
-        latest_app = appointment_manager.get_latest_appointment_for_session(vapi_call_id, mem.client_email)
-        if latest_app:
-            appointment_manager.cancel_appointment(appointment_id=latest_app["id"])
-            mem.appointment_action = None
-    elif is_booking_intent and not mem.appointment_booked:
-        target_email = mem.client_email or HARDCODED_RECEIVER_EMAIL
-        last_prop_title = mem.last_recommended_properties[0]["title"] if mem.last_recommended_properties else "Real Estate Consultation"
-        auto_booked_appointment = appointment_manager.book_appointment(
-            session_id=vapi_call_id,
-            client_name="Valued Client",
-            client_email=target_email,
-            city=mem.city or "Lahore",
-            property_title=last_prop_title,
-            appointment_date=mem.appointment_date or "Tomorrow",
-            appointment_time=mem.appointment_time or "11:00 AM"
-        )
-        mem.appointment_booked = True
-        mem.appointment_action = None
+    # Process Appointment Controller (Intent detection, repeat caller lookup, slot availability check, email confirmation)
+    app_flow = process_appointment_interaction(vapi_call_id, mem, normalized_msg)
+    auto_booked_appointment = app_flow["auto_booked_appointment"]
+    appointment_banner = app_flow["context_banner"]
 
     # Hybrid Retrieval (SQL + RAG)
     rec_data = rec_engine.get_recommendations(mem, normalized_msg)
+    context_combined = rec_data["formatted_context"]
+    if appointment_banner:
+        context_combined = f"{appointment_banner}\n\n{context_combined}"
     
     # Build System Prompt
-    sys_prompt = get_system_prompt_with_context(rec_data["formatted_context"], mem.get_summary())
+    sys_prompt = get_system_prompt_with_context(context_combined, mem.get_summary())
     
     messages_payload = [{"role": m.role, "content": m.content if m.content != last_user_msg else normalized_msg} for m in req.messages if m.role != "system"]
 
@@ -252,51 +348,35 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     
     # Layer 2 Guarantee Fail-Safe: Ensure dispatches trigger if confirmed in LLM text!
     confirm_phrases = ["confirmation mail", "confirmation email", "bhej di hai", "bhej diya hai", "schedule kar di", "calendar invite", "appointment book"]
-    if any(phrase in full_response.lower() for phrase in confirm_phrases) and not mem.appointment_booked:
-        target_email = mem.client_email or HARDCODED_RECEIVER_EMAIL
+    if any(phrase in full_response.lower() for phrase in confirm_phrases) and not mem.appointment_booked and mem.client_email:
         last_prop_title = mem.last_recommended_properties[0]["title"] if mem.last_recommended_properties else "Real Estate Consultation"
         auto_booked_appointment = appointment_manager.book_appointment(
             session_id=vapi_call_id,
-            client_name="Valued Client",
-            client_email=target_email,
+            client_name=mem.client_name or "Valued Client",
+            client_email=mem.client_email,
             city=mem.city or "Lahore",
             property_title=last_prop_title,
             appointment_date=mem.appointment_date or "Tomorrow",
             appointment_time=mem.appointment_time or "11:00 AM"
         )
-        mem.appointment_booked = True
-        mem.appointment_action = None
-
-    reschedule_confirm_phrases = ["reschedule kar di", "rescheduled", "time change kar diya", "new date/time"]
-    cancel_confirm_phrases = ["cancel kar di", "cancelled", "cancellation mail", "mansookh kar di"]
-
-    if any(phrase in full_response.lower() for phrase in reschedule_confirm_phrases):
-        latest_app = appointment_manager.get_latest_appointment_for_session(vapi_call_id, mem.client_email)
-        if latest_app and latest_app["status"] != "RESCHEDULED":
-            appointment_manager.reschedule_appointment(
-                appointment_id=latest_app["id"],
-                new_date=mem.appointment_date or "Tomorrow",
-                new_time=mem.appointment_time or "3:00 PM"
-            )
-
-    if any(phrase in full_response.lower() for phrase in cancel_confirm_phrases):
-        latest_app = appointment_manager.get_latest_appointment_for_session(vapi_call_id, mem.client_email)
-        if latest_app and latest_app["status"] != "CANCELLED":
-            appointment_manager.cancel_appointment(appointment_id=latest_app["id"])
+        if auto_booked_appointment.get("success"):
+            mem.appointment_booked = True
+            mem.appointment_action = None
 
     latency = round(time.time() - start_time, 3)
 
     # CRM Store Logging (Transcripts & Client Preferences Profile)
+    caller_email = mem.client_email or "guest_caller@realestatehub.pk"
     crm_store.log_transcript(
         session_id=vapi_call_id,
-        client_email=mem.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=caller_email,
         raw_transcript=last_user_msg,
         normalized_transcript=normalized_msg,
         agent_response=full_response,
         latency_sec=latency
     )
     crm_store.update_client_preferences(
-        client_email=mem.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=caller_email,
         memory_summary={
             "city": mem.city,
             "area": mem.area,
@@ -387,99 +467,53 @@ async def chat_endpoint(req: ChatRequest):
 
     mem.add_turn("user", normalized_msg)
 
-    # Trigger Live Email Dispatch for BOOKING, RESCHEDULING, and CANCELLATION!
-    auto_booked_appointment = None
-    reschedule_keywords = ["reschedule", "time change", "change time", "postpone", "doosra time", "time badal"]
-    cancel_keywords = ["cancel", "cancellation", "mansookh", "khatam"]
-    booking_keywords = ["book", "booking", "appointment", "visit", "schedule", "meeting", "email", "mail", "confirm", "bhej", "بک", "وزٹ", "سائیڈ", "سکیجول", "ای میل", "اپوائنٹمنٹ", "کل", "شام", "کنفرم", "ٹائم", "میل"]
+    # Process Appointment Controller (Intent detection, repeat caller lookup, slot availability check, email confirmation)
+    app_flow = process_appointment_interaction(req.session_id, mem, normalized_msg)
+    auto_booked_appointment = app_flow["auto_booked_appointment"]
+    appointment_banner = app_flow["context_banner"]
 
-    is_reschedule = (mem.appointment_action == "RESCHEDULE") or any(w in normalized_msg.lower() for w in reschedule_keywords)
-    is_cancel = (mem.appointment_action == "CANCEL") or any(w in normalized_msg.lower() for w in cancel_keywords)
-    is_booking_intent = not (is_reschedule or is_cancel) and ((mem.appointment_action == "BOOK") or any(w in normalized_msg.lower() for w in booking_keywords) or ("@" in normalized_msg or "gmail" in normalized_msg.lower()))
-
-    if is_reschedule:
-        latest_app = appointment_manager.get_latest_appointment_for_session(req.session_id, mem.client_email)
-        if latest_app:
-            appointment_manager.reschedule_appointment(
-                appointment_id=latest_app["id"],
-                new_date=mem.appointment_date or "Tomorrow",
-                new_time=mem.appointment_time or "3:00 PM"
-            )
-            mem.appointment_action = None
-    elif is_cancel:
-        latest_app = appointment_manager.get_latest_appointment_for_session(req.session_id, mem.client_email)
-        if latest_app:
-            appointment_manager.cancel_appointment(appointment_id=latest_app["id"])
-            mem.appointment_action = None
-    elif is_booking_intent and not mem.appointment_booked:
-        target_email = mem.client_email or HARDCODED_RECEIVER_EMAIL
-        last_prop_title = mem.last_recommended_properties[0]["title"] if mem.last_recommended_properties else "Real Estate Consultation"
-        auto_booked_appointment = appointment_manager.book_appointment(
-            session_id=req.session_id,
-            client_name="Valued Client",
-            client_email=target_email,
-            city=mem.city or "Lahore",
-            property_title=last_prop_title,
-            appointment_date=mem.appointment_date or "Tomorrow",
-            appointment_time=mem.appointment_time or "11:00 AM"
-        )
-        mem.appointment_booked = True
-        mem.appointment_action = None
-    
     rec_data = rec_engine.get_recommendations(mem, normalized_msg)
-    sys_prompt = get_system_prompt_with_context(rec_data["formatted_context"], mem.get_summary())
+    context_combined = rec_data["formatted_context"]
+    if appointment_banner:
+        context_combined = f"{appointment_banner}\n\n{context_combined}"
+
+    sys_prompt = get_system_prompt_with_context(context_combined, mem.get_summary())
     
     response = llm_client.generate_response(mem.history, sys_prompt, stream=False)
     
     # Layer 2 Guarantee Fail-Safe: Ensure dispatches trigger if confirmed in LLM text!
     confirm_phrases = ["confirmation mail", "confirmation email", "bhej di hai", "bhej diya hai", "schedule kar di", "calendar invite", "appointment book"]
-    if any(phrase in response.lower() for phrase in confirm_phrases) and not mem.appointment_booked:
-        target_email = mem.client_email or HARDCODED_RECEIVER_EMAIL
+    if any(phrase in response.lower() for phrase in confirm_phrases) and not mem.appointment_booked and mem.client_email:
         last_prop_title = mem.last_recommended_properties[0]["title"] if mem.last_recommended_properties else "Real Estate Consultation"
         auto_booked_appointment = appointment_manager.book_appointment(
             session_id=req.session_id,
-            client_name="Valued Client",
-            client_email=target_email,
+            client_name=mem.client_name or "Valued Client",
+            client_email=mem.client_email,
             city=mem.city or "Lahore",
             property_title=last_prop_title,
             appointment_date=mem.appointment_date or "Tomorrow",
             appointment_time=mem.appointment_time or "11:00 AM"
         )
-        mem.appointment_booked = True
-        mem.appointment_action = None
-
-    reschedule_confirm_phrases = ["reschedule kar di", "rescheduled", "time change kar diya", "new date/time"]
-    cancel_confirm_phrases = ["cancel kar di", "cancelled", "cancellation mail", "mansookh kar di"]
-
-    if any(phrase in response.lower() for phrase in reschedule_confirm_phrases):
-        latest_app = appointment_manager.get_latest_appointment_for_session(req.session_id, mem.client_email)
-        if latest_app and latest_app["status"] != "RESCHEDULED":
-            appointment_manager.reschedule_appointment(
-                appointment_id=latest_app["id"],
-                new_date=mem.appointment_date or "Tomorrow",
-                new_time=mem.appointment_time or "3:00 PM"
-            )
-
-    if any(phrase in response.lower() for phrase in cancel_confirm_phrases):
-        latest_app = appointment_manager.get_latest_appointment_for_session(req.session_id, mem.client_email)
-        if latest_app and latest_app["status"] != "CANCELLED":
-            appointment_manager.cancel_appointment(appointment_id=latest_app["id"])
+        if auto_booked_appointment.get("success"):
+            mem.appointment_booked = True
+            mem.appointment_action = None
 
     mem.add_turn("assistant", response)
 
     latency = round(time.time() - start_time, 3)
 
     # CRM Store Logging (Transcripts & Client Preferences Profile)
+    caller_email = mem.client_email or "guest_caller@realestatehub.pk"
     crm_store.log_transcript(
         session_id=req.session_id,
-        client_email=mem.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=caller_email,
         raw_transcript=req.message,
         normalized_transcript=normalized_msg,
         agent_response=response,
         latency_sec=latency
     )
     crm_store.update_client_preferences(
-        client_email=mem.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=caller_email,
         memory_summary={
             "city": mem.city,
             "area": mem.area,
@@ -507,7 +541,7 @@ async def book_appointment_endpoint(req: BookAppointmentRequest):
     res = appointment_manager.book_appointment(
         session_id=req.session_id,
         client_name=req.client_name,
-        client_email=req.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=req.client_email,
         client_phone=req.client_phone,
         city=req.city,
         property_title=req.property_title,
@@ -560,7 +594,7 @@ async def get_crm_followups(status: Optional[str] = None):
 @app.post("/api/v1/crm/followups/create")
 async def create_crm_followup(req: CreateFollowupRequest):
     res = crm_store.create_followup_reminder(
-        client_email=req.client_email or HARDCODED_RECEIVER_EMAIL,
+        client_email=req.client_email or "client@realestatehub.pk",
         client_name=req.client_name,
         reminder_type=req.reminder_type,
         reminder_date=req.reminder_date,
@@ -648,34 +682,34 @@ async def get_vapi_config():
         }
     }
 
-# ==========================================
-# 3. LANGGRAPH AI AGENT ENDPOINTS
-# ==========================================
-from langgraph_agent.graph import run_agent_graph
-from langgraph_agent.tracer import tracer
+# # ==========================================
+# # 3. LANGGRAPH AI AGENT ENDPOINTS
+# # ==========================================
+# from langgraph_agent.graph import run_agent_graph
+# from langgraph_agent.tracer import tracer
 
-class LangGraphAgentRequest(BaseModel):
-    session_id: Optional[str] = "langgraph_session_1"
-    message: str
+# class LangGraphAgentRequest(BaseModel):
+#     session_id: Optional[str] = "langgraph_session_1"
+#     message: str
 
-@app.post("/api/v1/agent/chat")
-async def langgraph_agent_chat_endpoint(req: LangGraphAgentRequest):
-    """
-    Executes LangGraph Agent Orchestration.
-    Includes State Tracking, Intent Routing, Tool Execution, Validation Guardrails,
-    and Annotated Execution Tracing.
-    """
-    res = run_agent_graph(session_id=req.session_id, user_message=req.message)
-    return res
+# @app.post("/api/v1/agent/chat")
+# async def langgraph_agent_chat_endpoint(req: LangGraphAgentRequest):
+#     """
+#     Executes LangGraph Agent Orchestration.
+#     Includes State Tracking, Intent Routing, Tool Execution, Validation Guardrails,
+#     and Annotated Execution Tracing.
+#     """
+#     res = run_agent_graph(session_id=req.session_id, user_message=req.message)
+#     return res
 
-@app.get("/api/v1/agent/trace")
-async def langgraph_agent_trace_endpoint(session_id: Optional[str] = None):
-    """
-    Returns Annotated Execution Traces of node transitions (Task 5).
-    """
-    if session_id:
-        return {"session_id": session_id, "trace": tracer.get_session_trace(session_id)}
-    return tracer.get_all_traces()
+# @app.get("/api/v1/agent/trace")
+# async def langgraph_agent_trace_endpoint(session_id: Optional[str] = None):
+#     """
+#     Returns Annotated Execution Traces of node transitions (Task 5).
+#     """
+#     if session_id:
+#         return {"session_id": session_id, "trace": tracer.get_session_trace(session_id)}
+#     return tracer.get_all_traces()
 
 
 if __name__ == "__main__":

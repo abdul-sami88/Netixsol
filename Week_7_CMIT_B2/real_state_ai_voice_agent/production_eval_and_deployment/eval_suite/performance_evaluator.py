@@ -11,6 +11,11 @@ Automated benchmark evaluator measuring:
 """
 
 import time
+import os
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 import numpy as np
 from typing import Dict, Any, List
 from production_eval_and_deployment.eval_suite.test_conversations_dataset import EVALUATION_DATASET

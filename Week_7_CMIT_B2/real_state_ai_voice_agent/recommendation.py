@@ -75,8 +75,8 @@ class RecommendationEngine:
         if memory.city and not memory.purpose:
             purpose_banner = (
                 "=== PURPOSE NOT SPECIFIED (BUY VS RENT) ===\n"
-                "MANDATORY INSTRUCTION: Ask the client politely whether they want to BUY (Khareedna) or RENT (Kiraya) the property!\n"
-                "Example: 'Acha... kya aap property khareedna (Buy) chahte hain ya rent (Kiraya) par lena chahte hain sir?'\n\n"
+                "MANDATORY INSTRUCTION: Ask the client politely whether they want to BUY or RENT the property. Do NOT say both languages (do NOT say 'khareedna (Buy)' or 'rent (Kiraya)').\n"
+                "Example: 'Acha... kya aap property buy karna chahte hain ya rent par lena chahte hain sir?'\n\n"
             )
 
         # 5. Format properties string for LLM injection

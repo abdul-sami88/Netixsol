@@ -134,4 +134,27 @@ class CalendarService:
             "status": "CANCELLED"
         }
 
+    def check_slot_conflict(self, date_str: str, time_str: str) -> bool:
+        """Checks if a slot is conflicted on Google Calendar if live service is active."""
+        if not self.service:
+            return False
+        try:
+            # Query events on calendar
+            events_result = self.service.events().list(
+                calendarId=self.calendar_id,
+                timeMin=f"{date_str}T00:00:00Z",
+                timeMax=f"{date_str}T23:59:59Z",
+                singleEvents=True,
+                orderBy='startTime'
+            ).execute()
+            items = events_result.get('items', [])
+            for event in items:
+                desc = (event.get('description') or "") + " " + (event.get('summary') or "")
+                if time_str.lower() in desc.lower():
+                    return True
+            return False
+        except Exception as e:
+            print(f"[Calendar Service] Slot conflict check error: {e}")
+            return False
+
 calendar_service = CalendarService()

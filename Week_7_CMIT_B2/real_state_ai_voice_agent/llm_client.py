@@ -161,7 +161,7 @@ class DualLLMClient:
 
         # 2. Buy vs Rent Clarification check when purpose is unstated
         if "PURPOSE NOT SPECIFIED" in system_prompt and not any(w in last_msg for w in ["buy", "khareedna", "rent", "kiraya", "sale"]):
-            return "Acha... property dekh rahe hain sir! Ji bilkul, kya aap property khareedna (Buy) chahte hain ya rent (Kiraya) par lena chahte hain sir?"
+            return "Acha... property dekh rahe hain sir! Ji bilkul, kya aap property buy karna chahte hain ya rent par lena chahte hain sir?"
 
         # 3. Document / Transfer / Legal query detection
         if "document" in last_msg or "transfer" in last_msg or "paper" in last_msg or "noc" in last_msg or "legal" in last_msg or "requirement" in last_msg:

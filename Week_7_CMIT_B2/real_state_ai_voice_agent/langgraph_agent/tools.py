@@ -2,9 +2,9 @@ from typing import Dict, Any, List, Optional
 # pyrefly: ignore [missing-import]
 from langchain_core.tools import tool
 
-from database import query_properties_sql, get_db_connection
+from database import query_properties_sql, get_db_connection, get_agent_by_city
 from appointment_manager import appointment_manager
-from email_service import email_service, HARDCODED_RECEIVER_EMAIL
+from email_service import email_service, DEFAULT_MANAGER_EMAIL
 from calendar_service import calendar_service
 from crm_store import crm_store
 from rag_engine import RAGEngine
@@ -47,26 +47,30 @@ def availability_checker_tool(
 ) -> Dict[str, Any]:
     """
     Task 3 & 4 Tool: Availability Checker Tool.
-    Verifies if a requested appointment date and time slot is available in the database.
-    Enforces Task 4 Validation: Never book unavailable slots.
+    Verifies if a requested appointment date and time slot is available.
+    If unavailable, dynamically returns alternative available slots on the same date.
     """
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT COUNT(*) FROM appointments 
-        WHERE appointment_date = ? AND appointment_time = ? AND status != 'CANCELLED'
-    """, (date_str, time_str))
-    booked_count = cursor.fetchone()[0]
-    conn.close()
-
-    is_available = (booked_count == 0)
-    return {
-        "date": date_str,
-        "time": time_str,
-        "city": city,
-        "is_available": is_available,
-        "conflict_reason": None if is_available else f"Slot {date_str} at {time_str} is already booked."
-    }
+    avail = appointment_manager.check_availability(date_str, time_str)
+    if avail["is_available"]:
+        return {
+            "date": date_str,
+            "time": time_str,
+            "city": city,
+            "is_available": True,
+            "conflict_reason": None,
+            "available_slots": []
+        }
+    else:
+        alt_slots = appointment_manager.get_available_slots(date_str)
+        alt_slots = [s for s in alt_slots if s.lower() != time_str.lower()]
+        return {
+            "date": date_str,
+            "time": time_str,
+            "city": city,
+            "is_available": False,
+            "conflict_reason": f"Slot {date_str} at {time_str} is already booked.",
+            "available_slots": alt_slots[:3]
+        }
 
 @tool
 def calendar_tool(
@@ -80,15 +84,14 @@ def calendar_tool(
 ) -> Dict[str, Any]:
     """
     Task 3 Tool: Calendar Tool.
-    Creates Google Calendar event for site visits.
+    Creates Google Calendar event for site visits using client's actual email.
     """
-    target_email = client_email if (client_email and "@" in client_email) else HARDCODED_RECEIVER_EMAIL
     return calendar_service.create_event(
         client_name=client_name,
-        client_email=target_email,
+        client_email=client_email,
         client_phone="Email Priority Client",
         employee_name=employee_name,
-        employee_email=HARDCODED_RECEIVER_EMAIL,
+        employee_email=DEFAULT_MANAGER_EMAIL,
         property_title=property_title,
         date_str=date_str,
         time_str=time_str,
@@ -108,16 +111,15 @@ def email_tool(
 ) -> Dict[str, Any]:
     """
     Task 3 Tool: Email Tool.
-    Dispatches 2 UTF-8 encoded HTML emails via live SMTP (Client Confirmation & Agent Alert).
+    Dispatches confirmation email directly to client_email and alert to manager.
     """
-    target_client = client_email if (client_email and "@" in client_email) else HARDCODED_RECEIVER_EMAIL
     return email_service.send_appointment_notification(
         action_type=action_type,
         client_name=client_name,
-        client_email=target_client,
+        client_email=client_email,
         client_phone="Email Priority Client",
         employee_name=employee_name,
-        employee_email=HARDCODED_RECEIVER_EMAIL,
+        employee_email=DEFAULT_MANAGER_EMAIL,
         property_title=property_title,
         appointment_date=appointment_date,
         appointment_time=appointment_time,
@@ -138,7 +140,7 @@ def crm_tool(
     Task 3 Tool: CRM Store Logging Tool.
     Logs call transcripts, preference profiles, and appointment history.
     """
-    target_email = client_email if (client_email and "@" in client_email) else HARDCODED_RECEIVER_EMAIL
+    target_email = client_email if (client_email and "@" in client_email) else "client@realestatehub.pk"
     crm_store.log_transcript(
         session_id=session_id,
         client_email=target_email,

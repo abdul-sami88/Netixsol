@@ -1,27 +1,38 @@
 import re
 from typing import Dict, Any, List, Optional
 from stt import UNSUPPORTED_CITIES
-from email_service import HARDCODED_RECEIVER_EMAIL
-
 def extract_spoken_email(text: str) -> Optional[str]:
-    """Extracts email addresses from spoken STT transcripts (e.g. 'samiworkspace11 at gmail dot com')."""
-    # 1. Standard regex
+    """Extracts email addresses from spoken STT transcripts (e.g. 'ali dot khan at gmail dot com')."""
+    if not text:
+        return None
+    # 1. Direct regex match
     m = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
     if m:
-        return m.group(0)
+        return m.group(0).lower().strip()
     
-    # 2. Spoken phrases: "at gmail.com", "at gmail dot com", "dot com"
+    # 2. Convert spoken transcript representation:
     norm = text.lower()
-    norm = re.sub(r'\s+at\s+', '@', norm)
-    norm = re.sub(r'\s+dot\s+', '.', norm)
-    norm = re.sub(r'\s+', '', norm) # Remove spaces in spoken email
+    norm = re.sub(r'\bat the rate of\b|\bat the rate\b|\bat\b', '@', norm)
+    norm = re.sub(r'\bdot\b', '.', norm)
     
-    m2 = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', norm)
-    if m2:
-        return m2.group(0)
-
-    if "samiworkspace11" in text.lower() or "smaiworkspace11" in text.lower():
-        return HARDCODED_RECEIVER_EMAIL
+    # If '@' exists, clean up around the email portion
+    if '@' in norm:
+        # Find segment around @
+        at_parts = norm.split('@')
+        left_words = at_parts[0].strip().split()
+        # Take the last word(s) of left part that could form email username
+        user_part = "".join(left_words[-3:]) if len(left_words) >= 3 else "".join(left_words)
+        user_part = re.sub(r'[^a-zA-Z0-9._%+-]', '', user_part)
+        
+        # Right part
+        right_words = at_parts[1].strip().split()
+        domain_part = "".join(right_words[:3]) if len(right_words) >= 3 else "".join(right_words)
+        domain_part = re.sub(r'[^a-zA-Z0-9.-]', '', domain_part)
+        
+        reconstructed = f"{user_part}@{domain_part}"
+        m2 = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', reconstructed)
+        if m2:
+            return m2.group(0).lower().strip()
 
     return None
 
@@ -39,6 +50,7 @@ class ConversationMemory:
         # Day 4 Appointment & Contact Fields
         self.client_name: Optional[str] = None
         self.client_email: Optional[str] = None # Starts None so agent asks for email naturally!
+        self.email_confirmed: bool = False # Confirmed by user response
         self.client_phone: Optional[str] = None
         self.appointment_date: Optional[str] = None
         self.appointment_time: Optional[str] = None
@@ -150,15 +162,32 @@ class ConversationMemory:
         elif re.search(r'(book|booking|appointment|site visit|visit|meeting|email|mail|confirm|bhej|بک|وزٹ|سائیڈ|سکیجول|ای میل|اپوائنٹمنٹ|کل|شام|کنفرم|ٹائم|میل)', text):
             self.appointment_action = "BOOK"
 
-        # 8. Date & Time Parsing
+        # 8. Email Confirmation Detection
+        if self.client_email and not self.email_confirmed:
+            if any(w in text for w in ["sahi", "theek", "yes", "haan", "bilkul", "correct", "yahi", "confirm", "right"]):
+                self.email_confirmed = True
+
+        # 9. Date & Time Parsing
         if "tomorrow" in text or "kal" in text or "کل" in text:
             self.appointment_date = "Tomorrow"
-        elif "saturday" in text or "hafta" in text:
+        elif "today" in text or "aaj" in text or "آج" in text:
+            self.appointment_date = "Today"
+        elif "saturday" in text or "hafta" in text or "ہفتہ" in text:
             self.appointment_date = "Saturday"
-        elif "monday" in text or "peer" in text:
+        elif "sunday" in text or "itwar" in text or "اتوار" in text:
+            self.appointment_date = "Sunday"
+        elif "monday" in text or "peer" in text or "پیر" in text:
             self.appointment_date = "Monday"
+        elif "tuesday" in text or "mangal" in text:
+            self.appointment_date = "Tuesday"
+        elif "wednesday" in text or "budh" in text:
+            self.appointment_date = "Wednesday"
+        elif "thursday" in text or "jumeraat" in text:
+            self.appointment_date = "Thursday"
+        elif "friday" in text or "juma" in text or "جمعہ" in text:
+            self.appointment_date = "Friday"
 
-        time_match = re.search(r'(\d{1,2}(?::\d{2})?\s*(?:am|pm|baje))', text)
+        time_match = re.search(r'(\d{1,2}(?::\d{2})?\s*(?:am|pm|baje|bajay|بجے))', text)
         if time_match:
             self.appointment_time = time_match.group(1)
 
@@ -187,7 +216,9 @@ class ConversationMemory:
         if self.purpose:
             parts.append(f"Purpose: {self.purpose}")
         if self.client_email:
-            parts.append(f"Client Email: {self.client_email}")
+            parts.append(f"Client Email: {self.client_email} (Confirmed: {'Yes' if self.email_confirmed else 'Pending'})")
+        if self.appointment_date or self.appointment_time:
+            parts.append(f"Requested Slot: {self.appointment_date or 'Date unstated'} at {self.appointment_time or 'Time unstated'}")
         if self.appointment_action:
             parts.append(f"Appointment Intent: {self.appointment_action}")
             

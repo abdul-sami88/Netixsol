@@ -7,8 +7,9 @@ from email.header import Header
 from typing import Dict, Any, Optional
 from config import config
 
-# Primary hardcoded receiving email by user for testing
-HARDCODED_RECEIVER_EMAIL = "yourmail@gmail.com"
+# Production Email Service: Dynamic Client Email & Staff Alert Dispatch
+DEFAULT_MANAGER_EMAIL = config.NOTIFICATION_SENDER_EMAIL or config.SMTP_USERNAME or "manager@realestatehub.pk"
+HARDCODED_RECEIVER_EMAIL = DEFAULT_MANAGER_EMAIL # Kept for backward compatibility
 
 class EmailService:
     def __init__(self):
@@ -18,7 +19,7 @@ class EmailService:
         self.password = config.SMTP_PASSWORD
         
         # Sender must align with SMTP authenticated username to pass SPF/DMARC checks on Gmail SMTP
-        self.sender = self.username or config.NOTIFICATION_SENDER_EMAIL or HARDCODED_RECEIVER_EMAIL
+        self.sender = self.username or config.NOTIFICATION_SENDER_EMAIL or DEFAULT_MANAGER_EMAIL
 
     def _generate_google_calendar_url(self, title: str, details: str, location: str, date_str: str, time_str: str) -> str:
         """Generates a 1-click Google Calendar Add-to-Calendar URL."""
@@ -76,14 +77,25 @@ class EmailService:
         requirements_summary: str = ""
     ) -> Dict[str, Any]:
         """
-        Sends TWO DISTINCT SEPARATE EMAILS to HARDCODED_RECEIVER_EMAIL (samiworkspace11@gmail.com):
-        1. Client Confirmation Email (Supporting BOOKING, RESCHEDULING, CANCELLATION)
-        2. Assigned Agent / Manager Notification Email (Supporting BOOKING, RESCHEDULING, CANCELLATION)
+        Sends TWO DISTINCT SEPARATE EMAILS:
+        1. Client Confirmation Email directly to client's provided email address.
+        2. Assigned Agent / Manager Notification Email to employee/manager.
         Both include a 1-Click 'Add to Google Calendar' button!
         """
+        client_recipient = client_email.strip() if client_email else ""
+        if not client_recipient or "@" not in client_recipient or "." not in client_recipient:
+            print(f"[Email Service] Error: Invalid or missing client email '{client_email}'. Cannot send client notification.")
+            return {
+                "success": False,
+                "error": f"Invalid client email: '{client_email}'",
+                "emails_sent_count": 0
+            }
+
+        agent_recipient = employee_email.strip() if (employee_email and "@" in employee_email) else DEFAULT_MANAGER_EMAIL
+
         details_text = (
             f"Client Name: {client_name}\n"
-            f"Client Email: {client_email or HARDCODED_RECEIVER_EMAIL}\n"
+            f"Client Email: {client_recipient}\n"
             f"Phone: {client_phone}\n"
             f"Assigned Manager: {employee_name}\n"
             f"Property: {property_title}\n"
@@ -100,9 +112,9 @@ class EmailService:
         )
 
         # ----------------------------------------------------
-        # EMAIL #1: CLIENT CONFIRMATION EMAIL
+        # EMAIL #1: CLIENT CONFIRMATION EMAIL (TO CLIENT'S EMAIL)
         # ----------------------------------------------------
-        client_subject = f"[CLIENT CONFIRMATION] Your Appointment for {property_title} is {action_type.title()}!"
+        client_subject = f"[CONFIRMATION] Your Appointment for {property_title} is {action_type.title()}!"
         client_html = f"""
         <html>
         <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
@@ -121,7 +133,7 @@ class EmailService:
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{action_type.title()}</strong></td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Property</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_title}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Meeting Date & Time</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{appointment_date} at {appointment_time}</strong></td></tr>
-                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Assigned Senior Executive</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{employee_name} ({HARDCODED_RECEIVER_EMAIL})</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Assigned Senior Executive</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{employee_name} ({agent_recipient})</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Consultation Notes</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{requirements_summary or 'Site Visit & Layout Consultation'}</td></tr>
                     </table>
 
@@ -143,7 +155,7 @@ class EmailService:
         # ----------------------------------------------------
         # EMAIL #2: AGENT / MANAGER NOTIFICATION EMAIL
         # ----------------------------------------------------
-        agent_subject = f"[AGENT ALERT] New Client Appointment {action_type.title()}: {client_name} - {property_title}"
+        agent_subject = f"[AGENT ALERT] Client Appointment {action_type.title()}: {client_name} - {property_title}"
         agent_html = f"""
         <html>
         <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
@@ -161,7 +173,7 @@ class EmailService:
                         <tr style="background: #eff6ff;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Field</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Client Lead Info</th></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8;"><strong>{action_type}</strong></td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Name</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>{client_name}</strong></td></tr>
-                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Email</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_email or HARDCODED_RECEIVER_EMAIL}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Email</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_recipient}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Phone</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_phone}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Target Property</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_title}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Meeting Time</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8;"><strong>{appointment_date} at {appointment_time}</strong></td></tr>
@@ -183,10 +195,6 @@ class EmailService:
         </html>
         """
 
-        # Determine actual recipients for client and agent notifications
-        client_recipient = client_email.strip() if (client_email and "@" in client_email) else HARDCODED_RECEIVER_EMAIL
-        agent_recipient = employee_email.strip() if (employee_email and "@" in employee_email) else HARDCODED_RECEIVER_EMAIL
-        
         print(f"[Email Service] Dispatching Email #1 ({action_type} - Client Confirmation) to {client_recipient}...")
         res1 = self._send_single_email(client_recipient, client_subject, client_html)
 
@@ -196,7 +204,7 @@ class EmailService:
         return {
             "success": (res1 and res2),
             "mode": "LIVE_SMTP" if (self.username and self.password and "your_" not in self.username) else "SIMULATION_LOGGER",
-            "emails_sent_count": 2,
+            "emails_sent_count": 2 if (res1 and res2) else (1 if (res1 or res2) else 0),
             "client_recipient": client_recipient,
             "agent_recipient": agent_recipient,
             "subjects": [client_subject, agent_subject],

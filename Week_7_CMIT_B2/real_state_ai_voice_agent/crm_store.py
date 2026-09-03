@@ -2,7 +2,7 @@ import sqlite3
 import time
 from typing import Dict, Any, List, Optional
 from database import get_db_connection, init_db
-from email_service import HARDCODED_RECEIVER_EMAIL
+DEFAULT_CRM_GUEST_EMAIL = "guest_client@realestatehub.pk"
 
 class CRMStore:
     def __init__(self):
@@ -18,7 +18,7 @@ class CRMStore:
         latency_sec: float = 0.0
     ) -> Dict[str, Any]:
         """Logs a single conversation turn (STT raw/normalized + AI response + timing) into SQLite CRM."""
-        email = (client_email or HARDCODED_RECEIVER_EMAIL).strip()
+        email = (client_email or DEFAULT_CRM_GUEST_EMAIL).strip()
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
@@ -37,7 +37,7 @@ class CRMStore:
         memory_summary: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Saves or updates extracted client preferences (city, area, budget, bedrooms, type, purpose)."""
-        email = (client_email or HARDCODED_RECEIVER_EMAIL).strip()
+        email = (client_email or DEFAULT_CRM_GUEST_EMAIL).strip()
         city = memory_summary.get("city")
         area = memory_summary.get("area")
         budget = memory_summary.get("budget_pkr")
@@ -72,7 +72,7 @@ class CRMStore:
         details: str
     ) -> Dict[str, Any]:
         """Logs an appointment status lifecycle event into appointment history audit table."""
-        email = (client_email or HARDCODED_RECEIVER_EMAIL).strip()
+        email = (client_email or DEFAULT_CRM_GUEST_EMAIL).strip()
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
@@ -93,7 +93,7 @@ class CRMStore:
         notes: str = ""
     ) -> Dict[str, Any]:
         """Creates a scheduled follow-up reminder task for sales relationship managers."""
-        email = (client_email or HARDCODED_RECEIVER_EMAIL).strip()
+        email = (client_email or DEFAULT_CRM_GUEST_EMAIL).strip()
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
