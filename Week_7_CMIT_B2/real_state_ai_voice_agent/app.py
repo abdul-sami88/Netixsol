@@ -882,34 +882,54 @@ async def get_vapi_config():
         }
     }
 
-# # ==========================================
-# # 3. LANGGRAPH AI AGENT ENDPOINTS
-# # ==========================================
-# from langgraph_agent.graph import run_agent_graph
-# from langgraph_agent.tracer import tracer
+# ==========================================
+# 3. LANGGRAPH AI AGENT ENDPOINTS
+# ==========================================
+from langgraph_agent.graph import run_agent_graph
+from langgraph_agent.tracer import tracer
 
-# class LangGraphAgentRequest(BaseModel):
-#     session_id: Optional[str] = "langgraph_session_1"
-#     message: str
+class LangGraphAgentRequest(BaseModel):
+    session_id: Optional[str] = "langgraph_session_1"
+    message: str
 
-# @app.post("/api/v1/agent/chat")
-# async def langgraph_agent_chat_endpoint(req: LangGraphAgentRequest):
-#     """
-#     Executes LangGraph Agent Orchestration.
-#     Includes State Tracking, Intent Routing, Tool Execution, Validation Guardrails,
-#     and Annotated Execution Tracing.
-#     """
-#     res = run_agent_graph(session_id=req.session_id, user_message=req.message)
-#     return res
+@app.post("/api/v1/agent/chat")
+async def langgraph_agent_chat_endpoint(req: LangGraphAgentRequest):
+    """
+    Executes LangGraph Agent Orchestration.
+    Includes State Tracking, Intent Routing, Tool Execution, Validation Guardrails,
+    and Annotated Execution Tracing.
+    """
+    res = run_agent_graph(session_id=req.session_id, user_message=req.message)
+    return res
 
-# @app.get("/api/v1/agent/trace")
-# async def langgraph_agent_trace_endpoint(session_id: Optional[str] = None):
-#     """
-#     Returns Annotated Execution Traces of node transitions (Task 5).
-#     """
-#     if session_id:
-#         return {"session_id": session_id, "trace": tracer.get_session_trace(session_id)}
-#     return tracer.get_all_traces()
+@app.get("/api/v1/agent/trace")
+async def langgraph_agent_trace_endpoint(session_id: Optional[str] = None):
+    """
+    Returns Annotated Execution Traces of node transitions (Task 5).
+    """
+    if session_id:
+        return {"session_id": session_id, "trace": tracer.get_session_trace(session_id)}
+    return tracer.get_all_traces()
+
+# ==========================================
+# 4. KUBERNETES & CLOUD HEALTH PROBES
+# ==========================================
+# from production_eval_and_deployment.deployment.health_checks import check_liveness, check_readiness
+
+# @app.get("/healthz")
+# def healthz_probe():
+#     """Basic Kubernetes / Load Balancer Liveness Probe."""
+#     return check_liveness()
+
+# @app.get("/livez")
+# def livez_probe():
+#     """Runtime Process & Worker Liveness Probe."""
+#     return check_liveness()
+
+# @app.get("/readyz")
+# def readyz_probe():
+#     """Deep Readiness Probe: SQLite DB, Gemini/Groq LLM API, and SMTP server reachability."""
+#     return check_readiness()
 
 
 if __name__ == "__main__":

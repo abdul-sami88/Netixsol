@@ -19,7 +19,7 @@
     },
     {
       "parameters": {
-        "functionCode": "// STT Normalization & Request Pre-processing\nconst inputData = $json.body || $json;\nlet rawMsg = '';\nif (inputData.messages && inputData.messages.length > 0) {\n  rawMsg = inputData.messages[inputData.messages.length - 1].content;\n} else if (inputData.message) {\n  rawMsg = inputData.message;\n}\n\nlet normalized = rawMsg.trim();\nconst textLower = normalized.toLowerCase();\n\n// Intent Detection Logic\nlet intent = 'recommendation';\nif (/salam|assalam|hello|hi|kaun|kon/i.test(textLower)) {\n  intent = 'greeting';\n} else if (/bye|khuda hafiz|allah hafiz|shukriya|thanks/i.test(textLower)) {\n  intent = 'goodbye';\n} else if (/reschedule|time change|postpone/i.test(textLower)) {\n  intent = 'reschedule';\n} else if (/cancel|mansookh/i.test(textLower)) {\n  intent = 'cancel';\n} else if (/book|booking|appointment|visit|schedule|meeting|email|mail|بک|وزٹ|سائیڈ|سکیجول|ای میل/i.test(textLower)) {\n  intent = 'booking';\n} else if (/noc|transfer|installment|document|legal|dha procedure/i.test(textLower)) {\n  intent = 'rag';\n}\n\n// City Extraction\nlet city = null;\nif (/lahore|لاہور/i.test(textLower)) city = 'Lahore';\nelse if (/islamabad|اسلام آباد/i.test(textLower)) city = 'Islamabad';\nelse if (/karachi|کراچی/i.test(textLower)) city = 'Karachi';\n\nreturn [{\n  json: {\n    session_id: inputData.session_id || 'n8n_session_1',\n    raw_message: rawMsg,\n    normalized_message: normalized,\n    intent: intent,\n    extracted_city: city,\n    user_email: 'samiworkspace11@gmail.com'\n  }\n}];"
+        "functionCode": "// STT Normalization & Request Pre-processing\nconst inputData = $json.body || $json;\nlet rawMsg = '';\nif (inputData.messages && inputData.messages.length > 0) {\n  rawMsg = inputData.messages[inputData.messages.length - 1].content;\n} else if (inputData.message) {\n  rawMsg = inputData.message;\n}\n\nlet normalized = rawMsg.trim();\nconst textLower = normalized.toLowerCase();\n\n// Intent Detection Logic with word boundaries\nlet intent = 'recommendation';\nif (/\\b(salam|assalam|hello|hi|kaun|kon)\\b/i.test(textLower)) {\n  if (/book|booking|appointment|visit|schedule|meeting|بک|وزٹ|سکیجول/i.test(textLower)) {\n    intent = 'booking';\n  } else if (/noc|transfer|installment|document|legal|dha procedure/i.test(textLower)) {\n    intent = 'rag';\n  } else if (/\\b(reschedule|time change|postpone)\\b/i.test(textLower)) {\n    intent = 'reschedule';\n  } else if (/\\b(cancel|mansookh)\\b/i.test(textLower)) {\n    intent = 'cancel';\n  } else if (/crore|lakh|marla|kanal|bed|bedroom|house|plot|flat|apartment|rent|buy|sale|lahore|islamabad|karachi/i.test(textLower)) {\n    intent = 'recommendation';\n  } else {\n    intent = 'greeting';\n  }\n} else if (/\\b(bye|khuda hafiz|allah hafiz|shukriya|thanks)\\b/i.test(textLower)) {\n  intent = 'goodbye';\n} else if (/\\b(reschedule|time change|postpone)\\b/i.test(textLower)) {\n  intent = 'reschedule';\n} else if (/\\b(cancel|mansookh)\\b/i.test(textLower)) {\n  intent = 'cancel';\n} else if (/book|booking|appointment|visit|schedule|meeting|email|mail|بک|وزٹ|سائیڈ|سکیجول|ای میل/i.test(textLower)) {\n  intent = 'booking';\n} else if (/noc|transfer|installment|document|legal|dha procedure/i.test(textLower)) {\n  intent = 'rag';\n}\n\n// City Extraction\nlet city = null;\nif (/lahore|لاہور/i.test(textLower)) city = 'Lahore';\nelse if (/islamabad|اسلام آباد/i.test(textLower)) city = 'Islamabad';\nelse if (/karachi|کراچی/i.test(textLower)) city = 'Karachi';\n\n// Spoken / written email extraction\nlet userEmail = 'samiworkspace11@gmail.com';\nconst emailMatch = rawMsg.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/);\nif (emailMatch) {\n  userEmail = emailMatch[0];\n}\n\nreturn [{\n  json: {\n    session_id: inputData.session_id || 'n8n_session_1',\n    raw_message: rawMsg,\n    normalized_message: normalized,\n    intent: intent,\n    extracted_city: city,\n    user_email: userEmail\n  }\n}];"
       },
       "name": "Task 1 & 2: STT Normalization & Intent Detection",
       "type": "n8n-nodes-base.function",
@@ -83,6 +83,7 @@
     },
     {
       "parameters": {
+        "requestMethod": "POST",
         "url": "=http://localhost:8000/api/v1/agent/chat",
         "options": {},
         "bodyParametersUi": {
@@ -110,6 +111,7 @@
     },
     {
       "parameters": {
+        "requestMethod": "POST",
         "url": "=http://localhost:8000/api/v1/agent/chat",
         "options": {},
         "bodyParametersUi": {
@@ -137,7 +139,8 @@
     },
     {
       "parameters": {
-        "url": "=http://localhost:8000/api/v1/appointments/book",
+        "requestMethod": "POST",
+        "url": "=http://localhost:8000/api/v1/agent/chat",
         "options": {},
         "bodyParametersUi": {
           "parameter": [
@@ -146,20 +149,8 @@
               "value": "={{$json.session_id}}"
             },
             {
-              "name": "client_name",
-              "value": "Valued Client"
-            },
-            {
-              "name": "client_email",
-              "value": "samiworkspace11@gmail.com"
-            },
-            {
-              "name": "city",
-              "value": "={{$json.extracted_city || 'Lahore'}}"
-            },
-            {
-              "name": "property_title",
-              "value": "Real Estate Consultation & Site Visit"
+              "name": "message",
+              "value": "={{$json.normalized_message}}"
             }
           ]
         },
@@ -189,7 +180,7 @@
     },
     {
       "parameters": {
-        "functionCode": "// Response Formatter for Vapi OpenAI-Compatible Chat Completion Format\nconst lastReply = $json.reply || ($json.body && $json.body.reply) || 'Assalam-o-Alaikum sir! Main aap ki kis tarah madad kar sakti hoon?';\nconst createdTs = Math.floor(Date.now() / 1000);\n\nreturn [{\n  json: {\n    id: 'chatcmpl-n8n-' + createdTs,\n    object: 'chat.completion',\n    created: createdTs,\n    model: 'n8n-langgraph-agent',\n    choices: [\n      {\n        index: 0,\n        message: {\n          role: 'assistant',\n          content: lastReply\n        },\n        finish_reason: 'stop'\n      }\n    ],\n    usage: {\n      prompt_tokens: 50,\n      completion_tokens: 30,\n      total_tokens: 80\n    }\n  }\n}];"
+        "functionCode": "// Response Formatter for Vapi OpenAI-Compatible Chat Completion Format\nlet lastReply = $json.reply || ($json.body && $json.body.reply);\nif (!lastReply) {\n  if ($json.success || ($json.body && $json.body.success)) {\n    const appNum = $json.appointment_id || ($json.body && $json.body.appointment_id) || '';\n    lastReply = `Bohat shukriya sir! Aap ki appointment ${appNum ? '#' + appNum + ' ' : ''}schedule kar di gayi hai aur confirmation email bhej di gayi hai.`;\n  } else {\n    lastReply = 'Assalam-o-Alaikum sir! Main aap ki kis tarah madad kar sakti hoon?';\n  }\n}\nconst createdTs = Math.floor(Date.now() / 1000);\n\nreturn [{\n  json: {\n    id: 'chatcmpl-n8n-' + createdTs,\n    object: 'chat.completion',\n    created: createdTs,\n    model: 'n8n-langgraph-agent',\n    choices: [\n      {\n        index: 0,\n        message: {\n          role: 'assistant',\n          content: lastReply\n        },\n        finish_reason: 'stop'\n      }\n    ],\n    usage: {\n      prompt_tokens: 50,\n      completion_tokens: 30,\n      total_tokens: 80\n    }\n  }\n}];"
       },
       "name": "Task 5: Vapi Response Formatter & Telemetry Log",
       "type": "n8n-nodes-base.function",

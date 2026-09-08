@@ -16,6 +16,7 @@ from llm_client import llm_client
 from system_prompt import get_system_prompt_with_context
 from appointment_manager import appointment_manager
 from email_service import DEFAULT_MANAGER_EMAIL
+from memory import extract_spoken_email
 
 def _create_trace_event(node_name: str, intent: Optional[str], details: Dict[str, Any]) -> Dict[str, Any]:
     """Helper to construct annotated execution trace events for Task 5."""
@@ -34,19 +35,31 @@ def intent_detection_node(state: AgentState) -> Dict[str, Any]:
     """
     Task 2 Node: Intent Detection Node.
     Analyzes last user message and updates state.intent.
+    Uses strict word boundaries to avoid substring false positives (e.g. 'hi' in 'chahiye').
     """
     user_msg = state["messages"][-1]["content"] if state["messages"] else ""
     text = user_msg.lower()
 
-    # Intent Classification Rules
+    # Intent Classification Rules with Word Boundaries
     intent = "recommendation"
-    if any(w in text for w in ["salam", "assalam", "hello", "hi", "kaun", "kon"]):
-        intent = "greeting"
-    elif any(w in text for w in ["bye", "khuda hafiz", "allah hafiz", "shukriya", "thanks"]):
+    if re.search(r'\b(salam|assalam|hello|hi|kaun|kon)\b', text):
+        if any(w in text for w in ["book", "booking", "appointment", "visit", "schedule", "meeting", "بک", "وزٹ", "سکیجول"]):
+            intent = "booking"
+        elif any(w in text for w in ["noc", "transfer", "installment", "document", "legal", "dha procedure"]):
+            intent = "rag"
+        elif re.search(r'\b(reschedule|time change|postpone)\b', text):
+            intent = "reschedule"
+        elif re.search(r'\b(cancel|mansookh)\b', text):
+            intent = "cancel"
+        elif any(w in text for w in ["crore", "lakh", "marla", "kanal", "bed", "bedroom", "house", "plot", "flat", "apartment", "rent", "buy", "sale", "lahore", "islamabad", "karachi"]):
+            intent = "recommendation"
+        else:
+            intent = "greeting"
+    elif re.search(r'\b(bye|khuda hafiz|allah hafiz|shukriya|thanks)\b', text):
         intent = "goodbye"
-    elif any(w in text for w in ["reschedule", "time change", "postpone"]):
+    elif re.search(r'\b(reschedule|time change|postpone)\b', text):
         intent = "reschedule"
-    elif any(w in text for w in ["cancel", "mansookh"]):
+    elif re.search(r'\b(cancel|mansookh)\b', text):
         intent = "cancel"
     elif any(w in text for w in ["book", "booking", "appointment", "visit", "schedule", "meeting", "email", "mail", "بک", "وزٹ", "سائیڈ", "سکیجول", "ای میل"]):
         intent = "booking"
@@ -67,23 +80,51 @@ def intent_detection_node(state: AgentState) -> Dict[str, Any]:
     elif "rent" in text or "kiraya" in text:
         prefs["purpose"] = "Rent"
 
-    # Extract spoken email if present
+    bed_m = re.search(r'(\d+)\s*(?:bed|bedroom|bedrooms|kamray|kamre|کمرے|بیڈ)', text)
+    if bed_m:
+        prefs["bedrooms"] = int(bed_m.group(1))
+
+    crore_m = re.search(r'(\d+(?:\.\d+)?)\s*(?:crore|crores|cr|cror|kror|krore|کروڑ)', text)
+    if crore_m:
+        prefs["max_price_pkr"] = float(crore_m.group(1)) * 10000000.0
+    lakh_m = re.search(r'(\d+(?:\.\d+)?)\s*(?:lakh|lakhs|lac|lacs|لاکھ)', text)
+    if lakh_m:
+        prefs["max_price_pkr"] = float(lakh_m.group(1)) * 100000.0
+
+    # Extract spoken email or standard email if present
     profile = dict(state.get("user_profile", {}))
-    m_email = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', user_msg)
-    if m_email:
-        profile["client_email"] = m_email.group(0)
+    spoken_email = extract_spoken_email(user_msg)
+    if spoken_email:
+        profile["client_email"] = spoken_email
+    else:
+        m_email = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', user_msg)
+        if m_email:
+            profile["client_email"] = m_email.group(0)
+
+    # Extract Date & Time for appointments
+    app_status = dict(state.get("appointment_status", {}))
+    if "tomorrow" in text or "kal" in text or "کل" in text:
+        app_status["date"] = "Tomorrow"
+    elif "today" in text or "aaj" in text or "آج" in text:
+        app_status["date"] = "Today"
+    
+    time_m = re.search(r'(\d{1,2}(?::\d{2})?\s*(?:am|pm|baje|bajay|بجے))', text)
+    if time_m:
+        app_status["time"] = time_m.group(1).upper()
 
     trace = [_create_trace_event("intent_detection_node", intent, {
         "user_message": user_msg,
         "detected_intent": intent,
         "extracted_city": prefs.get("city"),
-        "extracted_purpose": prefs.get("purpose")
+        "extracted_purpose": prefs.get("purpose"),
+        "extracted_email": profile.get("client_email")
     })]
 
     return {
         "intent": intent,
         "property_preferences": prefs,
         "user_profile": profile,
+        "appointment_status": app_status,
         "execution_trace": trace
     }
 
@@ -122,7 +163,9 @@ def recommendation_node(state: AgentState) -> Dict[str, Any]:
     # Task 4 Guardrail: Never recommend unavailable properties
     available_props = search_property_tool.invoke({
         "city": city,
-        "purpose": prefs.get("purpose")
+        "purpose": prefs.get("purpose"),
+        "bedrooms": prefs.get("bedrooms"),
+        "max_price_pkr": prefs.get("max_price_pkr")
     })
     
     formatted_props = ""
@@ -155,6 +198,8 @@ def availability_check_node(state: AgentState) -> Dict[str, Any]:
     
     avail_res = availability_checker_tool.invoke({"date_str": date_str, "time_str": time_str})
     app_status["is_available"] = avail_res["is_available"]
+    app_status["available_slots"] = avail_res.get("available_slots", [])
+    app_status["conflict_reason"] = avail_res.get("conflict_reason")
     
     trace = [_create_trace_event("availability_check_node", state["intent"], avail_res)]
     return {
@@ -272,9 +317,17 @@ def email_node(state: AgentState) -> Dict[str, Any]:
 def clarification_node(state: AgentState) -> Dict[str, Any]:
     """
     Task 2 & 4 Node: Clarification Node.
-    Task 4 Validation: Ask clarification instead of guessing.
+    Task 4 Validation: Ask clarification or offer alternative slots on conflict.
     """
-    reply = "Ji bilkul sir! Main aap ki site visit schedule kar deti hoon. Aap ka naam, email address, aur preferred date & time slot kya hai sir?"
+    app_status = state.get("appointment_status", {})
+    alt_slots = app_status.get("available_slots", [])
+    if not app_status.get("is_available", True) and alt_slots:
+        alt_str = ", ".join(alt_slots[:3])
+        req_time = app_status.get("time") or "ye slot"
+        reply = f"Sir {req_time} busy hai, lekin hamare paas usi din {alt_str} slots available hain. Kya main in mein se kisi par schedule kar doon?"
+    else:
+        reply = "Ji bilkul sir! Main aap ki site visit schedule kar deti hoon. Aap ka naam, email address, aur preferred date & time slot kya hai sir?"
+    
     trace = [_create_trace_event("clarification_node", state["intent"], {"asked_clarification": True})]
     return {
         "messages": [{"role": "assistant", "content": reply}],

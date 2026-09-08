@@ -10,25 +10,25 @@ This product delivers an end-to-end autonomous Pakistani real estate sales execu
 
 The complete product documentation package is organized as follows:
 
-1. [**System Architecture (`SYSTEM_ARCHITECTURE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/SYSTEM_ARCHITECTURE.md)
+1. [**System Architecture (`SYSTEM_ARCHITECTURE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/SYSTEM_ARCHITECTURE.md)
    - High-level architecture, LangGraph state machine flow, Vapi / Deepgram / ElevenLabs integration, hybrid SQL+RAG retrieval pipeline, and security model.
 
-2. [**API Documentation (`API_DOCUMENTATION.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/API_DOCUMENTATION.md)
+2. [**API Documentation (`API_DOCUMENTATION.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/API_DOCUMENTATION.md)
    - Comprehensive OpenAPI / REST and Webhook API specifications for Vapi `/v1/chat/completions`, REST chat, LangGraph agent, CRM logs, and Kubernetes health probes.
 
-3. [**User Guide (`USER_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/USER_GUIDE.md)
+3. [**User Guide (`USER_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/USER_GUIDE.md)
    - End-user and agent operator guide on UrduLish conversation etiquette, property search, site visit booking, rescheduling, and cancellation.
 
-4. [**Admin Guide (`ADMIN_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/ADMIN_GUIDE.md)
+4. [**Admin Guide (`ADMIN_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/ADMIN_GUIDE.md)
    - Administrator guide for environment configuration (`.env`), Vapi Portal setup, Google Service Account calendar integration, Gmail SMTP setup, and Docker deployment.
 
-5. [**Monitoring & Maintenance Plan (`MAINTENANCE_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/MAINTENANCE_GUIDE.md)
+5. [**Monitoring & Maintenance Plan (`MAINTENANCE_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/MAINTENANCE_GUIDE.md)
    - Operational SLAs, latency targets, 99.9% uptime targets, weekly STT retraining, vector DB refresh schedule, prompt updates, backup strategy, and monthly security review cadence.
 
-6. [**Troubleshooting Guide (`TROUBLESHOOTING_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/TROUBLESHOOTING_GUIDE.md)
+6. [**Troubleshooting Guide (`TROUBLESHOOTING_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/TROUBLESHOOTING_GUIDE.md)
    - Diagnostic matrix for SMTP authentication drops, DMARC/SPF deliverability, Vapi webhook timeouts, Deepgram STT normalization, and Google Calendar API error resolution.
 
-7. [**Future Enhancements Roadmap (`FUTURE_ENHANCEMENTS.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/client_delivery_docs/FUTURE_ENHANCEMENTS.md)
+7. [**Future Enhancements Roadmap (`FUTURE_ENHANCEMENTS.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/FUTURE_ENHANCEMENTS.md)
    - Strategic roadmap detailing WhatsApp Business integration, SMS confirmations, Salesforce/HubSpot CRM integration, Multilingual support (Urdu, English, Punjabi), and Voice Cloning for brand representatives.
 
 ---
@@ -36,7 +36,7 @@ The complete product documentation package is organized as follows:
 ## Quick System Status
 
 - **Core Engine**: FastAPI Custom LLM Server with Primary Gemini & Groq Backup
-- **Agent Orchestration**: LangGraph StateGraph (`langgraph_agent/`) + **n8n Workflow** ([`n8n_langgraph_workflow.json`](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/n8n_langgraph_workflow.json))
+- **Agent Orchestration**: LangGraph StateGraph (`langgraph_agent/`) + **n8n Workflow** ([`n8n_langgraph_workflow.json`](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/n8n_langgraph_workflow.json))
 - **Speech Stack**: Deepgram `nova-2` STT + ElevenLabs TTS (`21m00Tcm4TlvDq8ikWAM`)
 - **Database & Storage**: SQLite (`real_estate.db`) + TF-IDF Vector Index
 - **Email Dispatch**: Dual HTML Email Notifications via Live SMTP (`samiworkspace11@gmail.com`)
