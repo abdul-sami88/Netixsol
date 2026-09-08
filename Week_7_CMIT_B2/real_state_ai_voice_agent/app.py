@@ -3,14 +3,14 @@ import json
 import inspect
 from functools import wraps
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Header, Depends, status
 from fastapi.responses import StreamingResponse, JSONResponse, HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from config import config
-from database import query_properties_sql, get_agent_by_city
+from database import query_properties_sql, get_agent_by_city, get_db_connection
 from memory import get_session_memory, reset_session_memory
 from rag_engine import RAGEngine, evaluate_chunk_sizes
 from recommendation import RecommendationEngine
@@ -29,10 +29,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS middleware for Web Client
+# CORS middleware restricted to localhost development origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=config.ALLOWED_CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -215,12 +215,91 @@ class OpenAICompletionRequest(BaseModel):
     temperature: Optional[float] = 0.6
     max_tokens: Optional[int] = 300
 
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class AddPropertyRequest(BaseModel):
+    title: str
+    city: str
+    area: str
+    price_pkr: float
+    size_val: float
+    size_unit: str = "Marla"
+    bedrooms: int = 0
+    bathrooms: int = 0
+    purpose: str = "Sale"
+    property_type: str = "House"
+    developer: str = "Private Developer"
+    description: Optional[str] = ""
+    amenities: Optional[List[str]] = []
+    nearby_schools: Optional[str] = ""
+    nearby_hospitals: Optional[str] = ""
+    has_payment_plan: Optional[bool] = False
+    down_payment_pkr: Optional[float] = None
+    monthly_installment_pkr: Optional[float] = None
+    duration_months: Optional[int] = 36
+    possession_months: Optional[int] = 18
+
 # Serve static directory if available
 from pathlib import Path
 static_dir = Path(__file__).parent / "static"
 if static_dir.exists():
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+# ==========================================
+# AUTHENTICATION & SECURITY DEPENDENCIES
+# ==========================================
+def verify_admin_token(authorization: Optional[str] = Header(None)) -> bool:
+    """
+    Verifies Bearer token for protected administrative and CRM endpoints.
+    """
+    if not authorization:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authorization token required. Please log in."
+        )
+    token = authorization.replace("Bearer ", "").strip()
+    if token != config.ADMIN_SESSION_TOKEN:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired session token."
+        )
+    return True
+
+@app.post("/api/v1/auth/login")
+async def login_endpoint(req: LoginRequest):
+    """Simple, secure authentication for dashboard administration."""
+    if req.username == config.ADMIN_USERNAME and req.password == config.ADMIN_PASSWORD:
+        return {
+            "success": True,
+            "message": "Login successful",
+            "token": config.ADMIN_SESSION_TOKEN,
+            "user": {
+                "username": config.ADMIN_USERNAME,
+                "role": "admin"
+            }
+        }
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid username or password"
+    )
+
+@app.get("/api/v1/auth/verify")
+async def verify_auth_endpoint(authorization: Optional[str] = Header(None)):
+    """Validates whether client session token is active."""
+    if not authorization:
+        return {"valid": False, "error": "No token provided"}
+    token = authorization.replace("Bearer ", "").strip()
+    return {"valid": token == config.ADMIN_SESSION_TOKEN}
+
+@app.post("/api/v1/auth/logout")
+async def logout_endpoint():
+    return {"success": True, "message": "Logged out successfully"}
+
+# ==========================================
+# PAGE ROUTING (Dashboard, Login, Website)
+# ==========================================
 @app.get("/")
 def read_root():
     index_file = static_dir / "index.html"
@@ -228,6 +307,22 @@ def read_root():
         with open(index_file, "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     return {"message": "UrduLish Real Estate Voice Agent API Server is running."}
+
+@app.get("/login")
+def read_login():
+    login_file = static_dir / "login.html"
+    if login_file.exists():
+        with open(login_file, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return JSONResponse(status_code=404, content={"detail": "Login page not found."})
+
+@app.get("/website")
+def read_website():
+    web_file = static_dir / "website.html"
+    if web_file.exists():
+        with open(web_file, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    return JSONResponse(status_code=404, content={"detail": "Website page not found."})
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
@@ -567,33 +662,33 @@ async def cancel_appointment_endpoint(req: CancelAppointmentRequest):
     res = appointment_manager.cancel_appointment(appointment_id=req.appointment_id)
     return res
 
-@app.get("/api/v1/appointments")
+@app.get("/api/v1/appointments", dependencies=[Depends(verify_admin_token)])
 async def list_appointments_endpoint():
     apps = appointment_manager.list_appointments(limit=50)
     return {"count": len(apps), "appointments": apps}
 
 # --- CRM LOGGING STORE REST ENDPOINTS ---
-@app.get("/api/v1/crm/transcripts")
+@app.get("/api/v1/crm/transcripts", dependencies=[Depends(verify_admin_token)])
 async def get_crm_transcripts():
     logs = crm_store.get_transcripts(limit=50)
     return {"count": len(logs), "transcripts": logs}
 
-@app.get("/api/v1/crm/preferences")
+@app.get("/api/v1/crm/preferences", dependencies=[Depends(verify_admin_token)])
 async def get_crm_preferences():
     prefs = crm_store.get_preferences(limit=50)
     return {"count": len(prefs), "preferences": prefs}
 
-@app.get("/api/v1/crm/history")
+@app.get("/api/v1/crm/history", dependencies=[Depends(verify_admin_token)])
 async def get_crm_history():
     history = crm_store.get_appointment_history(limit=50)
     return {"count": len(history), "history": history}
 
-@app.get("/api/v1/crm/followups")
+@app.get("/api/v1/crm/followups", dependencies=[Depends(verify_admin_token)])
 async def get_crm_followups(status: Optional[str] = None):
     reminders = crm_store.get_followups(status=status, limit=50)
     return {"count": len(reminders), "followups": reminders}
 
-@app.post("/api/v1/crm/followups/create")
+@app.post("/api/v1/crm/followups/create", dependencies=[Depends(verify_admin_token)])
 async def create_crm_followup(req: CreateFollowupRequest):
     res = crm_store.create_followup_reminder(
         client_email=req.client_email or "client@realestatehub.pk",
@@ -604,10 +699,19 @@ async def create_crm_followup(req: CreateFollowupRequest):
     )
     return res
 
-@app.post("/api/v1/crm/followups/complete")
+@app.post("/api/v1/crm/followups/complete", dependencies=[Depends(verify_admin_token)])
 async def complete_crm_followup(req: CompleteFollowupRequest):
     res = crm_store.complete_followup_reminder(reminder_id=req.reminder_id)
     return res
+
+def format_pkr_price_label(price: float) -> str:
+    if price >= 10000000:
+        crore = price / 10000000
+        return f"{crore:.2f}".rstrip('0').rstrip('.') + " Crore"
+    elif price >= 100000:
+        lakh = price / 100000
+        return f"{lakh:.1f}".rstrip('0').rstrip('.') + " Lakh"
+    return f"{int(price):,} PKR"
 
 @app.get("/api/v1/properties")
 async def get_properties(
@@ -616,7 +720,8 @@ async def get_properties(
     max_price: Optional[float] = None,
     bedrooms: Optional[int] = None,
     purpose: Optional[str] = None,
-    property_type: Optional[str] = None
+    property_type: Optional[str] = None,
+    limit: int = 20
 ):
     props = query_properties_sql(
         city=city,
@@ -625,16 +730,73 @@ async def get_properties(
         bedrooms=bedrooms,
         purpose=purpose,
         property_type=property_type,
-        limit=20
+        limit=limit
     )
+    for p in props:
+        if not p.get("price_formatted"):
+            price = p.get("price_pkr", 0)
+            if price >= 10000000:
+                p["price_formatted"] = f"PKR {price / 10000000:.2f} Crore"
+            elif price >= 100000:
+                p["price_formatted"] = f"PKR {price / 100000:.1f} Lakh"
+            else:
+                p["price_formatted"] = f"PKR {price:,.0f}"
     return {"count": len(props), "properties": props}
 
-@app.get("/api/v1/eval/hallucination")
+@app.post("/api/v1/properties/add", dependencies=[Depends(verify_admin_token)])
+async def add_property_endpoint(req: AddPropertyRequest):
+    """Adds a new property record to SQLite with optional payment plan."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    price_fmt = format_pkr_price_label(req.price_pkr) if req.purpose == "Sale" else f"{int(req.price_pkr):,} PKR/month"
+    amenities_json = json.dumps(req.amenities if isinstance(req.amenities, list) else [a.strip() for a in (req.amenities or "").split(",") if a.strip()])
+    
+    cursor.execute("""
+        INSERT INTO properties (
+            title, city, area, price_pkr, price_formatted, size_val, size_unit,
+            bedrooms, bathrooms, purpose, property_type, status, developer,
+            description, amenities, nearby_schools, nearby_hospitals
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Available', ?, ?, ?, ?, ?)
+    """, (
+        req.title, req.city, req.area, req.price_pkr, price_fmt, req.size_val, req.size_unit,
+        req.bedrooms, req.bathrooms, req.purpose, req.property_type, req.developer,
+        req.description or f"Luxury {req.property_type} in {req.area}, {req.city}.",
+        amenities_json, req.nearby_schools or "City School, Beaconhouse", req.nearby_hospitals or "City Hospital"
+    ))
+    prop_id = cursor.lastrowid
+    
+    if req.has_payment_plan and req.down_payment_pkr:
+        dp = req.down_payment_pkr
+        dur = req.duration_months or 36
+        mo = req.monthly_installment_pkr or round((req.price_pkr - dp) / dur, -3)
+        poss = req.possession_months or 18
+        cursor.execute("""
+            INSERT INTO payment_plans (
+                property_id, down_payment_pkr, monthly_installment_pkr, duration_months, possession_months
+            ) VALUES (?, ?, ?, ?, ?)
+        """, (prop_id, dp, mo, dur, poss))
+        
+    conn.commit()
+    conn.close()
+    return {"success": True, "property_id": prop_id, "message": "Property added successfully"}
+
+@app.delete("/api/v1/properties/{property_id}", dependencies=[Depends(verify_admin_token)])
+async def delete_property_endpoint(property_id: int):
+    """Deletes a property record and its associated payment plan from SQLite."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM payment_plans WHERE property_id = ?", (property_id,))
+    cursor.execute("DELETE FROM properties WHERE id = ?", (property_id,))
+    conn.commit()
+    conn.close()
+    return {"success": True, "message": f"Property {property_id} deleted successfully"}
+
+@app.get("/api/v1/eval/hallucination", dependencies=[Depends(verify_admin_token)])
 async def eval_hallucination_endpoint():
     report = run_hallucination_evaluation()
     return report
 
-@app.get("/api/v1/eval/chunking")
+@app.get("/api/v1/eval/chunking", dependencies=[Depends(verify_admin_token)])
 async def eval_chunking_endpoint():
     sample_queries = [
         "DHA transfer procedure requirements",
@@ -645,7 +807,7 @@ async def eval_chunking_endpoint():
     res = evaluate_chunk_sizes(sample_queries)
     return res
 
-@app.get("/api/v1/eval/voice")
+@app.get("/api/v1/eval/voice", dependencies=[Depends(verify_admin_token)])
 async def eval_voice_endpoint():
     sample_dialogue = [
         "Assalam-o-Alaikum, mujhe Lahore mein property chahiye.",
@@ -659,6 +821,8 @@ async def eval_voice_endpoint():
 @app.get("/api/v1/config/vapi")
 async def get_vapi_config():
     return {
+        "vapi_public_key": config.VAPI_PUBLIC_KEY,
+        "vapi_assistant_id": config.VAPI_ASSISTANT_ID,
         "vapi_assistant_config": {
             "name": "RealEstate Hub UrduLish Executive (Zara)",
             "transcriber": {

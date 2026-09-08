@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealEstate Hub | Curated Luxury Estates & AI Advisory</title>
+  
+  <!-- Google Fonts: Playfair Display (Royal Serif) + Plus Jakarta Sans (Modern Minimalist) + Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+  <!-- Vapi Web SDK for Browser Voice Calling (ESM Module + Script Tag Fallback) -->
+  <script type="module">
+    try {
+      const { default: Vapi } = await import("https://esm.sh/@vapi-ai/web@2.7.0");
+      window.Vapi = Vapi;
+      if (typeof window.initVapi === 'function') {
+        window.initVapi();
+      }
+    } catch (e) {
+      console.warn("ESM Vapi import error, falling back to script tag:", e);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" defer></script>
+
+  <style>
+    /* ==========================================================================
+       ROYAL MINIMALIST COLOR PALETTE ("Midnight Obsidian & Imperial Brass/Gold")
+       ========================================================================== */
+    :root {
+      --bg-base: #07090e;
+      --bg-surface: #0d121d;
+      --card-bg: rgba(14, 20, 32, 0.72);
+      --card-border: rgba(212, 175, 55, 0.12);
+      --card-border-hover: rgba(223, 183, 108, 0.38);
+      
+      /* Royal Metallic Gold & Champagne */
+      --gold-primary: #dfb76c;
+      --gold-deep: #c59a45;
+      --gold-light: #f5e0a3;
+      --gold-glow: rgba(223, 183, 108, 0.25);
+      --gold-gradient: linear-gradient(135deg, #dfb76c 0%, #c59a45 50%, #f5e0a3 100%);
+      
+      /* Accents & Neutrals */
+      --emerald-accent: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --sapphire-accent: #3b82f6;
+      --text-pure: #ffffff;
+      --text-main: #f1f5f9;
+      --text-muted: #8e9bb0;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image: 
+        radial-gradient(circle at 18% 12%, rgba(223, 183, 108, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 82% 25%, rgba(59, 130, 246, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 55%);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --------------------------------------------------------------------------
+       1. NAVIGATION BAR
+       -------------------------------------------------------------------------- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1.1rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+    .brand-crest {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(223, 183, 108, 0.15), rgba(197, 154, 69, 0.25));
+      border: 1px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      font-size: 1.25rem;
+      box-shadow: 0 4px 15px var(--gold-glow);
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .brand-tagline {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-primary);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold-primary);
+      border-radius: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-dashboard-link {
+      padding: 0.55rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-dashboard-link:hover {
+      border-color: var(--gold-primary);
+      background: rgba(223, 183, 108, 0.08);
+      color: var(--gold-primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-royal-voice {
+      padding: 0.58rem 1.35rem;
+      background: linear-gradient(135deg, #c59a45, #dfb76c);
+      color: #0b0f17;
+      border: none;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      box-shadow: 0 4px 18px var(--gold-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-royal-voice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(223, 183, 108, 0.45);
+      background: linear-gradient(135deg, #dfb76c, #f5e0a3);
+    }
+
+    /* --------------------------------------------------------------------------
+       2. HERO SECTION
+       -------------------------------------------------------------------------- */
+    .hero {
+      position: relative;
+      padding: 5.5rem 2rem 4rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1.1rem;
+      border-radius: 9999px;
+      background: rgba(223, 183, 108, 0.08);
+      border: 1px solid rgba(223, 183, 108, 0.25);
+      color: var(--gold-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.18;
+      max-width: 960px;
+      margin: 0 auto 1.35rem auto;
+      letter-spacing: -0.01em;
+      color: var(--text-pure);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 2.75rem auto;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    /* Minimalist Search Console */
+    .search-console-wrapper {
+      max-width: 1020px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(223, 183, 108, 0.06);
+    }
+
+    .city-pills-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .city-pill {
+      padding: 0.4rem 1.1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .city-pill:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+    }
+
+    .city-pill.active {
+      background: rgba(223, 183, 108, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-field {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .search-field label {
+      font-size: 0.72rem;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .search-select, .search-input {
+      background: rgba(8, 11, 18, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.75rem 0.95rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-select:focus, .search-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(223, 183, 108, 0.15);
+    }
+
+    .btn-search-exec {
+      padding: 0.85rem 1.75rem;
+      background: linear-gradient(135deg, #c59a45, #dfb76c);
+      border: none;
+      border-radius: 10px;
+      color: #080a0f;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 18px var(--gold-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-search-exec:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(223, 183, 108, 0.4);
+    }
+
+    /* --------------------------------------------------------------------------
+       3. CURATED PROPERTIES SECTION
+       -------------------------------------------------------------------------- */
+    .section-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 4.5rem 2rem;
+      flex: 1;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.75rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1.25rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--text-pure);
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+      font-size: 0.95rem;
+    }
+
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.35rem;
+    }
+
+    /* Premium Property Card - Sleek Small Box Design */
+    .property-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .property-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(223, 183, 108, 0.45);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(223, 183, 108, 0.1);
+    }
+
+    .property-hero-visual {
+      height: 140px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+      background: #0b0f17;
+    }
+
+    .property-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .property-card:hover .property-card-img {
+      transform: scale(1.07);
+    }
+
+    .property-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 9, 14, 0.15) 0%, rgba(7, 9, 14, 0.72) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .badge-purpose {
+      position: absolute;
+      top: 0.7rem;
+      left: 0.75rem;
+      background: rgba(14, 20, 32, 0.88);
+      border: 1px solid rgba(223, 183, 108, 0.5);
+      color: var(--gold-light);
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .badge-city {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.75rem;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .badge-city i {
+      color: var(--gold-primary);
+    }
+
+    .property-content {
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .prop-pricing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.3rem;
+    }
+
+    .prop-price-tag {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .prop-developer-tag {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .prop-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: var(--text-pure);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.7em;
+    }
+
+    .prop-location {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .prop-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      padding: 0.55rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 0.75rem;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.12rem;
+    }
+
+    .spec-item i {
+      font-size: 0.82rem;
+      color: var(--gold-primary);
+      margin-bottom: 0.1rem;
+    }
+
+    .spec-label {
+      font-size: 0.64rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .spec-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Financial / Installment Plan Highlight Pill */
+    .prop-plan-box {
+      background: rgba(223, 183, 108, 0.05);
+      border: 1px dashed rgba(223, 183, 108, 0.25);
+      border-radius: 8px;
+      padding: 0.42rem 0.65rem;
+      font-size: 0.74rem;
+      color: var(--gold-light);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      line-height: 1.3;
+    }
+
+    .prop-plan-box i {
+      color: var(--gold-primary);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .prop-card-actions {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+    }
+
+    /* Minimalist Highlight Buttons instead of solid bright gold */
+    .btn-action-inquire {
+      padding: 0.6rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(223, 183, 108, 0.28);
+      color: #dfb76c;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-action-inquire::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(223, 183, 108, 0.15) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-action-inquire:hover {
+      background: rgba(223, 183, 108, 0.08);
+      border-color: rgba(223, 183, 108, 0.65);
+      color: #fce8b3;
+      box-shadow: 0 0 14px rgba(223, 183, 108, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .btn-action-inquire:hover::before {
+      opacity: 1;
+    }
+
+    .btn-action-call {
+      padding: 0.6rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-call:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* --------------------------------------------------------------------------
+       4. ROYAL VOICE BANNER (CONCIERGE PROMO)
+       -------------------------------------------------------------------------- */
+    .royal-voice-banner {
+      margin: 4rem 0 1rem 0;
+      background: linear-gradient(135deg, rgba(197, 154, 69, 0.15), rgba(13, 18, 29, 0.85));
+      border: 1px solid var(--gold-primary);
+      border-radius: 24px;
+      padding: 3.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px var(--gold-glow);
+      flex-wrap: wrap;
+    }
+
+    .banner-text-side h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 0.5rem;
+    }
+
+    .banner-text-side p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    .btn-royal-voice-large {
+      padding: 1rem 2rem;
+      background: var(--gold-gradient);
+      border: none;
+      border-radius: 9999px;
+      color: #080a0f;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: 0 8px 25px rgba(223, 183, 108, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    .btn-royal-voice-large:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(223, 183, 108, 0.6);
+    }
+
+    /* --------------------------------------------------------------------------
+       5. FLOATING AI CHATBOT WIDGET
+       -------------------------------------------------------------------------- */
+    .chatbot-launcher {
+      position: fixed;
+      bottom: 2.25rem;
+      right: 2.25rem;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: #080a0f;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(223, 183, 108, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.25s ease;
+    }
+
+    .chatbot-launcher:hover {
+      transform: scale(1.08);
+      box-shadow: 0 14px 38px rgba(223, 183, 108, 0.65);
+    }
+
+    .chatbot-status-ping {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 14px;
+      height: 14px;
+      background: var(--emerald-accent);
+      border-radius: 50%;
+      border: 2px solid #080a0f;
+      box-shadow: 0 0 8px var(--emerald-accent);
+    }
+
+    .chat-widget-window {
+      position: fixed;
+      bottom: 7rem;
+      right: 2.25rem;
+      width: 400px;
+      height: 540px;
+      background: rgba(13, 18, 29, 0.96);
+      backdrop-filter: blur(28px);
+      border: 1px solid var(--card-border-hover);
+      border-radius: 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(223, 183, 108, 0.1);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: royalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes royalFadeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-widget-header {
+      padding: 1.15rem 1.35rem;
+      background: rgba(18, 25, 40, 0.95);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-agent-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .chat-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #080a0f;
+      font-size: 1.15rem;
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    .chat-agent-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-pure);
+    }
+
+    .chat-agent-status {
+      font-size: 0.74rem;
+      color: var(--emerald-accent);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 500;
+    }
+
+    .btn-close-chat {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .btn-close-chat:hover {
+      color: var(--gold-primary);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+    }
+
+    .chat-bubble {
+      max-width: 86%;
+      padding: 0.85rem 1.15rem;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .bubble-agent {
+      align-self: flex-start;
+      background: rgba(223, 183, 108, 0.08);
+      border: 1px solid rgba(223, 183, 108, 0.22);
+      border-bottom-left-radius: 4px;
+      color: #f8fafc;
+    }
+
+    .bubble-user {
+      align-self: flex-end;
+      background: #172133;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom-right-radius: 4px;
+      color: #ffffff;
+    }
+
+    .chat-widget-footer {
+      padding: 0.85rem 1.15rem;
+      background: rgba(18, 25, 40, 0.95);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(8, 11, 18, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .chat-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .btn-chat-send {
+      padding: 0.75rem 1.2rem;
+      background: var(--gold-gradient);
+      border: none;
+      border-radius: 12px;
+      color: #080a0f;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-chat-send:hover {
+      opacity: 0.9;
+    }
+
+    /* --------------------------------------------------------------------------
+       6. VAPI VOICE CALL MODAL (ROYAL VOICE SUITE)
+       -------------------------------------------------------------------------- */
+    .voice-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .voice-suite-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-primary);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px var(--gold-glow);
+      animation: royalFadeIn 0.3s ease-out;
+    }
+
+    .voice-visualizer-orb {
+      width: 120px;
+      height: 120px;
+      margin: 1.75rem auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f5e0a3 0%, #c59a45 60%, #0d121d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      color: #080a0f;
+      box-shadow: 0 0 35px var(--gold-glow);
+      transition: all 0.3s;
+    }
+
+    .voice-visualizer-orb.active {
+      animation: orbGlowPulse 1.4s infinite alternate;
+    }
+
+    @keyframes orbGlowPulse {
+      0% { transform: scale(1); box-shadow: 0 0 30px var(--gold-glow); }
+      100% { transform: scale(1.14); box-shadow: 0 0 65px rgba(223, 183, 108, 0.85); }
+    }
+
+    .voice-suite-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-pure);
+      margin-bottom: 0.35rem;
+    }
+
+    .voice-suite-status {
+      font-size: 0.9rem;
+      color: var(--gold-primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .voice-suite-sub {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 2.25rem;
+    }
+
+    .btn-end-voice-call {
+      padding: 0.85rem 2.25rem;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      border: none;
+      border-radius: 9999px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-end-voice-call:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.55);
+    }
+
+    /* --------------------------------------------------------------------------
+       7. FOOTER
+       -------------------------------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      background: rgba(7, 9, 14, 0.98);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--gold-primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 1100px) {
+      .properties-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .properties-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-title { font-size: 2.2rem; }
+      nav { padding: 1rem; }
+      .nav-links { display: none; }
+      .search-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="/website" class="brand">
+      <div class="brand-crest">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div class="brand-meta">
+        <span class="brand-name">RealEstate Hub</span>
+        <span class="brand-tagline">Royal & Luxury Living</span>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#properties" class="nav-link active">Curated Portfolio</a>
+      <a href="#about-concierge" class="nav-link">AI Voice Concierge</a>
+      <a href="/login" class="btn-dashboard-link">
+        <i class="fa-solid fa-shield-halved"></i> Staff Portal
+      </a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-royal-voice" onclick="startVapiVoiceCall()">
+        <i class="fa-solid fa-phone-volume"></i> Speak to Zara (Voice)
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <i class="fa-solid fa-gem"></i> Bespoke Real Estate Advisory & AI Intelligence
+    </div>
+    <h1 class="hero-title">
+      Architectural Excellence & <em>Luxury Estates</em> Across Pakistan
+    </h1>
+    <p class="hero-desc">
+      Discover prime residences, modern villas, and verified plots across Lahore, Karachi & Islamabad. Consult in Urdu or English with <strong>Zara</strong>, our real-time voice sales executive.
+    </p>
+
+    <!-- Search Console -->
+    <div class="search-console-wrapper">
+      <div class="city-pills-row">
+        <button class="city-pill active" onclick="setCityFilter('', this)">All Locations</button>
+        <button class="city-pill" onclick="setCityFilter('Lahore', this)">Lahore (DHA, Lake City)</button>
+        <button class="city-pill" onclick="setCityFilter('Islamabad', this)">Islamabad (Gulberg, B-17)</button>
+        <button class="city-pill" onclick="setCityFilter('Karachi', this)">Karachi (Emaar, Clifton)</button>
+      </div>
+
+      <div class="search-grid">
+        <div class="search-field">
+          <label>City</label>
+          <select id="filterCity" class="search-select">
+            <option value="">All Metros</option>
+            <option value="Lahore">Lahore</option>
+            <option value="Karachi">Karachi</option>
+            <option value="Islamabad">Islamabad</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label>Category</label>
+          <select id="filterType" class="search-select">
+            <option value="">All Categories</option>
+            <option value="House">House / Luxury Villa</option>
+            <option value="Apartment">Luxury Penthouse & Apt</option>
+            <option value="Plot">Residential Plot</option>
+            <option value="Commercial">Commercial Prime</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label>Bedrooms</label>
+          <select id="filterBeds" class="search-select">
+            <option value="">Any Configuration</option>
+            <option value="3">3 Bedrooms</option>
+            <option value="4">4 Bedrooms</option>
+            <option value="5">5+ Bedrooms</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label>Maximum Budget (PKR)</label>
+          <input type="number" id="filterBudget" class="search-input" placeholder="e.g. 35000000" />
+        </div>
+
+        <button class="btn-search-exec" onclick="fetchFilteredProperties()">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Properties Section -->
+  <section id="properties" class="section-container">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Verified Portfolio Listings</h2>
+        <p class="section-subtitle">LDA, CDA & SBCA vetted properties with structured 36-month installment schedules</p>
+      </div>
+      <button class="btn-dashboard-link" onclick="resetFilters()">
+        <i class="fa-solid fa-arrow-rotate-right"></i> Reset All Filters
+      </button>
+    </div>
+
+    <!-- Properties Grid -->
+    <div id="propertiesGrid" class="properties-grid">
+      <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 4rem;">
+        <i class="fa-solid fa-circle-notch fa-spin fa-2x" style="color: var(--gold-primary);"></i>
+        <br><br>Retrieving verified luxury estates...
+      </div>
+    </div>
+
+    <!-- Royal Concierge Banner -->
+    <div id="about-concierge" class="royal-voice-banner">
+      <div class="banner-text-side">
+        <h3>Prefer an audio consultation?</h3>
+        <p>
+          Speak directly with Zara on live call. Ask about DHA transfer procedures, installment schedules, or request an instant on-site viewing.
+        </p>
+      </div>
+      <button class="btn-royal-voice-large" onclick="startVapiVoiceCall()">
+        <i class="fa-solid fa-microphone-lines"></i> Launch Live Voice Call
+      </button>
+    </div>
+  </section>
+
+  <!-- Floating Chatbot Launcher -->
+  <button class="chatbot-launcher" id="chatLauncher" onclick="toggleChatWidget()" title="Chat with Zara AI">
+    <i class="fa-solid fa-comment-dots"></i>
+    <div class="chatbot-status-ping"></div>
+  </button>
+
+  <!-- Floating Chatbot Widget Window -->
+  <div class="chat-widget-window" id="chatWidget">
+    <div class="chat-widget-header">
+      <div class="chat-agent-info">
+        <div class="chat-avatar">
+          <i class="fa-solid fa-gem"></i>
+        </div>
+        <div>
+          <div class="chat-agent-name">Zara • AI Executive</div>
+          <div class="chat-agent-status"><i class="fa-solid fa-circle" style="font-size: 0.5rem;"></i> Live • RealEstate Hub Concierge</div>
+        </div>
+      </div>
+      <button class="btn-close-chat" onclick="toggleChatWidget()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-bubble bubble-agent">
+        Assalam-o-Alaikum sir! Main RealEstate Hub se Zara baat kar rahi hoon. Aap Lahore, Islamabad ya Karachi mein kis tarah ki property talash kar rahe hain?
+      </div>
+    </div>
+
+    <div class="chat-widget-footer">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Urdu ya English mein type karein..." onkeypress="if(event.key==='Enter') sendChatMessage()" />
+      <button class="btn-chat-send" onclick="sendChatMessage()">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Royal Voice Call Modal Overlay -->
+  <div class="voice-modal-overlay" id="voiceModal">
+    <div class="voice-suite-card">
+      <div class="voice-suite-title">AI Voice Concierge</div>
+      <div class="voice-suite-status" id="voiceStatus">Establishing Audio Connection...</div>
+      
+      <div class="voice-visualizer-orb" id="voiceOrb">
+        <i class="fa-solid fa-microphone-lines"></i>
+      </div>
+      
+      <div class="voice-sub-text" id="voiceSubText">Please speak naturally in Urdu, English or UrduLish...</div>
+
+      <button class="btn-end-voice-call" onclick="endVapiVoiceCall()">
+        <i class="fa-solid fa-phone-slash"></i> End Consultation
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 RealEstate Hub Pakistan. Hand-Crafted Luxury & Intelligent UrduLish Advisory. Powered by Gemini, Groq & Vapi.</p>
+  </footer>
+
+  <script>
+    // -------------------------------------------------------------
+    // 1. PROPERTY CATALOGUE LOADER & RENDERER
+    // -------------------------------------------------------------
+    async function loadAllProperties() {
+      try {
+        const res = await fetch('/api/v1/properties');
+        const data = await res.json();
+        renderProperties(data.properties || []);
+      } catch (err) {
+        console.error("Failed to load properties:", err);
+      }
+    }
+
+    function setCityFilter(cityName, pillElem) {
+      document.querySelectorAll('.city-pill').forEach(p => p.classList.remove('active'));
+      if (pillElem) pillElem.classList.add('active');
+      document.getElementById('filterCity').value = cityName;
+      fetchFilteredProperties();
+    }
+
+    function resetFilters() {
+      document.getElementById('filterCity').value = '';
+      document.getElementById('filterType').value = '';
+      document.getElementById('filterBeds').value = '';
+      document.getElementById('filterBudget').value = '';
+      document.querySelectorAll('.city-pill').forEach((p, idx) => {
+        if (idx === 0) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+      loadAllProperties();
+    }
+
+    async function fetchFilteredProperties() {
+      const city = document.getElementById('filterCity').value;
+      const type = document.getElementById('filterType').value;
+      const beds = document.getElementById('filterBeds').value;
+      const budget = document.getElementById('filterBudget').value;
+
+      let url = `/api/v1/properties?`;
+      if (city) url += `city=${encodeURIComponent(city)}&`;
+      if (type) url += `property_type=${encodeURIComponent(type)}&`;
+      if (beds) url += `bedrooms=${encodeURIComponent(beds)}&`;
+      if (budget) url += `max_price=${encodeURIComponent(budget)}&`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        renderProperties(data.properties || []);
+      } catch (err) {
+        console.error("Filter request error:", err);
+      }
+    }
+
+    const DEMO_PROPERTY_IMAGES = [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=700&q=80"
+    ];
+
+    function getPropertyImage(p, index) {
+      if (p.image_url && p.image_url.startsWith('http')) return p.image_url;
+      const t = (p.property_type || '').toLowerCase();
+      if (t.includes('plot')) {
+        return "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=700&q=80";
+      }
+      if (t.includes('apartment') || t.includes('flat') || t.includes('penthouse')) {
+        return "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=700&q=80";
+      }
+      const seed = (p.id || index || 0);
+      return DEMO_PROPERTY_IMAGES[seed % DEMO_PROPERTY_IMAGES.length];
+    }
+
+    function renderProperties(list) {
+      const grid = document.getElementById('propertiesGrid');
+      if (!list || list.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 4rem;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; color: var(--gold-primary); margin-bottom: 1rem;"></i>
+            <br>No estates matched your filter criteria. Try adjusting the city or budget range.
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map((p, idx) => {
+        const imgUrl = getPropertyImage(p, idx);
+        
+        // Payment Plan Calculation & Formatting
+        let planHtml = '';
+        if (p.payment_plan && p.payment_plan.down_payment_pkr) {
+          const dpLakh = (p.payment_plan.down_payment_pkr / 100000).toFixed(1);
+          const moLakh = (p.payment_plan.monthly_installment_pkr / 100000).toFixed(1);
+          planHtml = `
+            <div class="prop-plan-box">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+              <div>
+                <strong>Installment Plan:</strong> 25% Down (${dpLakh} Lakh) • ${moLakh} Lakh/mo (${p.payment_plan.duration_months} Mos)
+              </div>
+            </div>`;
+        } else {
+          planHtml = `
+            <div class="prop-plan-box" style="border-color: rgba(255,255,255,0.1); color: var(--text-muted);">
+              <i class="fa-solid fa-shield-halved"></i>
+              <div>Standard Direct Transfer & Cash Settlement</div>
+            </div>`;
+        }
+
+        return `
+          <div class="property-card">
+            <div class="property-hero-visual">
+              <img src="${imgUrl}" alt="${p.title.replace(/"/g, '&quot;')}" class="property-card-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80'">
+              <div class="property-hero-overlay"></div>
+              <span class="badge-purpose">${p.purpose || 'For Sale'}</span>
+              <span class="badge-city"><i class="fa-solid fa-location-dot"></i> ${p.city}</span>
+            </div>
+
+            <div class="property-content">
+              <div class="prop-pricing-row">
+                <div class="prop-price-tag">${p.price_formatted || ('PKR ' + Number(p.price_pkr || 0).toLocaleString())}</div>
+                <div class="prop-developer-tag">${p.developer || 'Verified Host'}</div>
+              </div>
+
+              <h3 class="prop-title">${p.title}</h3>
+              <div class="prop-location">
+                <i class="fa-solid fa-map-pin" style="color: var(--gold-primary);"></i>
+                ${p.area}, ${p.city}
+              </div>
+
+              <div class="prop-specs-grid">
+                <div class="spec-item">
+                  <i class="fa-solid fa-ruler-combined"></i>
+                  <span class="spec-label">Dimensions</span>
+                  <span class="spec-value">${p.size_val} ${p.size_unit}</span>
+                </div>
+                <div class="spec-item">
+                  <i class="fa-solid fa-bed"></i>
+                  <span class="spec-label">Bedrooms</span>
+                  <span class="spec-value">${p.bedrooms || 0} Beds</span>
+                </div>
+                <div class="spec-item">
+                  <i class="fa-solid fa-bath"></i>
+                  <span class="spec-label">Bathrooms</span>
+                  <span class="spec-value">${p.bathrooms || 0} Baths</span>
+                </div>
+              </div>
+
+              ${planHtml}
+
+              <div class="prop-card-actions">
+                <button class="btn-action-inquire" onclick="inquireProperty('${p.title.replace(/'/g, "\\'")}', '${p.city}')">
+                  <i class="fa-solid fa-comments"></i> Inquire with Zara
+                </button>
+                <button class="btn-action-call" onclick="startVapiVoiceCall()" title="Call Voice Concierge">
+                  <i class="fa-solid fa-phone"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function inquireProperty(title, city) {
+      toggleChatWidget(true);
+      const input = document.getElementById('chatInput');
+      input.value = `Mujhe ${title} (${city}) ke installment plan aur details ke baray mein bataiye.`;
+      sendChatMessage();
+    }
+
+    // -------------------------------------------------------------
+    // 2. CHATBOT WIDGET INTEGRATION (/api/v1/chat)
+    // -------------------------------------------------------------
+    const websiteSessionId = "royal_visitor_" + Math.floor(Math.random() * 1000000);
+
+    function toggleChatWidget(forceOpen = false) {
+      const widget = document.getElementById('chatWidget');
+      if (forceOpen) {
+        widget.style.display = 'flex';
+      } else {
+        widget.style.display = (widget.style.display === 'flex') ? 'none' : 'flex';
+      }
+      if (widget.style.display === 'flex') {
+        document.getElementById('chatInput').focus();
+      }
+    }
+
+    async function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chatMessages');
+
+      // Append User Bubble
+      const userBubble = document.createElement('div');
+      userBubble.className = 'chat-bubble bubble-user';
+      userBubble.innerText = text;
+      container.appendChild(userBubble);
+
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Loading bubble
+      const loadingBubble = document.createElement('div');
+      loadingBubble.className = 'chat-bubble bubble-agent';
+      loadingBubble.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Zara is analyzing availability...';
+      container.appendChild(loadingBubble);
+      container.scrollTop = container.scrollHeight;
+
+      try {
+        const res = await fetch('/api/v1/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: websiteSessionId, message: text })
+        });
+        const data = await res.json();
+        loadingBubble.innerHTML = data.reply || "Shukriya! Main details check kar rahi hoon.";
+
+        if (data.booked_appointment && data.booked_appointment.success) {
+          const alertBubble = document.createElement('div');
+          alertBubble.className = 'chat-bubble bubble-agent';
+          alertBubble.style.borderColor = 'var(--gold-primary)';
+          alertBubble.style.background = 'rgba(223, 183, 108, 0.15)';
+          alertBubble.innerHTML = `✨ <strong>Appointment Successfully Scheduled!</strong><br>Confirmation sent to: ${data.booked_appointment.client_email}`;
+          container.appendChild(alertBubble);
+        }
+
+        container.scrollTop = container.scrollHeight;
+      } catch (err) {
+        loadingBubble.innerText = "Network connection issue. Please retry shortly.";
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 3. VAPI VOICE WEB SDK INTEGRATION
+    // -------------------------------------------------------------
+    let vapiInstance = null;
+    let isCallActive = false;
+    // Default to configured keys from config.py / .env
+    let vapiPublicKey = "e8f1ddd8-65e8-43a2-b906-d43b521f756d";
+    let vapiAssistantId = "1d536983-bc6b-457f-9845-62d4d709064f";
+
+    async function initVapi() {
+      try {
+        const res = await fetch('/api/v1/config/vapi');
+        if (res.ok) {
+          const configData = await res.json();
+          if (configData.vapi_public_key) vapiPublicKey = configData.vapi_public_key;
+          if (configData.vapi_assistant_id) vapiAssistantId = configData.vapi_assistant_id;
+        }
+      } catch (err) {
+        console.warn("Could not load /api/v1/config/vapi:", err);
+      }
+
+      if (window.Vapi && !vapiInstance) {
+        try {
+          vapiInstance = new window.Vapi(vapiPublicKey);
+          setupVapiListeners();
+        } catch (e) {
+          console.error("Vapi instantiation error:", e);
+        }
+      }
+    }
+    window.initVapi = initVapi;
+
+    function setupVapiListeners() {
+      if (!vapiInstance) return;
+
+      vapiInstance.on('call-start', () => {
+        isCallActive = true;
+        document.getElementById('voiceOrb').classList.add('active');
+        document.getElementById('voiceStatus').innerText = "Live Call Connected";
+        document.getElementById('voiceSubText').innerText = "Zara is listening. Speak naturally in Urdu or English...";
+      });
+
+      vapiInstance.on('speech-start', () => {
+        document.getElementById('voiceStatus').innerText = "Zara is Speaking...";
+      });
+
+      vapiInstance.on('speech-end', () => {
+        document.getElementById('voiceStatus').innerText = "Listening to you...";
+      });
+
+      vapiInstance.on('call-end', () => {
+        resetCallUI();
+      });
+
+      vapiInstance.on('error', (err) => {
+        console.error("Vapi call error:", err);
+        document.getElementById('voiceStatus').innerText = "Call Interrupted";
+        const msg = err && (err.message || err.errorMsg || err.reason) ? (err.message || err.errorMsg || err.reason) : "Please check microphone permissions or API keys.";
+        document.getElementById('voiceSubText').innerText = msg;
+      });
+    }
+
+    async function startVapiVoiceCall() {
+      const modal = document.getElementById('voiceModal');
+      modal.style.display = 'flex';
+      document.getElementById('voiceStatus').innerText = "Connecting to Voice Concierge...";
+      document.getElementById('voiceSubText').innerText = "Requesting microphone permission...";
+
+      if (!vapiInstance) {
+        await initVapi();
+      }
+
+      // If ESM module is still asynchronously loading, poll briefly
+      if (!vapiInstance && !window.Vapi && !window.vapiSDK) {
+        for (let i = 0; i < 15; i++) {
+          await new Promise(r => setTimeout(r, 200));
+          if (window.Vapi || window.vapiSDK) break;
+        }
+        await initVapi();
+      }
+
+      if (vapiInstance) {
+        try {
+          document.getElementById('voiceSubText').innerText = "Establishing secure voice channel...";
+          await vapiInstance.start(vapiAssistantId);
+        } catch (e) {
+          console.error("Could not start Vapi call:", e);
+          document.getElementById('voiceStatus').innerText = "Connection Failed";
+          document.getElementById('voiceSubText').innerText = e.message || "Microphone access denied or connection refused.";
+        }
+      } else if (window.vapiSDK && typeof window.vapiSDK.run === 'function') {
+        // Fallback to official script tag runner
+        try {
+          document.getElementById('voiceSubText').innerText = "Initializing voice suite...";
+          window.vapiSDK.run({
+            apiKey: vapiPublicKey,
+            assistant: vapiAssistantId
+          });
+          document.getElementById('voiceStatus').innerText = "Voice Session Running";
+          document.getElementById('voiceSubText').innerText = "Microphone connected. Speak naturally.";
+        } catch (e) {
+          console.error("vapiSDK run error:", e);
+          document.getElementById('voiceStatus').innerText = "Connection Failed";
+          document.getElementById('voiceSubText').innerText = "Unable to start voice call. Please reload page.";
+        }
+      } else {
+        document.getElementById('voiceStatus').innerText = "Voice SDK Loading";
+        document.getElementById('voiceSubText').innerText = "Loading audio libraries. Please check connection and retry in 2 seconds.";
+      }
+    }
+
+    function endVapiVoiceCall() {
+      if (vapiInstance && isCallActive) {
+        vapiInstance.stop();
+      }
+      resetCallUI();
+    }
+
+    function resetCallUI() {
+      isCallActive = false;
+      document.getElementById('voiceOrb').classList.remove('active');
+      document.getElementById('voiceModal').style.display = 'none';
+      document.getElementById('voiceStatus').innerText = "Consultation Concluded";
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAllProperties();
+      initVapi();
+    });
+  </script>
+</body>
+</html>

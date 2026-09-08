@@ -7,6 +7,21 @@ from rag_engine import RAGEngine
 from embedding_service import embedding_service
 from dialogue_memory import dialogue_memory
 
+def format_pkr_amount(amount: Optional[float]) -> str:
+    """Formats raw PKR numbers into natural Pakistani spoken denominations (Lakh / Crore)."""
+    if not amount or amount <= 0:
+        return "0 PKR"
+    if amount >= 10000000: # >= 1 Crore (10 Million)
+        val = amount / 10000000
+        return f"{val:.2f}".rstrip('0').rstrip('.') + " Crore PKR"
+    elif amount >= 100000: # >= 1 Lakh (100 Thousand)
+        val = amount / 100000
+        return f"{val:.2f}".rstrip('0').rstrip('.') + " Lakh PKR"
+    elif amount >= 1000: # >= 1 Thousand
+        k = amount / 1000
+        return f"{k:.1f}".rstrip('0').rstrip('.') + " Thousand PKR"
+    return f"{int(amount):,} PKR"
+
 class RecommendationEngine:
     def __init__(self, rag_engine: Optional[RAGEngine] = None):
         self.rag = rag_engine or RAGEngine()
@@ -209,10 +224,14 @@ class RecommendationEngine:
             plan_str = "Standard Cash Settlement"
             if p.get("payment_plan"):
                 plan = p["payment_plan"]
-                dp_str = f"{plan['down_payment_pkr']:,.0f} PKR" if plan.get('down_payment_pkr') else "25%"
-                mo_str = f"{plan['monthly_installment_pkr']:,.0f} PKR/month" if plan.get('monthly_installment_pkr') else "Flexible"
-                dur_str = f"{plan.get('duration_months', 36)} months"
-                plan_str = f"Flexible Installment Available (Down Payment: {dp_str}, Monthly: {mo_str}, Duration: {dur_str})"
+                dp_val = plan.get('down_payment_pkr')
+                mo_val = plan.get('monthly_installment_pkr')
+                dur_val = plan.get('duration_months', 36)
+                
+                dp_str = f"25% Down Payment = {format_pkr_amount(dp_val)}" if dp_val else "25% Down Payment"
+                mo_str = f"{format_pkr_amount(mo_val)}/month" if mo_val else "Flexible"
+                dur_str = f"{dur_val} months"
+                plan_str = f"Flexible Installment Available ({dp_str}, Monthly Installment: {mo_str}, Duration: {dur_str})"
 
             score_str = f" [ML Match Score: {p.get('ml_score', 0.85)*100:.0f}%]" if p.get('ml_score') is not None else ""
 

@@ -78,9 +78,17 @@ def normalize_slot_date(date_str: str) -> str:
         return "Friday"
     return date_str.strip()
 
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+DISPOSABLE_DOMAINS = {
+    "tempmail.com", "throwawaymail.com", "mailinator.com",
+    "guerrillamail.com", "10minutemail.com", "trashmail.com",
+    "yopmail.com", "fakeinbox.com", "sharklasers.com"
+}
+
 class AppointmentManager:
     def __init__(self):
-        pass
+        # In-memory throttle tracker: {client_email: [timestamp1, timestamp2, ...]}
+        self._email_booking_log: Dict[str, List[float]] = {}
 
     def check_availability(self, appointment_date: str, appointment_time: str) -> Dict[str, Any]:
         """
@@ -204,13 +212,49 @@ class AppointmentManager:
         6. Sends real confirmation email to the client's email (and alert to staff).
         7. Logs into CRM Appointment History and creates automatic Follow-up Reminder.
         """
-        target_email = client_email.strip() if client_email else ""
-        if not target_email or "@" not in target_email or "." not in target_email:
+        target_email = client_email.strip().lower() if client_email else ""
+        if not target_email or not EMAIL_REGEX.match(target_email):
             return {
                 "success": False,
                 "status": "INVALID_EMAIL",
                 "error": "Valid client email address is required to book an appointment.",
-                "message": "Client email address is missing or invalid. Please ask the client to provide their email address."
+                "message": "Client email address is missing or invalid. Please provide a valid email (e.g., name@example.com)."
+            }
+
+        # Check disposable domain
+        domain = target_email.split("@")[-1]
+        if domain in DISPOSABLE_DOMAINS:
+            return {
+                "success": False,
+                "status": "SPAM_REJECTED",
+                "error": "Disposable or temporary email addresses are not permitted.",
+                "message": "Please provide your permanent personal or work email address."
+            }
+
+        # Anti-Spam Throttling: Cooldown & Daily Limit
+        now = time.time()
+        recent_bookings = self._email_booking_log.get(target_email, [])
+        # Retain only timestamps from the last 24 hours
+        recent_bookings = [t for t in recent_bookings if now - t < 86400]
+        self._email_booking_log[target_email] = recent_bookings
+
+        # Cooldown check: minimum 2 minutes (120 sec) between booking attempts for same email
+        if recent_bookings and (now - recent_bookings[-1] < 120):
+            wait_sec = int(120 - (now - recent_bookings[-1]))
+            return {
+                "success": False,
+                "status": "SPAM_THROTTLED",
+                "error": f"Booking throttled. Please wait {wait_sec} seconds before booking another appointment.",
+                "message": f"An appointment was recently scheduled for {target_email}. To prevent duplicate emails, please wait {wait_sec} seconds."
+            }
+
+        # Daily booking cap: maximum 3 bookings per email per 24 hours
+        if len(recent_bookings) >= 3:
+            return {
+                "success": False,
+                "status": "DAILY_LIMIT_EXCEEDED",
+                "error": "Daily booking limit reached (max 3 appointments per 24 hours).",
+                "message": "Daily booking limit reached for this email address. Please contact our support team directly for additional bookings."
             }
 
         norm_date = normalize_slot_date(appointment_date)
@@ -301,6 +345,9 @@ class AppointmentManager:
         # Closed-Loop Feedback: Mark CRM transcripts as converted and index winning turns
         crm_store.mark_session_converted(session_id)
         dialogue_memory.index_converted_session(session_id)
+
+        # Record timestamp in anti-spam tracker
+        self._email_booking_log.setdefault(target_email, []).append(now)
 
         print(f"[Appointment Manager] Booked Appointment ID {appointment_id} for client {target_email} on {norm_date} {norm_time}")
 

@@ -7,28 +7,22 @@
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon-180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon-512.png">
 
   <style>
     :root {
-      --bg-dark: #0b0f19;
-      --card-bg: rgba(18, 26, 44, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg-dark: #070a12;
+      --card-bg: rgba(14, 20, 32, 0.78);
+      --card-border: rgba(255, 255, 255, 0.09);
       --accent-emerald: #10b981;
       --accent-gold: #fbbf24;
       --accent-blue: #3b82f6;
       --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
+      --text-muted: #94a3b8;
       --user-bubble: #1e293b;
       --agent-bubble: #064e3b;
     }
@@ -37,31 +31,34 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     }
 
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
+        radial-gradient(circle at 12% 15%, rgba(16, 185, 129, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 88% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 45%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     header {
-      padding: 1.25rem 2rem;
+      padding: 1rem 2rem;
       border-bottom: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(11, 15, 25, 0.85);
+      background: rgba(7, 10, 18, 0.9);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .brand {
@@ -77,7 +74,7 @@
 
     .brand h1 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 700;
       background: linear-gradient(135deg, #34d399, #fbbf24);
       -webkit-background-clip: text;
@@ -91,10 +88,11 @@
       gap: 0.5rem;
       background: rgba(16, 185, 129, 0.15);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 0.4rem 0.8rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--accent-emerald);
+      white-space: nowrap;
     }
 
     .dot {
@@ -112,31 +110,43 @@
       100% { opacity: 1; }
     }
 
+    /* Responsive Main Layout (Prevents overflowing viewport) */
     main {
       flex: 1;
-      max-width: 1400px;
+      max-width: 1560px;
       width: 100%;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 1.5rem;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 2rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+      gap: 1.5rem;
+      min-width: 0;
+    }
+
+    @media (max-width: 1150px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1rem;
+        gap: 1.25rem;
+      }
     }
 
     .glass-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      backdrop-filter: blur(16px);
+      border-radius: 18px;
+      backdrop-filter: blur(20px);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+      min-width: 0;
+      overflow: hidden;
     }
 
     .card-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 600;
       margin-bottom: 1rem;
       display: flex;
@@ -147,7 +157,7 @@
 
     /* Chat Simulator */
     .chat-container {
-      height: 520px;
+      height: 480px;
       overflow-y: auto;
       padding-right: 0.5rem;
       display: flex;
@@ -158,10 +168,11 @@
 
     .message {
       max-width: 90%;
-      padding: 0.9rem 1.2rem;
+      padding: 0.85rem 1.15rem;
       border-radius: 14px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.5;
+      word-break: break-word;
     }
 
     .user-message {
@@ -211,8 +222,9 @@
       font-size: 0.78rem;
       color: #34d399;
       white-space: pre-wrap;
-      max-height: 200px;
+      max-height: 180px;
       overflow-y: auto;
+      word-break: break-all;
     }
 
     .chat-input-row {
@@ -220,19 +232,18 @@
       gap: 0.75rem;
     }
 
-    input[type="text"], input[type="email"] {
-      flex: 1;
+    input[type="text"], input[type="email"], input[type="number"], select {
       background: rgba(15, 23, 42, 0.8);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 0.8rem 1.2rem;
+      padding: 0.75rem 1rem;
       color: white;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    input[type="text"]:focus, input[type="email"]:focus {
+    input:focus, select:focus {
       border-color: var(--accent-emerald);
     }
 
@@ -240,90 +251,77 @@
       background: linear-gradient(135deg, #10b981, #059669);
       border: none;
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 0.75rem 1.4rem;
       border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      transition: transform 0.1s, filter 0.2s;
+      transition: all 0.2s;
     }
 
     button:hover {
       filter: brightness(1.1);
     }
 
-    button:active {
-      transform: scale(0.98);
-    }
-
-    /* Right Column - Intelligence & Metrics */
+    /* Tabs Styling with Smooth Horizontal Scroll */
     .tabs {
       display: flex;
-      gap: 0.35rem;
-      margin-bottom: 1rem;
+      gap: 0.4rem;
       border-bottom: 1px solid var(--card-border);
-      padding-bottom: 0.55rem;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
       overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
     }
 
     .tab-btn {
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      padding: 0.45rem 0.75rem;
-      font-size: 0.8rem;
+      padding: 0.45rem 0.85rem;
       border-radius: 8px;
-      white-space: nowrap;
+      font-size: 0.84rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .tab-btn.active {
-      background: rgba(16, 185, 129, 0.18);
-      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
       color: var(--accent-emerald);
       font-weight: 600;
     }
 
     .tab-content {
       display: none;
-      height: 520px;
+      flex: 1;
+      overflow: hidden;
+      min-width: 0;
     }
 
     .tab-content.active {
       display: flex;
       flex-direction: column;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-emerald);
+      min-width: 0;
     }
 
     .prop-card {
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.75);
       border: 1px solid var(--card-border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 1rem;
       margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .prop-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
     }
 
     .prop-header {
@@ -331,6 +329,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
     .prop-price {
@@ -342,18 +342,19 @@
       background: #090d16;
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0.85rem;
       font-family: monospace;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #34d399;
       white-space: pre-wrap;
       overflow-x: auto;
+      max-height: 250px;
     }
 
     .btn-sm {
-      padding: 0.3rem 0.6rem;
-      font-size: 0.75rem;
-      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      border-radius: 8px;
     }
 
     .btn-danger {
@@ -368,15 +369,24 @@
       background: linear-gradient(135deg, #3b82f6, #2563eb);
     }
 
+    /* Responsive Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+    }
+
     .crm-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
+      font-size: 0.82rem;
+      min-width: 600px;
     }
 
     .crm-table th, .crm-table td {
-      padding: 0.6rem;
+      padding: 0.65rem;
       border: 1px solid var(--card-border);
       text-align: left;
     }
@@ -384,13 +394,14 @@
     .crm-table th {
       background: rgba(16, 185, 129, 0.15);
       color: var(--accent-emerald);
+      white-space: nowrap;
     }
 
-    @media (max-width: 1024px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-emerald); }
   </style>
 </head>
 <body>
@@ -400,9 +411,17 @@
       <i class="fa-solid fa-building-user"></i>
       <h1>RealEstate Hub <span style="font-size: 0.8rem; opacity: 0.7; color: white;">UrduLish Voice AI & CRM Logging Store</span></h1>
     </div>
-    <div class="status-badge">
-      <div class="dot"></div>
-      <span>CRM Store Online</span>
+    <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+      <a href="/website" style="color: var(--accent-emerald); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.95rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; font-weight: 500;">
+        <i class="fa-solid fa-globe"></i> Customer Website
+      </a>
+      <div class="status-badge">
+        <div class="dot"></div>
+        <span>CRM Store Online</span>
+      </div>
+      <button onclick="logoutAdmin()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; gap: 0.4rem;">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
     </div>
   </header>
 
@@ -431,7 +450,7 @@
       </div>
     </div>
 
-    <!-- Right Column: CRM Logging Store & Dashboards (Split into 7 Clean Tabs) -->
+    <!-- Right Column: CRM Logging Store & Dashboards -->
     <div class="glass-card">
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('tab-transcripts', this)"><i class="fa-solid fa-receipt"></i> Call Logs</button>
@@ -440,16 +459,16 @@
         <button class="tab-btn" onclick="switchTab('tab-appointments', this)"><i class="fa-solid fa-calendar-days"></i> Appointments</button>
         <button class="tab-btn" onclick="switchTab('tab-memory', this)"><i class="fa-solid fa-brain"></i> Memory</button>
         <button class="tab-btn" onclick="switchTab('tab-eval', this)"><i class="fa-solid fa-bolt"></i> Benchmarks</button>
-        <button class="tab-btn" onclick="switchTab('tab-properties', this)"><i class="fa-solid fa-house"></i> Properties (52)</button>
+        <button class="tab-btn" onclick="switchTab('tab-properties', this)"><i class="fa-solid fa-house"></i> Properties Inventory</button>
       </div>
 
       <!-- Tab 1: Call Transcripts -->
       <div id="tab-transcripts" class="tab-content active">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-microphone-lines"></i> Call Transcripts Store (STT & AI Responses)</h4>
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-microphone-lines"></i> Call Transcripts Store</h4>
           <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh Logs</button>
         </div>
-        <div style="flex: 1; overflow-y: auto; border: 1px solid var(--card-border); border-radius: 10px;">
+        <div class="table-container" style="max-height: 480px; overflow-y: auto;">
           <table class="crm-table" id="crmTranscriptsTable">
             <thead>
               <tr><th>Session / Time</th><th>Raw Input</th><th>Normalized STT</th><th>Zara Response</th><th>Latency</th></tr>
@@ -465,28 +484,28 @@
           <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-id-card"></i> Client Preferences Profile Store</h4>
           <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh Profiles</button>
         </div>
-        <div id="crmPreferencesCards" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">Loading preferences...</div>
+        <div id="crmPreferencesCards" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; max-height: 480px;">Loading preferences...</div>
       </div>
 
       <!-- Tab 3: Follow-up Tasks -->
       <div id="tab-followups" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-tasks"></i> Follow-up Reminders & Tasks Manager</h4>
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-tasks"></i> Follow-up Reminders Manager</h4>
           <div style="display: flex; gap: 0.5rem;">
             <button class="btn-sm btn-warning" onclick="createManualFollowup()"><i class="fa-solid fa-plus"></i> Add Task</button>
             <button class="btn-sm btn-blue" onclick="loadCRMData()"><i class="fa-solid fa-sync"></i> Refresh</button>
           </div>
         </div>
-        <div id="crmFollowupsList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">Loading follow-ups...</div>
+        <div id="crmFollowupsList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; max-height: 480px;">Loading follow-ups...</div>
       </div>
 
-      <!-- Tab 4: Appointments & Business Workflows -->
+      <!-- Tab 4: Appointments -->
       <div id="tab-appointments" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-calendar-check"></i> Booked Appointments & Google Calendar Sync</h4>
+          <h4 style="color: var(--accent-gold); font-size: 0.95rem;"><i class="fa-solid fa-calendar-check"></i> Booked Appointments & Google Calendar</h4>
           <button class="btn-sm btn-blue" onclick="loadAppointments()"><i class="fa-solid fa-sync"></i> Refresh</button>
         </div>
-        <div id="appointmentsList" style="flex: 1; overflow-y: auto;">Loading appointments...</div>
+        <div id="appointmentsList" style="flex: 1; overflow-y: auto; max-height: 480px;">Loading appointments...</div>
       </div>
 
       <!-- Tab 5: Context Memory -->
@@ -501,7 +520,7 @@
 
       <!-- Tab 6: Evaluation Benchmarks -->
       <div id="tab-eval" class="tab-content">
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
           <button onclick="runHallucinationEval()" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
             <i class="fa-solid fa-vial"></i> Run 20-Question Hallucination Test
           </button>
@@ -512,16 +531,200 @@
         <div class="code-block" id="evalResults" style="flex: 1; font-size: 0.8rem;">Click buttons above to trigger automated evaluation benchmarks.</div>
       </div>
 
-      <!-- Tab 7: Properties DB -->
+      <!-- Tab 7: Properties DB & Management (Full Add/Remove UI) -->
       <div id="tab-properties" class="tab-content">
-        <div id="propertiesList" style="flex: 1; overflow-y: auto;">Loading properties from SQLite...</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.6rem;">
+          <div>
+            <h4 style="color: var(--accent-gold); font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fa-solid fa-house-chimney"></i> Properties Management
+              <span id="propCountBadge" class="status-badge" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;">0 Items</span>
+            </h4>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="text" id="propSearchInput" placeholder="Filter title/area..." onkeyup="filterPropertiesList()" style="padding: 0.45rem 0.75rem; font-size: 0.82rem; border-radius: 8px; width: 160px;" />
+            <button class="btn-sm" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.45rem 0.85rem;" onclick="openAddPropertyModal()">
+              <i class="fa-solid fa-plus"></i> Add Property
+            </button>
+            <button class="btn-sm btn-blue" onclick="loadProperties()" title="Refresh Catalog">
+              <i class="fa-solid fa-sync"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="propertiesList" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; max-height: 480px; padding-right: 0.25rem;">
+          Loading properties from SQLite...
+        </div>
       </div>
     </div>
   </main>
 
+  <!-- Add Property Modal Dialog -->
+  <div id="addPropertyModal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center; padding: 1rem;">
+    <div class="glass-card" style="max-width: 620px; width: 100%; max-height: 92vh; overflow-y: auto; background: rgba(13, 18, 29, 0.98); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 1.75rem; box-shadow: 0 20px 60px rgba(0,0,0,0.8);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.75rem;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: var(--accent-gold); display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fa-solid fa-square-plus"></i> Add New Real Estate Property
+        </h3>
+        <button onclick="closeAddPropertyModal()" style="background: transparent; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="addPropertyForm" onsubmit="handleAddPropertySubmit(event)">
+        <div style="margin-bottom: 1rem;">
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Property Title *</label>
+          <input type="text" id="propTitle" required placeholder="e.g. 10 Marla Luxury Modern House in Lake City" style="width: 100%;" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">City *</label>
+            <select id="propCity" required style="width: 100%;">
+              <option value="Lahore">Lahore</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Karachi">Karachi</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Area / Sector *</label>
+            <input type="text" id="propArea" required placeholder="e.g. Lake City Sector M or DHA Phase 6" style="width: 100%;" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Price in PKR *</label>
+            <input type="number" id="propPrice" required placeholder="e.g. 35000000" style="width: 100%;" oninput="updatePriceHint()" />
+            <small id="priceHint" style="color: var(--accent-gold); font-size: 0.75rem; display: block; margin-top: 0.2rem;"></small>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Size & Unit *</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="number" id="propSizeVal" required placeholder="10" style="width: 50%;" />
+              <select id="propSizeUnit" style="width: 50%;">
+                <option value="Marla">Marla</option>
+                <option value="Kanal">Kanal</option>
+                <option value="Sq Ft">Sq Ft</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Beds</label>
+            <input type="number" id="propBeds" value="4" min="0" style="width: 100%;" />
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Baths</label>
+            <input type="number" id="propBaths" value="5" min="0" style="width: 100%;" />
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Purpose</label>
+            <select id="propPurpose" style="width: 100%;">
+              <option value="Sale">Sale</option>
+              <option value="Rent">Rent</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Type</label>
+            <select id="propType" style="width: 100%;">
+              <option value="House">House</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Plot">Plot</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Developer</label>
+            <input type="text" id="propDeveloper" value="DHA Developers" style="width: 100%;" />
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Amenities (comma separated)</label>
+            <input type="text" id="propAmenities" value="24/7 Security, Gated Community, Park View" style="width: 100%;" />
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Description</label>
+          <input type="text" id="propDesc" placeholder="Prime location, LDA approved, peaceful neighborhood." style="width: 100%;" />
+        </div>
+
+        <!-- 36-Month Installment Plan Section -->
+        <div style="background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(223, 183, 108, 0.35); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <input type="checkbox" id="propHasPlan" onchange="togglePlanFields()" style="width: 18px; height: 18px; accent-color: var(--accent-emerald);" />
+            <label for="propHasPlan" style="font-weight: 600; color: var(--accent-gold); font-size: 0.88rem; cursor: pointer;">
+              Include 36-Month Installment Plan
+            </label>
+          </div>
+          <div id="planFields" style="display: none; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Down Payment (PKR) (e.g. 25%)</label>
+              <input type="number" id="propDownPayment" placeholder="e.g. 8750000" style="width: 100%;" oninput="updatePlanCalculations()" />
+              <small id="dpHint" style="color: #34d399; font-size: 0.72rem;"></small>
+            </div>
+            <div>
+              <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Monthly Installment (PKR)</label>
+              <input type="number" id="propMonthlyInst" placeholder="Auto-calculated" style="width: 100%;" />
+              <small id="moHint" style="color: #34d399; font-size: 0.72rem;"></small>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn-sm" onclick="closeAddPropertyModal()" style="background: rgba(255,255,255,0.1); color: white; padding: 0.6rem 1.2rem;">Cancel</button>
+          <button type="submit" id="savePropBtn" class="btn-sm" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.6rem 1.5rem;">
+            <i class="fa-solid fa-check"></i> Save Property
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    // ==========================================
+    // AUTHENTICATION GUARD
+    // ==========================================
+    const adminToken = localStorage.getItem('admin_token');
+    if (!adminToken) {
+      window.location.replace('/login');
+    }
+
+    fetch('/api/v1/auth/verify', {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.valid) {
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_user');
+        window.location.replace('/login');
+      }
+    })
+    .catch(() => {});
+
+    function logoutAdmin() {
+      localStorage.removeItem('admin_token');
+      localStorage.removeItem('admin_user');
+      fetch('/api/v1/auth/logout', { method: 'POST' }).finally(() => {
+        window.location.replace('/login');
+      });
+    }
+
+    function getAuthHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token') || ''}`
+      };
+    }
+
     const sessionId = "session_" + Math.floor(Math.random() * 100000);
     let msgCounter = 0;
+    let allPropertiesCache = [];
 
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -561,7 +764,7 @@
       try {
         const response = await fetch('/api/v1/chat', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ session_id: sessionId, message: text })
         });
         const data = await response.json();
@@ -605,10 +808,13 @@
         .replace(/'/g, "&#039;");
     }
 
+    // -------------------------------------------------------------
+    // CRM DATA LOADERS
+    // -------------------------------------------------------------
     async function loadCRMData() {
       try {
-        // 1. Transcripts
-        const resT = await fetch('/api/v1/crm/transcripts');
+        const resT = await fetch('/api/v1/crm/transcripts', { headers: getAuthHeaders() });
+        if (resT.status === 401) return logoutAdmin();
         const dataT = await resT.json();
         const tbody = document.querySelector('#crmTranscriptsTable tbody');
         if (dataT.transcripts && dataT.transcripts.length > 0) {
@@ -622,11 +828,10 @@
             </tr>
           `).join('');
         } else {
-          tbody.innerHTML = `<tr><td colspan="5">No call transcripts logged yet. Send a message to see CRM logging!</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5">No call transcripts logged yet.</td></tr>`;
         }
 
-        // 2. Preferences
-        const resP = await fetch('/api/v1/crm/preferences');
+        const resP = await fetch('/api/v1/crm/preferences', { headers: getAuthHeaders() });
         const dataP = await resP.json();
         const prefDiv = document.getElementById('crmPreferencesCards');
         if (dataP.preferences && dataP.preferences.length > 0) {
@@ -648,8 +853,7 @@
           prefDiv.innerHTML = `<div style="font-size:0.85rem; color:#9ca3af;">No client preferences recorded yet.</div>`;
         }
 
-        // 3. Follow-ups
-        const resF = await fetch('/api/v1/crm/followups');
+        const resF = await fetch('/api/v1/crm/followups', { headers: getAuthHeaders() });
         const dataF = await resF.json();
         const fDiv = document.getElementById('crmFollowupsList');
         if (dataF.followups && dataF.followups.length > 0) {
@@ -683,9 +887,9 @@
       try {
         await fetch('/api/v1/crm/followups/create', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({
-            client_email: "samiworkspace11@gmail.com",
+            client_email: "client@realestatehub.pk",
             client_name: "Valued Client",
             reminder_type: type,
             reminder_date: date,
@@ -703,7 +907,7 @@
       try {
         await fetch('/api/v1/crm/followups/complete', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ reminder_id: id })
         });
         alert("Follow-up reminder marked as COMPLETED!");
@@ -715,7 +919,8 @@
 
     async function loadAppointments() {
       try {
-        const res = await fetch('/api/v1/appointments');
+        const res = await fetch('/api/v1/appointments', { headers: getAuthHeaders() });
+        if (res.status === 401) return logoutAdmin();
         const data = await res.json();
         const container = document.getElementById('appointmentsList');
         if (!data.appointments || data.appointments.length === 0) {
@@ -741,31 +946,221 @@
       }
     }
 
+    // -------------------------------------------------------------
+    // PROPERTIES MANAGEMENT (ADD & DELETE)
+    // -------------------------------------------------------------
     async function loadProperties() {
       try {
         const res = await fetch('/api/v1/properties');
         const data = await res.json();
-        const container = document.getElementById('propertiesList');
-        container.innerHTML = data.properties.map(p => `
-          <div class="prop-card">
-            <div class="prop-header">
-              <strong style="color: #34d399;">${p.title}</strong>
-              <span class="prop-price">${p.price_formatted}</span>
-            </div>
-            <div style="font-size: 0.8rem; color: #9ca3af;">
-              ${p.area}, ${p.city} | ${p.size_val} ${p.size_unit} | ${p.bedrooms} Beds | Dev: ${p.developer}
-            </div>
-          </div>
-        `).join('');
+        allPropertiesCache = data.properties || [];
+        document.getElementById('propCountBadge').innerText = `${allPropertiesCache.length} Available`;
+        renderPropertiesList(allPropertiesCache);
       } catch (err) {
         console.error(err);
+      }
+    }
+
+    const DEMO_PROPERTY_IMAGES = [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=300&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=300&q=80"
+    ];
+
+    function renderPropertiesList(list) {
+      const container = document.getElementById('propertiesList');
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div style="font-size: 0.85rem; color: #9ca3af; text-align: center; padding: 2rem;">No properties found.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map((p, idx) => {
+        let planInfo = '';
+        if (p.payment_plan && p.payment_plan.down_payment_pkr) {
+          const dpLakh = (p.payment_plan.down_payment_pkr / 100000).toFixed(1);
+          const moLakh = (p.payment_plan.monthly_installment_pkr / 100000).toFixed(1);
+          planInfo = `<span style="color: #fbbf24; font-size: 0.76rem; display: block; margin-top: 0.25rem;">⚡ <strong>Plan:</strong> 25% Down (${dpLakh} Lakh) • Monthly: ${moLakh} Lakh/mo</span>`;
+        }
+
+        const thumb = DEMO_PROPERTY_IMAGES[(p.id || idx) % DEMO_PROPERTY_IMAGES.length];
+
+        return `
+          <div class="prop-card" id="prop-item-${p.id}" style="display: flex; gap: 1rem; align-items: center;">
+            <img src="${thumb}" alt="thumb" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;" onerror="this.style.display='none'">
+            <div style="flex: 1; min-width: 0;">
+              <div class="prop-header">
+                <div>
+                  <strong style="color: #34d399; font-size: 0.95rem;">${escapeHtml(p.title)}</strong>
+                  <span class="status-badge" style="font-size: 0.68rem; padding: 0.15rem 0.45rem; margin-left: 0.4rem;">ID: #${p.id}</span>
+                  <span style="font-size: 0.75rem; color: #9ca3af; margin-left: 0.4rem;">[${p.property_type || 'House'} • ${p.purpose || 'Sale'}]</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.65rem;">
+                  <span class="prop-price">${p.price_formatted}</span>
+                  <button class="btn-sm btn-danger" onclick="confirmDeleteProperty(${p.id}, '${escapeHtml(p.title).replace(/'/g, "\\'")}')" title="Delete Property">
+                    <i class="fa-solid fa-trash-can"></i> Delete
+                  </button>
+                </div>
+              </div>
+              <div style="font-size: 0.8rem; color: #9ca3af; margin-top: 0.2rem;">
+                📍 <strong>Location:</strong> ${p.area}, ${p.city} | 📐 <strong>Size:</strong> ${p.size_val} ${p.size_unit} | 🛏️ <strong>Beds:</strong> ${p.bedrooms || 0} | 🛁 <strong>Baths:</strong> ${p.bathrooms || 0} | 🏗️ <strong>Developer:</strong> ${p.developer}
+              </div>
+              ${planInfo}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterPropertiesList() {
+      const q = document.getElementById('propSearchInput').value.toLowerCase().trim();
+      if (!q) {
+        renderPropertiesList(allPropertiesCache);
+        return;
+      }
+      const filtered = allPropertiesCache.filter(p => 
+        (p.title && p.title.toLowerCase().includes(q)) ||
+        (p.area && p.area.toLowerCase().includes(q)) ||
+        (p.city && p.city.toLowerCase().includes(q)) ||
+        (p.developer && p.developer.toLowerCase().includes(q))
+      );
+      renderPropertiesList(filtered);
+    }
+
+    function openAddPropertyModal() {
+      document.getElementById('addPropertyForm').reset();
+      document.getElementById('planFields').style.display = 'none';
+      document.getElementById('propHasPlan').checked = false;
+      document.getElementById('priceHint').innerText = '';
+      document.getElementById('dpHint').innerText = '';
+      document.getElementById('moHint').innerText = '';
+      document.getElementById('addPropertyModal').style.display = 'flex';
+    }
+
+    function closeAddPropertyModal() {
+      document.getElementById('addPropertyModal').style.display = 'none';
+    }
+
+    function togglePlanFields() {
+      const hasPlan = document.getElementById('propHasPlan').checked;
+      const fields = document.getElementById('planFields');
+      fields.style.display = hasPlan ? 'grid' : 'none';
+      if (hasPlan) updatePlanCalculations();
+    }
+
+    function updatePriceHint() {
+      const p = parseFloat(document.getElementById('propPrice').value) || 0;
+      const hint = document.getElementById('priceHint');
+      if (p >= 10000000) {
+        hint.innerText = `= ${(p/10000000).toFixed(2)} Crore PKR`;
+      } else if (p >= 100000) {
+        hint.innerText = `= ${(p/100000).toFixed(1)} Lakh PKR`;
+      } else {
+        hint.innerText = '';
+      }
+      if (document.getElementById('propHasPlan').checked) updatePlanCalculations();
+    }
+
+    function updatePlanCalculations() {
+      const p = parseFloat(document.getElementById('propPrice').value) || 0;
+      if (p > 0) {
+        const dpInput = document.getElementById('propDownPayment');
+        if (!dpInput.value) {
+          dpInput.value = Math.round(p * 0.25);
+        }
+        const dp = parseFloat(dpInput.value) || (p * 0.25);
+        const rem = Math.max(0, p - dp);
+        const mo = Math.round(rem / 36);
+        document.getElementById('propMonthlyInst').value = mo;
+        
+        document.getElementById('dpHint').innerText = `${(dp/100000).toFixed(1)} Lakh (25%)`;
+        document.getElementById('moHint').innerText = `${(mo/100000).toFixed(2)} Lakh / month`;
+      }
+    }
+
+    async function handleAddPropertySubmit(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('savePropBtn');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+      const priceVal = parseFloat(document.getElementById('propPrice').value);
+      const hasPlan = document.getElementById('propHasPlan').checked;
+      const dpVal = hasPlan ? parseFloat(document.getElementById('propDownPayment').value) : null;
+      const moVal = hasPlan ? parseFloat(document.getElementById('propMonthlyInst').value) : null;
+
+      const payload = {
+        title: document.getElementById('propTitle').value.trim(),
+        city: document.getElementById('propCity').value,
+        area: document.getElementById('propArea').value.trim(),
+        price_pkr: priceVal,
+        size_val: parseFloat(document.getElementById('propSizeVal').value) || 10,
+        size_unit: document.getElementById('propSizeUnit').value,
+        bedrooms: parseInt(document.getElementById('propBeds').value) || 0,
+        bathrooms: parseInt(document.getElementById('propBaths').value) || 0,
+        purpose: document.getElementById('propPurpose').value,
+        property_type: document.getElementById('propType').value,
+        developer: document.getElementById('propDeveloper').value.trim() || "Private Developer",
+        description: document.getElementById('propDesc').value.trim(),
+        amenities: document.getElementById('propAmenities').value.split(',').map(s => s.trim()).filter(Boolean),
+        has_payment_plan: hasPlan,
+        down_payment_pkr: dpVal,
+        monthly_installment_pkr: moVal,
+        duration_months: 36,
+        possession_months: 18
+      };
+
+      try {
+        const res = await fetch('/api/v1/properties/add', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          alert('Property added successfully to inventory!');
+          closeAddPropertyModal();
+          loadProperties();
+        } else {
+          alert('Failed to add property: ' + (data.detail || data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Server error while saving property.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Save Property';
+      }
+    }
+
+    async function confirmDeleteProperty(id, title) {
+      const ok = confirm(`CONFIRMATION:\nAre you sure you want to delete property #${id} "${title}"?\nThis will permanently delete this property and its payment plan.`);
+      if (!ok) return;
+
+      try {
+        const res = await fetch(`/api/v1/properties/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          alert(`Property #${id} deleted successfully.`);
+          loadProperties();
+        } else {
+          alert('Failed to delete property: ' + (data.detail || data.message || 'Unauthorized'));
+        }
+      } catch (err) {
+        alert('Network error while deleting property.');
       }
     }
 
     async function runHallucinationEval() {
       document.getElementById('evalResults').innerText = "Running 20-Question Hallucination Test across Gemini & Groq...";
       try {
-        const res = await fetch('/api/v1/eval/hallucination');
+        const res = await fetch('/api/v1/eval/hallucination', { headers: getAuthHeaders() });
         const data = await res.json();
         document.getElementById('evalResults').innerText = JSON.stringify(data, null, 2);
       } catch (err) {
@@ -776,7 +1171,7 @@
     async function runVoiceEval() {
       document.getElementById('evalResults').innerText = "Running Voice Latency & Naturalness Benchmark...";
       try {
-        const res = await fetch('/api/v1/eval/voice');
+        const res = await fetch('/api/v1/eval/voice', { headers: getAuthHeaders() });
         const data = await res.json();
         document.getElementById('evalResults').innerText = JSON.stringify(data, null, 2);
       } catch (err) {

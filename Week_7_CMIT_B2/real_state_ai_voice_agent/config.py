@@ -26,7 +26,24 @@ class Config:
     
     VAPI_API_KEY: str = clean_env(os.getenv("VAPI_API_KEY"))
     VAPI_ASSISTANT_ID: str = clean_env(os.getenv("VAPI_ASSISTANT_ID"))
+    VAPI_PUBLIC_KEY: str = clean_env(os.getenv("VAPI_PUBLIC_KEY"))
     SUPER_SECRET: str = clean_env(os.getenv("SUPER_SECRET"))
+
+    # Admin Dashboard Authentication Credentials
+    ADMIN_USERNAME: str = clean_env(os.getenv("ADMIN_USERNAME", "admin"))
+    ADMIN_PASSWORD: str = clean_env(os.getenv("ADMIN_PASSWORD", "admin123"))
+    ADMIN_SESSION_TOKEN: str = clean_env(os.getenv("ADMIN_SESSION_TOKEN", "realestate_secret_session_token_2026"))
+
+    # Allowed CORS Origins (Localhost Development)
+    ALLOWED_CORS_ORIGINS: list = [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:3000",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ]
 
      # Server Host & Port
     HOST: str = clean_env(os.getenv("HOST", "127.0.0.1"))
