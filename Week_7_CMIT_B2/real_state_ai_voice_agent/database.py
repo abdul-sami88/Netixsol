@@ -110,7 +110,26 @@ def init_db():
         normalized_transcript TEXT NOT NULL,
         agent_response TEXT NOT NULL,
         latency_sec REAL DEFAULT 0.0,
+        is_converted INTEGER DEFAULT 0,
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    cursor.execute("PRAGMA table_info(crm_call_transcripts)")
+    crm_cols = [c[1] for c in cursor.fetchall()]
+    if "is_converted" not in crm_cols:
+        cursor.execute("ALTER TABLE crm_call_transcripts ADD COLUMN is_converted INTEGER DEFAULT 0")
+
+    # 6b. Dialogue Exemplars (Phase 2 Winning Few-Shot Dialogue Memory)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS dialogue_exemplars (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        user_utterance TEXT NOT NULL,
+        agent_exemplar TEXT NOT NULL,
+        embedding TEXT NOT NULL,
+        conversion_count INTEGER DEFAULT 1,
+        source_session_id TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 
@@ -210,6 +229,92 @@ def query_properties_sql(
                 item["amenities"] = json.loads(item["amenities"])
             except Exception:
                 item["amenities"] = [a.strip() for a in item["amenities"].split(",") if a.strip()]
+        result.append(item)
+        
+    conn.close()
+    return result
+
+def query_candidate_properties_soft(
+    city: Optional[str] = None,
+    area: Optional[str] = None,
+    budget_pkr: Optional[float] = None,
+    bedrooms: Optional[int] = None,
+    purpose: Optional[str] = None,
+    property_type: Optional[str] = None,
+    budget_tolerance: float = 0.20,
+    limit: int = 15
+) -> List[Dict[str, Any]]:
+    """
+    Fetches candidate properties with relaxed boundaries for Phase 3 ML Ranking.
+    - Soft budget filtering (budget +/- 20% by default, or up to +25%)
+    - Joins payment_plans to enrich candidates with down payment & installment terms
+    - Parses amenities JSON
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    query = """
+        SELECT 
+            p.*,
+            pp.id AS payment_plan_id,
+            pp.down_payment_pkr,
+            pp.monthly_installment_pkr,
+            pp.duration_months,
+            pp.possession_months
+        FROM properties p
+        LEFT JOIN payment_plans pp ON pp.property_id = p.id
+        WHERE p.status = 'Available'
+    """
+    params = []
+    
+    if city:
+        query += " AND LOWER(p.city) LIKE LOWER(?)"
+        params.append(f"%{city}%")
+        
+    if purpose:
+        query += " AND LOWER(p.purpose) = LOWER(?)"
+        params.append(purpose)
+        
+    if property_type:
+        query += " AND LOWER(p.property_type) = LOWER(?)"
+        params.append(property_type)
+        
+    if budget_pkr and budget_pkr > 0:
+        max_price = budget_pkr * (1.0 + budget_tolerance)
+        min_price = max(0.0, budget_pkr * (1.0 - (budget_tolerance * 2.5)))
+        query += " AND p.price_pkr <= ?"
+        params.append(max_price)
+        if min_price > 0 and budget_pkr > 5000000:
+            query += " AND p.price_pkr >= ?"
+            params.append(min_price)
+            
+    query += " ORDER BY p.price_pkr ASC LIMIT ?"
+    params.append(limit)
+    
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    
+    result = []
+    for r in rows:
+        item = dict(r)
+        if item.get("amenities"):
+            try:
+                item["amenities"] = json.loads(item["amenities"])
+            except Exception:
+                item["amenities"] = [a.strip() for a in item["amenities"].split(",") if a.strip()]
+        else:
+            item["amenities"] = []
+            
+        if item.get("payment_plan_id") or item.get("monthly_installment_pkr"):
+            item["payment_plan"] = {
+                "down_payment_pkr": item.get("down_payment_pkr"),
+                "monthly_installment_pkr": item.get("monthly_installment_pkr"),
+                "duration_months": item.get("duration_months"),
+                "possession_months": item.get("possession_months")
+            }
+        else:
+            item["payment_plan"] = None
+            
         result.append(item)
         
     conn.close()

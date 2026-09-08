@@ -15,7 +15,8 @@ class CRMStore:
         raw_transcript: str,
         normalized_transcript: str,
         agent_response: str,
-        latency_sec: float = 0.0
+        latency_sec: float = 0.0,
+        is_converted: int = 0
     ) -> Dict[str, Any]:
         """Logs a single conversation turn (STT raw/normalized + AI response + timing) into SQLite CRM."""
         email = (client_email or DEFAULT_CRM_GUEST_EMAIL).strip()
@@ -23,9 +24,9 @@ class CRMStore:
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO crm_call_transcripts (
-                session_id, client_email, raw_transcript, normalized_transcript, agent_response, latency_sec
-            ) VALUES (?, ?, ?, ?, ?, ?)
-        """, (session_id, email, raw_transcript, normalized_transcript, agent_response, latency_sec))
+                session_id, client_email, raw_transcript, normalized_transcript, agent_response, latency_sec, is_converted
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (session_id, email, raw_transcript, normalized_transcript, agent_response, latency_sec, is_converted))
         conn.commit()
         log_id = cursor.lastrowid
         conn.close()
@@ -113,6 +114,34 @@ class CRMStore:
         conn.commit()
         conn.close()
         return {"success": True, "reminder_id": reminder_id}
+
+    def mark_session_converted(self, session_id: str) -> Dict[str, Any]:
+        """Marks all transcript turns for a booked session as converted (is_converted = 1)."""
+        if not session_id:
+            return {"success": False, "error": "session_id required"}
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE crm_call_transcripts 
+            SET is_converted = 1 
+            WHERE session_id = ?
+        """, (session_id,))
+        conn.commit()
+        updated_rows = cursor.rowcount
+        conn.close()
+        return {"success": True, "session_id": session_id, "updated_rows": updated_rows}
+
+    def get_converted_transcripts(self, session_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        """Retrieves high-converting transcripts that led to bookings."""
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        if session_id:
+            cursor.execute("SELECT * FROM crm_call_transcripts WHERE session_id = ? AND is_converted = 1 ORDER BY id ASC", (session_id,))
+        else:
+            cursor.execute("SELECT * FROM crm_call_transcripts WHERE is_converted = 1 ORDER BY id DESC LIMIT ?", (limit,))
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(r) for r in rows]
 
     # Fetchers for API / Dashboard
     def get_transcripts(self, limit: int = 50) -> List[Dict[str, Any]]:

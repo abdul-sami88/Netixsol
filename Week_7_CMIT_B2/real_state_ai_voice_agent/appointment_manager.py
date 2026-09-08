@@ -8,6 +8,7 @@ from database import get_db_connection, get_agent_by_city
 from calendar_service import calendar_service
 from email_service import email_service, DEFAULT_MANAGER_EMAIL
 from crm_store import crm_store
+from dialogue_memory import dialogue_memory
 
 STANDARD_SLOTS = [
     "10:00 AM",
@@ -296,6 +297,10 @@ class AppointmentManager:
             reminder_date=norm_date,
             notes=f"Call client to confirm arrival for {property_title} visit."
         )
+
+        # Closed-Loop Feedback: Mark CRM transcripts as converted and index winning turns
+        crm_store.mark_session_converted(session_id)
+        dialogue_memory.index_converted_session(session_id)
 
         print(f"[Appointment Manager] Booked Appointment ID {appointment_id} for client {target_email} on {norm_date} {norm_time}")
 

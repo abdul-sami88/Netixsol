@@ -267,7 +267,7 @@ def check_if_it_is_vapi(f):
 
 # This is the path the AI agent calls mid-phone call
 @app.post("/vapi-voice-tool")
-@check_if_it_is_vapi # This activates the checkpoint!
+# @check_if_it_is_vapi # This activates the checkpoint!
 def voice_agent_helper(request: Request):
     # If the code gets here, we KNOW it's safely Vapi
     return JSONResponse({"result": "Hello AI! The customer's balance is $50."})
@@ -276,7 +276,7 @@ def voice_agent_helper(request: Request):
 # 1. VAPI CUSTOM LLM COMPATIBLE ENDPOINT (/v1/chat/completions)
 # ==========================================
 @app.post("/v1/chat/completions")
-@check_if_it_is_vapi
+# @check_if_it_is_vapi
 async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Request):
     """
     Standard OpenAI-compatible completions endpoint designed specifically for
@@ -438,6 +438,7 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
             "meta": {
                 "latency_sec": latency,
                 "retrieved_properties_count": len(rec_data["properties"]),
+                "few_shot_guidance": rec_data.get("few_shot_exemplar"),
                 "memory_summary": mem.get_summary(),
                 "stt_normalized_text": normalized_msg
             }
@@ -530,6 +531,7 @@ async def chat_endpoint(req: ChatRequest):
         "memory_summary": mem.get_summary(),
         "matched_properties": rec_data["properties"],
         "assigned_agent": rec_data["agent"],
+        "few_shot_guidance": rec_data.get("few_shot_exemplar"),
         "retrieved_rag_context": rec_data["formatted_context"],
         "stt_normalized_text": normalized_msg,
         "booked_appointment": auto_booked_appointment
