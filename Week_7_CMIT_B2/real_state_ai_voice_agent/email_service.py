@@ -22,9 +22,48 @@ class EmailService:
         self.sender = self.username or config.NOTIFICATION_SENDER_EMAIL or DEFAULT_MANAGER_EMAIL
 
     def _generate_google_calendar_url(self, title: str, details: str, location: str, date_str: str, time_str: str) -> str:
-        """Generates a 1-click Google Calendar Add-to-Calendar URL."""
-        now = datetime.now() + timedelta(days=1)
-        start_dt = now.replace(hour=10, minute=0, second=0)
+        """Generates a 1-click Google Calendar Add-to-Calendar URL matching appointment date/time."""
+        now = datetime.now()
+        target_date = now + timedelta(days=1)
+        
+        # Parse date_str
+        d_lower = (date_str or "").strip().lower()
+        if d_lower == "today" or "aaj" in d_lower:
+            target_date = now
+        elif d_lower == "tomorrow" or "kal" in d_lower:
+            target_date = now + timedelta(days=1)
+        else:
+            # Try parsing YYYY-MM-DD
+            try:
+                target_date = datetime.strptime(date_str.strip(), "%Y-%m-%d")
+            except Exception:
+                pass
+
+        # Parse time_str (e.g. 11:00 AM, 4 PM, 04:00 PM)
+        target_hour = 11
+        target_minute = 0
+        try:
+            t_clean = (time_str or "").strip().upper()
+            is_pm = "PM" in t_clean
+            is_am = "AM" in t_clean
+            t_clean = t_clean.replace("PM", "").replace("AM", "").replace("BAJE", "").replace("BAJAY", "").strip()
+            if ":" in t_clean:
+                parts = t_clean.split(":")
+                target_hour = int(parts[0].strip())
+                target_minute = int(parts[1].strip())
+            else:
+                target_hour = int(t_clean)
+                target_minute = 0
+            
+            if is_pm and target_hour < 12:
+                target_hour += 12
+            elif is_am and target_hour == 12:
+                target_hour = 0
+        except Exception:
+            target_hour = 11
+            target_minute = 0
+
+        start_dt = target_date.replace(hour=target_hour, minute=target_minute, second=0, microsecond=0)
         end_dt = start_dt + timedelta(hours=1)
         
         start_iso = start_dt.strftime("%Y%m%dT%H%M%SZ")
@@ -74,13 +113,14 @@ class EmailService:
         property_title: str,
         appointment_date: str,
         appointment_time: str,
-        requirements_summary: str = ""
+        requirements_summary: str = "",
+        appointment_id: Optional[Any] = None
     ) -> Dict[str, Any]:
         """
         Sends TWO DISTINCT SEPARATE EMAILS:
         1. Client Confirmation Email directly to client's provided email address.
         2. Assigned Agent / Manager Notification Email to employee/manager.
-        Both include a 1-Click 'Add to Google Calendar' button!
+        Both include a 1-Click 'Add to Google Calendar' button and Appointment Reference ID!
         """
         client_recipient = client_email.strip() if client_email else ""
         if not client_recipient or "@" not in client_recipient or "." not in client_recipient:
@@ -92,8 +132,10 @@ class EmailService:
             }
 
         agent_recipient = employee_email.strip() if (employee_email and "@" in employee_email) else DEFAULT_MANAGER_EMAIL
+        id_display = f"APT-{appointment_id}" if appointment_id else "Pending Assignment"
 
         details_text = (
+            f"Appointment Reference ID: {id_display}\n"
             f"Client Name: {client_name}\n"
             f"Client Email: {client_recipient}\n"
             f"Phone: {client_phone}\n"
@@ -114,7 +156,7 @@ class EmailService:
         # ----------------------------------------------------
         # EMAIL #1: CLIENT CONFIRMATION EMAIL (TO CLIENT'S EMAIL)
         # ----------------------------------------------------
-        client_subject = f"[CONFIRMATION] Your Appointment for {property_title} is {action_type.title()}!"
+        client_subject = f"[CONFIRMATION - {id_display}] Your Appointment for {property_title} is {action_type.title()}!"
         client_html = f"""
         <html>
         <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
@@ -128,8 +170,15 @@ class EmailService:
                     <h3 style="color: #065f46; margin-top: 0;">Dear {client_name},</h3>
                     <p style="font-size: 15px;">Your appointment has been successfully <strong>{action_type.lower()}</strong>. Details are below:</p>
                     
+                    <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center;">
+                        <span style="font-size: 13px; color: #047857; text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Your Appointment Reference ID</span>
+                        <div style="font-size: 24px; font-weight: bold; color: #064e3b; margin-top: 4px;">{id_display}</div>
+                        <p style="margin: 6px 0 0 0; font-size: 12px; color: #065f46;">Please save this ID. Quote this ID if you need to reschedule or cancel your appointment.</p>
+                    </div>
+
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; border: 1px solid #e5e7eb;">
                         <tr style="background: #f9fafb;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Booking Field</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Confirmation Details</th></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Appointment ID</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #065f46; font-weight: bold;">{id_display}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{action_type.title()}</strong></td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Property</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_title}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Meeting Date & Time</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{appointment_date} at {appointment_time}</strong></td></tr>
@@ -139,8 +188,9 @@ class EmailService:
 
                     <div style="text-align: center; margin: 30px 0 10px 0;">
                         <a href="{gcal_url}" target="_blank" style="background-color: #10b981; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; display: inline-block; box-shadow: 0 4px 6px rgba(16,185,129,0.3);">
-                            Click Here to Add Event to Your Google Calendar
+                            📅 Click Here to Add Event to Your Google Calendar
                         </a>
+                        <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">(Clicking the button will open Google Calendar and add this site visit to your calendar)</p>
                     </div>
                 </div>
 
@@ -155,7 +205,7 @@ class EmailService:
         # ----------------------------------------------------
         # EMAIL #2: AGENT / MANAGER NOTIFICATION EMAIL
         # ----------------------------------------------------
-        agent_subject = f"[AGENT ALERT] Client Appointment {action_type.title()}: {client_name} - {property_title}"
+        agent_subject = f"[AGENT ALERT - {id_display}] Client Appointment {action_type.title()}: {client_name} - {property_title}"
         agent_html = f"""
         <html>
         <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
@@ -171,6 +221,7 @@ class EmailService:
                     
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; border: 1px solid #e5e7eb;">
                         <tr style="background: #eff6ff;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Field</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Client Lead Info</th></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Appointment ID</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8; font-weight: bold;">{id_display}</td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8;"><strong>{action_type}</strong></td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Name</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>{client_name}</strong></td></tr>
                         <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Email</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_recipient}</td></tr>
@@ -182,7 +233,7 @@ class EmailService:
 
                     <div style="text-align: center; margin: 30px 0 10px 0;">
                         <a href="{gcal_url}" target="_blank" style="background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; display: inline-block; box-shadow: 0 4px 6px rgba(37,99,235,0.3);">
-                            Click Here to Add Client Event to Google Calendar
+                            📅 Add Client Event to Google Calendar
                         </a>
                     </div>
                 </div>
@@ -195,16 +246,18 @@ class EmailService:
         </html>
         """
 
-        print(f"[Email Service] Dispatching Email #1 ({action_type} - Client Confirmation) to {client_recipient}...")
+        print(f"[Email Service] Dispatching Email #1 ({action_type} - Client Confirmation - ID: {id_display}) to {client_recipient}...")
         res1 = self._send_single_email(client_recipient, client_subject, client_html)
 
-        print(f"[Email Service] Dispatching Email #2 ({action_type} - Agent Alert) to {agent_recipient}...")
+        print(f"[Email Service] Dispatching Email #2 ({action_type} - Agent Alert - ID: {id_display}) to {agent_recipient}...")
         res2 = self._send_single_email(agent_recipient, agent_subject, agent_html)
 
         return {
             "success": (res1 and res2),
             "mode": "LIVE_SMTP" if (self.username and self.password and "your_" not in self.username) else "SIMULATION_LOGGER",
             "emails_sent_count": 2 if (res1 and res2) else (1 if (res1 or res2) else 0),
+            "appointment_id": appointment_id,
+            "id_display": id_display,
             "client_recipient": client_recipient,
             "agent_recipient": agent_recipient,
             "subjects": [client_subject, agent_subject],

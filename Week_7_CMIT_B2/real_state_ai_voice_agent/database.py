@@ -95,9 +95,15 @@ def init_db():
         status TEXT DEFAULT 'BOOKED',
         calendar_event_id TEXT,
         notes TEXT,
+        appointment_id TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
+    cursor.execute("PRAGMA table_info(appointments)")
+    app_cols = [c[1] for c in cursor.fetchall()]
+    if "appointment_id" not in app_cols:
+        cursor.execute("ALTER TABLE appointments ADD COLUMN appointment_id TEXT")
+    cursor.execute("UPDATE appointments SET appointment_id = 'APT-' || id WHERE appointment_id IS NULL OR appointment_id = ''")
 
     # --- CRM LOGGING STORE TABLES ---
     # 6. CRM Call Transcripts
