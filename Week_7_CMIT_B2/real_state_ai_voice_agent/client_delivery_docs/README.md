@@ -14,7 +14,7 @@ The complete product documentation package is organized as follows:
    - High-level architecture, LangGraph state machine flow, Vapi / Deepgram / ElevenLabs integration, hybrid SQL+RAG retrieval pipeline, and security model.
 
 2. [**API Documentation (`API_DOCUMENTATION.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/API_DOCUMENTATION.md)
-   - Comprehensive OpenAPI / REST and Webhook API specifications for Vapi `/v1/chat/completions`, REST chat, LangGraph agent, CRM logs, and Kubernetes health probes.
+   - Comprehensive OpenAPI / REST and Webhook API specifications for Vapi `endpoint`, REST chat, LangGraph agent, CRM logs, and Kubernetes health probes.
 
 3. [**User Guide (`USER_GUIDE.md`)**](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/client_delivery_docs/USER_GUIDE.md)
    - End-user and agent operator guide on UrduLish conversation etiquette, property search, site visit booking, rescheduling, and cancellation.
@@ -37,8 +37,8 @@ The complete product documentation package is organized as follows:
 
 - **Core Engine**: FastAPI Custom LLM Server with Primary Gemini & Groq Backup
 - **Agent Orchestration**: LangGraph StateGraph (`langgraph_agent/`) + **n8n Workflow** ([`n8n_langgraph_workflow.json`](file:///c:/Users/MEE/Anti-Gravity_projects/real_estate_voice_agent/n8n_langgraph_workflow.json))
-- **Speech Stack**: Deepgram `nova-2` STT + ElevenLabs TTS (`21m00Tcm4TlvDq8ikWAM`)
+- **Speech Stack**: Deepgram `nova-2` STT + ElevenLabs TTS (`************`)
 - **Database & Storage**: SQLite (`real_estate.db`) + TF-IDF Vector Index
-- **Email Dispatch**: Dual HTML Email Notifications via Live SMTP (`samiworkspace11@gmail.com`)
+- **Email Dispatch**: Dual HTML Email Notifications via Live SMTP (`email`)
 - **Production Package**: Dockerized with non-root security user, telemetry logging, and `/readyz` probes
 
