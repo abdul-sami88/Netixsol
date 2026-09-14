@@ -866,7 +866,7 @@ async def get_vapi_config():
             },
             "model": {
                 "provider": "custom-llm",
-                "url": "http://your-server-domain.com/v1/chat/completions"
+                "url": "http://https://real-estate-voice-agent-7od2.onrender.com/v1/chat/completions"
             },
             "voice": {
                 "provider": "elevenlabs",
