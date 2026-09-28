@@ -1,0 +1,28 @@
+artifact_path: file:c:/Users/MEE/Netixsol_intern_projects/Week_8_CMIT_B2/mlruns/1/models/m-9e83bbf708f046efa06264b185bb3c79/artifacts
+flavors:
+  catboost:
+    catboost_version: 1.2.10
+    code: null
+    data: model.cb
+    model_type: CatBoostRegressor
+    save_format: cbm
+  python_function:
+    data: model.cb
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.catboost
+    python_version: 3.12.13
+is_signature_from_type_hint: false
+mlflow_version: 3.16.1
+model_id: m-9e83bbf708f046efa06264b185bb3c79
+model_size_bytes: 521440
+model_uuid: m-9e83bbf708f046efa06264b185bb3c79
+prompts: null
+run_id: 0f080e00144f4ed8a9403f2324eab84e
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 39]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-09-28 12:29:20.695625'
