@@ -1,0 +1,123 @@
+Walkthrough: Unified Phase 2 & Phase 3 Machine Learning System
+We have successfully implemented and verified the Unified Phase 2 & Phase 3 Machine Learning System for the Real Estate Voice Agent.
+
+What Was Implemented
+1. Database Schema & Migration (
+database.py
+)
+crm_call_transcripts.is_converted: Added column with automatic database migration check.
+dialogue_exemplars Table: Stores proven successful dialogue turns with JSON-serialized vector embeddings, categories, conversion weights, and session references.
+query_candidate_properties_soft(): Performs soft SQL queries allowing $\pm 20%$ to $25%$ budget tolerance and joins payment_plans (down payment, monthly installments, duration, possession) to feed candidate pools into ML feature scoring.
+2. Multi-Tier Vector Service (
+embedding_service.py
+)
+Primary Tier: Google GenAI gemini-embedding-001 (3072 dimensions) with fallback to text-embedding-004.
+In-Memory LRU Cache: Sub-millisecond vector retrieval for repeated user utterances.
+Local Fallback: Scikit-Learn TF-IDF character n-gram vectorizer for zero-latency offline operation when external networks fluctuate.
+Math Utilities: Robust normalized cosine similarity calculations.
+3. Phase 2: Dynamic Few-Shot Dialogue Memory (
+dialogue_memory.py
+)
+15 Cold-Start Seed Corpus: Curated Pakistani real estate objection handling scenarios:
+Installment negotiation & down payment flexibility
+LDA / CDA / SBCA NOC & legal legitimacy verification
+Budget stretching via easy installments
+Urgent site visit closing
+Overseas Pakistani power of attorney & RDA bank accounts
+Price objection & market rate defense
+Rental yield & commercial ROI
+School & hospital proximity
+Possession vs construction timeline guarantees
+Utility connections (Sui gas, electricity, water)
+Resale liquidity and exit strategy
+Corner plot / park-facing premium justification
+Hidden costs & transfer tax transparency
+Weekend family site visit coordination
+Commercial shop vs residential house comparison
+Sub-millisecond Retrieval: In-memory numpy vector cache with cosine similarity search.
+Dynamic Few-Shot Banner: Injects high-converting exemplar guidance into LLM prompt when similarity exceeds threshold.
+Closed-Loop Feedback Ingestion: index_converted_session(session_id) automatically extracts winning turns from booked calls and indexes or reinforces exemplars.
+4. Phase 3: ML Property Candidate Recommender (
+recommendation.py
+)
+rank_properties_ml():
+Gaussian Budget Curve: Computes smooth bell-curve tolerance score, plus an installment flexibility bonus when a property is slightly above budget but provides an easy payment plan.
+Semantic Overlap: Cosine similarity between property description/amenities and caller query.
+Location Fit: Weighted scoring for exact sector vs city-wide matches.
+Composite Score: Weighted sum ($35%$ budget, $35%$ semantic, $20%$ location, $10%$ features) outputting match score percentages and breakdown.
+Unified Context Generator: Combines few-shot sales guidance banner, ML-ranked properties with installment terms, assigned Relationship Manager, and RAG legal brochure data.
+5. CRM & Appointment Manager Integration (
+crm_store.py
+, 
+appointment_manager.py
+, 
+app.py
+)
+Added crm_store.mark_session_converted(session_id).
+appointment_manager.book_appointment() now flags is_converted = 1 and triggers dialogue_memory.index_converted_session().
+Both /api/v1/chat and /v1/chat/completions provide ML recommendations and few-shot guidance in their responses.
+Verification Results
+We executed the automated test suite (
+test_ml_system.py
+) covering all 5 test cases:
+
+
+======================================================================
+  RUNNING UNIFIED PHASE 2 & 3 ML SYSTEM TEST SUITE
+======================================================================
+======================================================================
+  TEST CASE 1: Embedding Service & Fallback Validation
+======================================================================
+[*] Embedding generated in 800.29 ms | Vector Dimension: 3072
+[*] LRU Cache Hit: 0.0088 ms
+[*] Local Fallback Dim: 1150 | Cosine Sim: 0.0280
+[*] Similarity (Related Installment queries): 0.7348
+[*] Similarity (Installment vs Commercial Rental): 0.4974
+>>> TEST CASE 1 PASSED SUCCESSFULLY! <<<
+======================================================================
+  TEST CASE 2: Phase 2 Dialogue Memory Cold-Start & Retrieval
+======================================================================
+[*] Active exemplars in memory: 15
+[*] Query: 'Main DHA mein 4 crore ka ghar dekh raha hoon, inst...'
+    -> Matched Category: Installment Negotiation & Down Payment (Score: 0.973)
+[*] Query: 'Kya yeh project LDA approved hai? Legal NOC papers clear hain?'
+    -> Matched Category: NOC & Legal Legitimacy Verification (Score: 0.969)
+[*] Query: 'Yeh rate bohat zyada lag raha hai market se, thora sasta mil sakta hai?'
+    -> Matched Category: Price Objection & Market Rate Defense (Score: 0.937)
+>>> TEST CASE 2 PASSED SUCCESSFULLY! <<<
+======================================================================
+  TEST CASE 3: Phase 3 Soft SQL Query & ML Multi-Factor Ranking
+======================================================================
+[*] Candidates fetched via soft SQL query (+/- 25% tolerance): 7
+[*] ML-Ranked Properties Count: 1
+[*] Top Ranked Property: 10 Marla Modern House in Lake City Sector M, Lahore
+    - Price: 3.22 Crore (32,200,000.0 PKR)
+    - Location: Lake City Sector M, Lahore
+    - ML Score: 0.782
+    - Score Breakdown: {'budget_fit': 0.93, 'semantic_match': 0.65, 'location_fit': 0.65}
+    - Payment Plan: {'down_payment_pkr': 8050000.0, 'monthly_installment_pkr': 671000.0, 'duration_months': 36, 'possession_months': 18}
+>>> TEST CASE 3 PASSED SUCCESSFULLY! <<<
+======================================================================
+  TEST CASE 4: Closed-Loop Feedback on Booking
+======================================================================
+[*] is_converted flags before booking: [0, 0]
+[DialogueMemoryEngine] Indexed 2 winning turns from session conv_test_session_1788850251.
+[*] Booking result: BOOKED | Success: True
+[*] is_converted flags after booking: [1, 1]
+[*] Exemplars count: before=15, after=16
+>>> TEST CASE 4 PASSED SUCCESSFULLY! <<<
+======================================================================
+  TEST CASE 5: End-to-End Voice / Chat Integration via FastAPI
+======================================================================
+[*] /api/v1/chat Response Time: 2.004s
+[*] Agent Reply: "Acha... kya aap property buy karna chahte hain ya rent par lena chahte hain sir?..."
+[*] Matched Properties: 1
+[*] Few-shot Guidance Present: True
+[*] /v1/chat/completions Response Time: 1.605s
+[*] Vapi Assistant Message: "Ji bilkul sir! DHA Phase 6 mein hamare paas 4 Crore ka brand new 1 Kanal luxury house avai..."
+[*] Meta retrieved properties count: 1
+[*] Meta few_shot_guidance: True
+>>> TEST CASE 5 PASSED SUCCESSFULLY! <<<
+======================================================================
+  ALL 5 TEST CASES PASSED WITH 100% SUCCESS!
+======================================================================

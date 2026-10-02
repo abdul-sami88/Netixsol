@@ -1,0 +1,13 @@
+Slice_Dimension,Group,Sample_Count,Actual_Conversion_Rate,Predicted_Selection_Rate,Recall_pct,Precision_pct,ROC_AUC,Disparate_Impact_Ratio
+preferred_city,Lahore,246,18.3,48.8,97.8,36.7,0.9049,0.864
+preferred_city,Karachi,169,25.4,48.5,90.7,47.6,0.8487,0.858
+preferred_city,Islamabad,153,15.0,44.4,95.7,32.4,0.8853,0.786
+preferred_city,Rawalpindi,84,23.8,52.4,90.0,40.9,0.8797,0.927
+preferred_city,Faisalabad,23,30.4,56.5,71.4,38.5,0.7857,1.0
+lead_source,Zameen / Graana Portal,156,14.1,38.5,86.4,31.7,0.868,0.427
+lead_source,Facebook Ads,141,11.3,46.1,87.5,21.5,0.782,0.511
+lead_source,Website Direct,120,21.7,50.0,100.0,43.3,0.9227,0.554
+lead_source,WhatsApp Campaign,101,18.8,37.6,89.5,44.7,0.8851,0.417
+lead_source,Google Search Ads,73,16.4,50.7,91.7,29.7,0.8456,0.562
+lead_source,Referral / Network,51,56.9,90.2,100.0,63.0,0.8213,1.0
+lead_source,Inbound Call / Walk-in,33,42.4,63.6,85.7,57.1,0.7744,0.705

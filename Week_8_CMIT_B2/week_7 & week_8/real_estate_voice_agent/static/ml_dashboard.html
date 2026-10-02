@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealEstate Hub | ML Intelligence & Governance Studio</title>
+  
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --card-bg: rgba(14, 20, 32, 0.78);
+      --card-border: rgba(212, 175, 55, 0.14);
+      --card-border-hover: rgba(223, 183, 108, 0.4);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.22);
+      --gold: #dfb76c;
+      --gold-deep: #c59a45;
+      --blue: #3b82f6;
+      --red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(223, 183, 108, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      padding: 1rem 2.2rem;
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      background: rgba(7, 9, 14, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand i {
+      font-size: 1.7rem;
+      color: var(--gold);
+    }
+
+    .brand h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #dfb76c, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      border-color: var(--gold);
+      background: rgba(223, 183, 108, 0.1);
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald);
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Container */
+    main {
+      padding: 1.8rem 2.2rem;
+      max-width: 1550px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Metric Cards Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.2rem;
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--card-border-hover);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--emerald));
+    }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Studio Tabs */
+    .studio-tabs {
+      display: flex;
+      gap: 0.6rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.75rem 1.4rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Grid layout for calculators */
+    .calc-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .calc-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: blur(14px);
+    }
+
+    .panel-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input, select {
+      width: 100%;
+      background: rgba(7, 10, 18, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(223, 183, 108, 0.15);
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #dfb76c, #c59a45);
+      border: none;
+      color: #07090e;
+      font-weight: 700;
+      padding: 0.85rem 1.6rem;
+      border-radius: 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .action-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    /* Result Cards */
+    .result-container {
+      background: rgba(7, 10, 18, 0.85);
+      border: 1px solid rgba(223, 183, 108, 0.2);
+      border-radius: 12px;
+      padding: 1.4rem;
+      margin-top: 1.2rem;
+    }
+
+    .price-display {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin: 0.4rem 0;
+    }
+
+    .ci-range-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .verdict-tag {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin: 0.5rem 0;
+    }
+
+    .verdict-under {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid var(--emerald);
+    }
+
+    .verdict-fair {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid var(--blue);
+    }
+
+    .verdict-over {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid var(--red);
+    }
+
+    .disclaimer-box {
+      font-size: 0.76rem;
+      color: #94a3b8;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      padding-top: 0.75rem;
+      margin-top: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* Table styles */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(223, 183, 108, 0.08);
+      color: var(--gold);
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-hot {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .badge-warm {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fde68a;
+      border: 1px solid rgba(251, 191, 36, 0.4);
+    }
+
+    .badge-cold {
+      background: rgba(148, 163, 184, 0.2);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .badge-ood {
+      background: rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      border: 1px solid #ef4444;
+    }
+
+    .badge-ok {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    /* Progress bar */
+    .lead-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .lead-progress-bar {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+
+    .lead-progress-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="brand">
+      <i class="fa-solid fa-brain-circuit"></i>
+      <div>
+        <h1>RealEstate Hub ML Intelligence Studio</h1>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Week 8 LightGBM Production Models & Governance Dashboard</div>
+      </div>
+    </div>
+    
+    <div class="nav-links">
+      <div class="badge-live">
+        <div class="pulse-dot"></div>
+        <span>FastAPI Integrated Engine</span>
+      </div>
+      <a href="/" class="nav-btn"><i class="fa-solid fa-table-columns"></i> Staff Portal</a>
+      <a href="/website" class="nav-btn"><i class="fa-solid fa-globe"></i> Customer Website</a>
+      <a href="/docs" target="_blank" class="nav-btn"><i class="fa-solid fa-code"></i> API Swagger</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Top KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title"><span>Valuation Accuracy (R²)</span><i class="fa-solid fa-chart-line" style="color: var(--emerald);"></i></div>
+        <div class="kpi-val">94.85%</div>
+        <div class="kpi-sub">Mean Abs Error: 39.04 Lakh PKR (MAPE 8.0%)</div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-title"><span>Quantile Regressor Coverage</span><i class="fa-solid fa-shield-halved" style="color: var(--gold);"></i></div>
+        <div class="kpi-val">80.0% CI</div>
+        <div class="kpi-sub">Pinball Loss Optimized (P10 to P90 Bounds)</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title"><span>Lead Classifier PR-AUC</span><i class="fa-solid fa-crosshairs" style="color: var(--blue);"></i></div>
+        <div class="kpi-val">0.5932</div>
+        <div class="kpi-sub">Top-20% Lift: 2.93x | Optimal Threshold: 38%</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title"><span>Total Model Inferences</span><i class="fa-solid fa-database" style="color: var(--emerald);"></i></div>
+        <div class="kpi-val" id="totalPredictionsStat">--</div>
+        <div class="kpi-sub" id="oodPredictionsStat">Logged to model_prediction_logs</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="studio-tabs">
+      <button class="tab-btn active" onclick="showTab('tab-val', this)">
+        <i class="fa-solid fa-house-chimney-crack"></i> 1. Property Valuation & Investment Verdict
+      </button>
+      <button class="tab-btn" onclick="showTab('tab-leads-inbox', this)">
+        <i class="fa-solid fa-inbox"></i> 2. Inbound Lead Scoring Inbox (Live CRM)
+      </button>
+      <button class="tab-btn" onclick="showTab('tab-leads-calc', this)">
+        <i class="fa-solid fa-calculator"></i> 3. Single Lead Scorer Form
+      </button>
+      <button class="tab-btn" onclick="showTab('tab-audit', this)">
+        <i class="fa-solid fa-receipt"></i> 4. Live SQLite Audit Trail & OOD Logs
+      </button>
+    </div>
+
+    <!-- TAB 1: PROPERTY VALUATION CALCULATOR -->
+    <div id="tab-val" class="tab-panel active">
+      <div class="calc-layout">
+        <!-- Form -->
+        <div class="glass-panel">
+          <div class="panel-title"><i class="fa-solid fa-sliders"></i> Listing Specifications</div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Target City</label>
+              <select id="vCity">
+                <option value="Lahore" selected>Lahore</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Karachi">Karachi</option>
+                <option value="Rawalpindi">Rawalpindi</option>
+                <option value="Faisalabad">Faisalabad</option>
+                <option value="Peshawar (OOD Test)">Peshawar (OOD Test)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Location / Area</label>
+              <input type="text" id="vLocation" value="DHA Phase 6" placeholder="e.g. Bahria Town, Gulberg, F-7" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Plot Size (Marla)</label>
+              <input type="number" id="vMarla" value="10" min="1" max="500" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label>Property Type</label>
+              <select id="vPropType">
+                <option value="House" selected>House</option>
+                <option value="Flat">Flat / Apartment</option>
+                <option value="Plot / Plot File">Plot / Plot File</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Farmhouse">Farmhouse</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bedrooms</label>
+              <input type="number" id="vBeds" value="4" min="0" max="15" />
+            </div>
+            <div class="form-group">
+              <label>Bathrooms</label>
+              <input type="number" id="vBaths" value="4" min="0" max="15" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Covered Area (Sq.Ft)</label>
+              <input type="number" id="vCoveredSqft" value="2500" min="100" max="30000" />
+            </div>
+            <div class="form-group">
+              <label>Year Built / Age (Years)</label>
+              <input type="number" id="vAge" value="2" min="0" max="50" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Seller Asking Price in PKR (Optional for Investment Verdict)</label>
+            <input type="number" id="vAskingPrice" placeholder="e.g. 45000000 (4.5 Crore)" />
+          </div>
+
+          <button class="action-btn" onclick="runPropertyValuation()">
+            <i class="fa-solid fa-calculator"></i> Run Quantile Valuation & Verdict
+          </button>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="glass-panel" id="valResultPanel">
+          <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Valuation Result & Confidence Bounds</div>
+          
+          <div style="text-align: center; color: var(--text-muted); padding: 3rem 1rem;" id="valPlaceholder">
+            <i class="fa-solid fa-arrow-left" style="font-size: 2rem; margin-bottom: 0.8rem; opacity: 0.4;"></i>
+            <p>Fill in property specifications and click <strong>Run Quantile Valuation</strong> to calculate fair market price and 80% statistical confidence interval.</p>
+          </div>
+
+          <div id="valResultContent" style="display: none;">
+            <div class="result-container">
+              <div style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Estimated Fair Market Price</div>
+              <div class="price-display" id="valPriceFormatted">--</div>
+              <div style="font-size: 0.85rem; color: var(--emerald);" id="valSummary">--</div>
+            </div>
+
+            <div class="ci-range-box">
+              <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem;">
+                <i class="fa-solid fa-arrows-left-right-to-line" style="color: var(--emerald);"></i> 80% Statistical Confidence Interval (P10 to P90)
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.95rem; font-weight: 600; margin-top: 0.5rem;">
+                <span style="color: #60a5fa;">Lower Bound: <strong id="valLowBound">--</strong></span>
+                <span style="color: #f59e0b;">Upper Bound: <strong id="valHighBound">--</strong></span>
+              </div>
+            </div>
+
+            <div id="verdictContainer" style="display: none; margin-top: 1rem;">
+              <div style="font-size: 0.82rem; color: var(--text-muted); text-transform: uppercase;">Investment Assessment vs Asking Price</div>
+              <div id="verdictBadge" class="verdict-tag">--</div>
+              <p id="verdictNarrative" style="font-size: 0.88rem; color: #e2e8f0; margin-top: 0.4rem;"></p>
+            </div>
+
+            <div class="disclaimer-box" id="valDisclaimer">
+              *Legal Disclaimer: Note: Yeh statistical machine learning model ka automated andaza hai. Hatmi qeemat physical inspection aur registry dastavezat par munhasir hai.*
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: INBOUND LEAD SCORING INBOX (LIVE CRM LEADS) -->
+    <div id="tab-leads-inbox" class="tab-panel">
+      <div class="glass-panel" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: var(--gold); margin-bottom: 0.2rem;">
+              <i class="fa-solid fa-inbox"></i> Inbound Sales Lead Prioritization & Scoring Inbox
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Prioritizes inbound callers by predicted conversion probability. Top 20% leads capture &gt;60% of all closed transactions.
+            </p>
+          </div>
+          <button class="nav-btn" onclick="loadLeadsInbox()" style="border-color: var(--emerald); color: var(--emerald);">
+            <i class="fa-solid fa-sync"></i> Refresh Live Voice Agent CRM Data
+          </button>
+        </div>
+
+        <!-- 4 Top KPI Metric Cards (Matching Streamlit Tab 2) -->
+        <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 1.2rem;">
+          <div class="kpi-card" style="padding: 0.9rem;">
+            <div class="kpi-title"><span>Total Historical Leads</span><i class="fa-solid fa-users" style="color: var(--gold);"></i></div>
+            <div class="kpi-val" id="crmTotalLeads">--</div>
+            <div class="kpi-sub">leads_scoring_cleaned.csv</div>
+          </div>
+          <div class="kpi-card" style="padding: 0.9rem;">
+            <div class="kpi-title"><span style="color: #fca5a5;">🔥 Hot (Action Now)</span><i class="fa-solid fa-fire" style="color: var(--red);"></i></div>
+            <div class="kpi-val" id="crmHotLeads" style="color: #fca5a5;">--</div>
+            <div class="kpi-sub">Conversion Prob &ge; 50%</div>
+          </div>
+          <div class="kpi-card" style="padding: 0.9rem;">
+            <div class="kpi-title"><span style="color: #fde68a;">🌤 Warm (Nurture)</span><i class="fa-solid fa-sun" style="color: #fbbf24;"></i></div>
+            <div class="kpi-val" id="crmWarmLeads" style="color: #fde68a;">--</div>
+            <div class="kpi-sub">35% &le; Prob &lt; 50%</div>
+          </div>
+          <div class="kpi-card" style="padding: 0.9rem;">
+            <div class="kpi-title"><span style="color: #cbd5e1;">❄️ Cold (Drip)</span><i class="fa-solid fa-snowflake" style="color: #94a3b8;"></i></div>
+            <div class="kpi-val" id="crmColdLeads" style="color: #cbd5e1;">--</div>
+            <div class="kpi-sub">Prob &lt; 35%</div>
+          </div>
+        </div>
+
+        <!-- Filters (Matching Streamlit Filter Bar) -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 160px;">
+            <label>Filter City</label>
+            <select id="crmFilterCity" onchange="loadLeadsInbox()">
+              <option value="All" selected>All Cities</option>
+              <option value="Lahore">Lahore</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Karachi">Karachi</option>
+              <option value="Rawalpindi">Rawalpindi</option>
+              <option value="Faisalabad">Faisalabad</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 160px;">
+            <label>Filter Priority Tier</label>
+            <select id="crmFilterTier" onchange="loadLeadsInbox()">
+              <option value="All" selected>All Tiers</option>
+              <option value="Hot">🔥 Hot Only</option>
+              <option value="Warm">🌤 Warm Only</option>
+              <option value="Cold">❄️ Cold Only</option>
+            </select>
+          </div>
+          <div style="flex: 1; min-width: 180px;">
+            <label>Sort Ordering</label>
+            <select id="crmSortOrder" onchange="loadLeadsInbox()">
+              <option value="score" selected>Highest Conversion Score</option>
+              <option value="budget">Highest Budget (PKR)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="table-responsive">
+          <table id="crmLeadsTable">
+            <thead>
+              <tr>
+                <th>Prospect Email</th>
+                <th>City & Location</th>
+                <th>Budget (PKR)</th>
+                <th>Property</th>
+                <th>Source</th>
+                <th>Calls</th>
+                <th>Objection</th>
+                <th>Visit</th>
+                <th style="min-width: 140px;">Conversion Likelihood</th>
+                <th>Priority Status</th>
+                <th style="min-width: 220px;">Prescribed Sales Action</th>
+              </tr>
+            </thead>
+            <tbody id="crmLeadsTableBody">
+              <tr><td colspan="11" style="text-align: center; color: var(--text-muted);"><span class="spinner"></span> Loading Live CRM leads...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SINGLE LEAD SCORER FORM -->
+    <div id="tab-leads-calc" class="tab-panel">
+      <div class="calc-layout">
+        <!-- Form -->
+        <div class="glass-panel">
+          <div class="panel-title"><i class="fa-solid fa-user-tag"></i> Lead Interaction Parameters</div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Client Email</label>
+              <input type="email" id="lEmail" value="investor.tariq@gmail.com" />
+            </div>
+            <div class="form-group">
+              <label>Budget (PKR)</label>
+              <input type="number" id="lBudget" value="55000000" step="1000000" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Total Phone Calls</label>
+              <input type="number" id="lCalls" value="4" min="1" max="50" />
+            </div>
+            <div class="form-group">
+              <label>Avg Call Duration (Mins)</label>
+              <input type="number" id="lDuration" value="8" min="0.5" max="60" step="0.5" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Response Time (Hours)</label>
+              <input type="number" id="lRespTime" value="0.5" min="0.1" max="100" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label>Follow-up Count</label>
+              <input type="number" id="lFollowups" value="3" min="0" max="30" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Site Visit Booked?</label>
+              <select id="lVisitBooked">
+                <option value="Yes" selected>Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Site Visit Completed?</label>
+              <select id="lVisitCompleted">
+                <option value="Yes" selected>Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Stated Objection</label>
+              <select id="lObjection">
+                <option value="None" selected>None (No Objection)</option>
+                <option value="Family Consensus Pending">Family Consensus Pending (Mild)</option>
+                <option value="Location Too Far">Location Too Far (Moderate)</option>
+                <option value="Price / Budget Gap">Price / Budget Gap (High)</option>
+                <option value="Legal / Title Verification">Legal / Title Verification (Severe)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred City</label>
+              <select id="lCity">
+                <option value="Lahore" selected>Lahore</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Karachi">Karachi</option>
+                <option value="Rawalpindi">Rawalpindi</option>
+                <option value="Faisalabad">Faisalabad</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="action-btn" onclick="runLeadScoring()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Calculate Conversion Score & Priority Tier
+          </button>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="glass-panel">
+          <div class="panel-title"><i class="fa-solid fa-bullseye"></i> Lead Intelligence & Prescribed SLA</div>
+          
+          <div style="text-align: center; color: var(--text-muted); padding: 3rem 1rem;" id="leadPlaceholder">
+            <i class="fa-solid fa-arrow-left" style="font-size: 2rem; margin-bottom: 0.8rem; opacity: 0.4;"></i>
+            <p>Adjust lead parameters and click <strong>Calculate Conversion Score</strong> to evaluate conversion probability and priority classification.</p>
+          </div>
+
+          <div id="leadResultContent" style="display: none;">
+            <div class="result-container">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;">Probability of Conversion</span>
+                <span id="leadTierBadge" class="badge-pill badge-hot">--</span>
+              </div>
+              <div class="price-display" id="leadProbDisplay" style="color: #fff;">--</div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Asymmetric Cost Optimized Threshold: 38.0%</div>
+            </div>
+
+            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 1.1rem; margin-top: 1rem;" id="slaBox">
+              <div style="font-size: 0.85rem; font-weight: 700; color: #fca5a5; margin-bottom: 0.4rem;">
+                <i class="fa-solid fa-clock"></i> Prescribed Broker SLA & Immediate Action
+              </div>
+              <div id="leadActionText" style="font-size: 0.95rem; color: #fff; font-weight: 600;">--</div>
+            </div>
+
+            <div style="background: rgba(14, 20, 32, 0.6); border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: 0.84rem; line-height: 1.6;">
+              <strong style="color: var(--gold);">Automated Actions Triggered:</strong>
+              <ul style="margin-left: 1.2rem; margin-top: 0.4rem; color: var(--text-muted);" id="leadActionList">
+                <li>Preferences saved into SQLite CRM</li>
+                <li>Logged into model_prediction_logs audit table</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AUDIT TRAIL & OOD LOGS -->
+    <div id="tab-audit" class="tab-panel">
+      <div class="glass-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+          <div class="panel-title" style="margin-bottom: 0;"><i class="fa-solid fa-list-check"></i> Permanent SQLite Prediction Audit Trail (`model_prediction_logs`)</div>
+          <div style="display: flex; gap: 0.6rem;">
+            <button class="nav-btn" onclick="loadAuditLogs(false)"><i class="fa-solid fa-sync"></i> Refresh All</button>
+            <button class="nav-btn" style="border-color: #ef4444; color: #fca5a5;" onclick="loadAuditLogs(true)"><i class="fa-solid fa-triangle-exclamation"></i> OOD Refusals Only</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table id="auditTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>Prediction Type</th>
+                <th>Model</th>
+                <th>Client / Identity</th>
+                <th>Summary Output</th>
+                <th>OOD Status</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Loading audit logs...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function escapeHtml(text) {
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Tab switching
+    function showTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      
+      if (tabId === 'tab-audit') {
+        loadAuditLogs(false);
+      } else if (tabId === 'tab-leads-inbox') {
+        loadLeadsInbox();
+      }
+    }
+
+    // Run Property Valuation
+    async function runPropertyValuation() {
+      const payload = {
+        city: document.getElementById('vCity').value,
+        location: document.getElementById('vLocation').value,
+        plot_size_marla: parseFloat(document.getElementById('vMarla').value),
+        property_type: document.getElementById('vPropType').value,
+        bedrooms: parseInt(document.getElementById('vBeds').value),
+        bathrooms: parseInt(document.getElementById('vBaths').value),
+        covered_area_sqft: parseFloat(document.getElementById('vCoveredSqft').value),
+        year_built: 2026 - parseInt(document.getElementById('vAge').value),
+        client_email: "staff_portal@realestatehub.pk"
+      };
+
+      const asking = document.getElementById('vAskingPrice').value;
+      if (asking && parseFloat(asking) > 0) {
+        payload.listed_price_pkr = parseFloat(asking);
+      }
+
+      try {
+        const res = await fetch('/predict/price', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        document.getElementById('valPlaceholder').style.display = 'none';
+        document.getElementById('valResultContent').style.display = 'block';
+
+        if (data.status === 'refused') {
+          document.getElementById('valPriceFormatted').innerText = 'Refused (OOD)';
+          document.getElementById('valPriceFormatted').style.color = '#ef4444';
+          document.getElementById('valSummary').innerText = data.reason || 'Out of operational distribution';
+          document.getElementById('valLowBound').innerText = 'N/A';
+          document.getElementById('valHighBound').innerText = 'N/A';
+          document.getElementById('verdictContainer').style.display = 'none';
+          document.getElementById('valDisclaimer').innerText = 'Model refused prediction because inputs exceed certified operational boundaries (1-100 Marla; supported cities: Lahore, Islamabad, Karachi, Rawalpindi, Faisalabad).';
+          return;
+        }
+
+        document.getElementById('valPriceFormatted').innerText = data.fair_market_price_formatted || (data.fair_market_price_pkr.toLocaleString() + ' PKR');
+        document.getElementById('valPriceFormatted').style.color = 'var(--gold)';
+        document.getElementById('valSummary').innerText = data.property_summary || '';
+        document.getElementById('valLowBound').innerText = data.confidence_interval_80.lower_bound_formatted;
+        document.getElementById('valHighBound').innerText = data.confidence_interval_80.upper_bound_formatted;
+        document.getElementById('valDisclaimer').innerText = data.disclaimer_urdulish || data.disclaimer;
+
+        // Investment verdict
+        if (data.investment_verdict) {
+          document.getElementById('verdictContainer').style.display = 'block';
+          const vBadge = document.getElementById('verdictBadge');
+          const v = data.investment_verdict.verdict;
+          vBadge.innerText = v;
+          vBadge.className = 'verdict-tag ' + (v === 'Underpriced' ? 'verdict-under' : v === 'Overpriced' ? 'verdict-over' : 'verdict-fair');
+          document.getElementById('verdictNarrative').innerText = data.investment_verdict.client_narrative;
+        } else {
+          document.getElementById('verdictContainer').style.display = 'none';
+        }
+        loadStats();
+      } catch (e) {
+        alert('Valuation request failed: ' + e.message);
+      }
+    }
+
+    // Run Single Lead Scoring
+    async function runLeadScoring() {
+      const payload = {
+        budget_pkr: parseFloat(document.getElementById('lBudget').value),
+        num_calls: parseInt(document.getElementById('lCalls').value),
+        avg_call_duration_mins: parseFloat(document.getElementById('lDuration').value),
+        response_time_hours: parseFloat(document.getElementById('lRespTime').value),
+        followup_count: parseInt(document.getElementById('lFollowups').value),
+        visit_booked: document.getElementById('lVisitBooked').value,
+        visit_completed: document.getElementById('lVisitCompleted').value,
+        objection_raised: document.getElementById('lObjection').value,
+        preferred_city: document.getElementById('lCity').value,
+        client_email: document.getElementById('lEmail').value,
+        lead_source: 'Inbound Call / Walk-in'
+      };
+
+      try {
+        const res = await fetch('/predict/lead-score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        document.getElementById('leadPlaceholder').style.display = 'none';
+        document.getElementById('leadResultContent').style.display = 'block';
+
+        const prob = data.conversion_probability_pct || 0;
+        document.getElementById('leadProbDisplay').innerText = prob.toFixed(1) + '%';
+        
+        const tierBadge = document.getElementById('leadTierBadge');
+        tierBadge.innerText = data.priority_tier;
+        tierBadge.className = 'badge-pill ' + (data.priority_tier.includes('Hot') ? 'badge-hot' : data.priority_tier.includes('Warm') ? 'badge-warm' : 'badge-cold');
+
+        document.getElementById('leadActionText').innerText = data.recommended_action;
+        
+        const actionList = document.getElementById('leadActionList');
+        if (data.priority_tier.includes('Hot')) {
+          actionList.innerHTML = `
+            <li style="color: #fca5a5;">🔥 Hot Lead SLA: Urgent email alert dispatched to assigned city broker</li>
+            <li>Stored in CRM Client Preferences with Hot Lead priority tier</li>
+            <li>Inference logged in model_prediction_logs audit table</li>
+          `;
+        } else {
+          actionList.innerHTML = `
+            <li>Logged into CRM Client Preferences with ${data.priority_tier} priority</li>
+            <li>Enrolled in standard automated follow-up calendar</li>
+            <li>Inference logged in model_prediction_logs audit table</li>
+          `;
+        }
+        loadStats();
+      } catch (e) {
+        alert('Lead scoring failed: ' + e.message);
+      }
+    }
+
+    // Load Historical Leads Inbox (Matching Streamlit Tab 2)
+    async function loadLeadsInbox() {
+      const city = document.getElementById('crmFilterCity').value;
+      const tier = document.getElementById('crmFilterTier').value;
+      const sort = document.getElementById('crmSortOrder')?.value || 'score';
+      const tbody = document.getElementById('crmLeadsTableBody');
+      tbody.innerHTML = '<tr><td colspan="11" style="text-align: center;"><span class="spinner"></span> Loading historical dataset leads scored by champion model...</td></tr>';
+
+      try {
+        let url = `/api/v1/ml/historical-leads?limit=100&sort_by=${encodeURIComponent(sort)}&`;
+        if (city !== 'All') url += `city=${encodeURIComponent(city)}&`;
+        if (tier !== 'All') url += `tier=${encodeURIComponent(tier)}&`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const total = data.count || 0;
+        const hot = (data.leads || []).filter(l => l.priority_tier && l.priority_tier.includes('Hot')).length;
+        const warm = (data.leads || []).filter(l => l.priority_tier && l.priority_tier.includes('Warm')).length;
+        const cold = (data.leads || []).filter(l => l.priority_tier && l.priority_tier.includes('Cold')).length;
+
+        document.getElementById('crmTotalLeads').innerText = total;
+        document.getElementById('crmHotLeads').innerText = hot;
+        document.getElementById('crmWarmLeads').innerText = warm;
+        document.getElementById('crmColdLeads').innerText = cold;
+
+        if (!data.leads || data.leads.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: var(--text-muted);">No historical leads found matching filters.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.leads.map(l => {
+          const score = l.conversion_score_pct !== undefined ? l.conversion_score_pct : (l.lead_score_pct || 0);
+          const tier = l.priority_tier || '❄️ Cold';
+          const isHot = tier.includes('Hot');
+          const isWarm = tier.includes('Warm');
+          const badgeClass = isHot ? 'badge-hot' : isWarm ? 'badge-warm' : 'badge-cold';
+          const barColor = isHot ? '#ef4444' : isWarm ? '#fbbf24' : '#64748b';
+          const visitText = (l.visit_booked === 'Yes' || l.visit_completed === 'Yes') ? '<span style="color: var(--emerald); font-weight: bold;">Yes</span>' : '<span style="opacity: 0.5;">No</span>';
+
+          return `
+            <tr>
+              <td><strong>${escapeHtml(l.lead_id || l.client_email)}</strong><br><small style="color: var(--text-muted);">${escapeHtml(l.client_email)}</small></td>
+              <td>${escapeHtml(l.preferred_city || 'Lahore')}</td>
+              <td style="color: var(--gold); font-weight: 600;">${escapeHtml(l.budget_formatted || 'Flexible')}</td>
+              <td>${escapeHtml(l.property_type || 'House')}</td>
+              <td style="font-size: 0.78rem;">${escapeHtml(l.lead_source || 'Portal')}</td>
+              <td>${l.num_calls || 1}</td>
+              <td style="font-size: 0.78rem;">${escapeHtml(l.objection_raised || 'None')}</td>
+              <td>${visitText}</td>
+              <td>
+                <div class="lead-progress-wrap">
+                  <span style="font-weight: 700; width: 42px; font-size: 0.8rem;">${score.toFixed(1)}%</span>
+                  <div class="lead-progress-bar">
+                    <div class="lead-progress-fill" style="width: ${Math.min(100, Math.max(5, score))}%; background: ${barColor};"></div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge-pill ${badgeClass}">${escapeHtml(tier)}</span></td>
+              <td style="font-size: 0.8rem; line-height: 1.3;">${escapeHtml(l.recommended_action || 'Standard nurture')}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="11" style="color: #ef4444; text-align: center;">Failed to load leads inbox: ${escapeHtml(e.message)}</td></tr>`;
+      }
+    }
+
+    // Load Audit Logs
+    async function loadAuditLogs(oodOnly = false) {
+      const tbody = document.getElementById('auditTableBody');
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;"><span class="spinner"></span> Loading audit logs...</td></tr>';
+      
+      try {
+        const res = await fetch('/api/v1/ml/audit-logs?limit=50&ood_only=' + (oodOnly ? 'true' : 'false'));
+        const data = await res.json();
+
+        if (!data.logs || data.logs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No prediction logs found.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.logs.map(log => {
+          let outSummary = '';
+          try {
+            const out = JSON.parse(log.output_payload);
+            if (log.prediction_type === 'PRICE_VALUATION') {
+              outSummary = out.fair_market_price_formatted ? `${out.fair_market_price_formatted} (${out.confidence_interval_80.lower_bound_formatted} - ${out.confidence_interval_80.upper_bound_formatted})` : (out.reason || 'Refused');
+            } else {
+              outSummary = out.conversion_probability_pct !== undefined ? `${out.conversion_probability_pct}% (${out.priority_tier})` : (out.reason || 'Refused');
+            }
+          } catch(e) {
+            outSummary = log.output_payload.substring(0, 50);
+          }
+
+          const oodBadge = log.is_ood ? 
+            `<span class="badge-pill badge-ood"><i class="fa-solid fa-triangle-exclamation"></i> OOD Refused</span>` : 
+            `<span class="badge-pill badge-ok"><i class="fa-solid fa-check"></i> In-Bounds</span>`;
+
+          return `
+            <tr>
+              <td>#${log.id}</td>
+              <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">${log.timestamp}</td>
+              <td><span style="font-weight: 600; color: ${log.prediction_type === 'PRICE_VALUATION' ? 'var(--gold)' : 'var(--blue)'};">${log.prediction_type}</span></td>
+              <td style="font-size: 0.78rem;">${log.model_name} <span style="opacity: 0.6;">v${log.model_version}</span></td>
+              <td>${log.client_email || 'anonymous'}</td>
+              <td style="font-weight: 600;">${outSummary}</td>
+              <td>${oodBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="7" style="color: #ef4444; text-align: center;">Failed to load audit logs: ${e.message}</td></tr>`;
+      }
+    }
+
+    // Load Overall Stats
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/v1/ml/audit-logs?limit=1');
+        const data = await res.json();
+        document.getElementById('totalPredictionsStat').innerText = (data.total_predictions || 0).toLocaleString();
+        document.getElementById('oodPredictionsStat').innerText = `${data.ood_predictions || 0} OOD Refusals Logged`;
+      } catch (e) {
+        // fallback
+      }
+    }
+
+    // Initial load
+    loadStats();
+    loadLeadsInbox();
+  </script>
+</body>
+</html>

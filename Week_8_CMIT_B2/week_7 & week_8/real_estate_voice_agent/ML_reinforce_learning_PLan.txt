@@ -1,0 +1,135 @@
+# Implementation Plan: Unified Phase 2 & Phase 3 Machine Learning System
+
+Integrate **Phase 2 (Dynamic Few-Shot In-Context Learning from winning calls)** and **Phase 3 (ML-based Property Candidate Ranking & Soft Matching)** into the existing Real Estate Voice Agent architecture.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Free Embedding API Key Recommendation:**
+> You can use Google AI Studio's **Gemini API** (`text-embedding-004`), which is completely **free** (included in the Google AI Studio free tier, up to 1,500 RPM) and works directly with your existing `google-genai` client. If you have an existing or new `GEMINI_API_KEY` in `.env`, no new third-party account is required!
+>
+> We also implement an automatic **in-memory vector cache & fast fallback**, so live voice calls never block if external network latency spikes.
+>
+> **Model Versions:**
+> Note acknowledged: `gemini-2.5` models are deprecated, and the system defaults to modern active models (e.g., `gemini-3.5-flash` for chat completions and `text-embedding-004` for vector embeddings).
+
+---
+
+## Proposed Architecture: Unified ML Loop
+
+```
+  Caller Speaks: "Main DHA Lahore mein 4 crore tak ka ghar dekh raha hoon,
+                  installment plan flexible hona chahiye."
+                              │
+                              ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        PARALLEL ML PROCESSING                          │
+│                                                                        │
+│   ┌────────────────────────────────┐  ┌────────────────────────────┐   │
+│   │    PHASE 3: ML RECOMMENDER     │  │   PHASE 2: DIALOGUE MEMORY │   │
+│   │ [recommendation.py]            │  │ [dialogue_memory.py]       │   │
+│   │                                │  │                            │   │
+│   │ 1. Soft SQL Candidate Fetch    │  │ 1. Embed caller utterance  │   │
+│   │    (+/- 20% budget relaxation) │  │ 2. Cosine match against    │   │
+│   │ 2. Feature Vector Scoring:     │  │    proven winning turns    │   │
+│   │    - Gaussian budget fit curve │  │ 3. Pulls high-converting   │   │
+│   │    - Amenity semantic overlap  │  │    objection handle / tone │   │
+│   │ 3. Outputs: Top 3 ML-Ranked    │  │ 4. Outputs: Few-Shot       │   │
+│   │    Properties                  │  │    Exemplar Banner         │   │
+│   └───────────────┬────────────────┘  └─────────────┬──────────────┘   │
+└───────────────────┼─────────────────────────────────┼──────────────────┘
+                    │                                 │
+                    ▼                                 ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│               UNIFIED PROMPT CONTEXT (recommendation.py)               │
+│ - Top ML-ranked properties with installment & value highlights         │
+│ - Injected few-shot sales guidance to guide LLM tone and closing       │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+                 [LLM Generates Voice Response via Gemini]
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                   CLOSED-LOOP FEEDBACK ON BOOKING                      │
+│ - When appointment books -> `crm_call_transcripts.is_converted = 1`    │
+│ - Key winning turns automatically indexed into dialogue memory         │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Proposed Changes
+
+### 1. Database Layer
+
+#### [MODIFY] [database.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/database.py)
+- Update `crm_call_transcripts` table with `is_converted INTEGER DEFAULT 0` column.
+- Create `dialogue_exemplars` table to persist proven successful Q&As with their vector embeddings, category, and conversion counts.
+- Add helper functions to fetch candidate properties with relaxed boundaries (`query_candidate_properties_soft()`).
+
+---
+
+### 2. Embedding & Vector Service
+
+#### [NEW] [embedding_service.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/embedding_service.py)
+- Implements `EmbeddingService`:
+  - Primary: Uses `google.genai` client `client.models.embed_content(model="text-embedding-004", ...)` via `GEMINI_API_KEY`.
+  - Fallback: Local TF-IDF / Scikit-learn cosine vectorizer for instant local processing if offline.
+  - LRU memory cache: Prevents redundant embedding API calls for common phrases.
+
+---
+
+### 3. Phase 2: Dynamic Few-Shot Dialogue Memory
+
+#### [NEW] [dialogue_memory.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/dialogue_memory.py)
+- Implements `DialogueMemoryEngine`:
+  - **Cold-Start Seed Corpus**: Pre-loaded with ~15 curated high-converting Urdu/English dialogues tackling common Pakistani real-estate hurdles (e.g., installment negotiation, LDA/CDA NOC legitimacy, budget stretching, site visit closing).
+  - **Similarity Search**: Retrieves top-1 winning exemplar if cosine similarity $> 0.72$.
+  - **Auto-Learning Ingestion**: `index_converted_session(session_id)` to extract user objections and successful agent replies from newly booked calls.
+
+---
+
+### 4. Phase 3: ML Property Recommender & Unified Context
+
+#### [MODIFY] [recommendation.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/recommendation.py)
+- Implement `rank_properties_ml()`:
+  - Fetches candidate pool with relaxed budget bounds ($\pm 20\%$).
+  - Computes composite ML score:
+    - **Budget Affordability**: Bell-curve tolerance function.
+    - **Semantic Match**: Cosine similarity between property description/amenities and user speech.
+    - **Area Match**: Weighted scoring for exact sector vs nearby areas.
+  - Ranks candidate properties and selects the top 3.
+- Query `dialogue_memory.retrieve_exemplar(user_query)` and append a structured `=== PROVEN SALES GUIDANCE (FEW-SHOT) ===` banner to the LLM context.
+
+---
+
+### 5. CRM & Closed-Loop Integration
+
+#### [MODIFY] [crm_store.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/crm_store.py)
+- Add `mark_session_converted(session_id: str)` to flag converted conversations.
+- Add getter for converted transcripts to feed into `dialogue_memory`.
+
+#### [MODIFY] [appointment_manager.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/appointment_manager.py)
+- On successful booking in `book_appointment()`, call `crm_store.mark_session_converted()` and trigger `dialogue_memory.index_session_if_converted()`.
+
+#### [MODIFY] [app.py](file:///c:/Users/MEE/Anti-Gravity_projects/Real_estate_voice_agent/app.py)
+- Pass conversation context and latest user query to the updated `recommendation.get_recommendations()` so both Phase 2 and Phase 3 run smoothly on every turn.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+1. **Embedding & Vector Match Unit Test**:
+   - Run a test script to verify `embedding_service.py` computes embeddings via Gemini API and local fallback.
+   - Assert similarity scores between related queries (e.g., *"installment plan flexible"* vs *"down payment kitni hogi"*).
+2. **Phase 2 Dialogue Retrieval Test**:
+   - Query `dialogue_memory` with realistic Roman Urdu real estate queries and assert that the relevant winning dialogue is retrieved with $> 0.70$ similarity.
+3. **Phase 3 ML Ranking Test**:
+   - Run candidate scoring with a 3.8 Crore budget and verify that a 4.0 Crore villa with a favorable payment plan ranks higher than an irrelevant 2.0 Crore commercial shop.
+4. **End-to-End Voice Simulation**:
+   - Simulate a turn through `app.py` endpoint and inspect the generated LLM prompt to verify:
+     - Properties are ranked by ML score.
+     - Dynamic few-shot banner is injected when applicable.
+     - Latency remains well under the 2-second target.

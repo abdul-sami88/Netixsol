@@ -1,0 +1,29 @@
+artifact_path: file:C:/Users/MEE/Anti-Gravity_projects/week_7 & week_8/AI_property_valuation_lead_scoring/mlruns/2/models/m-74d43d0131c64ce0828e25f6a90c9e9d/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.13
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.16.1
+model_id: m-74d43d0131c64ce0828e25f6a90c9e9d
+model_size_bytes: 6345
+model_uuid: m-74d43d0131c64ce0828e25f6a90c9e9d
+prompts: null
+run_id: 7482011589bf443a90ffef1ea9572dea
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 2]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-09-28 10:17:37.186563'

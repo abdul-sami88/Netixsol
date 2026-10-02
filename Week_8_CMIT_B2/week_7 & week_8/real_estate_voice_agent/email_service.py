@@ -1,0 +1,345 @@
+import smtplib
+import urllib.parse
+from datetime import datetime, timedelta
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.header import Header
+from typing import Dict, Any, Optional
+from config import config
+
+# Production Email Service: Dynamic Client Email & Staff Alert Dispatch
+DEFAULT_MANAGER_EMAIL = config.NOTIFICATION_SENDER_EMAIL or config.SMTP_USERNAME or "manager@realestatehub.pk"
+HARDCODED_RECEIVER_EMAIL = DEFAULT_MANAGER_EMAIL # Kept for backward compatibility
+
+class EmailService:
+    def __init__(self):
+        self.server = config.SMTP_SERVER
+        self.port = config.SMTP_PORT
+        self.username = config.SMTP_USERNAME
+        self.password = config.SMTP_PASSWORD
+        
+        # Sender must align with SMTP authenticated username to pass SPF/DMARC checks on Gmail SMTP
+        self.sender = self.username or config.NOTIFICATION_SENDER_EMAIL or DEFAULT_MANAGER_EMAIL
+
+    def _generate_google_calendar_url(self, title: str, details: str, location: str, date_str: str, time_str: str) -> str:
+        """Generates a 1-click Google Calendar Add-to-Calendar URL matching appointment date/time."""
+        now = datetime.now()
+        target_date = now + timedelta(days=1)
+        
+        # Parse date_str
+        d_lower = (date_str or "").strip().lower()
+        if d_lower == "today" or "aaj" in d_lower:
+            target_date = now
+        elif d_lower == "tomorrow" or "kal" in d_lower:
+            target_date = now + timedelta(days=1)
+        else:
+            # Try parsing YYYY-MM-DD
+            try:
+                target_date = datetime.strptime(date_str.strip(), "%Y-%m-%d")
+            except Exception:
+                pass
+
+        # Parse time_str (e.g. 11:00 AM, 4 PM, 04:00 PM)
+        target_hour = 11
+        target_minute = 0
+        try:
+            t_clean = (time_str or "").strip().upper()
+            is_pm = "PM" in t_clean
+            is_am = "AM" in t_clean
+            t_clean = t_clean.replace("PM", "").replace("AM", "").replace("BAJE", "").replace("BAJAY", "").strip()
+            if ":" in t_clean:
+                parts = t_clean.split(":")
+                target_hour = int(parts[0].strip())
+                target_minute = int(parts[1].strip())
+            else:
+                target_hour = int(t_clean)
+                target_minute = 0
+            
+            if is_pm and target_hour < 12:
+                target_hour += 12
+            elif is_am and target_hour == 12:
+                target_hour = 0
+        except Exception:
+            target_hour = 11
+            target_minute = 0
+
+        start_dt = target_date.replace(hour=target_hour, minute=target_minute, second=0, microsecond=0)
+        end_dt = start_dt + timedelta(hours=1)
+        
+        start_iso = start_dt.strftime("%Y%m%dT%H%M%SZ")
+        end_iso = end_dt.strftime("%Y%m%dT%H%M%SZ")
+
+        params = {
+            "action": "TEMPLATE",
+            "text": f"Real Estate Visit: {title}",
+            "details": details,
+            "location": location,
+            "dates": f"{start_iso}/{end_iso}"
+        }
+        return "https://calendar.google.com/calendar/render?" + urllib.parse.urlencode(params)
+
+    def _send_single_email(self, recipient: str, subject: str, html_content: str) -> bool:
+        """Helper to dispatch an individual UTF-8 encoded email via SMTP."""
+        if not (self.username and self.password and "your_" not in self.username):
+            print(f"[Email Service SIMULATION] Logger: Sent to {recipient} | Subject: {subject}")
+            return True
+
+        try:
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = Header(subject, "utf-8")
+            msg["From"] = self.sender or self.username
+            msg["To"] = recipient
+            msg.attach(MIMEText(html_content, "html", "utf-8"))
+
+            server = smtplib.SMTP(self.server, self.port)
+            server.starttls()
+            server.login(self.username, self.password)
+            server.sendmail(self.sender or self.username, [recipient], msg.as_string().encode("utf-8"))
+            server.quit()
+            print(f"[Email Service] LIVE EMAIL sent successfully to {recipient} | Subject: {subject}")
+            return True
+        except Exception as e:
+            print(f"[Email Service] Failed sending email to {recipient}: {e}")
+            return False
+
+    def send_appointment_notification(
+        self,
+        action_type: str, # 'BOOKING', 'RESCHEDULING', 'CANCELLATION'
+        client_name: str,
+        client_email: str,
+        client_phone: str,
+        employee_name: str,
+        employee_email: str,
+        property_title: str,
+        appointment_date: str,
+        appointment_time: str,
+        requirements_summary: str = "",
+        appointment_id: Optional[Any] = None
+    ) -> Dict[str, Any]:
+        """
+        Sends TWO DISTINCT SEPARATE EMAILS:
+        1. Client Confirmation Email directly to client's provided email address.
+        2. Assigned Agent / Manager Notification Email to employee/manager.
+        Both include a 1-Click 'Add to Google Calendar' button and Appointment Reference ID!
+        """
+        client_recipient = client_email.strip() if client_email else ""
+        if not client_recipient or "@" not in client_recipient or "." not in client_recipient:
+            print(f"[Email Service] Error: Invalid or missing client email '{client_email}'. Cannot send client notification.")
+            return {
+                "success": False,
+                "error": f"Invalid client email: '{client_email}'",
+                "emails_sent_count": 0
+            }
+
+        agent_recipient = employee_email.strip() if (employee_email and "@" in employee_email) else DEFAULT_MANAGER_EMAIL
+        id_display = f"APT-{appointment_id}" if appointment_id else "Pending Assignment"
+
+        details_text = (
+            f"Appointment Reference ID: {id_display}\n"
+            f"Client Name: {client_name}\n"
+            f"Client Email: {client_recipient}\n"
+            f"Phone: {client_phone}\n"
+            f"Assigned Manager: {employee_name}\n"
+            f"Property: {property_title}\n"
+            f"Meeting Time: {appointment_date} at {appointment_time}\n"
+            f"Notes: {requirements_summary or 'Site Visit Consultation'}"
+        )
+        
+        gcal_url = self._generate_google_calendar_url(
+            title=property_title,
+            details=details_text,
+            location=property_title,
+            date_str=appointment_date,
+            time_str=appointment_time
+        )
+
+        # ----------------------------------------------------
+        # EMAIL #1: CLIENT CONFIRMATION EMAIL (TO CLIENT'S EMAIL)
+        # ----------------------------------------------------
+        client_subject = f"[CONFIRMATION - {id_display}] Your Appointment for {property_title} is {action_type.title()}!"
+        client_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background-color: #064e3b; padding: 25px; text-align: center; color: white;">
+                    <h2 style="margin: 0; font-size: 22px;">RealEstate Hub Pakistan</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 14px; color: #a7f3d0;">Client Appointment Confirmation Notice</p>
+                </div>
+                
+                <div style="padding: 30px;">
+                    <h3 style="color: #065f46; margin-top: 0;">Dear {client_name},</h3>
+                    <p style="font-size: 15px;">Your appointment has been successfully <strong>{action_type.lower()}</strong>. Details are below:</p>
+                    
+                    <div style="background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center;">
+                        <span style="font-size: 13px; color: #047857; text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">Your Appointment Reference ID</span>
+                        <div style="font-size: 24px; font-weight: bold; color: #064e3b; margin-top: 4px;">{id_display}</div>
+                        <p style="margin: 6px 0 0 0; font-size: 12px; color: #065f46;">Please save this ID. Quote this ID if you need to reschedule or cancel your appointment.</p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; border: 1px solid #e5e7eb;">
+                        <tr style="background: #f9fafb;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Booking Field</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Confirmation Details</th></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Appointment ID</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #065f46; font-weight: bold;">{id_display}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{action_type.title()}</strong></td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Property</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_title}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Meeting Date & Time</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #059669;"><strong>{appointment_date} at {appointment_time}</strong></td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Assigned Senior Executive</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{employee_name} ({agent_recipient})</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Consultation Notes</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{requirements_summary or 'Site Visit & Layout Consultation'}</td></tr>
+                    </table>
+
+                    <div style="text-align: center; margin: 30px 0 10px 0;">
+                        <a href="{gcal_url}" target="_blank" style="background-color: #10b981; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; display: inline-block; box-shadow: 0 4px 6px rgba(16,185,129,0.3);">
+                            📅 Click Here to Add Event to Your Google Calendar
+                        </a>
+                        <p style="font-size: 12px; color: #6b7280; margin-top: 8px;">(Clicking the button will open Google Calendar and add this site visit to your calendar)</p>
+                    </div>
+                </div>
+
+                <div style="background-color: #f9fafb; padding: 15px; text-align: center; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280;">
+                    RealEstate Hub Customer Service Team &bull; Senior Executive Zara
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        # ----------------------------------------------------
+        # EMAIL #2: AGENT / MANAGER NOTIFICATION EMAIL
+        # ----------------------------------------------------
+        agent_subject = f"[AGENT ALERT - {id_display}] Client Appointment {action_type.title()}: {client_name} - {property_title}"
+        agent_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background-color: #1e3a8a; padding: 25px; text-align: center; color: white;">
+                    <h2 style="margin: 0; font-size: 22px;">RealEstate Hub CRM Agent Alert</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 14px; color: #93c5fd;">Internal Assigned Client Notification</p>
+                </div>
+                
+                <div style="padding: 30px;">
+                    <h3 style="color: #1e40af; margin-top: 0;">Hello Agent {employee_name},</h3>
+                    <p style="font-size: 15px;">A client appointment update has occurred. Status: <strong>{action_type}</strong>.</p>
+                    
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; border: 1px solid #e5e7eb;">
+                        <tr style="background: #eff6ff;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Field</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Client Lead Info</th></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Appointment ID</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8; font-weight: bold;">{id_display}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Action Status</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8;"><strong>{action_type}</strong></td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Name</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>{client_name}</strong></td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Email</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_recipient}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Phone</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{client_phone}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Target Property</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_title}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Meeting Time</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8;"><strong>{appointment_date} at {appointment_time}</strong></td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Requirements</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{requirements_summary or 'Standard Site Visit & Investment Consultation'}</td></tr>
+                    </table>
+
+                    <div style="text-align: center; margin: 30px 0 10px 0;">
+                        <a href="{gcal_url}" target="_blank" style="background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; display: inline-block; box-shadow: 0 4px 6px rgba(37,99,235,0.3);">
+                            📅 Add Client Event to Google Calendar
+                        </a>
+                    </div>
+                </div>
+
+                <div style="background-color: #f9fafb; padding: 15px; text-align: center; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280;">
+                    RealEstate Hub Internal Business Automation &bull; Agent Notification System
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        print(f"[Email Service] Dispatching Email #1 ({action_type} - Client Confirmation - ID: {id_display}) to {client_recipient}...")
+        res1 = self._send_single_email(client_recipient, client_subject, client_html)
+
+        print(f"[Email Service] Dispatching Email #2 ({action_type} - Agent Alert - ID: {id_display}) to {agent_recipient}...")
+        res2 = self._send_single_email(agent_recipient, agent_subject, agent_html)
+
+        return {
+            "success": (res1 and res2),
+            "mode": "LIVE_SMTP" if (self.username and self.password and "your_" not in self.username) else "SIMULATION_LOGGER",
+            "emails_sent_count": 2 if (res1 and res2) else (1 if (res1 or res2) else 0),
+            "appointment_id": appointment_id,
+            "id_display": id_display,
+            "client_recipient": client_recipient,
+            "agent_recipient": agent_recipient,
+            "subjects": [client_subject, agent_subject],
+            "gcal_url": gcal_url
+        }
+
+    def send_hot_lead_alert(
+        self,
+        client_email: str,
+        lead_score_pct: float,
+        priority_tier: str,
+        recommended_action: str,
+        city: str = "Lahore",
+        budget_pkr: float = 0.0,
+        property_type: str = "House",
+        assigned_employee_email: Optional[str] = None,
+        assigned_employee_name: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Dispatches urgent email alert to assigned city employee/broker when a Hot Lead is scored.
+        """
+        from database import get_agent_by_city
+
+        agent = get_agent_by_city(city)
+        emp_name = assigned_employee_name or agent.get("name", "Tariq Mahmood")
+        emp_email = assigned_employee_email or agent.get("email", DEFAULT_MANAGER_EMAIL)
+
+        budget_str = f"{budget_pkr / 10000000:.2f} Crore PKR" if budget_pkr >= 10000000 else f"{budget_pkr / 100000:.1f} Lakh PKR" if budget_pkr > 0 else "Flexible / Disclosed on call"
+
+        subject = f"🔥 [HOT LEAD ALERT - {lead_score_pct:.1f}%] High Conversion Prospect: {client_email}"
+        
+        html_body = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6; background-color: #f3f4f6; padding: 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="background-color: #b91c1c; padding: 25px; text-align: center; color: white;">
+                    <h2 style="margin: 0; font-size: 24px;">🔥 URGENT: High Priority Lead Alert</h2>
+                    <p style="margin: 5px 0 0 0; font-size: 15px; color: #fecaca;">Conversion Probability: <strong>{lead_score_pct:.1f}% ({priority_tier})</strong></p>
+                </div>
+                
+                <div style="padding: 30px;">
+                    <h3 style="color: #991b1b; margin-top: 0;">Attention: {emp_name},</h3>
+                    <p style="font-size: 15px;">The AI Voice Agent has detected an inbound high-conversion prospect. Immediate follow-up SLA required.</p>
+                    
+                    <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                        <strong style="color: #991b1b;">Prescribed Action (SLA: 1 Hour):</strong><br>
+                        <span style="font-size: 15px; color: #7f1d1d;">{recommended_action}</span>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; border: 1px solid #e5e7eb;">
+                        <tr style="background: #f9fafb;"><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Parameter</th><th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Prospect Details</th></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Client Email</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #1d4ed8; font-weight: bold;">{client_email}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Target City</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{city}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Preferred Asset</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{property_type}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Budget Estimation</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; font-weight: bold; color: #047857;">{budget_str}</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>ML Conversion Score</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb; color: #b91c1c; font-weight: bold;">{lead_score_pct:.1f}% ({priority_tier})</td></tr>
+                        <tr><td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>Assigned Broker</strong></td><td style="padding: 10px; border: 1px solid #e5e7eb;">{emp_name} ({emp_email})</td></tr>
+                    </table>
+
+                    <p style="font-size: 13px; color: #6b7280; margin-top: 25px;">
+                        <em>This lead alert was automatically generated by the Pakistan Real Estate Inbound Lead Scoring Engine.</em>
+                    </p>
+                </div>
+
+                <div style="background-color: #f9fafb; padding: 15px; text-align: center; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280;">
+                    RealEstate Hub AI Lead Intelligence &bull; Commercial Sales System
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        print(f"[Email Service] Dispatching HOT LEAD ALERT to assigned employee {emp_email} ({emp_name})...")
+        sent = self._send_single_email(emp_email, subject, html_body)
+
+        return {
+            "success": sent,
+            "recipient": emp_email,
+            "subject": subject,
+            "lead_score_pct": lead_score_pct,
+            "assigned_employee": emp_name
+        }
+
+
+email_service = EmailService()

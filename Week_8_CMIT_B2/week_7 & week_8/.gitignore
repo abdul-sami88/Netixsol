@@ -1,0 +1,45 @@
+# ==============================================================================
+# Master .gitignore — Pakistan Real Estate AI & Voice Agent Repository
+# ==============================================================================
+
+# Virtual Environments (Local Python binaries)
+.venv/
+venv/
+env/
+ENV/
+*.env
+!.env.example
+
+# Environment Secrets & API Keys
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+google_ai_service_account.json
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+catboost_info/
+
+# Large Executables & Temporary Archives
+cloudflared.exe
+*.zip
+*.tar.gz
+*.rar
+
+# IDE & Editor Configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Jupyter Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*

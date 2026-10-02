@@ -1,0 +1,385 @@
+import sqlite3
+import json
+from pathlib import Path
+from typing import List, Dict, Any, Optional
+from config import config
+
+DB_PATH = config.DB_PATH
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # 1. Create properties table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS properties (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        city TEXT NOT NULL,
+        area TEXT NOT NULL,
+        price_pkr REAL NOT NULL,
+        price_formatted TEXT NOT NULL,
+        size_val REAL NOT NULL,
+        size_unit TEXT NOT NULL,
+        bedrooms INTEGER DEFAULT 0,
+        bathrooms INTEGER DEFAULT 0,
+        purpose TEXT NOT NULL,
+        property_type TEXT NOT NULL,
+        status TEXT DEFAULT 'Available',
+        developer TEXT NOT NULL,
+        description TEXT,
+        amenities TEXT,
+        nearby_schools TEXT,
+        nearby_hospitals TEXT
+    )
+    """)
+    
+    # 2. Create payment_plans table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS payment_plans (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        property_id INTEGER,
+        down_payment_pkr REAL NOT NULL,
+        monthly_installment_pkr REAL NOT NULL,
+        duration_months INTEGER NOT NULL,
+        possession_months INTEGER NOT NULL,
+        FOREIGN KEY (property_id) REFERENCES properties (id)
+    )
+    """)
+    
+    # 3. Create agents table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS agents (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        email TEXT DEFAULT 'manager@realestatehub.pk',
+        city_specialty TEXT NOT NULL,
+        rating REAL DEFAULT 4.8
+    )
+    """)
+    
+    cursor.execute("PRAGMA table_info(agents)")
+    columns = [col[1] for col in cursor.fetchall()]
+    if "email" not in columns:
+        cursor.execute("ALTER TABLE agents ADD COLUMN email TEXT DEFAULT 'manager@realestatehub.pk'")
+
+    # 4. Create faqs table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS faqs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        question TEXT NOT NULL,
+        answer TEXT NOT NULL
+    )
+    """)
+    
+    # 5. Create appointments table (Day 4 Automation)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS appointments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT NOT NULL,
+        client_name TEXT NOT NULL,
+        client_phone TEXT NOT NULL,
+        client_email TEXT NOT NULL,
+        employee_name TEXT NOT NULL,
+        employee_email TEXT NOT NULL,
+        property_title TEXT NOT NULL,
+        appointment_date TEXT NOT NULL,
+        appointment_time TEXT NOT NULL,
+        status TEXT DEFAULT 'BOOKED',
+        calendar_event_id TEXT,
+        notes TEXT,
+        appointment_id TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    cursor.execute("PRAGMA table_info(appointments)")
+    app_cols = [c[1] for c in cursor.fetchall()]
+    if "appointment_id" not in app_cols:
+        cursor.execute("ALTER TABLE appointments ADD COLUMN appointment_id TEXT")
+    cursor.execute("UPDATE appointments SET appointment_id = 'APT-' || id WHERE appointment_id IS NULL OR appointment_id = ''")
+
+    # --- CRM LOGGING STORE TABLES ---
+    # 6. CRM Call Transcripts
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS crm_call_transcripts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT NOT NULL,
+        client_email TEXT NOT NULL,
+        raw_transcript TEXT NOT NULL,
+        normalized_transcript TEXT NOT NULL,
+        agent_response TEXT NOT NULL,
+        latency_sec REAL DEFAULT 0.0,
+        is_converted INTEGER DEFAULT 0,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    cursor.execute("PRAGMA table_info(crm_call_transcripts)")
+    crm_cols = [c[1] for c in cursor.fetchall()]
+    if "is_converted" not in crm_cols:
+        cursor.execute("ALTER TABLE crm_call_transcripts ADD COLUMN is_converted INTEGER DEFAULT 0")
+
+    # 6b. Dialogue Exemplars (Phase 2 Winning Few-Shot Dialogue Memory)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS dialogue_exemplars (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category TEXT NOT NULL,
+        user_utterance TEXT NOT NULL,
+        agent_exemplar TEXT NOT NULL,
+        embedding TEXT NOT NULL,
+        conversion_count INTEGER DEFAULT 1,
+        source_session_id TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 7. CRM Client Preferences (Enriched with ML Lead Scoring)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS crm_client_preferences (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        client_email TEXT UNIQUE NOT NULL,
+        preferred_city TEXT,
+        preferred_area TEXT,
+        max_budget_pkr REAL,
+        bedrooms INTEGER,
+        property_type TEXT,
+        purpose TEXT,
+        lead_score_pct REAL DEFAULT 0.0,
+        priority_tier TEXT DEFAULT '🌤 Warm',
+        recommended_action TEXT DEFAULT 'Follow up within 24 hours',
+        lead_source TEXT DEFAULT 'Inbound Call / Walk-in',
+        objection_raised TEXT DEFAULT 'None',
+        avg_call_duration_mins REAL DEFAULT 5.0,
+        num_calls INTEGER DEFAULT 1,
+        response_time_hours REAL DEFAULT 1.5,
+        days_since_first_contact REAL DEFAULT 2.0,
+        followup_count INTEGER DEFAULT 1,
+        visit_booked TEXT DEFAULT 'No',
+        visit_completed TEXT DEFAULT 'No',
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    cursor.execute("PRAGMA table_info(crm_client_preferences)")
+    pref_cols = [c[1] for c in cursor.fetchall()]
+    ml_cols = [
+        ("lead_score_pct", "REAL DEFAULT 0.0"),
+        ("priority_tier", "TEXT DEFAULT '🌤 Warm'"),
+        ("recommended_action", "TEXT DEFAULT 'Follow up within 24 hours'"),
+        ("lead_source", "TEXT DEFAULT 'Inbound Call / Walk-in'"),
+        ("objection_raised", "TEXT DEFAULT 'None'"),
+        ("avg_call_duration_mins", "REAL DEFAULT 5.0"),
+        ("num_calls", "INTEGER DEFAULT 1"),
+        ("response_time_hours", "REAL DEFAULT 1.5"),
+        ("days_since_first_contact", "REAL DEFAULT 2.0"),
+        ("followup_count", "INTEGER DEFAULT 1"),
+        ("visit_booked", "TEXT DEFAULT 'No'"),
+        ("visit_completed", "TEXT DEFAULT 'No'")
+    ]
+    for col_name, col_def in ml_cols:
+        if col_name not in pref_cols:
+            cursor.execute(f"ALTER TABLE crm_client_preferences ADD COLUMN {col_name} {col_def}")
+
+    # 8. CRM Appointment History
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS crm_appointment_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        appointment_id INTEGER,
+        client_email TEXT NOT NULL,
+        action_type TEXT NOT NULL, -- 'BOOKING', 'RESCHEDULING', 'CANCELLATION'
+        details TEXT NOT NULL,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    # 9. CRM Follow-up Reminders
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS crm_followup_reminders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        client_email TEXT NOT NULL,
+        client_name TEXT NOT NULL,
+        reminder_type TEXT NOT NULL, -- 'Pre-Visit Call', 'Price Discount Check', 'Legal Documents'
+        reminder_date TEXT NOT NULL,
+        status TEXT DEFAULT 'PENDING', -- 'PENDING', 'COMPLETED'
+        notes TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+    
+    conn.commit()
+    conn.close()
+
+def query_properties_sql(
+    city: Optional[str] = None,
+    area: Optional[str] = None,
+    max_price_pkr: Optional[float] = None,
+    min_price_pkr: Optional[float] = None,
+    bedrooms: Optional[int] = None,
+    purpose: Optional[str] = None,
+    property_type: Optional[str] = None,
+    limit: int = 5
+) -> List[Dict[str, Any]]:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    query = "SELECT * FROM properties WHERE status = 'Available'"
+    params = []
+    
+    if city:
+        query += " AND LOWER(city) LIKE LOWER(?)"
+        params.append(f"%{city}%")
+    if area:
+        query += " AND LOWER(area) LIKE LOWER(?)"
+        params.append(f"%{area}%")
+    if max_price_pkr:
+        query += " AND price_pkr <= ?"
+        params.append(max_price_pkr)
+    if min_price_pkr:
+        query += " AND price_pkr >= ?"
+        params.append(min_price_pkr)
+    if bedrooms:
+        query += " AND bedrooms >= ?"
+        params.append(bedrooms)
+    if purpose:
+        query += " AND LOWER(purpose) = LOWER(?)"
+        params.append(purpose)
+    if property_type:
+        query += " AND LOWER(property_type) = LOWER(?)"
+        params.append(property_type)
+        
+    query += " ORDER BY price_pkr ASC LIMIT ?"
+    params.append(limit)
+    
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    
+    result = []
+    for r in rows:
+        item = dict(r)
+        if item.get("amenities"):
+            try:
+                item["amenities"] = json.loads(item["amenities"])
+            except Exception:
+                item["amenities"] = [a.strip() for a in item["amenities"].split(",") if a.strip()]
+        result.append(item)
+        
+    conn.close()
+    return result
+
+def query_candidate_properties_soft(
+    city: Optional[str] = None,
+    area: Optional[str] = None,
+    budget_pkr: Optional[float] = None,
+    bedrooms: Optional[int] = None,
+    purpose: Optional[str] = None,
+    property_type: Optional[str] = None,
+    budget_tolerance: float = 0.20,
+    limit: int = 15
+) -> List[Dict[str, Any]]:
+    """
+    Fetches candidate properties with relaxed boundaries for Phase 3 ML Ranking.
+    - Soft budget filtering (budget +/- 20% by default, or up to +25%)
+    - Joins payment_plans to enrich candidates with down payment & installment terms
+    - Parses amenities JSON
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    query = """
+        SELECT 
+            p.*,
+            pp.id AS payment_plan_id,
+            pp.down_payment_pkr,
+            pp.monthly_installment_pkr,
+            pp.duration_months,
+            pp.possession_months
+        FROM properties p
+        LEFT JOIN payment_plans pp ON pp.property_id = p.id
+        WHERE p.status = 'Available'
+    """
+    params = []
+    
+    if city:
+        query += " AND LOWER(p.city) LIKE LOWER(?)"
+        params.append(f"%{city}%")
+        
+    if purpose:
+        query += " AND LOWER(p.purpose) = LOWER(?)"
+        params.append(purpose)
+        
+    if property_type:
+        query += " AND LOWER(p.property_type) = LOWER(?)"
+        params.append(property_type)
+        
+    if budget_pkr and budget_pkr > 0:
+        max_price = budget_pkr * (1.0 + budget_tolerance)
+        min_price = max(0.0, budget_pkr * (1.0 - (budget_tolerance * 2.5)))
+        query += " AND p.price_pkr <= ?"
+        params.append(max_price)
+        if min_price > 0 and budget_pkr > 5000000:
+            query += " AND p.price_pkr >= ?"
+            params.append(min_price)
+            
+    query += " ORDER BY p.price_pkr ASC LIMIT ?"
+    params.append(limit)
+    
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    
+    result = []
+    for r in rows:
+        item = dict(r)
+        if item.get("amenities"):
+            try:
+                item["amenities"] = json.loads(item["amenities"])
+            except Exception:
+                item["amenities"] = [a.strip() for a in item["amenities"].split(",") if a.strip()]
+        else:
+            item["amenities"] = []
+            
+        if item.get("payment_plan_id") or item.get("monthly_installment_pkr"):
+            item["payment_plan"] = {
+                "down_payment_pkr": item.get("down_payment_pkr"),
+                "monthly_installment_pkr": item.get("monthly_installment_pkr"),
+                "duration_months": item.get("duration_months"),
+                "possession_months": item.get("possession_months")
+            }
+        else:
+            item["payment_plan"] = None
+            
+        result.append(item)
+        
+    conn.close()
+    return result
+
+def get_agent_by_city(city: str) -> Dict[str, Any]:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM agents WHERE LOWER(city_specialty) LIKE LOWER(?) LIMIT 1", (f"%{city}%",))
+    row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        agent_dict = dict(row)
+        if not agent_dict.get("email"):
+            agent_dict["email"] = f"{agent_dict['name'].lower().replace(' ', '.')}@realestatehub.pk"
+        return agent_dict
+    
+    # Fallbacks by city
+    if "lahore" in (city or "").lower():
+        return {"name": "Tariq Mahmood", "phone": "+92-300-8451199", "email": "tariq.mahmood@realestatehub.pk", "city_specialty": "Lahore", "rating": 4.9}
+    elif "islamabad" in (city or "").lower():
+        return {"name": "Shehryar Khan", "phone": "+92-321-9988112", "email": "shehryar.khan@realestatehub.pk", "city_specialty": "Islamabad", "rating": 4.8}
+    elif "karachi" in (city or "").lower():
+        return {"name": "Zeeshan Siddiqui", "phone": "+92-333-2211445", "email": "zeeshan.siddiqui@realestatehub.pk", "city_specialty": "Karachi", "rating": 4.9}
+    else:
+        return {"name": "Tariq Mahmood", "phone": "+92-300-8451199", "email": "tariq.mahmood@realestatehub.pk", "city_specialty": "Lahore", "rating": 4.9}
+
+if __name__ == "__main__":
+    init_db()
+    print("Database initialized with CRM Logging Store tables successfully.")
