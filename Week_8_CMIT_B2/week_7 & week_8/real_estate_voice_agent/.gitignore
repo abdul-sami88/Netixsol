@@ -1,0 +1,26 @@
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Environment Variables & Secrets
+.env
+google_ai_service_account.json
+credentials.json
+token.json
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Executables & Large Archives
+cloudflared.exe
+*.zip
+*.tar.gz
+
+# IDE configs
+.vscode/
+.idea/

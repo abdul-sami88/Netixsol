@@ -1410,24 +1410,17 @@ async def langgraph_agent_trace_endpoint(session_id: Optional[str] = None):
     return tracer.get_all_traces()
 
 # ==========================================
-# 4. KUBERNETES & CLOUD HEALTH PROBES
+# 4. CLOUD & RENDER HEALTH PROBES
 # ==========================================
-# from production_eval_and_deployment.deployment.health_checks import check_liveness, check_readiness
-
-# @app.get("/healthz")
-# def healthz_probe():
-#     """Basic Kubernetes / Load Balancer Liveness Probe."""
-#     return check_liveness()
-
-# @app.get("/livez")
-# def livez_probe():
-#     """Runtime Process & Worker Liveness Probe."""
-#     return check_liveness()
-
-# @app.get("/readyz")
-# def readyz_probe():
-#     """Deep Readiness Probe: SQLite DB, Gemini/Groq LLM API, and SMTP server reachability."""
-#     return check_readiness()
+@app.get("/healthz")
+@app.get("/health")
+def healthz_probe():
+    """Liveness probe for Render, Kubernetes, and uptime monitoring."""
+    return {
+        "status": "healthy",
+        "service": "real_estate_voice_agent",
+        "models_loaded": True
+    }
 
 
 if __name__ == "__main__":
