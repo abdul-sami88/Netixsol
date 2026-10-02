@@ -199,14 +199,44 @@ def process_valuation_interaction(mem, normalized_msg: str) -> Optional[Dict[str
     """
     import re
     norm_lower = normalized_msg.lower()
-    val_keywords = [
-        "kitne ka bikega", "kitne ka sell", "mera ghar kitne", "ghar kitne ka",
-        "plot kitne ka", "valuation", "value kya hogi", "qeemat kya hogi", "qeemat kitni",
-        "bazar bhav", "marla ka ghar kitne", "property price", "market price", "price estimate",
-        "worth kya hai", "sell karna hai", "bechna chahta", "bechni hai", "bechna hai"
-    ]
+
+    val_regex = re.compile(
+        r'(?:'
+        r'kitn[ea]\s*(?:ka|mein|me|par)?\s*(?:bik|sell|sale|khar|bikay|hoga)'
+        r'|price\s*of\s*(?:my\s*)?(?:house|home|property|ghar|plot)'
+        r'|how\s*much\s*(?:is|can|for|would)'
+        r'|predict\s*(?:the\s*)?(?:property\s*|house\s*)?price'
+        r'|price\s*predict'
+        r'|price\s*score'
+        r'|lead\s*score'
+        r'|valuation'
+        r'|value\s*(?:kya|kitni|estimate|check|of)'
+        r'|qeemat\s*(?:kya|kitni|batao|check)'
+        r'|qimat'
+        r'|rate\s*(?:kya|kitna|batao|check)'
+        r'|market\s*(?:rate|value|price)'
+        r'|property\s*price'
+        r'|house\s*price'
+        r'|ghar\s*price'
+        r'|bazar\s*bhav'
+        r'|bhav\s*kya'
+        r'|worth'
+        r'|estimate'
+        r'|appraisal'
+        r'|bechn[aei]'
+        r'|farokht'
+        r'|sell\s*karna'
+        r'|sell\s*my\s*house'
+        r'|sell\s*house'
+        r'|sale\s*karna'
+        r')',
+        re.IGNORECASE
+    )
+    has_size = bool(re.search(r'\b(?:\d+(?:\.\d+)?)\s*(?:marla|marle|kanal|kanals|مرلہ|کنال)\b', norm_lower))
+    has_pricing_term = bool(re.search(r'\b(?:price|rate|value|qeemat|worth|cost|bikega|bikay|sell|sale|bhav|khar)\b', norm_lower))
     is_awaiting = getattr(mem, "awaiting_valuation_specs", False)
-    if not (any(k in norm_lower for k in val_keywords) or is_awaiting):
+
+    if not (val_regex.search(norm_lower) or (has_size and has_pricing_term) or is_awaiting):
         return None
 
     # Check for prompt injection
@@ -216,6 +246,39 @@ def process_valuation_interaction(mem, normalized_msg: str) -> Optional[Dict[str
         return {
             "status": "refused",
             "reply": "Mujhe afsos hai, main safety policies ke mutabiq aisi instructions follow nahi kar sakti. Main sirf real estate khareed o farokht, valuation aur appointments mein aapki madad kar sakti hoon."
+        }
+
+    # Check if caller specifically asked for their Lead Score / CRM Priority Tier
+    lead_score_query = bool(re.search(r'\b(?:lead\s*score|lead\s*quality|caller\s*score|priority\s*tier)\b', norm_lower))
+    prop_val_query = bool(re.search(r'\b(?:ghar|house|property|plot|marla|kanal|price|qeemat|rate|bikega|bikay|worth|cost|valuation)\b', norm_lower))
+    if lead_score_query and not (prop_val_query or has_size):
+        from crm_lead_scorer import CRMLeadScorer
+        scorer = CRMLeadScorer.get_instance()
+        lead_input = {
+            "budget_pkr": mem.budget_pkr or 35000000.0,
+            "num_calls": max(1, len(mem.history) // 2),
+            "avg_call_duration_mins": 4.5,
+            "response_time_hours": 1.5,
+            "days_since_first_contact": 1.0,
+            "followup_count": 1,
+            "preferred_city": mem.city or "Lahore",
+            "purpose": mem.purpose or "Buy",
+            "property_type_preferred": mem.property_type or "House",
+            "visit_booked": "Yes" if mem.appointment_booked else "No",
+            "client_email": mem.client_email
+        }
+        res = scorer.predict_score(lead_input, client_email=mem.client_email)
+        score_pct = int(res["conversion_probability"] * 100)
+        tier = res["priority_tier"]
+        tier_text = "Hot Lead" if tier == "Hot" else ("Warm Lead" if tier == "Warm" else "Cold Lead")
+        sla = res["action_sla"]
+        lead_reply = (
+            f"Aap ka current CRM lead score {score_pct} percent calculate hua hai aur aapka status '{tier_text}' hai. "
+            f"Hamari sales team ka action time {sla} hai. Main aapki real estate mein mazeed kis tarah madad kar sakti hoon?"
+        )
+        return {
+            "status": "lead_score",
+            "reply": lead_reply
         }
 
     # Extract size: e.g. "10 marla", "5 marla", "1 kanal", "2 kanal"
@@ -289,9 +352,9 @@ def process_valuation_interaction(mem, normalized_msg: str) -> Optional[Dict[str
     high_fmt = val_res["confidence_interval_80"]["upper_bound_formatted"]
 
     reply = (
-        f"Aap ke {marla_val:.0f} Marla ghar ({area}, {city}) ki fair market value taqreeban **{mid_fmt}** banti hai. "
-        f"Hamare statistical 80% confidence interval model ke mutabiq yeh **{low_fmt} se {high_fmt}** ke darmiyan sell ho sakta hai.\n\n"
-        f"*Qanooni Wazahat: {DISCLAIMER_TEXT_UR}*"
+        f"Aap ke {marla_val:.0f} Marla ghar {area} {city} ki fair market value taqreeban {mid_fmt} banti hai. "
+        f"Hamare statistical 80 percent confidence interval model ke mutabiq yeh {low_fmt} se {high_fmt} ke darmiyan sell ho sakta hai. "
+        f"Qanooni wazahat: {DISCLAIMER_TEXT_UR}"
     )
 
     return {
@@ -299,6 +362,7 @@ def process_valuation_interaction(mem, normalized_msg: str) -> Optional[Dict[str
         "val_res": val_res,
         "reply": reply
     }
+
 
 
 # Pydantic Schemas
@@ -398,6 +462,8 @@ class OpenAICompletionRequest(BaseModel):
     stream: Optional[bool] = False
     temperature: Optional[float] = 0.6
     max_tokens: Optional[int] = 300
+    call: Optional[Dict[str, Any]] = None
+    tools: Optional[List[Any]] = None
 
 class LoginRequest(BaseModel):
     username: str
@@ -552,12 +618,127 @@ def check_if_it_is_vapi(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# This is the path the AI agent calls mid-phone call
+# ==========================================
+# VAPI & OPENAI STREAMING HELPERS
+# ==========================================
+def create_openai_sse_stream(text: str, model: str):
+    """
+    Yields chunks formatted for OpenAI SSE streaming protocol compatible with Vapi.
+    Streams word-by-word with finish_reason: None, followed by terminal stop delta.
+    """
+    created_ts = int(time.time())
+    words = text.split(" ")
+    for w in words:
+        if not w:
+            continue
+        chunk = {
+            "id": f"chatcmpl-{created_ts}",
+            "object": "chat.completion.chunk",
+            "created": created_ts,
+            "model": model,
+            "choices": [{
+                "index": 0,
+                "delta": {"content": w + " "},
+                "finish_reason": None
+            }]
+        }
+        yield f"data: {json.dumps(chunk)}\n\n"
+    
+    end_chunk = {
+        "id": f"chatcmpl-{created_ts}",
+        "object": "chat.completion.chunk",
+        "created": created_ts,
+        "model": model,
+        "choices": [{
+            "index": 0,
+            "delta": {},
+            "finish_reason": "stop"
+        }]
+    }
+    yield f"data: {json.dumps(end_chunk)}\n\n"
+    yield "data: [DONE]\n\n"
+
+SSE_HEADERS = {
+    "Cache-Control": "no-cache",
+    "Connection": "keep-alive",
+    "X-Accel-Buffering": "no",
+    "Content-Type": "text/event-stream"
+}
+
+# This is the path the AI agent calls mid-phone call for Tool Calling
 @app.post("/vapi-voice-tool")
-# @check_if_it_is_vapi # This activates the checkpoint!
-def voice_agent_helper(request: Request):
-    # If the code gets here, we KNOW it's safely Vapi
-    return JSONResponse({"result": "Hello AI! The customer's balance is $50."})
+async def voice_agent_helper(request: Request):
+    """
+    Vapi Mid-Call Tool Calling webhook for Property Valuation & Lead Scoring.
+    Handles Vapi function calls (e.g., predict_price, get_property_valuation).
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+
+    tool_calls = []
+    if isinstance(body, dict):
+        if "message" in body and isinstance(body["message"], dict):
+            tool_calls = body["message"].get("toolCalls") or body["message"].get("toolCallList") or []
+        elif "toolCalls" in body:
+            tool_calls = body.get("toolCalls") or []
+
+    if tool_calls:
+        results = []
+        for tc in tool_calls:
+            call_id = tc.get("id") or tc.get("toolCallId") or "call_default"
+            func = tc.get("function", {})
+            args = func.get("arguments", {})
+            if isinstance(args, str):
+                try:
+                    args = json.loads(args)
+                except Exception:
+                    args = {}
+
+            plot_size = float(args.get("plot_size_marla") or args.get("marla") or 10.0)
+            city = str(args.get("city") or "Lahore")
+            loc = str(args.get("location") or args.get("area") or "DHA Phase 6")
+            beds = int(args.get("bedrooms") or 4)
+
+            prop_data = {
+                "city": city,
+                "location": loc,
+                "plot_size_marla": plot_size,
+                "bedrooms": beds,
+                "bathrooms": beds,
+                "covered_area_sqft": plot_size * 225.0 * 0.75,
+                "year_built": 2021
+            }
+            val_res = predict_property_price(prop_data)
+            reply = (
+                f"Aap ke {plot_size:.0f} Marla ghar {loc} {city} ki fair market value taqreeban {val_res['fair_market_price_formatted']} banti hai. "
+                f"Hamare 80 percent confidence interval model ke mutabiq yeh {val_res['confidence_interval_80']['lower_bound_formatted']} se {val_res['confidence_interval_80']['upper_bound_formatted']} ke darmiyan sell ho sakta hai. "
+                f"Qanooni wazahat: {DISCLAIMER_TEXT_UR}"
+            )
+            results.append({"toolCallId": call_id, "result": reply})
+
+        return JSONResponse({"results": results})
+
+    # Direct fallback if called with raw JSON arguments
+    plot_size = float(body.get("plot_size_marla") or body.get("marla") or 10.0)
+    city = str(body.get("city") or "Lahore")
+    loc = str(body.get("location") or body.get("area") or "DHA Phase 6")
+    val_res = predict_property_price({
+        "city": city,
+        "location": loc,
+        "plot_size_marla": plot_size,
+        "bedrooms": int(body.get("bedrooms") or 4),
+        "bathrooms": int(body.get("bedrooms") or 4),
+        "covered_area_sqft": plot_size * 225.0 * 0.75,
+        "year_built": 2021
+    })
+    reply = (
+        f"Aap ke {plot_size:.0f} Marla ghar {loc} {city} ki fair market value taqreeban {val_res['fair_market_price_formatted']} banti hai. "
+        f"Hamare 80 percent confidence interval model ke mutabiq yeh {val_res['confidence_interval_80']['lower_bound_formatted']} se {val_res['confidence_interval_80']['upper_bound_formatted']} ke darmiyan sell ho sakta hai. "
+        f"Qanooni wazahat: {DISCLAIMER_TEXT_UR}"
+    )
+    return JSONResponse({"result": reply, "results": [{"toolCallId": "default", "result": reply}]})
 
 # ==========================================
 # 1. VAPI CUSTOM LLM COMPATIBLE ENDPOINT (/v1/chat/completions)
@@ -571,8 +752,13 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     """
     start_time = time.time()
     
-    # Extract unique call ID from Vapi headers or create session key per call
-    vapi_call_id = request.headers.get("x-vapi-call-id") or request.headers.get("x-call-id") or "vapi_session_active"
+    # Extract unique call ID from Vapi headers or request payload
+    vapi_call_id = (
+        request.headers.get("x-vapi-call-id")
+        or request.headers.get("x-call-id")
+        or (req.call.get("id") if req.call else None)
+        or "vapi_session_active"
+    )
     
     # Extract user messages
     user_msgs = [m.content for m in req.messages if m.role == "user"]
@@ -592,23 +778,18 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     if stt_info["is_interruption"]:
         interruption_reply = "Ji bilkul sir! Main sun rahi hoon, aap bataiye."
         if req.stream:
-            def interrupt_stream():
-                data = {
-                    "id": f"chatcmpl-{int(time.time())}",
-                    "object": "chat.completion.chunk",
-                    "created": int(time.time()),
-                    "model": req.model,
-                    "choices": [{"index": 0, "delta": {"content": interruption_reply}, "finish_reason": "stop"}]
-                }
-                yield f"data: {json.dumps(data)}\n\n"
-                yield "data: [DONE]\n\n"
-            return StreamingResponse(interrupt_stream(), media_type="text/event-stream")
+            return StreamingResponse(
+                create_openai_sse_stream(interruption_reply, req.model),
+                media_type="text/event-stream",
+                headers=SSE_HEADERS
+            )
         else:
             return {
                 "id": f"chatcmpl-{int(time.time())}",
                 "object": "chat.completion",
                 "created": int(time.time()),
                 "model": req.model,
+                "choices": [{"index": 0, "message": {"role": "assistant", "content": interruption_reply}, "finish_reason": "stop"}]
             }
 
     # 1. Prompt Injection Defense
@@ -616,17 +797,11 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     if is_inj:
         refusal_reply = "Mujhe afsos hai, main safety policies ke mutabiq aisi instructions follow nahi kar sakti. Main sirf real estate khareed o farokht, valuation aur appointments mein aapki madad kar sakti hoon."
         if req.stream:
-            def inj_stream():
-                data = {
-                    "id": f"chatcmpl-{int(time.time())}",
-                    "object": "chat.completion.chunk",
-                    "created": int(time.time()),
-                    "model": req.model,
-                    "choices": [{"index": 0, "delta": {"content": refusal_reply}, "finish_reason": "stop"}]
-                }
-                yield f"data: {json.dumps(data)}\n\n"
-                yield "data: [DONE]\n\n"
-            return StreamingResponse(inj_stream(), media_type="text/event-stream")
+            return StreamingResponse(
+                create_openai_sse_stream(refusal_reply, req.model),
+                media_type="text/event-stream",
+                headers=SSE_HEADERS
+            )
         else:
             return {
                 "id": f"chatcmpl-{int(time.time())}",
@@ -636,7 +811,7 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
                 "choices": [{"index": 0, "message": {"role": "assistant", "content": refusal_reply}, "finish_reason": "stop"}]
             }
 
-    # 2. Valuation Query Flow ("Mera ghar kitne ka bikega?", etc.)
+    # 2. Valuation Query Flow ("Mera ghar kitne ka bikega?", "predict price score", etc.)
     val_flow = process_valuation_interaction(mem, normalized_msg)
     if val_flow:
         val_reply = val_flow["reply"]
@@ -652,17 +827,11 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
             latency_sec=round(time.time() - start_time, 3)
         )
         if req.stream:
-            def val_stream():
-                data = {
-                    "id": f"chatcmpl-{int(time.time())}",
-                    "object": "chat.completion.chunk",
-                    "created": int(time.time()),
-                    "model": req.model,
-                    "choices": [{"index": 0, "delta": {"content": val_reply}, "finish_reason": "stop"}]
-                }
-                yield f"data: {json.dumps(data)}\n\n"
-                yield "data: [DONE]\n\n"
-            return StreamingResponse(val_stream(), media_type="text/event-stream")
+            return StreamingResponse(
+                create_openai_sse_stream(val_reply, req.model),
+                media_type="text/event-stream",
+                headers=SSE_HEADERS
+            )
         else:
             return {
                 "id": f"chatcmpl-{int(time.time())}",
@@ -744,38 +913,11 @@ async def open_ai_chat_completions(req: OpenAICompletionRequest, request: Reques
     )
 
     if req.stream:
-        def stream_generator():
-            created_ts = int(time.time())
-            words = full_response.split(" ")
-            for w in words:
-                data = {
-                    "id": f"chatcmpl-{created_ts}",
-                    "object": "chat.completion.chunk",
-                    "created": created_ts,
-                    "model": req.model,
-                    "choices": [{
-                        "index": 0,
-                        "delta": {"content": w + " "},
-                        "finish_reason": None
-                    }]
-                }
-                yield f"data: {json.dumps(data)}\n\n"
-            
-            end_data = {
-                "id": f"chatcmpl-{created_ts}",
-                "object": "chat.completion.chunk",
-                "created": created_ts,
-                "model": req.model,
-                "choices": [{
-                    "index": 0,
-                    "delta": {},
-                    "finish_reason": "stop"
-                }]
-            }
-            yield f"data: {json.dumps(end_data)}\n\n"
-            yield "data: [DONE]\n\n"
-
-        return StreamingResponse(stream_generator(), media_type="text/event-stream")
+        return StreamingResponse(
+            create_openai_sse_stream(full_response, req.model),
+            media_type="text/event-stream",
+            headers=SSE_HEADERS
+        )
     else:
         return {
             "id": f"chatcmpl-{int(time.time())}",
@@ -944,12 +1086,59 @@ async def chat_endpoint(req: ChatRequest):
 # WEEK 8 ML/MLOPS INTEGRATION ENDPOINTS
 # ==========================================
 @app.post("/predict/price")
-async def predict_price_endpoint(req: DirectValuationRequest):
+async def predict_price_endpoint(request: Request):
     """
     Direct Property Price Valuation Endpoint:
+    Accepts both standard DirectValuationRequest JSON and Vapi toolCalls webhooks mid-call.
     Returns Fair Market Price, 80% Confidence Interval, and Mandatory Legal Disclaimer.
     """
-    res = predict_property_price(req.model_dump(), client_email=req.client_email)
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+
+    tool_calls = []
+    if isinstance(body, dict):
+        if "message" in body and isinstance(body["message"], dict):
+            tool_calls = body["message"].get("toolCalls") or body["message"].get("toolCallList") or []
+        elif "toolCalls" in body:
+            tool_calls = body.get("toolCalls") or []
+
+    if tool_calls:
+        results = []
+        for tc in tool_calls:
+            call_id = tc.get("id") or tc.get("toolCallId") or "call_default"
+            func = tc.get("function", {})
+            args = func.get("arguments", {})
+            if isinstance(args, str):
+                try:
+                    args = json.loads(args)
+                except Exception:
+                    args = {}
+            plot_size = float(args.get("plot_size_marla") or args.get("marla") or 10.0)
+            city = str(args.get("city") or "Lahore")
+            loc = str(args.get("location") or args.get("area") or "DHA Phase 6")
+            beds = int(args.get("bedrooms") or 4)
+            prop_data = {
+                "city": city,
+                "location": loc,
+                "plot_size_marla": plot_size,
+                "bedrooms": beds,
+                "bathrooms": beds,
+                "covered_area_sqft": plot_size * 225.0 * 0.75,
+                "year_built": 2021
+            }
+            val_res = predict_property_price(prop_data)
+            reply = (
+                f"Aap ke {plot_size:.0f} Marla ghar {loc} {city} ki fair market value taqreeban {val_res['fair_market_price_formatted']} banti hai. "
+                f"Hamare 80 percent confidence interval model ke mutabiq yeh {val_res['confidence_interval_80']['lower_bound_formatted']} se {val_res['confidence_interval_80']['upper_bound_formatted']} ke darmiyan sell ho sakta hai. "
+                f"Qanooni wazahat: {DISCLAIMER_TEXT_UR}"
+            )
+            results.append({"toolCallId": call_id, "result": reply})
+        return {"results": results}
+
+    # Standard direct API call
+    res = predict_property_price(body, client_email=body.get("client_email"))
     return res
 
 
