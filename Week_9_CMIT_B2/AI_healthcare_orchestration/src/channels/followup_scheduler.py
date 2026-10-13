@@ -15,7 +15,12 @@ import uuid
 from datetime import datetime, timedelta, date
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from apscheduler.schedulers.background import BackgroundScheduler
+try:
+    from apscheduler.schedulers.background import BackgroundScheduler
+    HAS_APSCHEDULER = True
+except ImportError:
+    BackgroundScheduler = None
+    HAS_APSCHEDULER = False
 
 from src.channels.email_channel import send_followup_reminder_email
 from src.mcp_servers.notifications_server import send_whatsapp, send_sms
@@ -31,12 +36,15 @@ class FollowUpScheduler:
     def __init__(self, storage_path: Optional[Path] = None):
         self.file_path = storage_path or SCHEDULE_FILE
         self._ensure_storage()
-        self.scheduler = BackgroundScheduler(daemon=True)
-        if not self.scheduler.running:
-            self.scheduler.start()
+        if HAS_APSCHEDULER and BackgroundScheduler:
+            self.scheduler = BackgroundScheduler(daemon=True)
+            if not self.scheduler.running:
+                self.scheduler.start()
+        else:
+            self.scheduler = None
 
     def shutdown(self):
-        if self.scheduler.running:
+        if self.scheduler and getattr(self.scheduler, "running", False):
             self.scheduler.shutdown(wait=False)
 
     def _ensure_storage(self):
