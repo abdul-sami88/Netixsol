@@ -1,0 +1,445 @@
+[
+  {
+    "approval_id": "APPR-1007-27E8D5",
+    "approval_type": "PRESCRIPTION",
+    "patient_id": "pat-0042",
+    "patient_name": "Saeeda Begum",
+    "created_at": "2026-10-07T06:22:10.275020",
+    "status": "EDITED",
+    "payload": {
+      "draft_prescription": [
+        {
+          "drug_name": "Amoxil",
+          "dose": "500mg tid"
+        }
+      ],
+      "safety_verdict": "BLOCKED",
+      "reason": "Documented Penicillin allergy contraindication",
+      "modified_prescription": [
+        {
+          "drug_name": "Klaricid",
+          "dose": "500mg bd"
+        }
+      ],
+      "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+    },
+    "context": {
+      "urgency": "HIGH"
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Allergy verified. Substituted with Clarithromycin.",
+      "timestamp": "2026-10-07T06:22:10.286036",
+      "edited_payload": {
+        "modified_prescription": [
+          {
+            "drug_name": "Klaricid",
+            "dose": "500mg bd"
+          }
+        ],
+        "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+      }
+    },
+    "resolved_at": "2026-10-07T06:22:10.286046"
+  },
+  {
+    "approval_id": "APPR-1007-A61C2B",
+    "approval_type": "PRESCRIPTION",
+    "patient_id": "pat-0042",
+    "patient_name": "Saeeda Begum",
+    "created_at": "2026-10-07T06:24:49.881861",
+    "status": "EDITED",
+    "payload": {
+      "draft_prescription": [
+        {
+          "drug_name": "Amoxil",
+          "dose": "500mg tid"
+        }
+      ],
+      "safety_verdict": "BLOCKED",
+      "reason": "Documented Penicillin allergy contraindication",
+      "modified_prescription": [
+        {
+          "drug_name": "Klaricid",
+          "dose": "500mg bd"
+        }
+      ],
+      "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+    },
+    "context": {
+      "urgency": "HIGH"
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Allergy verified. Substituted with Clarithromycin.",
+      "timestamp": "2026-10-07T06:24:49.890156",
+      "edited_payload": {
+        "modified_prescription": [
+          {
+            "drug_name": "Klaricid",
+            "dose": "500mg bd"
+          }
+        ],
+        "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+      }
+    },
+    "resolved_at": "2026-10-07T06:24:49.890166"
+  },
+  {
+    "approval_id": "APPR-1007-955B2A",
+    "approval_type": "PRESCRIPTION",
+    "patient_id": "pat-0042",
+    "patient_name": "Saeeda Begum",
+    "created_at": "2026-10-07T06:46:32.848471",
+    "status": "EDITED",
+    "payload": {
+      "draft_prescription": [
+        {
+          "drug_name": "Amoxil",
+          "dose": "500mg tid"
+        }
+      ],
+      "safety_verdict": "BLOCKED",
+      "reason": "Documented Penicillin allergy contraindication",
+      "modified_prescription": [
+        {
+          "drug_name": "Klaricid",
+          "dose": "500mg bd"
+        }
+      ],
+      "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+    },
+    "context": {
+      "urgency": "HIGH"
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Allergy verified. Substituted with Clarithromycin.",
+      "timestamp": "2026-10-07T06:46:32.857879",
+      "edited_payload": {
+        "modified_prescription": [
+          {
+            "drug_name": "Klaricid",
+            "dose": "500mg bd"
+          }
+        ],
+        "substitute_rationale": "Switched from Penicillin to Clarithromycin due to confirmed allergy."
+      }
+    },
+    "resolved_at": "2026-10-07T06:46:32.857888"
+  },
+  {
+    "approval_id": "APPR-1008-9F28C2",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-08ff86",
+    "patient_name": "Ali Raza Khan",
+    "created_at": "2026-10-08T10:08:17.918687",
+    "status": "PENDING",
+    "payload": {
+      "patient_info": {
+        "name": "Sadia Bashir",
+        "age": 39,
+        "gender": "Female",
+        "mr_number": "MR-2026-1016",
+        "date": "2026-10-05"
+      },
+      "panel_name": "Lipid Profile",
+      "parameters": [
+        {
+          "name": "Total Cholesterol",
+          "value": 170.2,
+          "unit": "mg/dL",
+          "reference_range": "< 200.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "Triglycerides",
+          "value": 124.3,
+          "unit": "mg/dL",
+          "reference_range": "< 150.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "HDL Cholesterol",
+          "value": 31.6,
+          "unit": "mg/dL",
+          "reference_range": "> 40.0",
+          "flag": "LOW"
+        },
+        {
+          "name": "LDL Cholesterol",
+          "value": 143.5,
+          "unit": "mg/dL",
+          "reference_range": "< 100.0",
+          "flag": "HIGH"
+        }
+      ],
+      "urdulish_explanation": "Assalam-o-Alaikum! Aap ki Lipid Profile report mein 4 parameters check kiye gaye hain. In mein se HDL Cholesterol (31.6 mg/dL, LOW), LDL Cholesterol (143.5 mg/dL, HIGH) standard range se mukhtalif hai. Yeh sirf lab report ke adaad-o-shumar hain. Asal tashkhees aur ilaaj sirf doctor sahab physical checkup ke baad farmayen ge."
+    },
+    "context": {
+      "file_name": "report_01.png",
+      "saved_path": "C:\\Users\\MEE\\Anti-Gravity_projects\\AI_healthcare_orchestration\\data\\uploaded_lab_reports\\1791454091_3b8335.png",
+      "session_id": "test-sess-1791454074"
+    },
+    "doctor_decision": null,
+    "resolved_at": null
+  },
+  {
+    "approval_id": "APPR-1008-FA597F",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-b8b499",
+    "patient_name": "Ali Raza Khan",
+    "created_at": "2026-10-08T10:09:34.178059",
+    "status": "PENDING",
+    "payload": {
+      "patient_info": {
+        "name": "Waqas Cheema",
+        "age": 27,
+        "gender": "Male",
+        "mr_number": "MR-2026-1017",
+        "date": "2026-10-04"
+      },
+      "panel_name": "Lipid Profile",
+      "parameters": [
+        {
+          "name": "Total Cholesterol",
+          "value": 230.5,
+          "unit": "mg/dL",
+          "reference_range": "< 200.0",
+          "flag": "HIGH"
+        },
+        {
+          "name": "Triglycerides",
+          "value": 110.5,
+          "unit": "mg/dL",
+          "reference_range": "< 150.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "HDL Cholesterol",
+          "value": 56.7,
+          "unit": "mg/dL",
+          "reference_range": "> 40.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "LDL Cholesterol",
+          "value": 83.8,
+          "unit": "mg/dL",
+          "reference_range": "< 100.0",
+          "flag": "NORMAL"
+        }
+      ],
+      "urdulish_explanation": "Assalam-o-Alaikum! Aap ki Lipid Profile report mein 4 parameters check kiye gaye hain. In mein se Total Cholesterol (230.5 mg/dL, HIGH) standard range se mukhtalif hai. Yeh sirf lab report ke adaad-o-shumar hain. Asal tashkhees aur ilaaj sirf doctor sahab physical checkup ke baad farmayen ge."
+    },
+    "context": {
+      "file_name": "report_01.png",
+      "saved_path": "C:\\Users\\MEE\\Anti-Gravity_projects\\AI_healthcare_orchestration\\data\\uploaded_lab_reports\\1791454168_b460c4.png",
+      "session_id": "test-sess-1791454149"
+    },
+    "doctor_decision": null,
+    "resolved_at": null
+  },
+  {
+    "approval_id": "APPR-1008-4373DD",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-lab-1f7caa",
+    "patient_name": "Sadia Bashir",
+    "created_at": "2026-10-08T11:04:32.072392",
+    "status": "PENDING",
+    "payload": {
+      "patient_info": {
+        "name": "Sadia Bashir",
+        "age": 39,
+        "gender": "Female",
+        "mr_number": "MR-2026-1016",
+        "date": "2026-10-05"
+      },
+      "panel_name": "Lipid Profile",
+      "parameters": [
+        {
+          "name": "Total Cholesterol",
+          "value": 170.2,
+          "unit": "mg/dL",
+          "reference_range": "< 200.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "Triglycerides",
+          "value": 124.3,
+          "unit": "mg/dL",
+          "reference_range": "< 150.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "HDL Cholesterol",
+          "value": 31.6,
+          "unit": "mg/dL",
+          "reference_range": "> 40.0",
+          "flag": "LOW"
+        },
+        {
+          "name": "LDL Cholesterol",
+          "value": 143.5,
+          "unit": "mg/dL",
+          "reference_range": "< 100.0",
+          "flag": "HIGH"
+        }
+      ],
+      "urdulish_explanation": "Assalam-o-Alaikum! Aap ki Lipid Profile report mein 4 parameters check kiye gaye hain. In mein se HDL Cholesterol (31.6 mg/dL, LOW), LDL Cholesterol (143.5 mg/dL, HIGH) standard range se mukhtalif hai. Yeh sirf lab report ke adaad-o-shumar hain. Asal tashkhees aur ilaaj sirf doctor sahab physical checkup ke baad farmayen ge."
+    },
+    "context": {
+      "file_name": "report_03.pdf",
+      "saved_path": "C:\\Users\\MEE\\Anti-Gravity_projects\\AI_healthcare_orchestration\\data\\uploaded_lab_reports\\1791457465_b95e97.pdf",
+      "session_id": "sess_full_4pdvcy14"
+    },
+    "doctor_decision": null,
+    "resolved_at": null
+  },
+  {
+    "approval_id": "APPR-1008-38A952",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-001",
+    "patient_name": "Test Patient",
+    "doctor_id": "doc-001",
+    "doctor_name": "Dr. Farhan Tariq",
+    "created_at": "2026-10-08T12:01:54.539199",
+    "status": "EDITED",
+    "payload": {
+      "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+    },
+    "context": {
+      "test": true
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Verified. Advised fasting test tomorrow.",
+      "timestamp": "2026-10-08T12:01:54.552321",
+      "edited_payload": {
+        "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+      }
+    },
+    "resolved_at": "2026-10-08T12:01:54.552332"
+  },
+  {
+    "approval_id": "APPR-1008-9BA51A",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-001",
+    "patient_name": "Test Patient",
+    "doctor_id": "doc-001",
+    "doctor_name": "Dr. Farhan Tariq",
+    "created_at": "2026-10-08T12:02:12.575568",
+    "status": "EDITED",
+    "payload": {
+      "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+    },
+    "context": {
+      "test": true
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Verified. Advised fasting test tomorrow.",
+      "timestamp": "2026-10-08T12:02:12.585737",
+      "edited_payload": {
+        "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+      }
+    },
+    "resolved_at": "2026-10-08T12:02:12.585746"
+  },
+  {
+    "approval_id": "APPR-1008-5ADB70",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-001",
+    "patient_name": "Test Patient",
+    "doctor_id": "doc-001",
+    "doctor_name": "Dr. Farhan Tariq",
+    "created_at": "2026-10-08T12:02:43.840834",
+    "status": "EDITED",
+    "payload": {
+      "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+    },
+    "context": {
+      "test": true
+    },
+    "doctor_decision": {
+      "action": "EDITED",
+      "doctor_name": "Dr. Farhan Tariq",
+      "notes": "Verified. Advised fasting test tomorrow.",
+      "timestamp": "2026-10-08T12:02:43.855409",
+      "edited_payload": {
+        "proposed_message": "Doctor Review: Blood Glucose elevated (185 mg/dL). Fasting test recommended."
+      }
+    },
+    "resolved_at": "2026-10-08T12:02:43.855419"
+  },
+  {
+    "approval_id": "APPR-1008-C3E0C6",
+    "approval_type": "LAB_EXPLANATION",
+    "patient_id": "pat-lab-3282bf",
+    "patient_name": "Hamza Ali",
+    "doctor_id": "doc-001",
+    "doctor_name": "Dr. Farhan Tariq",
+    "created_at": "2026-10-08T12:16:01.795144",
+    "status": "PENDING",
+    "payload": {
+      "patient_info": {
+        "name": "Hamza Ali",
+        "age": 38,
+        "gender": "Male",
+        "mr_number": "MR-2026-1007",
+        "date": "2026-10-01"
+      },
+      "panel_name": "Complete Blood Count (CBC)",
+      "parameters": [
+        {
+          "name": "Hemoglobin",
+          "value": 14.2,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "RBC Count",
+          "value": 4,
+          "unit": "mil/uL",
+          "reference_range": "4.0 - 5.5",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "WBC Count",
+          "value": 8486,
+          "unit": "/uL",
+          "reference_range": "4000 - 11000",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "Platelet Count",
+          "value": 211732,
+          "unit": "/mcL",
+          "reference_range": "150000 - 450000",
+          "flag": "NORMAL"
+        },
+        {
+          "name": "Hematocrit (PCV)",
+          "value": 42.1,
+          "unit": "%",
+          "reference_range": "36.0 - 48.0",
+          "flag": "NORMAL"
+        }
+      ],
+      "urdulish_explanation": "Assalam-o-Alaikum! Aap ki Complete Blood Count (CBC) report ke tamam parameters normal standard range ke andar hain. Yeh sirf lab report ke adaad-o-shumar hain. Asal tashkhees aur ilaaj sirf doctor sahab physical checkup ke baad farmayen ge."
+    },
+    "context": {
+      "file_name": "report_01.pdf",
+      "saved_path": "C:\\Users\\MEE\\Anti-Gravity_projects\\AI_healthcare_orchestration\\data\\uploaded_lab_reports\\1791461744_9a648e.pdf",
+      "session_id": "sess_full_q6yzdalh"
+    },
+    "doctor_decision": null,
+    "resolved_at": null
+  }
+]

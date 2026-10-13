@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attending Physician Dashboard | City Care Clinics</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="background-color: #f8fafc;">
+
+  <!-- Dashboard Top Navigation Bar -->
+  <header class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">🩺</div>
+      <div>
+        <span class="brand-title">City Care Clinics</span>
+        <span class="brand-sub">Physician Clinical Portal</span>
+      </div>
+    </a>
+
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="/" class="nav-link" target="_blank">🌐 View Patient Home</a>
+      <button onclick="doctorLogout()" class="btn-logout">
+        Sign Out 🚪
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <!-- Doctor Profile Header Card -->
+    <div class="doc-profile-header">
+      <div class="doc-info">
+        <div class="doc-badge-lg" id="docInitials">DR</div>
+        <div>
+          <h2 id="docNameDisplay" style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Loading Doctor...</h2>
+          <div id="docSpecialtyDisplay" style="font-size: 14px; font-weight: 600; color: #0284c7;">Specialty • PMDC</div>
+          <div id="docEmailDisplay" style="font-size: 13px; color: #64748b; margin-top: 2px;">email@citycareclinics.pk</div>
+        </div>
+      </div>
+
+      <div style="text-align: right;">
+        <span style="background:#e0f2fe; color:#0369a1; padding:6px 14px; border-radius:9999px; font-size:12.5px; font-weight:700;">
+          🔒 Active Clinical Session
+        </span>
+        <div style="font-size: 12px; color: #64748b; margin-top: 6px;">
+          Physician Authorization Gate Active
+        </div>
+      </div>
+    </div>
+
+    <!-- Doctor Metrics Grid -->
+    <div class="stats-grid" style="margin: 0 0 32px 0; padding: 0;">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-val" id="statTotalPatients">0</div>
+        <div class="stat-label">Patients Checked Up (Your Cohort)</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-val" id="statTotalConsultations">0</div>
+        <div class="stat-label">Total Appointments Booked</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">⚖️</div>
+        <div class="stat-val" id="statPendingReviews" style="color: #ea580c;">0</div>
+        <div class="stat-label">Safety Reviews Pending Approval</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏥</div>
+        <div class="stat-val" style="color: #16a34a;">Verified</div>
+        <div class="stat-label">PMDC Regulatory Compliance</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Pending Clinical Approvals (Human-in-the-Loop) -->
+    <div style="margin-bottom: 36px;">
+      <div class="section-head">
+        <h3 class="section-title">🚨 Pending Clinical Approvals Queue</h3>
+      </div>
+      <p style="color:#64748b; font-size:13.5px; margin-bottom:14px;">
+        Prescriptions with safety contraindications, critical lab explanations, and low-confidence triage decisions require your digital sign-off before dispatching to patients.
+      </p>
+
+      <div id="approvalsContainer">
+        <!-- Rendered via dashboard.js -->
+      </div>
+    </div>
+
+    <!-- Section 2: Patient Roster & Records (Strict Patient Isolation) -->
+    <div>
+      <div class="section-head">
+        <div>
+          <h3 class="section-title">📋 Your Patient Cohort & Encounter History</h3>
+          <p style="color: #0284c7; font-size: 13px; font-weight: 600; margin-top: 4px;">
+            🔒 STRICT PRIVACY ISOLATION: Displaying ONLY patients who have consulted with or booked appointments with YOU. Patients of other doctors are completely excluded.
+          </p>
+        </div>
+
+        <div>
+          <input type="text" id="patientSearchInput" placeholder="🔍 Search by Name, CNIC, Phone, Token..." class="form-input" style="width: 320px; font-size: 13.5px;">
+        </div>
+      </div>
+
+      <!-- Patients Table -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Patient Name</th>
+              <th>CNIC</th>
+              <th>Phone</th>
+              <th>Encounter Date</th>
+              <th>Status</th>
+              <th>Urgency Tier</th>
+              <th>Chief Complaint & Clinical Notes</th>
+              <th style="text-align:center;">Clinical Actions</th>
+            </tr>
+          </thead>
+          <tbody id="patientsTableBody">
+            <!-- Injected via dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comprehensive Patient EHR & Medical History Modal -->
+  <div id="ehrModalOverlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); z-index:2000; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; border-radius:16px; width:950px; max-width:100%; max-height:90vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);">
+      
+      <!-- Modal Header -->
+      <div style="padding:20px 24px; background:linear-gradient(135deg, #0284c7, #0369a1); color:#ffffff; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <h3 id="ehrPatientName" style="font-size:20px; font-weight:700; margin:0;">Patient Name</h3>
+            <span id="ehrBloodGroupBadge" style="background:rgba(255,255,255,0.2); padding:3px 10px; border-radius:9999px; font-size:12px; font-weight:700;">🩸 Blood Group</span>
+          </div>
+          <div id="ehrPatientMeta" style="font-size:13px; opacity:0.9; margin-top:4px;">
+            Age • Gender • CNIC • Phone • City
+          </div>
+        </div>
+        <button onclick="closeEhrModal()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer; line-height:1;">&times;</button>
+      </div>
+
+      <!-- Modal Body (Tabs & Clinical Records) -->
+      <div style="padding:24px; overflow-y:auto; display:flex; flex-direction:column; gap:20px;">
+        
+        <!-- Row 1: Chronic Conditions & Allergies Grid -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <!-- Chronic Diseases -->
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+            <h4 style="font-size:14px; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <span>🩺</span> Chronic Conditions & Diagnoses
+            </h4>
+            <div id="ehrConditionsList" style="font-size:13px; display:flex; flex-direction:column; gap:6px;">
+              <!-- Injected -->
+            </div>
+          </div>
+
+          <!-- Allergies -->
+          <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:16px;">
+            <h4 style="font-size:14px; color:#9a3412; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+              <span>⚠️</span> Known Allergies & Contraindications
+            </h4>
+            <div id="ehrAllergiesList" style="font-size:13px; display:flex; flex-direction:column; gap:6px;">
+              <!-- Injected -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Active Prescriptions -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+          <h4 style="font-size:14px; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>💊</span> Current & Past Prescriptions
+          </h4>
+          <div id="ehrMedicationsList" style="overflow-x:auto;">
+            <!-- Injected -->
+          </div>
+        </div>
+
+        <!-- Section 3: Diagnostic Observations & Labs -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+          <h4 style="font-size:14px; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>🔬</span> Diagnostic Observations & Recent Lab Results
+          </h4>
+          <div id="ehrObservationsList" style="overflow-x:auto;">
+            <!-- Injected -->
+          </div>
+        </div>
+
+        <!-- Section 4: Past Encounters -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+          <h4 style="font-size:14px; color:#0f172a; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>🗓️</span> Consultation Encounter History & Notes
+          </h4>
+          <div id="ehrEncountersList" style="overflow-x:auto;">
+            <!-- Injected -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding:14px 24px; background:#f1f5f9; border-top:1px solid #e2e8f0; text-align:right;">
+        <button onclick="closeEhrModal()" style="background:#64748b; color:white; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; font-weight:600; font-size:13.5px;">
+          Close Record
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Safety Agent (Day 2 Engine) Modal -->
+  <div id="rxSafetyModalOverlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(4px); z-index:2100; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; border-radius:16px; width:920px; max-width:100%; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3);">
+      
+      <!-- Modal Header -->
+      <div style="padding:18px 24px; background:linear-gradient(135deg, #0d9488, #0f766e); color:#ffffff; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:22px;">🛡️</span>
+            <h3 style="font-size:18px; font-weight:700; margin:0;">Prescription Safety Agent (Day 2 Clinical Engine)</h3>
+          </div>
+          <div id="rxModalPatientSub" style="font-size:13px; opacity:0.9; margin-top:3px;">
+            Patient: <strong id="rxPatientName">Loading...</strong> • <span id="rxPatientMeta">ID: pat-001</span>
+          </div>
+        </div>
+        <button onclick="closeRxModal()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer; line-height:1;">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding:22px 24px; overflow-y:auto; display:flex; flex-direction:column; gap:18px;">
+        
+        <!-- Context Card: Allergies & Active Meds -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div>
+            <span style="font-size:12px; font-weight:700; color:#dc2626; text-transform:uppercase;">⚠️ Documented Patient Allergies:</span>
+            <div id="rxDocumentedAllergies" style="font-size:13.5px; font-weight:600; color:#991b1b; margin-top:4px;">None</div>
+          </div>
+          <div>
+            <span style="font-size:12px; font-weight:700; color:#0369a1; text-transform:uppercase;">💊 Active Medications in EHR:</span>
+            <div id="rxActiveMedications" style="font-size:13.5px; color:#0f172a; margin-top:4px;">None</div>
+          </div>
+        </div>
+
+        <!-- Draft Prescription Input Area -->
+        <div style="border:1px solid #cbd5e1; border-radius:10px; padding:16px; background:#ffffff;">
+          <h4 style="margin:0 0 12px 0; font-size:14.5px; color:#0f172a; display:flex; align-items:center; gap:6px;">
+            <span>✍️</span> Doctor's Draft Prescription
+          </h4>
+
+          <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Drug / Brand Name</label>
+              <input type="text" id="draftDrugName" class="form-input" placeholder="e.g. Augmentin, Amoxicillin, Panadol, Brufen" style="width:100%; font-size:13.5px;">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Dosage</label>
+              <input type="text" id="draftDosage" class="form-input" placeholder="e.g. 625mg, 500mg" style="width:100%; font-size:13.5px;">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Frequency</label>
+              <select id="draftFrequency" class="form-input" style="width:100%; font-size:13.5px;">
+                <option value="TDS (3 times daily)">TDS (3x Daily)</option>
+                <option value="BD (twice daily)">BD (2x Daily)</option>
+                <option value="OD (once daily)">OD (Once Daily)</option>
+                <option value="QDS (4 times daily)">QDS (4x Daily)</option>
+                <option value="PRN (as needed)">PRN (As Needed)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:16px; font-size:13px; color:#475569;">
+              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="checkbox" id="draftIsPregnant"> Pregnant Patient
+              </label>
+              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                <input type="checkbox" id="draftIsLactating"> Lactating Mother
+              </label>
+            </div>
+
+            <button type="button" onclick="runSafetyEngineCheck()" id="btnRunSafetyCheck" style="background:#0d9488; color:white; border:none; padding:9px 18px; border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 2px 4px rgba(13,148,136,0.25);">
+              <span>🛡️ Run Day 2 Safety Engine</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Safety Feedback Box -->
+        <div id="rxSafetyResultsBox" style="display:none; border-radius:10px; padding:16px; animation: fadeIn 0.3s ease;">
+          <!-- Dynamically populated -->
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding:14px 24px; background:#f1f5f9; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+        <button onclick="closeRxModal()" style="background:#94a3b8; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-weight:600; font-size:13px;">
+          Cancel
+        </button>
+
+        <button onclick="submitSignedPrescription()" id="btnSignPrescription" disabled style="background:#cbd5e1; color:#64748b; border:none; padding:9px 22px; border-radius:6px; cursor:not-allowed; font-weight:700; font-size:13.5px; display:flex; align-items:center; gap:6px;">
+          <span>✍️ Sign & Issue Prescription</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinical Summary Agent (Pre-Visit SOAP Note) Modal -->
+  <div id="soapModalOverlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(4px); z-index:2200; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; border-radius:16px; width:920px; max-width:100%; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3);">
+      
+      <!-- Header -->
+      <div style="padding:18px 24px; background:linear-gradient(135deg, #4f46e5, #4338ca); color:#ffffff; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:22px;">📝</span>
+            <h3 style="font-size:18px; font-weight:700; margin:0;">Clinical Summary Agent — Pre-Visit SOAP Note</h3>
+          </div>
+          <div id="soapPatientSubtitle" style="font-size:13px; opacity:0.9; margin-top:3px;">
+            Patient: <strong id="soapPatientName">Loading...</strong> • Strict Separation: Patient Facts vs AI Suggestions
+          </div>
+        </div>
+        <button onclick="closeSoapModal()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer; line-height:1;">&times;</button>
+      </div>
+
+      <!-- Body -->
+      <div id="soapModalBody" style="padding:22px 24px; overflow-y:auto; display:flex; flex-direction:column; gap:16px;">
+        <div id="soapLoadingState" style="text-align:center; padding:40px; color:#64748b;">
+          <div class="loading-spinner" style="margin: 0 auto 12px auto;"></div>
+          <p>Synthesizing pre-visit clinical SOAP note from EHR & intake...</p>
+        </div>
+
+        <div id="soapContentContainer" style="display:none; display:flex; flex-direction:column; gap:16px;">
+          <!-- Subjective (Patient Facts) -->
+          <div style="background:#f8fafc; border-left:4px solid #0284c7; border-radius:8px; padding:16px; border:1px solid #e2e8f0; border-left-width:4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="font-size:14px; color:#0369a1; font-weight:700; margin:0; text-transform:uppercase; letter-spacing:0.5px;">
+                🗣️ S — Subjective (Patient-Reported Facts)
+              </h4>
+              <span style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:9999px; font-weight:600;">Verified Patient Intake</span>
+            </div>
+            <div id="soapSubjectiveContent" style="font-size:13px; color:#334155; line-height:1.6;"></div>
+          </div>
+
+          <!-- Objective (Verified EHR Data) -->
+          <div style="background:#f8fafc; border-left:4px solid #059669; border-radius:8px; padding:16px; border:1px solid #e2e8f0; border-left-width:4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="font-size:14px; color:#047857; font-weight:700; margin:0; text-transform:uppercase; letter-spacing:0.5px;">
+                🔬 O — Objective (Verified EHR & Diagnostic Facts)
+              </h4>
+              <span style="font-size:11px; background:#d1fae5; color:#047857; padding:2px 8px; border-radius:9999px; font-weight:600;">Clinic Database Ground Truth</span>
+            </div>
+            <div id="soapObjectiveContent" style="font-size:13px; color:#334155; line-height:1.6;"></div>
+          </div>
+
+          <!-- Assessment (AI Suggestions for Doctor Review) -->
+          <div style="background:#fffbeb; border-left:4px solid #f59e0b; border-radius:8px; padding:16px; border:1px solid #fde68a; border-left-width:4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="font-size:14px; color:#b45309; font-weight:700; margin:0; text-transform:uppercase; letter-spacing:0.5px;">
+                🧠 A — Assessment (AI Suggestions for Doctor Review)
+              </h4>
+              <span style="font-size:11px; background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:9999px; font-weight:700;">⚠️ Algorithmic Suggestion</span>
+            </div>
+            <div id="soapAssessmentContent" style="font-size:13px; color:#451a03; line-height:1.6;"></div>
+          </div>
+
+          <!-- Plan (AI Suggested Workup) -->
+          <div style="background:#f5f3ff; border-left:4px solid #8b5cf6; border-radius:8px; padding:16px; border:1px solid #ddd6fe; border-left-width:4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="font-size:14px; color:#6d28d9; font-weight:700; margin:0; text-transform:uppercase; letter-spacing:0.5px;">
+                📋 P — Plan Suggestions (AI Clinical Recommendations)
+              </h4>
+              <span style="font-size:11px; background:#ede9fe; color:#6d28d9; padding:2px 8px; border-radius:9999px; font-weight:700;">Physician Discretion Required</span>
+            </div>
+            <div id="soapPlanContent" style="font-size:13px; color:#2e1065; line-height:1.6;"></div>
+          </div>
+
+          <!-- Legal Disclaimer -->
+          <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:12px; font-size:12px; color:#475569; display:flex; gap:8px;">
+            <span>🛡️</span>
+            <div id="soapDisclaimerText">
+              <strong>Mandatory Safety Disclaimer:</strong> Assessment and Plan sections represent preliminary algorithmic syntheses generated for attending physician convenience. These do not constitute medical diagnoses or prescriptive orders. All clinical decisions remain the exclusive responsibility of the licensed practitioner.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding:14px 24px; background:#f8fafc; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end;">
+        <button onclick="closeSoapModal()" style="background:#4f46e5; color:white; border:none; padding:8px 18px; border-radius:6px; cursor:pointer; font-weight:600; font-size:13.5px;">
+          Done Reviewing
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Records Agent Q&A Modal -->
+  <div id="recordsQaModalOverlay" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(4px); z-index:2250; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; border-radius:16px; width:750px; max-width:100%; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,0.3);">
+      
+      <!-- Header -->
+      <div style="padding:18px 24px; background:linear-gradient(135deg, #0284c7, #0369a1); color:#ffffff; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:22px;">💬</span>
+            <h3 style="font-size:18px; font-weight:700; margin:0;">Records Agent — Patient EHR & Lab Q&A</h3>
+          </div>
+          <div id="qaPatientSubtitle" style="font-size:13px; opacity:0.9; margin-top:3px;">
+            Patient: <strong id="qaPatientName">Loading...</strong> • Factual answers from FHIR records & lab observations
+          </div>
+        </div>
+        <button onclick="closeRecordsQaModal()" style="background:none; border:none; color:white; font-size:28px; cursor:pointer; line-height:1;">&times;</button>
+      </div>
+
+      <!-- Body / Chat Stream -->
+      <div id="qaChatContainer" style="padding:20px 24px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:14px; min-height:300px; max-height:450px; background:#f8fafc;">
+        <div style="background:#e0f2fe; color:#0369a1; padding:12px 16px; border-radius:8px; font-size:13px;">
+          👨‍⚕️ <strong>Records Agent Ready:</strong> Ask any question regarding this patient's documented diagnoses, active medications, allergy history, or laboratory test values (CBC, HbA1c, LFTs, Lipid Profile).
+        </div>
+        <!-- Thread messages injected here -->
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div style="padding:10px 24px; background:#ffffff; border-top:1px solid #f1f5f9; display:flex; gap:8px; overflow-x:auto;">
+        <button onclick="setQaPrompt('What were their latest CBC and blood test results?')" style="background:#f1f5f9; border:1px solid #e2e8f0; border-radius:9999px; padding:4px 12px; font-size:12px; color:#334155; cursor:pointer; white-space:nowrap;">🧪 Latest CBC & Labs</button>
+        <button onclick="setQaPrompt('Are there any documented allergies or medication contraindications?')" style="background:#f1f5f9; border:1px solid #e2e8f0; border-radius:9999px; padding:4px 12px; font-size:12px; color:#334155; cursor:pointer; white-space:nowrap;">⚠️ Documented Allergies</button>
+        <button onclick="setQaPrompt('What active medications and dosages are currently prescribed?')" style="background:#f1f5f9; border:1px solid #e2e8f0; border-radius:9999px; padding:4px 12px; font-size:12px; color:#334155; cursor:pointer; white-space:nowrap;">💊 Active Prescriptions</button>
+      </div>
+
+      <!-- Input Bar -->
+      <div style="padding:14px 24px; background:#ffffff; border-top:1px solid #e2e8f0; display:flex; gap:10px; align-items:center;">
+        <input type="text" id="qaQueryInput" placeholder="Ask Records Agent a question..." style="flex:1; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; font-size:13.5px; outline:none;" onkeydown="if(event.key === 'Enter') submitRecordsQa();">
+        <button onclick="submitRecordsQa()" id="btnSendQa" style="background:#0284c7; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; font-size:13.5px;">
+          Ask
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="border-top: 1px solid #e2e8f0; padding: 24px; text-align: center; color: #64748b; font-size: 13px; margin-top: 48px;">
+    City Care Clinics • Attending Physician Portal • HIPAA & Healthcare Privacy Compliant
+  </footer>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

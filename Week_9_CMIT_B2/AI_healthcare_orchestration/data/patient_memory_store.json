@@ -1,0 +1,166 @@
+{
+  "pat-0001": {
+    "patient_id": "pat-0001",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-026",
+    "preferred_doctor_name": "Dr. Haris Nadeem",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-07",
+    "last_complaint_summary": "Acute fever and sore throat",
+    "past_encounters_count": 3,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-07T06:46:31.804649"
+  },
+  "pat-memory-test-99": {
+    "patient_id": "pat-memory-test-99",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-bilal-01",
+    "preferred_doctor_name": "Dr. Bilal Aslam",
+    "preferred_branch": "City Care Clinics - Johar Town",
+    "last_visit_date": "2026-10-07",
+    "last_complaint_summary": "Chronic allergic rhinitis",
+    "past_encounters_count": 3,
+    "confirmed_allergies": [
+      "Penicillin"
+    ],
+    "chronic_conditions": [
+      "Allergic Rhinitis"
+    ],
+    "updated_at": "2026-10-07T06:46:32.830088"
+  },
+  "pat-privacy-test-88": {
+    "patient_id": "pat-privacy-test-88",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": null,
+    "preferred_doctor_name": "Dr. Farhan Tariq",
+    "preferred_branch": null,
+    "last_visit_date": "2026-10-07",
+    "last_complaint_summary": "Mera naam [NAME_REDACTED] hai, CNIC [CNIC_REDACTED] aur phone [PHONE_REDACTED] hai. Severe migraine.",
+    "past_encounters_count": 2,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-07T06:46:32.843469"
+  },
+  "pat-postgres-test-01": {
+    "patient_id": "pat-postgres-test-01",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-bilal-01",
+    "preferred_doctor_name": "Dr. Bilal Aslam",
+    "preferred_branch": "Johar Town",
+    "last_visit_date": "2026-10-07",
+    "last_complaint_summary": "Mild dry cough with fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [
+      "Penicillin"
+    ],
+    "chronic_conditions": [
+      "Asthma"
+    ],
+    "updated_at": "2026-10-07T06:46:16.938153"
+  },
+  "pat-20847c": {
+    "patient_id": "pat-20847c",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-001",
+    "preferred_doctor_name": "Dr. Ahmad Khan",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-07",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 2,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-07T12:35:39.884221"
+  },
+  "pat-1249fe": {
+    "patient_id": "pat-1249fe",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-026",
+    "preferred_doctor_name": "Dr. Haris Nadeem",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-08",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-08T10:07:02.148390"
+  },
+  "pat-08ff86": {
+    "patient_id": "pat-08ff86",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-026",
+    "preferred_doctor_name": "Dr. Haris Nadeem",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-08",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-08T10:08:08.800846"
+  },
+  "pat-b8b499": {
+    "patient_id": "pat-b8b499",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-026",
+    "preferred_doctor_name": "Dr. Haris Nadeem",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-08",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-08T10:09:23.421751"
+  },
+  "pat-1206e0": {
+    "patient_id": "pat-1206e0",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-001",
+    "preferred_doctor_name": "Dr. Ahmad Khan",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-08",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-08T12:08:15.223933"
+  },
+  "pat-00ac95": {
+    "patient_id": "pat-00ac95",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-001",
+    "preferred_doctor_name": "Dr. Ahmad Khan",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-09",
+    "last_complaint_summary": "Severe abdominal pain",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-09T07:04:54.869071"
+  },
+  "pat-6b60d0": {
+    "patient_id": "pat-6b60d0",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-001",
+    "preferred_doctor_name": "Dr. Ahmad Khan",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-09",
+    "last_complaint_summary": "headache",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-09T07:11:38.171074"
+  },
+  "pat-3716e6": {
+    "patient_id": "pat-3716e6",
+    "preferred_language": "UrduLish",
+    "preferred_doctor_id": "doc-001",
+    "preferred_doctor_name": "Dr. Ahmad Khan",
+    "preferred_branch": "City Care Clinics - Main Gulberg",
+    "last_visit_date": "2026-10-09",
+    "last_complaint_summary": "fever",
+    "past_encounters_count": 1,
+    "confirmed_allergies": [],
+    "chronic_conditions": [],
+    "updated_at": "2026-10-09T07:30:33.873115"
+  }
+}

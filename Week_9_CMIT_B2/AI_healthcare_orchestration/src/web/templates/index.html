@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>City Care Clinics — Healthcare Reimagined</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">🏥</div>
+      <div>
+        <span class="brand-title">City Care Clinics</span>
+        <span class="brand-sub">Excellence in Healthcare</span>
+      </div>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/chat" class="nav-link" style="color:var(--primary); font-weight:700;">💬 Patient AI Consultation</a></li>
+        <li><a href="#specialties" class="nav-link">Specialties</a></li>
+        <li><a href="#branches" class="nav-link">Locations</a></li>
+        <li><a href="#emergency" class="nav-link" style="color:#ef4444; font-weight:700;">🚨 24/7 Emergency (1122)</a></li>
+        <li>
+          <a href="/doctor-login" class="btn-doc-login" id="doctorLoginNavBtn">
+            <span>🔐</span> Doctor Portal Login
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="hero-badge">✨ AI-Powered Clinical Care & Hospital Network</div>
+      <h1 class="hero-title">World-Class Healthcare,<br><span>Guided by Expert Physicians.</span></h1>
+      <p class="hero-subtitle">
+        Consult with top specialist doctors across Lahore and Islamabad. 
+        Experience rapid triage, digital prescriptions, verified EHR history, and 24/7 empathetic care in English and UrduLish.
+      </p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="toggleChat()">
+          <span>💬</span> Chat with AI Clinic Assistant
+        </button>
+        <a href="#specialties" class="btn-secondary">
+          Explore Specialties
+        </a>
+      </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div class="stat-val">30+</div>
+        <div class="stat-label">Senior Specialist Doctors</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🏥</div>
+        <div class="stat-val">4 Branches</div>
+        <div class="stat-label">Lahore & Islamabad</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-val">&lt; 10 Mins</div>
+        <div class="stat-label">Average Triage & Booking Time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛡️</div>
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Physician Signed-Off Care</div>
+      </div>
+    </section>
+
+    <!-- Specialties Directory -->
+    <section id="specialties" class="section-wrapper">
+      <div class="section-head">
+        <h2 class="section-title">Clinical Specialties & Departments</h2>
+      </div>
+
+      <div class="doctor-grid">
+        <div class="doctor-card">
+          <div class="doc-avatar">GM</div>
+          <div class="doc-name">General Medicine</div>
+          <span class="doc-spec">Internal Medicine</span>
+          <div class="doc-meta">Fever, respiratory infections, hypertension, diabetes care, and chronic management.</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doc-avatar">CD</div>
+          <div class="doc-name">Cardiology</div>
+          <span class="doc-spec">Heart & Vascular</span>
+          <div class="doc-meta">Chest pain evaluation, ECG review, lipid disorders, and cardiac risk assessments.</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doc-avatar">ENT</div>
+          <div class="doc-name">Ear, Nose & Throat (ENT)</div>
+          <span class="doc-spec">Otolaryngology</span>
+          <div class="doc-meta">Acute sinusitis, tonsillitis, vertigo, hearing evaluation, and allergic rhinitis.</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doc-avatar">PED</div>
+          <div class="doc-name">Paediatrics</div>
+          <span class="doc-spec">Child Care</span>
+          <div class="doc-meta">Infant care, childhood infections, growth milestones, and pediatric vaccinations.</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doc-avatar">GYN</div>
+          <div class="doc-name">Gynaecology & Obstetrics</div>
+          <span class="doc-spec">Women's Health</span>
+          <div class="doc-meta">Antenatal consultations, hormonal disorders, maternal wellness, and reproductive health.</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doc-avatar">DER</div>
+          <div class="doc-name">Dermatology</div>
+          <span class="doc-spec">Skin & Allergy</span>
+          <div class="doc-meta">Acne, eczema, psoriasis, skin rashes, hair restoration, and diagnostic biopsying.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Guidance Banner -->
+    <section id="emergency" class="section-wrapper">
+      <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border: 2px solid #ef4444; border-radius: 16px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+        <div>
+          <h3 style="color: #991b1b; font-size: 20px; font-weight: 800; margin-bottom: 6px;">⚠️ 24/7 Emergency Medical Protocol</h3>
+          <p style="color: #7f1d1d; font-size: 14.5px; margin: 0; max-width: 800px;">
+            Agar aap ya patient ko shadeed seene mein dard, saans lene mein rukawat, achanak behoshi, ya shadeed khoon behne ka masla hai, to foran <strong>Rescue 1122</strong> par call karein ya qareebi Emergency Room tashreef le jayen!
+          </p>
+        </div>
+        <a href="tel:1122" style="background: #dc2626; color: white; padding: 12px 24px; border-radius: 9999px; font-weight: 700; text-decoration: none; font-size: 16px; white-space: nowrap; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);">
+          🚨 Call 1122 Now
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Chatbot Widget Launcher (Patient Only) -->
+  <button class="chat-launcher-btn" id="chatLauncherBtn">
+    <div class="chat-pulse"></div>
+    <span class="chat-launcher-icon">💬</span>
+    <span class="chat-launcher-text">Chat with AI Clinic Assistant</span>
+  </button>
+
+  <!-- Floating Chat Window (Patient Consultation) -->
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <div class="chat-header-avatar">🤖</div>
+        <div>
+          <div class="chat-header-h4">City Care AI Assistant</div>
+          <div class="chat-header-sub">Online • UrduLish & English</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="/chat" title="Open Full-Screen Consultation" style="color:#ffffff; text-decoration:none; font-size:18px; padding:2px 6px; border-radius:4px; background:rgba(255,255,255,0.15);">⛶</a>
+        <button class="chat-close-btn" id="closeChatBtn">&times;</button>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <!-- Chat bubbles injected via chat.js -->
+    </div>
+
+    <div class="chat-footer">
+      <input type="file" id="widgetFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display:none;">
+      <button class="chat-attach-btn" id="widgetAttachBtn" title="Attach Lab Report (PDF / Image)">📎</button>
+      <input type="text" class="chat-input" id="chatInput" placeholder="Apni takleef ya alamat batayein..." autocomplete="off">
+      <button class="chat-send-btn" id="sendChatBtn">➤</button>
+    </div>
+  </div>
+
+  <footer style="border-top: 1px solid #e2e8f0; padding: 32px 24px; text-align: center; color: #64748b; font-size: 13px; margin-top: 60px;">
+    City Care Clinics • Advanced Multi-Agent Healthcare Platform • Pakistan<br>
+    Patient Portal • Attending Doctor Oversight • Confidential Clinical Care
+  </footer>
+
+  <script src="/static/js/chat.js"></script>
+</body>
+</html>

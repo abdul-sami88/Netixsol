@@ -1,0 +1,1297 @@
+[
+  {
+    "report_id": "report_01",
+    "mr_number": "MR-2026-1001",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Muhammad Bilal",
+      "age": 34,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 15.0,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "RBC Count",
+        "value": 4,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "WBC Count",
+        "value": 14865,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 405233,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 43.9,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_02",
+    "mr_number": "MR-2026-1002",
+    "date": "2026-10-03",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Fatima Tariq",
+      "age": 28,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 12.8,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "RBC Count",
+        "value": 6,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "HIGH"
+      },
+      {
+        "name": "WBC Count",
+        "value": 6490,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 245527,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 41.0,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_03",
+    "mr_number": "MR-2026-1003",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Usman Ghani",
+      "age": 52,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 21.4,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "RBC Count",
+        "value": 3,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "LOW"
+      },
+      {
+        "name": "WBC Count",
+        "value": 6253,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 229676,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 39.6,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_04",
+    "mr_number": "MR-2026-1004",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Zainab Bibi",
+      "age": 45,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 14.3,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "RBC Count",
+        "value": 7,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "HIGH"
+      },
+      {
+        "name": "WBC Count",
+        "value": 6359,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 644327,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 66.0,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_05",
+    "mr_number": "MR-2026-1005",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Ahmad Raza",
+      "age": 61,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 13.7,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "RBC Count",
+        "value": 3,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "LOW"
+      },
+      {
+        "name": "WBC Count",
+        "value": 10393,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 399532,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 39.1,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_06",
+    "mr_number": "MR-2026-1006",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Ayesha Siddiqa",
+      "age": 22,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 10.0,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "RBC Count",
+        "value": 4,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "WBC Count",
+        "value": 13019,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 579737,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 44.6,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_07",
+    "mr_number": "MR-2026-1007",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Hamza Ali",
+      "age": 38,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 14.2,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "RBC Count",
+        "value": 4,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "WBC Count",
+        "value": 8486,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 211732,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 42.1,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_08",
+    "mr_number": "MR-2026-1008",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Complete Blood Count (CBC)",
+    "patient": {
+      "name": "Sana Malik",
+      "age": 31,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Hemoglobin",
+        "value": 19.4,
+        "unit": "g/dL",
+        "reference_range": "12.0 - 16.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "RBC Count",
+        "value": 2,
+        "unit": "mil/uL",
+        "reference_range": "4.0 - 5.5",
+        "flag": "LOW"
+      },
+      {
+        "name": "WBC Count",
+        "value": 15071,
+        "unit": "/uL",
+        "reference_range": "4000 - 11000",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Platelet Count",
+        "value": 282514,
+        "unit": "/mcL",
+        "reference_range": "150000 - 450000",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Hematocrit (PCV)",
+        "value": 68.2,
+        "unit": "%",
+        "reference_range": "36.0 - 48.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_09",
+    "mr_number": "MR-2026-1009",
+    "date": "2026-10-03",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Tariq Mahmood",
+      "age": 58,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 1.8,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "HIGH"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 6.2,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 54.0,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 76.0,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 7.1,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_10",
+    "mr_number": "MR-2026-1010",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Hira Farooq",
+      "age": 19,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 1.7,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "HIGH"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 23.1,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 28.8,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 28.2,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 4.3,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_11",
+    "mr_number": "MR-2026-1011",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Bilal Aslam",
+      "age": 47,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 0.1,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "LOW"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 51.5,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 19.7,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 115.8,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 3.9,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_12",
+    "mr_number": "MR-2026-1012",
+    "date": "2026-10-06",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Rabia Zafar",
+      "age": 36,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 1.5,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "HIGH"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 22.8,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 25.9,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 80.2,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 4.3,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_13",
+    "mr_number": "MR-2026-1013",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Kashif Munir",
+      "age": 50,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 0.7,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 6.5,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 8.4,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 38.3,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 3.9,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_14",
+    "mr_number": "MR-2026-1014",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Maryam Noor",
+      "age": 29,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 0.9,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 28.8,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 7.8,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 118.5,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 4.7,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_15",
+    "mr_number": "MR-2026-1015",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Liver Function Tests (LFT)",
+    "patient": {
+      "name": "Imran Khan",
+      "age": 42,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Bilirubin",
+        "value": 1.8,
+        "unit": "mg/dL",
+        "reference_range": "0.2 - 1.2",
+        "flag": "HIGH"
+      },
+      {
+        "name": "ALT (SGPT)",
+        "value": 31.7,
+        "unit": "U/L",
+        "reference_range": "10.0 - 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "AST (SGOT)",
+        "value": 21.6,
+        "unit": "U/L",
+        "reference_range": "10.0 - 35.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Alkaline Phosphatase (ALP)",
+        "value": 105.6,
+        "unit": "U/L",
+        "reference_range": "44.0 - 147.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Albumin",
+        "value": 7.5,
+        "unit": "g/dL",
+        "reference_range": "3.5 - 5.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_16",
+    "mr_number": "MR-2026-1016",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Lipid Profile",
+    "patient": {
+      "name": "Sadia Bashir",
+      "age": 39,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Cholesterol",
+        "value": 170.2,
+        "unit": "mg/dL",
+        "reference_range": "< 200.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Triglycerides",
+        "value": 124.3,
+        "unit": "mg/dL",
+        "reference_range": "< 150.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HDL Cholesterol",
+        "value": 31.6,
+        "unit": "mg/dL",
+        "reference_range": "> 40.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "LDL Cholesterol",
+        "value": 143.5,
+        "unit": "mg/dL",
+        "reference_range": "< 100.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_17",
+    "mr_number": "MR-2026-1017",
+    "date": "2026-10-04",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Lipid Profile",
+    "patient": {
+      "name": "Waqas Cheema",
+      "age": 27,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Cholesterol",
+        "value": 230.5,
+        "unit": "mg/dL",
+        "reference_range": "< 200.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Triglycerides",
+        "value": 110.5,
+        "unit": "mg/dL",
+        "reference_range": "< 150.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HDL Cholesterol",
+        "value": 56.7,
+        "unit": "mg/dL",
+        "reference_range": "> 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "LDL Cholesterol",
+        "value": 83.8,
+        "unit": "mg/dL",
+        "reference_range": "< 100.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_18",
+    "mr_number": "MR-2026-1018",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Lipid Profile",
+    "patient": {
+      "name": "Bushra Rehman",
+      "age": 64,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Cholesterol",
+        "value": 163.6,
+        "unit": "mg/dL",
+        "reference_range": "< 200.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Triglycerides",
+        "value": 133.5,
+        "unit": "mg/dL",
+        "reference_range": "< 150.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HDL Cholesterol",
+        "value": 42.6,
+        "unit": "mg/dL",
+        "reference_range": "> 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "LDL Cholesterol",
+        "value": 135.7,
+        "unit": "mg/dL",
+        "reference_range": "< 100.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_19",
+    "mr_number": "MR-2026-1019",
+    "date": "2026-10-06",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Lipid Profile",
+    "patient": {
+      "name": "Haris Nadeem",
+      "age": 33,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Total Cholesterol",
+        "value": 169.7,
+        "unit": "mg/dL",
+        "reference_range": "< 200.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Triglycerides",
+        "value": 62.0,
+        "unit": "mg/dL",
+        "reference_range": "< 150.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HDL Cholesterol",
+        "value": 42.2,
+        "unit": "mg/dL",
+        "reference_range": "> 40.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "LDL Cholesterol",
+        "value": 79.3,
+        "unit": "mg/dL",
+        "reference_range": "< 100.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_20",
+    "mr_number": "MR-2026-1020",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Lipid Profile",
+    "patient": {
+      "name": "Nadia Afzal",
+      "age": 41,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Total Cholesterol",
+        "value": 156.8,
+        "unit": "mg/dL",
+        "reference_range": "< 200.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Triglycerides",
+        "value": 179.1,
+        "unit": "mg/dL",
+        "reference_range": "< 150.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "HDL Cholesterol",
+        "value": 83.7,
+        "unit": "mg/dL",
+        "reference_range": "> 40.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "LDL Cholesterol",
+        "value": 94.8,
+        "unit": "mg/dL",
+        "reference_range": "< 100.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_21",
+    "mr_number": "MR-2026-1021",
+    "date": "2026-10-05",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Glycemic Assessment (HbA1c & Glucose)",
+    "patient": {
+      "name": "Zainab Bokhari",
+      "age": 55,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Fasting Blood Sugar",
+        "value": 126.0,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 100.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "HbA1c (Glycated Hemoglobin)",
+        "value": 5.0,
+        "unit": "%",
+        "reference_range": "4.0 - 5.6",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Estimated Average Glucose",
+        "value": 163.7,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 115.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_22",
+    "mr_number": "MR-2026-1022",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Glycemic Assessment (HbA1c & Glucose)",
+    "patient": {
+      "name": "Faisal Munir",
+      "age": 48,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Fasting Blood Sugar",
+        "value": 79.9,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 100.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HbA1c (Glycated Hemoglobin)",
+        "value": 3.2,
+        "unit": "%",
+        "reference_range": "4.0 - 5.6",
+        "flag": "LOW"
+      },
+      {
+        "name": "Estimated Average Glucose",
+        "value": 93.5,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 115.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_23",
+    "mr_number": "MR-2026-1023",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Glycemic Assessment (HbA1c & Glucose)",
+    "patient": {
+      "name": "Mahnoor Javed",
+      "age": 24,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Fasting Blood Sugar",
+        "value": 92.4,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 100.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HbA1c (Glycated Hemoglobin)",
+        "value": 5.0,
+        "unit": "%",
+        "reference_range": "4.0 - 5.6",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Estimated Average Glucose",
+        "value": 98.4,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 115.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_24",
+    "mr_number": "MR-2026-1024",
+    "date": "2026-10-02",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Glycemic Assessment (HbA1c & Glucose)",
+    "patient": {
+      "name": "Omer Farooq",
+      "age": 53,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Fasting Blood Sugar",
+        "value": 59.2,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 100.0",
+        "flag": "LOW"
+      },
+      {
+        "name": "HbA1c (Glycated Hemoglobin)",
+        "value": 4.4,
+        "unit": "%",
+        "reference_range": "4.0 - 5.6",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Estimated Average Glucose",
+        "value": 139.8,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 115.0",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_25",
+    "mr_number": "MR-2026-1025",
+    "date": "2026-10-04",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Glycemic Assessment (HbA1c & Glucose)",
+    "patient": {
+      "name": "Farzana Malik",
+      "age": 62,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Fasting Blood Sugar",
+        "value": 77.7,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 100.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "HbA1c (Glycated Hemoglobin)",
+        "value": 2.2,
+        "unit": "%",
+        "reference_range": "4.0 - 5.6",
+        "flag": "LOW"
+      },
+      {
+        "name": "Estimated Average Glucose",
+        "value": 85.3,
+        "unit": "mg/dL",
+        "reference_range": "70.0 - 115.0",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_26",
+    "mr_number": "MR-2026-1026",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Ahmad Khan (General Medicine)",
+    "panel_name": "Renal Function Tests (RFT / KFT)",
+    "patient": {
+      "name": "Shazia Parveen",
+      "age": 37,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Serum Creatinine",
+        "value": 0.4,
+        "unit": "mg/dL",
+        "reference_range": "0.6 - 1.2",
+        "flag": "LOW"
+      },
+      {
+        "name": "Blood Urea Nitrogen",
+        "value": 30.1,
+        "unit": "mg/dL",
+        "reference_range": "7.0 - 20.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Serum Uric Acid",
+        "value": 10.0,
+        "unit": "mg/dL",
+        "reference_range": "3.5 - 7.2",
+        "flag": "HIGH"
+      }
+    ]
+  },
+  {
+    "report_id": "report_27",
+    "mr_number": "MR-2026-1027",
+    "date": "2026-10-06",
+    "ref_doctor": "Dr. Ayesha Siddiqa (Internal Medicine)",
+    "panel_name": "Renal Function Tests (RFT / KFT)",
+    "patient": {
+      "name": "Asim Jamil",
+      "age": 44,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Serum Creatinine",
+        "value": 1.1,
+        "unit": "mg/dL",
+        "reference_range": "0.6 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Blood Urea Nitrogen",
+        "value": 16.4,
+        "unit": "mg/dL",
+        "reference_range": "7.0 - 20.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Uric Acid",
+        "value": 5.1,
+        "unit": "mg/dL",
+        "reference_range": "3.5 - 7.2",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_28",
+    "mr_number": "MR-2026-1028",
+    "date": "2026-10-03",
+    "ref_doctor": "Dr. Kamran Qureshi (Cardiology)",
+    "panel_name": "Renal Function Tests (RFT / KFT)",
+    "patient": {
+      "name": "Shahzad Rasheed",
+      "age": 60,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Serum Creatinine",
+        "value": 0.7,
+        "unit": "mg/dL",
+        "reference_range": "0.6 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Blood Urea Nitrogen",
+        "value": 8.4,
+        "unit": "mg/dL",
+        "reference_range": "7.0 - 20.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Uric Acid",
+        "value": 4.9,
+        "unit": "mg/dL",
+        "reference_range": "3.5 - 7.2",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_29",
+    "mr_number": "MR-2026-1029",
+    "date": "2026-10-01",
+    "ref_doctor": "Dr. Farzana Malik (Gynaecology)",
+    "panel_name": "Renal Function Tests (RFT / KFT)",
+    "patient": {
+      "name": "Kamran Qureshi",
+      "age": 51,
+      "gender": "Male"
+    },
+    "results": [
+      {
+        "name": "Serum Creatinine",
+        "value": 0.8,
+        "unit": "mg/dL",
+        "reference_range": "0.6 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Blood Urea Nitrogen",
+        "value": 10.1,
+        "unit": "mg/dL",
+        "reference_range": "7.0 - 20.0",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Serum Uric Acid",
+        "value": 5.2,
+        "unit": "mg/dL",
+        "reference_range": "3.5 - 7.2",
+        "flag": "NORMAL"
+      }
+    ]
+  },
+  {
+    "report_id": "report_30",
+    "mr_number": "MR-2026-1030",
+    "date": "2026-10-04",
+    "ref_doctor": "Dr. Fatima Zahra (Paediatrics)",
+    "panel_name": "Renal Function Tests (RFT / KFT)",
+    "patient": {
+      "name": "Sara Malik",
+      "age": 30,
+      "gender": "Female"
+    },
+    "results": [
+      {
+        "name": "Serum Creatinine",
+        "value": 1.1,
+        "unit": "mg/dL",
+        "reference_range": "0.6 - 1.2",
+        "flag": "NORMAL"
+      },
+      {
+        "name": "Blood Urea Nitrogen",
+        "value": 28.5,
+        "unit": "mg/dL",
+        "reference_range": "7.0 - 20.0",
+        "flag": "HIGH"
+      },
+      {
+        "name": "Serum Uric Acid",
+        "value": 6.0,
+        "unit": "mg/dL",
+        "reference_range": "3.5 - 7.2",
+        "flag": "NORMAL"
+      }
+    ]
+  }
+]

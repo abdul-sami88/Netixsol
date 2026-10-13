@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Portal Login | City Care Clinics</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);">
+
+  <header class="navbar">
+    <a href="/" class="nav-brand">
+      <div class="brand-icon">🏥</div>
+      <div>
+        <span class="brand-title">City Care Clinics</span>
+        <span class="brand-sub">Physician Governance Portal</span>
+      </div>
+    </a>
+    <a href="/" class="btn-logout">← Back to Patient Home</a>
+  </header>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div style="font-size: 38px;">🩺</div>
+        <h2>Attending Physician Sign-In</h2>
+        <p style="color: #64748b; font-size: 13.5px; margin-top: 4px;">
+          Access your clinical dashboard to review patients and authorize AI-generated plans.
+        </p>
+      </div>
+
+      <div id="errorAlert" style="display:none; background:#fee2e2; border:1px solid #f87171; color:#991b1b; padding:12px; border-radius:8px; font-size:13.5px; margin-bottom:18px;"></div>
+
+      <form id="doctorLoginForm" onsubmit="handleLogin(event)">
+        <!-- Quick Doctor Selector for Testing / Convenience -->
+        <div class="form-group">
+          <label class="form-label">Select Doctor (or type Email/PMDC below):</label>
+          <select id="quickDoctorSelect" class="form-select" onchange="selectDoctor(this)">
+            <option value="">-- Choose Attending Physician --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email or PMDC Registration:</label>
+          <input type="text" id="emailInput" class="form-input" placeholder="e.g. ahmad.khan@citycareclinics.pk" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password:</label>
+          <input type="password" id="passwordInput" class="form-input" value="doctor123" required>
+          <small style="color:#64748b; font-size:12px;">Default password: <code>doctor123</code></small>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-primary btn-block" style="margin-top: 10px;">
+          Sign In to Doctor Dashboard
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; text-align: center;">
+        🔒 <strong>Strict Patient Isolation:</strong> When you log in, the dashboard filters and displays <em>only</em> patients registered under your medical ID.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load doctors directory into dropdown
+    async function loadDoctorsDropdown() {
+      try {
+        const res = await fetch("/api/doctors/list");
+        if (res.ok) {
+          const docs = await res.json();
+          const sel = document.getElementById("quickDoctorSelect");
+          docs.forEach(d => {
+            const opt = document.createElement("option");
+            opt.value = d.email;
+            opt.innerText = `${d.name} (${d.specialty}) • PMDC: ${d.pmdc}`;
+            sel.appendChild(opt);
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function selectDoctor(selectElem) {
+      if (selectElem.value) {
+        document.getElementById("emailInput").value = selectElem.value;
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const errBox = document.getElementById("errorAlert");
+      errBox.style.display = "none";
+
+      const email = document.getElementById("emailInput").value.trim();
+      const pwd = document.getElementById("passwordInput").value.trim();
+      const btn = document.getElementById("submitBtn");
+
+      btn.disabled = true;
+      btn.innerText = "Authenticating...";
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email_or_pmdc: email, password: pwd })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          window.location.href = "/doctor-dashboard";
+        } else {
+          errBox.innerText = data.detail || "Authentication failed.";
+          errBox.style.display = "block";
+        }
+      } catch (err) {
+        errBox.innerText = "Network error connecting to authentication server.";
+        errBox.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Sign In to Doctor Dashboard";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDoctorsDropdown);
+  </script>
+</body>
+</html>
