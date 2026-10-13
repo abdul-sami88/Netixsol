@@ -600,7 +600,7 @@ Please provide clear, compassionate explanations for patient and physician.
     gemini_api_key = os.getenv("GEMINI_API_KEY")
 
     if groq_api_key:
-        groq_models = ["openai/gpt-oss-20b", "llama-3.1-8b-instant", "qwen/qwen3.8-27b"]
+        groq_models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]
         for m in groq_models:
             try:
                 from groq import Groq

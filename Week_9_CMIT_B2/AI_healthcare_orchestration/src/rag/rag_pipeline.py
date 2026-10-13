@@ -102,7 +102,7 @@ class MedicalRAGPipeline:
         user_prompt = f"<CONTEXT>\n{context_str}\n</CONTEXT>\n\nUser Question: {query}\n\nAnswer with exact citations:"
 
         if self.groq_key:
-            groq_models = ["openai/gpt-oss-20b", "qwen/qwen3.8-27b", "llama-3.1-8b-instant"]
+            groq_models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]
             for model_name in groq_models:
                 try:
                     from langchain_groq import ChatGroq
