@@ -1,0 +1,214 @@
+{
+  "overall": {
+    "total": 3505,
+    "turn_types": {
+      "single": 2352,
+      "json": 348,
+      "multi": 805
+    },
+    "categories": {
+      "fraud_security": 535,
+      "transaction_complaint": 998,
+      "structured_json": 348,
+      "multi_turn": 805,
+      "faq_general": 819
+    },
+    "sub_categories": {
+      "SMS_PHISHING": 119,
+      "1LINK_ATM": 683,
+      "RAAST_P2P": 796,
+      "POS_SWIPE": 434,
+      "ECOMMERCE_ONLINE": 174,
+      "KYC_BIOMETRIC": 312,
+      "SCHEDULE_OF_CHARGES": 309,
+      "IBFT_INTERBANK": 56,
+      "VISHING_CALL": 622
+    },
+    "languages": {
+      "urdulish": 3085,
+      "roman_urdu": 333,
+      "english": 87
+    },
+    "intents": {
+      "FRAUD_ALERT_REPORT": 488,
+      "ATM_CASH_DISPENSE_FAILURE": 409,
+      "RAAST_ID_MANAGEMENT": 79,
+      "TRANSACTION_FAILED_DISPUTE": 555,
+      "CARD_BLOCK_REQUEST": 224,
+      "GENERAL_BANKING_FAQ": 999,
+      "KYC_BIOMETRIC": 180,
+      "ACCOUNT_STATEMENT_INQUIRY": 54,
+      "FEE_TAX_DISPUTE": 112,
+      "SECURITY_REFUSAL_ESCALATION": 283,
+      "SCHEDULE_OF_CHARGES": 96,
+      "CARD_UNBLOCK_REQUEST": 26
+    },
+    "personas": {
+      "gen_z_slang": 684,
+      "anxious_frustrated": 745,
+      "formal_polite": 672,
+      "panicked_fraud_victim": 746,
+      "busy_merchant": 658
+    },
+    "approx_tokens": 813787
+  },
+  "train": {
+    "total": 2809,
+    "turn_types": {
+      "multi": 659,
+      "single": 1870,
+      "json": 280
+    },
+    "categories": {
+      "multi_turn": 659,
+      "fraud_security": 411,
+      "transaction_complaint": 804,
+      "structured_json": 280,
+      "faq_general": 655
+    },
+    "sub_categories": {
+      "1LINK_ATM": 554,
+      "VISHING_CALL": 493,
+      "RAAST_P2P": 633,
+      "ECOMMERCE_ONLINE": 143,
+      "KYC_BIOMETRIC": 253,
+      "POS_SWIPE": 359,
+      "SMS_PHISHING": 90,
+      "SCHEDULE_OF_CHARGES": 239,
+      "IBFT_INTERBANK": 45
+    },
+    "languages": {
+      "urdulish": 2486,
+      "roman_urdu": 263,
+      "english": 60
+    },
+    "intents": {
+      "CARD_BLOCK_REQUEST": 185,
+      "FRAUD_ALERT_REPORT": 387,
+      "ATM_CASH_DISPENSE_FAILURE": 319,
+      "TRANSACTION_FAILED_DISPUTE": 449,
+      "GENERAL_BANKING_FAQ": 797,
+      "CARD_UNBLOCK_REQUEST": 22,
+      "KYC_BIOMETRIC": 154,
+      "SCHEDULE_OF_CHARGES": 77,
+      "SECURITY_REFUSAL_ESCALATION": 223,
+      "FEE_TAX_DISPUTE": 91,
+      "ACCOUNT_STATEMENT_INQUIRY": 40,
+      "RAAST_ID_MANAGEMENT": 65
+    },
+    "personas": {
+      "panicked_fraud_victim": 592,
+      "gen_z_slang": 530,
+      "busy_merchant": 532,
+      "anxious_frustrated": 608,
+      "formal_polite": 547
+    },
+    "approx_tokens": 653085
+  },
+  "val": {
+    "total": 496,
+    "turn_types": {
+      "single": 348,
+      "multi": 100,
+      "json": 48
+    },
+    "categories": {
+      "transaction_complaint": 137,
+      "faq_general": 118,
+      "multi_turn": 100,
+      "fraud_security": 93,
+      "structured_json": 48
+    },
+    "sub_categories": {
+      "ECOMMERCE_ONLINE": 22,
+      "KYC_BIOMETRIC": 40,
+      "POS_SWIPE": 52,
+      "VISHING_CALL": 98,
+      "SCHEDULE_OF_CHARGES": 52,
+      "RAAST_P2P": 111,
+      "1LINK_ATM": 92,
+      "IBFT_INTERBANK": 10,
+      "SMS_PHISHING": 19
+    },
+    "languages": {
+      "urdulish": 419,
+      "roman_urdu": 55,
+      "english": 22
+    },
+    "intents": {
+      "GENERAL_BANKING_FAQ": 144,
+      "CARD_BLOCK_REQUEST": 28,
+      "FRAUD_ALERT_REPORT": 75,
+      "TRANSACTION_FAILED_DISPUTE": 70,
+      "RAAST_ID_MANAGEMENT": 9,
+      "ATM_CASH_DISPENSE_FAILURE": 66,
+      "FEE_TAX_DISPUTE": 14,
+      "SECURITY_REFUSAL_ESCALATION": 45,
+      "CARD_UNBLOCK_REQUEST": 3,
+      "KYC_BIOMETRIC": 18,
+      "SCHEDULE_OF_CHARGES": 14,
+      "ACCOUNT_STATEMENT_INQUIRY": 10
+    },
+    "personas": {
+      "formal_polite": 92,
+      "anxious_frustrated": 99,
+      "gen_z_slang": 107,
+      "busy_merchant": 86,
+      "panicked_fraud_victim": 112
+    },
+    "approx_tokens": 114437
+  },
+  "gold": {
+    "total": 200,
+    "turn_types": {
+      "single": 134,
+      "json": 20,
+      "multi": 46
+    },
+    "categories": {
+      "fraud_security": 31,
+      "transaction_complaint": 57,
+      "structured_json": 20,
+      "multi_turn": 46,
+      "faq_general": 46
+    },
+    "sub_categories": {
+      "SMS_PHISHING": 10,
+      "VISHING_CALL": 31,
+      "1LINK_ATM": 37,
+      "RAAST_P2P": 52,
+      "POS_SWIPE": 23,
+      "ECOMMERCE_ONLINE": 9,
+      "IBFT_INTERBANK": 1,
+      "SCHEDULE_OF_CHARGES": 18,
+      "KYC_BIOMETRIC": 19
+    },
+    "languages": {
+      "urdulish": 180,
+      "roman_urdu": 15,
+      "english": 5
+    },
+    "intents": {
+      "FRAUD_ALERT_REPORT": 26,
+      "SECURITY_REFUSAL_ESCALATION": 15,
+      "CARD_BLOCK_REQUEST": 11,
+      "ATM_CASH_DISPENSE_FAILURE": 24,
+      "RAAST_ID_MANAGEMENT": 5,
+      "GENERAL_BANKING_FAQ": 58,
+      "TRANSACTION_FAILED_DISPUTE": 36,
+      "ACCOUNT_STATEMENT_INQUIRY": 4,
+      "CARD_UNBLOCK_REQUEST": 1,
+      "SCHEDULE_OF_CHARGES": 5,
+      "KYC_BIOMETRIC": 8,
+      "FEE_TAX_DISPUTE": 7
+    },
+    "personas": {
+      "gen_z_slang": 47,
+      "busy_merchant": 40,
+      "formal_polite": 33,
+      "anxious_frustrated": 38,
+      "panicked_fraud_victim": 42
+    },
+    "approx_tokens": 46263
+  }
+}

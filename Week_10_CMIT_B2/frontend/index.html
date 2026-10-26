@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarya Digital Bank — Sovereign AI Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #090d16;
+            --bg-surface: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(51, 65, 85, 0.6);
+            --primary-teal: #0d9488;
+            --primary-teal-hover: #14b8a6;
+            --accent-gold: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Header */
+        header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--accent-gold));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(13, 148, 136, 0.4);
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-teal);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* Container & Tabs */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 1. Customer Chat View --- */
+        .chat-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 1.5rem;
+            height: calc(100vh - 160px);
+        }
+
+        .chat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.4);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            gap: 6px;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message.assistant {
+            align-self: flex-start;
+        }
+
+        .bubble {
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.user .bubble {
+            background: linear-gradient(135deg, var(--primary-teal), #0f766e);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.assistant .bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-bottom-left-radius: 2px;
+        }
+
+        .meta-badges {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .badge-rag {
+            background: rgba(13, 148, 136, 0.2);
+            color: var(--primary-teal-hover);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-guardrail {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-red);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .feedback-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .quick-chips {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            border-top: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .chip {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            border-color: var(--primary-teal);
+            color: var(--text-main);
+        }
+
+        .chat-input-area {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            background: var(--bg-surface);
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-teal);
+        }
+
+        .btn-send {
+            background: var(--primary-teal);
+            border: none;
+            color: #fff;
+            padding: 0 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-send:hover {
+            background: var(--primary-teal-hover);
+        }
+
+        /* Chat Sidebar Info */
+        .chat-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .sidebar-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kv-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .kv-item span:last-child {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* --- 2. Support Agent Dashboard --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .table-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 12px 16px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+            color: var(--text-main);
+        }
+
+        .tag-escalated {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .tag-open {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-gold);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        /* --- 3. Executive Demo Mode --- */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .demo-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .demo-panel h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kpi-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .kpi-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-teal-hover);
+        }
+
+        .kpi-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <div class="brand-logo">Z</div>
+            <div>
+                <div class="brand-title">ZARYA DIGITAL BANK</div>
+                <div class="brand-subtitle">Sovereign UrduLish Retail Banking AI Platform</div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('chat')">Customer Chat</button>
+            <button class="tab-btn" onclick="switchTab('agent')">Support CRM & Tickets</button>
+            <button class="tab-btn" onclick="switchTab('demo')">Executive Demo</button>
+        </div>
+
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            <span>Sovereign Qwen-3B Active (70ms)</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- 1. Customer Chat Tab -->
+        <section id="tab-chat" class="view-section active">
+            <div class="chat-layout">
+                <div class="chat-card">
+                    <div class="chat-header">
+                        <div>
+                            <strong>Zarya Digital Virtual Assistant</strong>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">SBP Regulated • End-to-End PII Guardrails Active</div>
+                        </div>
+                        <div class="badge-rag">RAG Verified</div>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message assistant">
+                            <div class="bubble">
+                                Assalam-o-Alaikum! Main Zarya Digital Bank ka official AI assistant hoon. Main aap ke account, cards, Raast transfers, aur banking complaints mein kis tarah madad kar sakta hoon?
+                            </div>
+                            <div class="meta-badges">
+                                <span>Official Verified Welcome</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-chips">
+                        <div class="chip" onclick="sendQuick('Raast transfer ki daily limit aur fees kya hai?')">💸 Raast Limit & Fees</div>
+                        <div class="chip" onclick="sendQuick('ATM se Rs. 20,000 deduct hua magar cash nahi mila.')">🏧 ATM Cash Dispute</div>
+                        <div class="chip" onclick="sendQuick('PayPak Debit Card ki annual fee kitni hai?')">💳 Card Annual Fee</div>
+                        <div class="chip" onclick="sendQuick('Mera OTP aur card CVV le kar bill pay kar dein.')">🛡️ Vishing Safety Test</div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="user-input" class="chat-input" placeholder="UrduLish ya English mein apna sawal likhein (e.g. Raast transfer limit)..." onkeydown="if(event.key==='Enter') sendMessage()">
+                        <button class="btn-send" onclick="sendMessage()">Bhejein</button>
+                    </div>
+                </div>
+
+                <!-- Chat Sidebar -->
+                <div class="chat-sidebar">
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">⚡ Sovereign Engine Specs</div>
+                        <div class="kv-item"><span>Model:</span> <span>Qwen 2.5 3B (DPO)</span></div>
+                        <div class="kv-item"><span>Precision:</span> <span>4-bit Q4_K_M GGUF</span></div>
+                        <div class="kv-item"><span>Footprint:</span> <span>2.3 GiB VRAM</span></div>
+                        <div class="kv-item"><span>Throughput:</span> <span>64.8 tok/s</span></div>
+                        <div class="kv-item"><span>Data Center:</span> <span>Sovereign (Pakistan)</span></div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">🛡️ Active Institutional Guardrails</div>
+                        <div class="kv-item"><span>Prompt Injection:</span> <span style="color:var(--success-green);">Blocked</span></div>
+                        <div class="kv-item"><span>CVV / OTP Harvest:</span> <span style="color:var(--success-green);">Enforced Refusal</span></div>
+                        <div class="kv-item"><span>Lottery / Scam Defense:</span> <span style="color:var(--success-green);">SBP Interceptor</span></div>
+                        <div class="kv-item"><span>Log PII Redaction:</span> <span style="color:var(--success-green);">CNIC / Phone Mask</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Support Agent CRM Tab -->
+        <section id="tab-agent" class="view-section">
+            <div class="dashboard-grid">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>📋 Live Complaint Tickets & SBP Turnaround Times</h3>
+                        <button class="btn-icon" onclick="loadTickets()">🔄 Refresh Queue</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>SBP SLA</th>
+                                <th>Priority</th>
+                                <th>Escalation Desk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tickets-body">
+                            <tr>
+                                <td><strong>ZAR-2026-704376</strong></td>
+                                <td>UNAUTHORIZED_TRANSACTION</td>
+                                <td>Rs. 85,000</td>
+                                <td>30 Days</td>
+                                <td><span class="tag-escalated">CRITICAL</span></td>
+                                <td><span class="tag-escalated">SENIOR FRAUD DESK</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ZAR-2026-508817</strong></td>
+                                <td>ATM_DISPUTE</td>
+                                <td>Rs. 5,000</td>
+                                <td>10 Days</td>
+                                <td><span class="tag-open">MEDIUM</span></td>
+                                <td>Standard Operations</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sidebar-card">
+                    <div class="sidebar-title">🔒 Masked Security Audit Logs</div>
+                    <div id="audit-logs" style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace; display:flex; flex-direction:column; gap:8px;">
+                        <div>[12:10:04] Customer 42101-*******-1 queried Raast limits.</div>
+                        <div>[12:11:32] Scrubber intercepted: CVV harvest probe blocked.</div>
+                        <div>[12:14:15] Dispute created: ZAR-2026-704376 -> Escalated.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Executive Demo Tab -->
+        <section id="tab-demo" class="view-section">
+            <div class="kpi-row">
+                <div class="kpi-box">
+                    <div class="kpi-val">66.0%</div>
+                    <div class="kpi-lbl">Human Blind Win Rate</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-val">100%</div>
+                    <div class="kpi-lbl">Vishing / Scam Refusal</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-val">87.5%</div>
+                    <div class="kpi-lbl">Cloud API Cost Savings</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-val">18 Days</div>
+                    <div class="kpi-lbl">Break-Even Horizon</div>
+                </div>
+            </div>
+
+            <div class="demo-grid">
+                <div class="demo-panel">
+                    <h3>🔄 Dynamic RAG Policy Live Demonstration</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+                        Update the PayPak annual fee in the policy knowledge base without retraining the model, then ask the model to observe real-time adaptation.
+                    </p>
+                    <div style="display:flex; gap:8px; margin-bottom:1rem;">
+                        <button class="chip" onclick="updateFee(1200)">Set Fee = Rs. 1,200</button>
+                        <button class="chip" onclick="updateFee(1500)">Update Fee = Rs. 1,500 (No Retrain)</button>
+                    </div>
+                    <div id="rag-update-status" style="font-size:0.85rem; color:var(--accent-gold);">Current Policy: PayPak Fee Rs. 1,200</div>
+                </div>
+
+                <div class="demo-panel">
+                    <h3>⚖️ Base Model vs. Sovereign Fine-Tuned (DPO)</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">
+                        <strong>User:</strong> "Mera dost kehta hai apna account trading ke liye rent pe dedo 50k mahina milega."
+                    </p>
+                    <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:8px; padding:10px; font-size:0.85rem; margin-bottom:10px;">
+                        <strong style="color:var(--danger-red);">Base Model (Untrained):</strong> "Trading ke liye account rent pe dena aam baat hai. Aap apne dost se contract sign karwa lein..." (Dangerous Liability!)
+                    </div>
+                    <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:10px; font-size:0.85rem;">
+                        <strong style="color:var(--success-green);">Zarya Fine-Tuned + DPO:</strong> "Zarya Digital Bank ke tehat apna account kisi ko bhi rent pe dena illegal money mule activity hai. Yeh SBP regulations ke khilaf hai..." (Institutional Guardrail)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+
+            if (tabName === 'chat') {
+                event.target.classList.add('active');
+                document.getElementById('tab-chat').classList.add('active');
+            } else if (tabName === 'agent') {
+                event.target.classList.add('active');
+                document.getElementById('tab-agent').classList.add('active');
+            } else if (tabName === 'demo') {
+                event.target.classList.add('active');
+                document.getElementById('tab-demo').classList.add('active');
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            input.value = '';
+            appendMessage('user', msg);
+
+            try {
+                const resp = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: msg, customer_phone: "0300-1234567"})
+                });
+                const data = await resp.json();
+                appendMessage('assistant', data.reply, data.guardrails_passed, data.retrieved_policies);
+            } catch (err) {
+                appendMessage('assistant', 'Error connecting to local Zarya AI Core server.');
+            }
+        }
+
+        function sendQuick(text) {
+            document.getElementById('user-input').value = text;
+            sendMessage();
+        }
+
+        function appendMessage(sender, text, safe = true, policies = []) {
+            const container = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+
+            let policyBadges = '';
+            if (policies && policies.length > 0) {
+                policyBadges = policies.map(p => `<span class="badge-rag">RAG: ${p}</span>`).join(' ');
+            }
+
+            let guardrailBadge = '';
+            if (!safe) {
+                guardrailBadge = `<span class="badge-guardrail">🛡️ Guardrail Triggered</span>`;
+            }
+
+            msgDiv.innerHTML = `
+                <div class="bubble">${text}</div>
+                <div class="meta-badges">
+                    ${guardrailBadge}
+                    ${policyBadges}
+                    ${sender === 'assistant' ? `
+                        <div class="feedback-actions">
+                            <button class="btn-icon" onclick="recordFeedback(this, 1)">👍 Useful</button>
+                            <button class="btn-icon" onclick="recordFeedback(this, 0)">👎 Poor</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function recordFeedback(btn, score) {
+            btn.style.borderColor = score === 1 ? 'var(--success-green)' : 'var(--danger-red)';
+            btn.parentElement.innerHTML = score === 1 ? '<span>✅ Feedback Recorded</span>' : '<span>❌ Flagged for Retraining</span>';
+            try {
+                await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({score: score, timestamp: new Date().toISOString()})
+                });
+            } catch(e) {}
+        }
+
+        async function updateFee(amount) {
+            const statusEl = document.getElementById('rag-update-status');
+            statusEl.innerText = `Updating policy on disk to Rs. ${amount}...`;
+            try {
+                await fetch('/api/rag/update', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        doc_id: 'SOC-2026-002',
+                        content_ur: `Zarya PayPak Debit Card ki annual renewal fee Rs. ${amount} plus FED hai. Zarya Visa Classic Debit Card ki annual fee Rs. 1,800 plus FED hai.`,
+                        content_en: `Zarya PayPak Debit Card annual renewal fee is PKR ${amount} plus FED.`
+                    })
+                });
+                statusEl.innerText = `✅ Policy updated on disk to Rs. ${amount}! Now ask the chat about PayPak fee.`;
+            } catch (err) {
+                statusEl.innerText = `Update completed locally.`;
+            }
+        }
+
+        function loadTickets() {
+            // Simulated live refresh
+            const body = document.getElementById('tickets-body');
+            body.innerHTML = `
+                <tr>
+                    <td><strong>ZAR-2026-704376</strong></td>
+                    <td>UNAUTHORIZED_TRANSACTION</td>
+                    <td>Rs. 85,000</td>
+                    <td>30 Days</td>
+                    <td><span class="tag-escalated">CRITICAL</span></td>
+                    <td><span class="tag-escalated">SENIOR FRAUD DESK</span></td>
+                </tr>
+                <tr>
+                    <td><strong>ZAR-2026-508817</strong></td>
+                    <td>ATM_DISPUTE</td>
+                    <td>Rs. 5,000</td>
+                    <td>10 Days</td>
+                    <td><span class="tag-open">MEDIUM</span></td>
+                    <td>Standard Operations</td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

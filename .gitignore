@@ -1,3 +1,54 @@
+#Week 10 fine tune ignore files
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Bytecode and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# Environment Variables and Secrets (PROTECT CREDENTIALS)
+.env
+.env.local
+*.pem
+*.key
+
+# Model Weights, Checkpoints, and Large Binaries (Download from Hugging Face / Storage)
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+*.onnx
+dpo_outputs/
+content/
+zarya_qwen2.5_3b_dpo/
+zarya_qwen_lora_adapter/
+zarya_Llama_lora_adapter/
+zarya_qwen2.5_3b_q4km_gguf/
+*.zip
+*.tar.gz
+
+# Local SQLite Databases and Log Files
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+*.log
+
+# IDE and System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.system_generated/
+
 # Ignored data set folder
 Week_3_CMIT_B2/Day5/enterprise_analytics_hackathon/dataset/
 

@@ -1,0 +1,114 @@
+[
+  {
+    "doc_id": "SOC-2026-001",
+    "category": "fees_and_charges",
+    "title": "Schedule of Bank Charges (SOC) - Digital Transfers & 1LINK",
+    "content_ur": "Zarya Digital Bank ke tehat Raast P2P fund transfers bilkul muft (Rs. 0) hain. 1LINK Interbank Funds Transfer (IBFT) ke zariye mahana pehlay Rs. 25,000 tak transfers muft hain. Rs. 25,000 se zayed ke transfer par 0.1% ya Rs. 200 (jo bhi kam ho) charge kiya jata hai. Zarya-to-Zarya internal account transfer par koi fees nahi hai.",
+    "content_en": "Under Zarya Digital Bank, Raast P2P fund transfers are completely free (PKR 0). Via 1LINK Interbank Funds Transfer (IBFT), the first PKR 25,000 per month is free. For transfers exceeding PKR 25,000, a fee of 0.1% or PKR 200 (whichever is lower) applies. Internal Zarya-to-Zarya transfers are 100% free.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "raast",
+      "ibft",
+      "transfer fee",
+      "1link",
+      "charges",
+      "p2p",
+      "fees"
+    ]
+  },
+  {
+    "doc_id": "SOC-2026-002",
+    "category": "fees_and_charges",
+    "title": "Debit Card Issuance & Annual Charges",
+    "content_ur": "Zarya PayPak Debit Card ki annual renewal fee Rs. 1,200 plus FED hai. Zarya Visa Classic Debit Card ki annual fee Rs. 1,800 plus FED hai. Zarya Visa Platinum Card ki annual fee Rs. 3,500 plus FED hai. Naya card gum hone ya damage hone par replacement card fee Rs. 1,000 plus FED hogi.",
+    "content_en": "Zarya PayPak Debit Card annual renewal fee is PKR 1,200 plus FED. Zarya Visa Classic Debit Card annual fee is PKR 1,800 plus FED. Zarya Visa Platinum Card annual fee is PKR 3,500 plus FED. Lost or damaged card replacement fee is PKR 1,000 plus FED.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "debit card fee",
+      "paypak",
+      "visa classic",
+      "platinum",
+      "card renewal",
+      "replacement fee"
+    ]
+  },
+  {
+    "doc_id": "SOC-2026-003",
+    "category": "fees_and_charges",
+    "title": "ATM Cash Withdrawal & SMS Alert Charges",
+    "content_ur": "Zarya ATM par cash nikalna bilkul muft hai. Doosray bank ke 1LINK ATM se cash nikalnay par SBP ke mutabiq Rs. 23.44 fee aaid hogi. Digital banking SMS transaction alerts ki mahana subscription fee Rs. 150 plus FED hai, jabkay email alerts bilkul muft hain.",
+    "content_en": "Cash withdrawal at Zarya ATMs is completely free. Cash withdrawal from other banks' 1LINK ATMs incurs an SBP-mandated fee of PKR 23.44 per transaction. Digital banking SMS transaction alerts carry a monthly fee of PKR 150 plus FED, while email notifications are completely free.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "atm fee",
+      "cash withdrawal",
+      "1link atm",
+      "sms alerts",
+      "sms charges",
+      "alert fee"
+    ]
+  },
+  {
+    "doc_id": "LIM-2026-001",
+    "category": "transaction_limits",
+    "title": "Daily Digital & ATM Limits",
+    "content_ur": "Zarya Digital Bank mein rozana ATM cash withdrawal ki hadd Rs. 100,000 hai. POS (Point of Sale) aur online e-commerce shopping ki rozana hadd Rs. 250,000 hai. Raast P2P transfer ki rozana limit Rs. 500,000 hai. Biometric verification ke baad standard account ki rozana IBFT hadd Rs. 1,000,000 tak barhai ja sakti hai.",
+    "content_en": "At Zarya Digital Bank, daily ATM cash withdrawal limit is PKR 100,000. Daily POS and online e-commerce merchant payment limit is PKR 250,000. Daily Raast P2P limit is PKR 500,000. Following biometric verification, standard account daily IBFT limit can be extended up to PKR 1,000,000.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "limits",
+      "atm limit",
+      "daily limit",
+      "raast limit",
+      "pos limit",
+      "transfer limit"
+    ]
+  },
+  {
+    "doc_id": "PRD-2026-001",
+    "category": "product_terms",
+    "title": "Zarya Asaan Digital Account Terms",
+    "content_ur": "Zarya Asaan Digital Account sirf computerized CNIC aur live selfie ke zariye 3 minute mein open kiya ja sakta hai. Kisi income proof ki zaroorat nahi hoti. Is account mein total credit balance limit Rs. 1,000,000 aur monthly total debit limit Rs. 1,000,000 muqarrar hai.",
+    "content_en": "Zarya Asaan Digital Account can be opened in 3 minutes using only a valid CNIC and live selfie, requiring no proof of income. The account carries a maximum total credit balance limit of PKR 1,000,000 and a monthly total debit limit of PKR 1,000,000.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "asaan account",
+      "digital account",
+      "account opening",
+      "income proof",
+      "balance limit"
+    ]
+  },
+  {
+    "doc_id": "PRD-2026-002",
+    "category": "product_terms",
+    "title": "Zarya Freelancer Digital Account",
+    "content_ur": "Freelancers aur IT exporters ke liye Zarya Freelancer Account mein monthly inward remittance hadd USD 5,000 (ya masawi PKR) hai. Account holders apni export proceeds ka 50% tak foreign currency (USD) account mein retain kar saktay hain, aur tax deduction Form-R ke zariye automatically handle hoti hai.",
+    "content_en": "For freelancers and digital IT exporters, the Zarya Freelancer Account permits monthly inward remittances up to USD 5,000 (or PKR equivalent). Account holders can retain up to 50% of foreign export proceeds in a USD retention account, with tax compliance handled via digital Form-R.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "freelancer account",
+      "it export",
+      "usd retention",
+      "foreign remittance",
+      "inward remittance"
+    ]
+  },
+  {
+    "doc_id": "TAT-2026-001",
+    "category": "complaint_turnaround_times",
+    "title": "Dispute Resolution & Turnaround Times (SBP Guidelines)",
+    "content_ur": "State Bank of Pakistan (SBP) Consumer Protection Regulations ke tehat: ATM Cash Not Dispensed complaint ka turnaround time (TAT) 7 se 10 working days hai. Raast failed transfer reversal ka TAT 24 se 48 banking hours hai. Wrong Interbank IBFT fund transfer dispute ka TAT 15 working days hai. Unauthorized card fraud / transaction dispute ka SBP SLA 30 working days hai.",
+    "content_en": "Under State Bank of Pakistan (SBP) Consumer Protection Regulations: ATM Cash Not Dispensed turnaround time (TAT) is 7 to 10 working days. Raast failed transfer reversal TAT is 24 to 48 banking hours. Wrong IBFT fund transfer coordination TAT is 15 working days. Unauthorized digital card fraud investigation SLA is up to 30 working days.",
+    "effective_date": "2026-10-01",
+    "keywords": [
+      "tat",
+      "turnaround time",
+      "complaint resolution",
+      "atm dispute",
+      "raast reversal",
+      "fraud dispute",
+      "sla"
+    ]
+  }
+]

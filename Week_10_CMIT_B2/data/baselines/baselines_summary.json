@@ -1,0 +1,59 @@
+{
+  "base_zero_shot": {
+    "model_type": "base_zero_shot",
+    "total_evaluated": 12,
+    "json_tasks_evaluated": 3,
+    "json_validity_rate_pct": 66.7,
+    "intent_accuracy_pct": 0.0,
+    "polite_tone_rate_pct": 33.3,
+    "tat_compliance_pct": 100.0,
+    "avg_response_chars": 316.2,
+    "avg_latency_sec": 0.57
+  },
+  "base_few_shot": {
+    "model_type": "base_few_shot",
+    "total_evaluated": 12,
+    "json_tasks_evaluated": 3,
+    "json_validity_rate_pct": 0.0,
+    "intent_accuracy_pct": 8.3,
+    "polite_tone_rate_pct": 16.7,
+    "tat_compliance_pct": 100.0,
+    "avg_response_chars": 122.7,
+    "avg_latency_sec": 0.32
+  },
+  "large_api_gemini": {
+    "model_type": "large_api_gemini",
+    "total_evaluated": 12,
+    "json_tasks_evaluated": 3,
+    "json_validity_rate_pct": 100.0,
+    "intent_accuracy_pct": 41.7,
+    "polite_tone_rate_pct": 100.0,
+    "tat_compliance_pct": 100.0,
+    "avg_response_chars": 890.2,
+    "avg_latency_sec": 18.31
+  },
+  "finetuned_llama3.2_3b": {
+    "model_type": "finetuned_llama3.2_3b",
+    "total_evaluated": 12,
+    "json_tasks_evaluated": 3,
+    "json_validity_rate_pct": 100.0,
+    "intent_accuracy_pct": 83.3,
+    "polite_tone_rate_pct": 100.0,
+    "tat_compliance_pct": 100.0,
+    "avg_response_chars": 268.4,
+    "vram_gb": 5.83,
+    "avg_latency_sec": 5.75
+  },
+  "finetuned_qwen2.5_3b": {
+    "model_type": "finetuned_qwen2.5_3b",
+    "total_evaluated": 12,
+    "json_tasks_evaluated": 3,
+    "json_validity_rate_pct": 100.0,
+    "intent_accuracy_pct": 91.7,
+    "polite_tone_rate_pct": 100.0,
+    "tat_compliance_pct": 100.0,
+    "avg_response_chars": 284.1,
+    "vram_gb": 3.34,
+    "avg_latency_sec": 7.62
+  }
+}

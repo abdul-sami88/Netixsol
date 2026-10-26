@@ -1,0 +1,9 @@
+{
+  "initial_count": 4096,
+  "removed_length_filter": 0,
+  "removed_exact_duplicate": 499,
+  "removed_near_duplicate": 92,
+  "removed_pii_violation": 0,
+  "policy_corrected_count": 0,
+  "final_clean_count": 3505
+}
