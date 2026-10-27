@@ -184,3 +184,12 @@ class ZaryaTicketingEngine:
         if row:
             return dict(row)
         return None
+
+    def get_all_tickets(self, limit: int = 50) -> List[Dict[str, Any]]:
+        conn = get_db_connection(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM complaint_tickets ORDER BY id DESC LIMIT ?", (limit,))
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(r) for r in rows]
+

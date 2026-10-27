@@ -690,6 +690,7 @@
             } else if (tabName === 'agent') {
                 event.target.classList.add('active');
                 document.getElementById('tab-agent').classList.add('active');
+                loadTickets();
             } else if (tabName === 'demo') {
                 event.target.classList.add('active');
                 document.getElementById('tab-demo').classList.add('active');
@@ -785,28 +786,45 @@
             }
         }
 
-        function loadTickets() {
-            // Simulated live refresh
+        async function loadTickets() {
             const body = document.getElementById('tickets-body');
-            body.innerHTML = `
-                <tr>
-                    <td><strong>ZAR-2026-704376</strong></td>
-                    <td>UNAUTHORIZED_TRANSACTION</td>
-                    <td>Rs. 85,000</td>
-                    <td>30 Days</td>
-                    <td><span class="tag-escalated">CRITICAL</span></td>
-                    <td><span class="tag-escalated">SENIOR FRAUD DESK</span></td>
-                </tr>
-                <tr>
-                    <td><strong>ZAR-2026-508817</strong></td>
-                    <td>ATM_DISPUTE</td>
-                    <td>Rs. 5,000</td>
-                    <td>10 Days</td>
-                    <td><span class="tag-open">MEDIUM</span></td>
-                    <td>Standard Operations</td>
-                </tr>
-            `;
+            try {
+                const resp = await fetch('/api/tickets');
+                const tickets = await resp.json();
+                if (!tickets || tickets.length === 0) {
+                    body.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No complaint tickets logged yet.</td></tr>';
+                    return;
+                }
+                body.innerHTML = tickets.map(t => {
+                    const isEscalated = t.escalated_to_human || t.priority === 'CRITICAL';
+                    const amountFormatted = Number(t.amount || 0).toLocaleString();
+                    return `
+                        <tr>
+                            <td><strong>${t.ticket_id}</strong></td>
+                            <td>${t.category}</td>
+                            <td>Rs. ${amountFormatted}</td>
+                            <td>${t.tat_days} Days</td>
+                            <td><span class="${t.priority === 'CRITICAL' ? 'tag-escalated' : 'tag-open'}">${t.priority}</span></td>
+                            <td><span class="${isEscalated ? 'tag-escalated' : ''}">${isEscalated ? 'SENIOR FRAUD DESK' : 'Standard Operations'}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+
+                // Update live audit logs with actual logged tickets
+                const auditDiv = document.getElementById('audit-logs');
+                if (auditDiv && tickets.length > 0) {
+                    auditDiv.innerHTML = tickets.slice(0, 6).map(t => {
+                        const timeStr = t.created_at ? new Date(t.created_at).toLocaleTimeString() : 'Live';
+                        return `<div>[${timeStr}] Ticket ${t.ticket_id} (${t.category}): Rs. ${Number(t.amount||0).toLocaleString()} -> ${t.escalated_to_human ? '🚨 Escalated to Senior Fraud' : 'Standard Queue'}.</div>`;
+                    }).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load live tickets', err);
+            }
         }
+
+        // Auto-fetch on page load
+        window.addEventListener('DOMContentLoaded', loadTickets);
     </script>
 </body>
 </html>

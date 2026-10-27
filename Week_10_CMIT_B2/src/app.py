@@ -179,12 +179,18 @@ def create_complaint_ticket(ticket_req: TicketCreateRequest):
     return ticket
 
 
+@app.get("/api/tickets")
+def list_complaint_tickets():
+    return ticketing.get_all_tickets(limit=50)
+
+
 @app.get("/api/tickets/{ticket_id}")
 def get_complaint_ticket(ticket_id: str):
     ticket = ticketing.get_ticket(ticket_id)
     if not ticket:
         raise HTTPException(status_code=404, detail="Ticket not found")
     return ticket
+
 
 
 @app.post("/api/rag/update")
