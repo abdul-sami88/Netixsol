@@ -15,3 +15,6 @@ services:
         value: "true"
       - key: MASK_PII_LOGS
         value: "true"
+      - key: GROQ_API_KEY
+        sync: false
+

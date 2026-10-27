@@ -4,6 +4,9 @@ Week 10 - Day 4: Task 5 FastAPI Backend Connecting Guardrails -> RAG -> Model ->
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import HTMLResponse, FileResponse
@@ -118,15 +121,34 @@ def handle_chat(req: ChatRequest):
     # 3. RAG Policy Augmentation
     rag_prompt_data = rag_engine.build_augmented_prompt(req.message, top_k=2)
     top_docs = [d["title"] for d in rag_prompt_data["retrieved_docs"]]
-
-    # Synthesize clean policy response based on retrieved facts
     context_ur = " ".join([d["content_ur"] for d in rag_prompt_data["retrieved_docs"]])
-    
-    # Base response derived from verified RAG context
-    model_output = (
-        f"Zarya Digital Bank ki official policy ke mutabiq: {context_ur[:350]}...\n\n"
-        "Mazeed rehnumai ya tasdeeq ke liye aap Zarya Helpline (021-111-ZARYA) par bhi call kar saktay hain."
-    )
+
+    # Dynamic LLM Generation with Qwen + RAG Context
+    model_output = None
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    if groq_api_key:
+        try:
+            from groq import Groq
+            client = Groq(api_key=groq_api_key)
+            completion = client.chat.completions.create(
+                model="qwen/qwen3.8-27b",
+                messages=[
+                    {"role": "system", "content": rag_prompt_data["system_prompt"]},
+                    {"role": "user", "content": req.message}
+                ],
+                max_tokens=256,
+                temperature=0.3
+            )
+            model_output = completion.choices[0].message.content
+        except Exception as e:
+            print(f"[LLM FALLBACK NOTICE] {e}")
+
+    # Fallback if offline or API unavailable
+    if not model_output:
+        model_output = (
+            f"Zarya Digital Bank ki official policy ke mutabiq: {context_ur[:350]}...\n\n"
+            "Mazeed rehnumai ya tasdeeq ke liye aap Zarya Helpline (021-111-ZARYA) par bhi rabta kar saktay hain."
+        )
 
     if created_ticket:
         model_output = f"{created_ticket['customer_message_ur']}\n\n{model_output}"
