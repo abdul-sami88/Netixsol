@@ -1,4 +1,39 @@
-#Week 10 fine tune ignore files
+      #Week 11 ignored files
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files with secrets
+.env
+!.env.example
+
+
+
+    #Week 10 fine tune ignore files
+
 # Virtual Environments
 .venv/
 venv/
