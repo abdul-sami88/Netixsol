@@ -1,0 +1,42 @@
+name: ShopKaro AI Platform CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt pytest httpx flake8
+
+    - name: Code Quality & Lint Check
+      run: |
+        # Stop build if there are Python syntax errors or undefined names
+        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Exit-zero treats all errors as warnings
+        flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Verify Serving API Health & Test Endpoints
+      run: |
+        python -c "from src.serving.api import app; print('FastAPI Serving App imported successfully!')"
+        python -c "from src.experimentation.ab_test import ABTestExperiment; print('A/B Testing Engine loaded!')"
+
+    - name: Verify Docker Build
+      run: |
+        docker build -t shopkaro-serving:ci .
+

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopKaro AI Commerce Intelligence Platform</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2222%22 font-size=%2222%22>🛍️</text></svg>">
+</head>
+<body>
+    <!-- Top Header -->
+    <header>
+        <div class="brand">
+            <h1>🛍️ ShopKaro AI Platform</h1>
+            <span class="badge">● PRODUCTION SERVING</span>
+        </div>
+        
+        <div class="user-selector">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Active Profile:</span>
+            <select id="active-user-select">
+                <option value="USR-00746">Ahmed Mirza (Eid Fashion Shopper - Fashion)</option>
+                <option value="USR-00042">Sadia Farooqi (Loyal Tech Enthusiast - Electronics)</option>
+                <option value="GUEST-COLD-START">New Visitor (Cold-Start Safe Baseline)</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="tab-customer">
+            <span>🛍️</span> Customer Experience
+        </button>
+        <button class="tab-btn" data-tab="tab-operations">
+            <span>🏭</span> Operations & Inventory
+        </button>
+        <button class="tab-btn" data-tab="tab-management">
+            <span>📊</span> Management & A/B Testing
+        </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- TAB 1: CUSTOMER EXPERIENCE -->
+        <section id="tab-customer" class="tab-content active">
+            <!-- Search Bar -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span>🔍 UrduLish & Multilingual Hybrid Search</span>
+                    <span class="tag" id="search-count">Try searching in English, Urdu or Roman Urdu</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="e.g. 'eid ke liye lawn suit under 5000' or 'laptop for coding under 1.5 lac'...">
+                    <button id="search-btn">Search Catalog</button>
+                </div>
+                <div id="search-results-grid" class="product-grid"></div>
+            </div>
+
+            <!-- Two-Column Layout: Recommendations & Assistant -->
+            <div class="grid-2">
+                <!-- Left: Personalized Homepage Feed -->
+                <div class="card">
+                    <div class="card-title">
+                        <span>✨ Recommended for You</span>
+                        <span class="tag" id="recs-latency" style="font-weight: 700;">Fetching latency...</span>
+                    </div>
+                    <div id="recs-grid" class="product-grid" style="grid-template-columns: 1fr 1fr;"></div>
+                </div>
+
+                <!-- Right: UrduLish AI Shopping Assistant -->
+                <div class="card">
+                    <div class="card-title">
+                        <span>🤖 ShopKaro AI Shopping Assistant</span>
+                        <span class="tag">Zero-Hallucination Grounded</span>
+                    </div>
+                    <div class="chat-container">
+                        <div id="chat-messages" class="chat-messages">
+                            <div class="chat-bubble assistant">Assalam-o-Alaikum! Main ShopKaro ka AI assistant hoon. Main aap ke budget ke mutabiq shopping, orders track karne, aur reviews batane mein madad kar sakta hoon!</div>
+                        </div>
+                        <div class="chat-input-bar">
+                            <input type="text" id="chat-input" placeholder="e.g. 'Ammi ke liye Eid gift chahiye 3000 tak'...">
+                            <button id="chat-send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: OPERATIONS & INVENTORY -->
+        <section id="tab-operations" class="tab-content">
+            <!-- Top Alert Summary -->
+            <div class="grid-3" style="margin-bottom: 1.5rem;">
+                <div class="kpi-card" style="border-left: 4px solid var(--danger);">
+                    <div class="kpi-label">Stock-Out Risk SKUs (Next 14 Days)</div>
+                    <div class="kpi-value" style="color: #f87171;">3,847 SKUs</div>
+                    <div class="kpi-sub" style="color: var(--danger);">Requires immediate supplier re-order</div>
+                </div>
+                <div class="kpi-card" style="border-left: 4px solid var(--warning);">
+                    <div class="kpi-label">Overstocked Dead Capital SKUs</div>
+                    <div class="kpi-value" style="color: #fbbf24;">40,266 SKUs</div>
+                    <div class="kpi-sub" style="color: var(--warning);">Liquidate via tiered promotional markdown</div>
+                </div>
+                <div class="kpi-card" style="border-left: 4px solid var(--success);">
+                    <div class="kpi-label">Protected GMV (Stock-Out Prevention)</div>
+                    <div class="kpi-value" style="color: #34d399;">Rs. 131.3M</div>
+                    <div class="kpi-sub">85% fewer out-of-stock events</div>
+                </div>
+            </div>
+
+            <!-- Imminent Stockouts Table -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span>🚨 Imminent Stock-Out Risk Alerts (14-Day Horizon)</span>
+                    <span class="tag">Dynamic ROP & Safety Stock Formula</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Title</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Daily Sales Rate</th>
+                                <th>Days of Cover</th>
+                                <th>Action Directive</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockout-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Overstock Table -->
+            <div class="card">
+                <div class="card-title">
+                    <span>📦 Overstock Liquidation Engine (Slow Movers)</span>
+                    <span class="tag">Holding Cost Optimization</span>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Title</th>
+                                <th>Category</th>
+                                <th>Warehouse Units</th>
+                                <th>Velocity</th>
+                                <th>Inventory Health</th>
+                                <th>Recommended Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overstock-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: MANAGEMENT & A/B TESTING -->
+        <section id="tab-management" class="tab-content">
+            <!-- Executive Metrics -->
+            <div class="grid-4" style="margin-bottom: 1.5rem;">
+                <div class="kpi-card">
+                    <div class="kpi-label">Annualized GMV</div>
+                    <div class="kpi-value">Rs. 1.74B</div>
+                    <div class="kpi-sub">37,154 Orders Processed</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Customer Lifetime Value (CLV)</div>
+                    <div class="kpi-value">Rs. 18,338</div>
+                    <div class="kpi-sub">48.5% Repeat Purchase Rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">A/B Conversion Rate Lift</div>
+                    <div class="kpi-value" id="ab-cvr-uplift" style="color: #34d399;">+21.1%</div>
+                    <div class="kpi-sub">p < 0.001 (Statistically Significant)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">A/B Revenue Per Visitor (RPV)</div>
+                    <div class="kpi-value" id="ab-rpv-uplift" style="color: #38bdf8;">+36.4%</div>
+                    <div class="kpi-sub">p < 0.001 (Statistically Significant)</div>
+                </div>
+            </div>
+
+            <!-- A/B Test Verdict Card -->
+            <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
+                <div class="card-title">
+                    <span>🚀 Official A/B Testing Executive Verdict: SHIP TO 100% PRODUCTION</span>
+                    <span class="tag" style="background-color: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700;">APPROVED</span>
+                </div>
+                <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1rem;">
+                    Experiment <b>EXP-2026-REC-001</b> evaluated 50,000 visitors (25,000 Control vs 25,000 Treatment) across two full business cycles (14 days).
+                    The AI Personalised Hybrid Recommender achieved an extraordinary <b>+21.1% Conversion Rate lift</b> and <b>+36.4% Revenue Per Visitor lift</b> ($p < 0.001$) while driving cart abandonment down from 65.0% to 54.0%.
+                </p>
+                <div style="background-color: rgba(15, 23, 42, 0.6); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">Estimated Annual Revenue Uplift (1M Monthly Visitors):</div>
+                        <div style="font-size: 1.4rem; font-weight: 800; color: #38bdf8;">+Rs. 1,152,000,000 PKR (~Rs. 1.15 Billion)</div>
+                    </div>
+                    <span class="tag-alert tag-success" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">100% Rollout Recommended</span>
+                </div>
+            </div>
+
+            <!-- 5 Personas & Category Complaints -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">
+                        <span>👥 Customer Segments (RFM Personas)</span>
+                    </div>
+                    <ul style="list-style: none; font-size: 0.88rem; line-height: 2;">
+                        <li>🌙 <b>Eid & Festive Shoppers:</b> 34.2% of users | High festival surge, Fashion preference</li>
+                        <li>💻 <b>Loyal Tech & Electronics Buyers:</b> 18.5% of users | High AOV, Brand conscious</li>
+                        <li>🛒 <b>Routine Replenishers:</b> 22.1% of users | High frequency, Groceries & Essentials</li>
+                        <li>🏷️ <b>Bargain Hunters:</b> 15.8% of users | Extreme price sensitivity (< Rs. 3,000)</li>
+                        <li>👀 <b>Window Shoppers:</b> 9.4% of users | High browse frequency, Low checkout conversion</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span>🛡️ Review Intelligence: Top Aspect Complaint Drivers</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Primary Complaint</th>
+                                    <th>Complaint %</th>
+                                    <th>Operational Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Fashion</b></td>
+                                    <td>Size / Fit Mismatch</td>
+                                    <td>18.4%</td>
+                                    <td>Enforce standard cm sizing chart</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Electronics</b></td>
+                                    <td>Packaging / Box Transit Damage</td>
+                                    <td>12.1%</td>
+                                    <td>Require double bubble-wrap packaging</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Groceries & Essentials</b></td>
+                                    <td>Courier Transit Delay</td>
+                                    <td>8.5%</td>
+                                    <td>Prioritize local city delivery hubs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        ShopKaro AI Commerce Intelligence Platform • Capstone Delivery • Powered by FastAPI & DuckDB
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+

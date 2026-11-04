@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # 1. ShopKaro Real-Time FastAPI Serving Engine & Dashboard
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shopkaro_serving_api
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DUCKDB_PATH=/app/data/processed/shopkaro.duckdb
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # 2. Redis Caching Layer for Sub-10ms Serving Latency
+  redis:
+    image: redis:7-alpine
+    container_name: shopkaro_redis_cache
+    ports:
+      - "6379:6379"
+    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru --save ""
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  default:
+    name: shopkaro_network
+

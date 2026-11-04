@@ -1,0 +1,18 @@
+# Render Blueprint Specification for ShopKaro AI Platform
+# Allows 1-click cloud deployment on Render (https://render.com)
+services:
+  - type: web
+    name: shopkaro-ai-platform
+    runtime: docker
+    plan: free # Can be upgraded to starter/standard for higher RAM
+    region: oregon # or frankfurt, singapore
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DUCKDB_PATH
+        value: data/processed/shopkaro.duckdb
+      - key: LOG_LEVEL
+        value: info
+
