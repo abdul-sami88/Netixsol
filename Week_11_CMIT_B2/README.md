@@ -87,12 +87,7 @@ AI_E-Commerce_Intelligence_Platform/
 │   ├── stakeholder_presentation.md  # Day 5 10-slide executive slide deck & presentation
 │   ├── model_cards.md               # Day 5 Production model cards (Recommender, Forecaster, Reviews)
 │   ├── user_guides.md               # Day 5 Operational user guides (Marketing, Operations, Management)
-│   └── day5_explanation.md          # Day 5 Technical reference documentation
-├── day1_explanation.md              # Complete Day 1 explanation guide
-├── day2_explanation.md              # Complete Day 2 explanation guide
-├── day3_explanation.md              # Complete Day 3 explanation guide
-├── day4_explanation.md              # Complete Day 4 explanation guide
-├── day5_explanation.md              # Complete Day 5 explanation guide
+│   └── day5_explanation.md          # Day 5 Technical reference 
 ├── main_day1.py                     # Master orchestration script: Day 1
 ├── main_day2.py                     # Master orchestration script: Day 2
 ├── main_day3.py                     # Master orchestration script: Day 3
