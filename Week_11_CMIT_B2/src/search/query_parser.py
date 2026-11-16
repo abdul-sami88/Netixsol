@@ -246,11 +246,11 @@ class QueryUnderstandingEngine:
                 extracted_target = TARGET_MAPPINGS[tok]
                 break
                 
-        # Inferred category
+        # Inferred category (Use word boundary \b to prevent "ac" matching inside "acha" or "tea" inside "steam")
         inferred_category = None
         for cat, kw_list in CATEGORY_KEYWORDS.items():
             for kw in kw_list:
-                if kw in text_lower:
+                if re.search(r'\b' + re.escape(kw) + r'\b', text_lower):
                     inferred_category = cat
                     break
             if inferred_category:
@@ -262,10 +262,11 @@ class QueryUnderstandingEngine:
         # Expanded normalized tokens for search matching (comprehensive conversational & Roman Urdu stopwords)
         FILLER_WORDS = {
             "dikhao", "dikhayein", "dikhaye", "chahiye", "mil", "sakta", "hai", "hain", "kuch", 
-            "mujhe", "humein", "wali", "wale", "wala", "plz", "please", "batao", "batayein", 
-            "koi", "ka", "ki", "ke", "k", "liye", "aur", "mein", "mai", "me", "budget", 
-            "khareedny", "khareedna", "khareedne", "kharidna", "lena", "lene", "chahye", "andar", 
-            "se", "tak", "under", "below", "above", "rs", "pkr", "hazaar", "hazar", "lac", "lakh"
+            "mujhe", "mujhy", "humein", "wali", "wale", "wala", "plz", "please", "batao", "batayein", 
+            "koi", "ka", "ki", "ke", "k", "liye", "aur", "mein", "mai", "me", "budget", "sa", "si", "se",
+            "khareedny", "khareedna", "khareedne", "kharidna", "lena", "lene", "chahye", "andar", "andr",
+            "tak", "under", "below", "above", "rs", "pkr", "hazaar", "hazar", "lac", "lakh", 
+            "recommend", "kro", "karo", "do", "bhi"
         }
         
         expanded_terms = []

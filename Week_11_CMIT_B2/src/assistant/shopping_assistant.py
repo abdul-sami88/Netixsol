@@ -316,9 +316,32 @@ class UrduLishShoppingAssistant:
         if any(w in msg_lower for w in farewell_words):
             return "Aap ka bohot bohot shukriya! ShopKaro par shopping karne ka shukriya. Agar mazeed koi cheez chahiye ho toh zaroor batayein. Have a wonderful day! Allah Hafiz! 😊"
 
-        # 3. Trending & Recommendations Intent
+        # 2b. Off-Topic / General Knowledge / Programming Guardrail
+        non_shopping_cues = [
+            "python", "java", "coding", "syntax", "code", "programming", "algorithm",
+            "what is football", "what is cricket", "who is", "kya hota hai", "kya hoti hai",
+            "meaning of", "explain", "prime minister", "capital of", "weather", "joke", "kahani", "essay", "poem"
+        ]
+        shopping_cues = ["buy", "khareed", "lena", "price", "pkr", "rate", "shop", "order", "product", "item", "sasta", "budget", "deliver", "dastiyab", "stock"]
+        if any(cue in msg_lower for cue in non_shopping_cues) and not any(sc in msg_lower for sc in shopping_cues):
+            return (
+                "Main ShopKaro ka AI Shopping Assistant hoon. Main sirf ShopKaro par shopping karne, "
+                "products dhoondnay, orders track karne aur reviews janchnay mein aap ki madad kar sakta hoon.\n\n"
+                "Main programming ya general knowledge ke sawalaat ka jawab nahi de sakta. "
+                "Agar aap ko Fashion (Lawn, Kurtis, Shoes), Electronics (Smartphones, Earbuds, Laptops), "
+                "Beauty & Attar, Home Decor ya Groceries mein se kuch shopping karni ho toh barah-e-karam zaroor batayein!"
+            )
+
+        # 3. Trending & Recommendations Intent (Only for generic requests without specific product/budget)
         rec_words = ["trending", "recommend", "recommendation", "mashhoor", "bestseller", "popular", "kuch acha", "suggestions", "mashwara"]
-        if any(w in msg_lower for w in rec_words) and not any(k in msg_lower for k in ["order", "cart", "compare", "review"]):
+        product_indicators = [
+            "phone", "smartphone", "mobile", "laptop", "tablet", "earbuds", "headphones", "charger", "watch",
+            "suit", "lawn", "kurti", "kurta", "chiffon", "silk", "shoes", "joota", "khussa", "shawl", "dress",
+            "perfume", "attar", "serum", "cream", "tea", "chai", "dinner set", "comforter", "budget", "under", "tak", "kam", "andr", "andar"
+        ]
+        is_specific_product_request = any(p in msg_lower for p in product_indicators)
+
+        if any(w in msg_lower for w in rec_words) and not is_specific_product_request and not any(k in msg_lower for k in ["order", "cart", "compare", "review"]):
             cur_recs = self.tools.get_recommendations(user_id=user_id, k=3)
             if cur_recs:
                 self.last_shown_products[user_id] = cur_recs
