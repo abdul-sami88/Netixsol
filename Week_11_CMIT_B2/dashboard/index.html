@@ -3,265 +3,586 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopKaro AI Commerce Intelligence Platform</title>
+    <title>ShopKaro — Lahore & Karachi Concept Store</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2222%22 font-size=%2222%22>🛍️</text></svg>">
 </head>
 <body>
-    <!-- Top Header -->
-    <header>
-        <div class="brand">
-            <h1>🛍️ ShopKaro AI Platform</h1>
-            <span class="badge">● PRODUCTION SERVING</span>
-        </div>
-        
-        <div class="user-selector">
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Active Profile:</span>
-            <select id="active-user-select">
-                <option value="USR-00746">Ahmed Mirza (Eid Fashion Shopper - Fashion)</option>
-                <option value="USR-00042">Sadia Farooqi (Loyal Tech Enthusiast - Electronics)</option>
-                <option value="GUEST-COLD-START">New Visitor (Cold-Start Safe Baseline)</option>
-            </select>
+
+    <!-- 1. Editorial Announcement Bar -->
+    <div class="announcement-bar">
+        <span>✨ <b>EID '26 CURATION:</b> Free delivery across Pakistan on orders over PKR 3,000</span>
+        <span class="badge-highlight">Cash on Delivery &amp; JazzCash</span>
+    </div>
+
+    <!-- 2. Sticky Header Navigation -->
+    <header class="site-header" id="site-header">
+        <div class="header-container">
+            <!-- Brand Logo Wordmark -->
+            <a href="#" class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <span class="logo-text">ShopKaro</span>
+                <span class="logo-dot"></span>
+            </a>
+
+            <!-- Editorial Nav Categories -->
+            <ul class="nav-links">
+                <li><a href="#category-ribbon" class="nav-link active">Collections</a></li>
+                <li><a href="#picked-for-you" class="nav-link">For You</a></li>
+                <li><a href="#feature-band" class="nav-link">The Eid Edit</a></li>
+                <li><a href="#catalog-grid" class="nav-link">Trending</a></li>
+            </ul>
+
+            <!-- Search Pill Trigger -->
+            <div class="search-pill" id="search-trigger" onclick="openSearchModal()">
+                <span class="search-icon">🔍</span>
+                <span class="placeholder-text" id="rotating-search-text">Search "eid ke liye lawn suit under 5000"...</span>
+                <span class="search-shortcut">⌘K</span>
+            </div>
+
+            <!-- Actions: Wishlist & Cart -->
+            <div class="header-actions">
+                <button class="action-btn" id="wishlist-btn" onclick="openWishlistModal()">
+                    <span>♡</span>
+                    <span id="wishlist-count" style="font-size: 0.8rem; font-weight: 600;">0</span>
+                </button>
+                <button class="action-btn" id="cart-btn" onclick="toggleCartDrawer()">
+                    <span>🛍️</span>
+                    <span class="cart-counter" id="cart-counter">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <div class="tabs-nav">
-        <button class="tab-btn active" data-tab="tab-customer">
-            <span>🛍️</span> Customer Experience
-        </button>
-        <button class="tab-btn" data-tab="tab-operations">
-            <span>🏭</span> Operations & Inventory
-        </button>
-        <button class="tab-btn" data-tab="tab-management">
-            <span>📊</span> Management & A/B Testing
-        </button>
-    </div>
-
-    <!-- Main Content Area -->
-    <main>
-        <!-- TAB 1: CUSTOMER EXPERIENCE -->
-        <section id="tab-customer" class="tab-content active">
-            <!-- Search Bar -->
-            <div class="card" style="margin-bottom: 1.5rem;">
-                <div class="card-title">
-                    <span>🔍 UrduLish & Multilingual Hybrid Search</span>
-                    <span class="tag" id="search-count">Try searching in English, Urdu or Roman Urdu</span>
+    <!-- 3. Hero Section (Art-Directed Stage & 3D Tilt) -->
+    <section class="hero-section">
+        <div class="hero-backdrop-glow"></div>
+        <div class="hero-grid">
+            <!-- Left Typography -->
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span class="tag-dot"></span>
+                    <span>Lahore &amp; Karachi Curated · Festive Edit '26</span>
                 </div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="e.g. 'eid ke liye lawn suit under 5000' or 'laptop for coding under 1.5 lac'...">
-                    <button id="search-btn">Search Catalog</button>
-                </div>
-                <div id="search-results-grid" class="product-grid"></div>
-            </div>
-
-            <!-- Two-Column Layout: Recommendations & Assistant -->
-            <div class="grid-2">
-                <!-- Left: Personalized Homepage Feed -->
-                <div class="card">
-                    <div class="card-title">
-                        <span>✨ Recommended for You</span>
-                        <span class="tag" id="recs-latency" style="font-weight: 700;">Fetching latency...</span>
-                    </div>
-                    <div id="recs-grid" class="product-grid" style="grid-template-columns: 1fr 1fr;"></div>
-                </div>
-
-                <!-- Right: UrduLish AI Shopping Assistant -->
-                <div class="card">
-                    <div class="card-title">
-                        <span>🤖 ShopKaro AI Shopping Assistant</span>
-                        <span class="tag">Zero-Hallucination Grounded</span>
-                    </div>
-                    <div class="chat-container">
-                        <div id="chat-messages" class="chat-messages">
-                            <div class="chat-bubble assistant">Assalam-o-Alaikum! Main ShopKaro ka AI assistant hoon. Main aap ke budget ke mutabiq shopping, orders track karne, aur reviews batane mein madad kar sakta hoon!</div>
-                        </div>
-                        <div class="chat-input-bar">
-                            <input type="text" id="chat-input" placeholder="e.g. 'Ammi ke liye Eid gift chahiye 3000 tak'...">
-                            <button id="chat-send-btn">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 2: OPERATIONS & INVENTORY -->
-        <section id="tab-operations" class="tab-content">
-            <!-- Top Alert Summary -->
-            <div class="grid-3" style="margin-bottom: 1.5rem;">
-                <div class="kpi-card" style="border-left: 4px solid var(--danger);">
-                    <div class="kpi-label">Stock-Out Risk SKUs (Next 14 Days)</div>
-                    <div class="kpi-value" style="color: #f87171;">3,847 SKUs</div>
-                    <div class="kpi-sub" style="color: var(--danger);">Requires immediate supplier re-order</div>
-                </div>
-                <div class="kpi-card" style="border-left: 4px solid var(--warning);">
-                    <div class="kpi-label">Overstocked Dead Capital SKUs</div>
-                    <div class="kpi-value" style="color: #fbbf24;">40,266 SKUs</div>
-                    <div class="kpi-sub" style="color: var(--warning);">Liquidate via tiered promotional markdown</div>
-                </div>
-                <div class="kpi-card" style="border-left: 4px solid var(--success);">
-                    <div class="kpi-label">Protected GMV (Stock-Out Prevention)</div>
-                    <div class="kpi-value" style="color: #34d399;">Rs. 131.3M</div>
-                    <div class="kpi-sub">85% fewer out-of-stock events</div>
-                </div>
-            </div>
-
-            <!-- Imminent Stockouts Table -->
-            <div class="card" style="margin-bottom: 1.5rem;">
-                <div class="card-title">
-                    <span>🚨 Imminent Stock-Out Risk Alerts (14-Day Horizon)</span>
-                    <span class="tag">Dynamic ROP & Safety Stock Formula</span>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product ID</th>
-                                <th>Product Title</th>
-                                <th>Category</th>
-                                <th>Current Stock</th>
-                                <th>Daily Sales Rate</th>
-                                <th>Days of Cover</th>
-                                <th>Action Directive</th>
-                            </tr>
-                        </thead>
-                        <tbody id="stockout-tbody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Overstock Table -->
-            <div class="card">
-                <div class="card-title">
-                    <span>📦 Overstock Liquidation Engine (Slow Movers)</span>
-                    <span class="tag">Holding Cost Optimization</span>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product ID</th>
-                                <th>Product Title</th>
-                                <th>Category</th>
-                                <th>Warehouse Units</th>
-                                <th>Velocity</th>
-                                <th>Inventory Health</th>
-                                <th>Recommended Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="overstock-tbody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 3: MANAGEMENT & A/B TESTING -->
-        <section id="tab-management" class="tab-content">
-            <!-- Executive Metrics -->
-            <div class="grid-4" style="margin-bottom: 1.5rem;">
-                <div class="kpi-card">
-                    <div class="kpi-label">Annualized GMV</div>
-                    <div class="kpi-value">Rs. 1.74B</div>
-                    <div class="kpi-sub">37,154 Orders Processed</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Customer Lifetime Value (CLV)</div>
-                    <div class="kpi-value">Rs. 18,338</div>
-                    <div class="kpi-sub">48.5% Repeat Purchase Rate</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">A/B Conversion Rate Lift</div>
-                    <div class="kpi-value" id="ab-cvr-uplift" style="color: #34d399;">+21.1%</div>
-                    <div class="kpi-sub">p < 0.001 (Statistically Significant)</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">A/B Revenue Per Visitor (RPV)</div>
-                    <div class="kpi-value" id="ab-rpv-uplift" style="color: #38bdf8;">+36.4%</div>
-                    <div class="kpi-sub">p < 0.001 (Statistically Significant)</div>
-                </div>
-            </div>
-
-            <!-- A/B Test Verdict Card -->
-            <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
-                <div class="card-title">
-                    <span>🚀 Official A/B Testing Executive Verdict: SHIP TO 100% PRODUCTION</span>
-                    <span class="tag" style="background-color: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700;">APPROVED</span>
-                </div>
-                <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1rem;">
-                    Experiment <b>EXP-2026-REC-001</b> evaluated 50,000 visitors (25,000 Control vs 25,000 Treatment) across two full business cycles (14 days).
-                    The AI Personalised Hybrid Recommender achieved an extraordinary <b>+21.1% Conversion Rate lift</b> and <b>+36.4% Revenue Per Visitor lift</b> ($p < 0.001$) while driving cart abandonment down from 65.0% to 54.0%.
+                <h1 class="hero-headline">
+                    Everything you love, <span class="hand-drawn-word">found</span> before you search.
+                </h1>
+                <p class="hero-subhead">
+                    A boutique marketplace shaped around your individual style, festive traditions, and everyday life in Pakistan. Hand-embroidered apparel, studio audio, and artisanal living.
                 </p>
-                <div style="background-color: rgba(15, 23, 42, 0.6); padding: 1rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">Estimated Annual Revenue Uplift (1M Monthly Visitors):</div>
-                        <div style="font-size: 1.4rem; font-weight: 800; color: #38bdf8;">+Rs. 1,152,000,000 PKR (~Rs. 1.15 Billion)</div>
-                    </div>
-                    <span class="tag-alert tag-success" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">100% Rollout Recommended</span>
+                <div class="hero-cta-group">
+                    <a href="#picked-for-you" class="btn-primary">
+                        <span>Explore Your Edit</span>
+                        <span>→</span>
+                    </a>
+                    <a href="#catalog-grid" class="btn-secondary">
+                        <span>Browse Collections</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- 5 Personas & Category Complaints -->
-            <div class="grid-2">
-                <div class="card">
-                    <div class="card-title">
-                        <span>👥 Customer Segments (RFM Personas)</span>
+            <!-- Right Showcase Stage -->
+            <div class="hero-stage">
+                <div class="hero-stage-card" id="hero-interactive-card">
+                    <div class="curator-stamp">
+                        <span>Hand</span>
+                        <span>Picked</span>
+                        <span>★ 2026</span>
                     </div>
-                    <ul style="list-style: none; font-size: 0.88rem; line-height: 2;">
-                        <li>🌙 <b>Eid & Festive Shoppers:</b> 34.2% of users | High festival surge, Fashion preference</li>
-                        <li>💻 <b>Loyal Tech & Electronics Buyers:</b> 18.5% of users | High AOV, Brand conscious</li>
-                        <li>🛒 <b>Routine Replenishers:</b> 22.1% of users | High frequency, Groceries & Essentials</li>
-                        <li>🏷️ <b>Bargain Hunters:</b> 15.8% of users | Extreme price sensitivity (< Rs. 3,000)</li>
-                        <li>👀 <b>Window Shoppers:</b> 9.4% of users | High browse frequency, Low checkout conversion</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">
-                        <span>🛡️ Review Intelligence: Top Aspect Complaint Drivers</span>
+                    <div class="orbit-badge orbit-1">
+                        <span>🌸</span>
+                        <span>Pure Silk Chiffon</span>
                     </div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Primary Complaint</th>
-                                    <th>Complaint %</th>
-                                    <th>Operational Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>Fashion</b></td>
-                                    <td>Size / Fit Mismatch</td>
-                                    <td>18.4%</td>
-                                    <td>Enforce standard cm sizing chart</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Electronics</b></td>
-                                    <td>Packaging / Box Transit Damage</td>
-                                    <td>12.1%</td>
-                                    <td>Require double bubble-wrap packaging</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Groceries & Essentials</b></td>
-                                    <td>Courier Transit Delay</td>
-                                    <td>8.5%</td>
-                                    <td>Prioritize local city delivery hubs</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="orbit-badge orbit-2">
+                        <span>⚡</span>
+                        <span>Next-Day Lahore &amp; Khi</span>
+                    </div>
+                    <div class="stage-image-wrap">
+                        <img id="hero-stage-img" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80" alt="Sapphire Festive Chiffon">
+                    </div>
+                    <div class="stage-details">
+                        <div>
+                            <div class="stage-title">Sapphire Festive Formal Chiffon</div>
+                            <div class="stage-sub">Hand-Finished Embroidered Lawn · 3-Piece</div>
+                        </div>
+                        <div class="stage-price">PKR 1,599</div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        ShopKaro AI Commerce Intelligence Platform • Capstone Delivery • Powered by FastAPI & DuckDB
+    <!-- 4. Category Ribbon (Tactile Scroll Tiles) -->
+    <section class="category-ribbon-section" id="category-ribbon">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Curated <em>Departments</em></h2>
+                <p class="section-sub">Carefully sourced collections from Pakistan's most trusted artisan houses and brands</p>
+            </div>
+        </div>
+        <div class="ribbon-scroll-container">
+            <div class="category-tile" onclick="filterCatalog('Fashion')">
+                <div class="tile-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" alt="Festive & Lawn">
+                </div>
+                <div>
+                    <div class="tile-title">Festive &amp; Lawn</div>
+                    <div class="tile-count">Khaadi, Sapphire, Bareeze</div>
+                </div>
+            </div>
+
+            <div class="category-tile" onclick="filterCatalog('Electronics')">
+                <div class="tile-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Audio & Electronics">
+                </div>
+                <div>
+                    <div class="tile-title">Audio &amp; Electronics</div>
+                    <div class="tile-count">Xiaomi, Infinix, Studio Sound</div>
+                </div>
+            </div>
+
+            <div class="category-tile" onclick="filterCatalog('Beauty & Personal Care')">
+                <div class="tile-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1608248597359-0050854497e0?auto=format&fit=crop&w=600&q=80" alt="Beauty & Fragrance">
+                </div>
+                <div>
+                    <div class="tile-title">Beauty &amp; Attar</div>
+                    <div class="tile-count">Hemani, Pure Rose Water, Oils</div>
+                </div>
+            </div>
+
+            <div class="category-tile" onclick="filterCatalog('Home & Living')">
+                <div class="tile-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=600&q=80" alt="Home & Living">
+                </div>
+                <div>
+                    <div class="tile-title">Artisan Living</div>
+                    <div class="tile-count">Dinnerware, Habitt, Soft Linen</div>
+                </div>
+            </div>
+
+            <div class="category-tile" onclick="filterCatalog('Groceries & Essentials')">
+                <div class="tile-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80" alt="Gourmet Pantry">
+                </div>
+                <div>
+                    <div class="tile-title">Gourmet Pantry</div>
+                    <div class="tile-count">Tapal Tea, Shan Foods, Honey</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. "Picked for You" Personalized Section (Humanized AI Rail) -->
+    <section class="personalized-section" id="picked-for-you">
+        <div class="personalization-banner">
+            <div class="banner-text">
+                <span class="sparkle-icon">✨</span>
+                <span><b>Shaped Around You:</b> Recommendations dynamically adapted from your browsing and taste profile.</span>
+            </div>
+            <div class="persona-active-badge" id="active-persona-label">
+                Profile: Ahmed Mirza (Eid Fashion Shopper)
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Picked <em>for you</em></h2>
+                <p class="section-sub">Ranked in real time based on your style affinities and session clicks</p>
+            </div>
+        </div>
+
+        <!-- Personalized Items Grid -->
+        <div class="editorial-grid" id="personalized-grid">
+            <!-- Dynamically injected cards -->
+        </div>
+    </section>
+
+    <!-- 6. Editorial Feature Band (Dark Forest Section) -->
+    <section class="editorial-feature-band" id="feature-band">
+        <div class="feature-band-container">
+            <div class="feature-band-content">
+                <h2>Crafted for comfort, cut for <em>celebration.</em></h2>
+                <p>
+                    From delicate organza borders to breathable jacquard weave, our festive drops bring together heritage craftsmanship and effortless modern silhouettes.
+                </p>
+                <button class="btn-primary" onclick="filterCatalog('Fashion')">
+                    <span>Shop The Festive Drop</span>
+                    <span>→</span>
+                </button>
+            </div>
+            <div class="feature-band-images">
+                <div class="feature-img-card" style="aspect-ratio: 4/5;">
+                    <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80" alt="Embroidered Gold Silk">
+                </div>
+                <div class="feature-img-card" style="aspect-ratio: 1/1; transform: translateY(20px);">
+                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=80" alt="Handcrafted Khussa Footwear">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Full Trending & Catalog Grid (Asymmetric Rhythm) -->
+    <section class="product-grid-section" id="catalog-grid">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Trending <em>Now</em></h2>
+                <p class="section-sub">Discover bestselling pieces across all ShopKaro departments</p>
+            </div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="catalog-filter-bar">
+            <button class="filter-chip active" data-category="ALL" onclick="filterCatalog('ALL', this)">All Collections</button>
+            <button class="filter-chip" data-category="Fashion" onclick="filterCatalog('Fashion', this)">Festive &amp; Lawn</button>
+            <button class="filter-chip" data-category="Electronics" onclick="filterCatalog('Electronics', this)">Audio &amp; Gadgets</button>
+            <button class="filter-chip" data-category="Beauty & Personal Care" onclick="filterCatalog('Beauty & Personal Care', this)">Beauty &amp; Attar</button>
+            <button class="filter-chip" data-category="Home & Living" onclick="filterCatalog('Home & Living', this)">Artisan Home</button>
+            <button class="filter-chip" data-category="Groceries & Essentials" onclick="filterCatalog('Groceries & Essentials', this)">Gourmet Pantry</button>
+        </div>
+
+        <!-- Product Grid with 2-Column Featured Moment -->
+        <div class="editorial-grid" id="main-catalog-grid">
+            <!-- Dynamically populated -->
+        </div>
+    </section>
+
+    <!-- 8. Footer (Forest Theme with Generous Layout) -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <span class="logo-text">ShopKaro</span>
+                    <span class="logo-dot"></span>
+                </div>
+                <p>A human-first Pakistani lifestyle marketplace combining thoughtful curation with intelligent personalization.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Departments</h5>
+                <ul>
+                    <li><a href="#category-ribbon" onclick="filterCatalog('Fashion')">Festive &amp; Lawn Wear</a></li>
+                    <li><a href="#category-ribbon" onclick="filterCatalog('Electronics')">Audio &amp; High-Fi Tech</a></li>
+                    <li><a href="#category-ribbon" onclick="filterCatalog('Beauty & Personal Care')">Botanical &amp; Fragrance</a></li>
+                    <li><a href="#category-ribbon" onclick="filterCatalog('Home & Living')">Handcrafted Home</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Customer Care</h5>
+                <ul>
+                    <li><a href="javascript:void(0)" onclick="openConciergeWithPrompt('Mera order kahan pohancha hai?')">Track Active Order</a></li>
+                    <li><a href="javascript:void(0)" onclick="openConciergeWithPrompt('Delivery policy kya hai?')">Delivery &amp; COD Policy</a></li>
+                    <li><a href="javascript:void(0)" onclick="openConciergeWithPrompt('Return policy')">Exchange &amp; Returns</a></li>
+                    <li><a href="javascript:void(0)" onclick="openConcierge()">Ask AI Concierge</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Payment &amp; Trust</h5>
+                <ul>
+                    <li>✓ Cash on Delivery (COD)</li>
+                    <li>✓ JazzCash &amp; Easypaisa</li>
+                    <li>✓ Visa &amp; Mastercard Secure</li>
+                    <li>✓ 100% Genuine Brands Verified</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 ShopKaro Marketplace Inc. Built with love in Lahore, Karachi &amp; Islamabad.</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem;">Press ⌘K or click Studio for Platform Metrics</span>
+        </div>
     </footer>
 
+    <!-- =======================================================================
+         INTERACTIVE OVERLAYS & MODALS
+         ======================================================================= -->
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-drawer-overlay" onclick="toggleCartDrawer()"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Bag (<span id="drawer-item-count">0</span>)</h3>
+            <button class="close-drawer-btn" onclick="toggleCartDrawer()">✕</button>
+        </div>
+
+        <!-- Free Delivery Progress Tracker -->
+        <div class="free-delivery-tracker">
+            <div class="delivery-text" id="free-delivery-text">
+                <span>Add PKR 3,000 for Free Express Delivery</span>
+                <span id="delivery-pct-label">0%</span>
+            </div>
+            <div class="delivery-progress-bar">
+                <div class="delivery-progress-fill" id="delivery-progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Cart Items List -->
+        <div class="cart-items-list" id="cart-items-container">
+            <!-- Populated via JS -->
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="cart-footer">
+            <div class="cart-summary-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">PKR 0</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Shipping</span>
+                <span id="cart-shipping">PKR 250</span>
+            </div>
+            <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cart-total" style="color: var(--terracotta);">PKR 0</span>
+            </div>
+            <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="openCheckoutModal()">
+                <span>Proceed to Checkout</span>
+                <span>→</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Product Detail / Quick View Modal -->
+    <div class="studio-modal-overlay" id="quickview-overlay" onclick="closeQuickView(event)">
+        <div class="studio-modal" style="max-width: 780px;" onclick="event.stopPropagation()">
+            <div class="studio-header">
+                <div>
+                    <span class="card-brand" id="qv-brand">Sapphire</span>
+                    <h3 id="qv-title" style="font-size: 1.4rem; margin-top: 0.3rem;">Product Name</h3>
+                </div>
+                <button class="close-drawer-btn" onclick="closeQuickView()">✕</button>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; background: var(--sand-light);">
+                    <img id="qv-img" src="" alt="Product" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-price" id="qv-price" style="font-size: 1.6rem; color: var(--terracotta); margin-bottom: 0.5rem;">PKR 0</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                            <span style="color: var(--saffron);">★★★★★</span>
+                            <span id="qv-rating" style="font-size: 0.85rem; font-weight: 600;">4.8 (Verified Reviews)</span>
+                        </div>
+                        <p id="qv-desc" style="font-size: 0.9rem; line-height: 1.5; color: var(--ink-soft); margin-bottom: 1.5rem;">
+                            Crafted with premium materials and designed for everyday elegance.
+                        </p>
+                        
+                        <!-- Real Aspect Sentiment Summary (From Day 4) -->
+                        <div style="background: var(--sand-light); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--forest); margin-bottom: 0.4rem;">
+                                💬 Customer Sentiment Breakdown
+                            </div>
+                            <div style="font-size: 0.8125rem; color: var(--ink-soft); line-height: 1.45;" id="qv-reviews-summary">
+                                Loading aspect sentiment intelligence...
+                            </div>
+                        </div>
+
+                        <!-- Frequently Bought Together Section -->
+                        <div id="qv-fbt-container" style="background: var(--paper); border: 1px dashed var(--sand); padding: 0.85rem; border-radius: 12px; display: none;">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--terracotta); margin-bottom: 0.35rem;">
+                                🎁 Frequently Bought Together
+                            </div>
+                            <div id="qv-fbt-text" style="font-size: 0.8125rem; color: var(--ink-soft); margin-bottom: 0.5rem;"></div>
+                            <button id="qv-fbt-btn" class="filter-chip" style="font-size: 0.75rem; padding: 0.35rem 0.85rem; background: var(--terracotta); color: white;">
+                                Add Bundle to Bag
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn-primary" id="qv-add-btn" style="width: 100%; justify-content: center;">
+                            <span>Add to Bag</span>
+                            <span>•</span>
+                            <span id="qv-btn-price">PKR 0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Overlay Modal (UrduLish Command Palette) -->
+    <div class="studio-modal-overlay" id="search-modal-overlay" onclick="closeSearchModal(event)">
+        <div class="studio-modal" style="max-width: 680px;" onclick="event.stopPropagation()">
+            <div style="display: flex; align-items: center; gap: 0.75rem; border-bottom: 1.5px solid var(--sand); padding-bottom: 1rem;">
+                <span style="font-size: 1.25rem;">🔍</span>
+                <input type="text" id="modal-search-input" placeholder="Search by product, Urdu or Roman Urdu (e.g. 'lawn suit under 5000')..." style="flex:1; border:none; outline:none; font-size:1.1rem; font-family:inherit; background:transparent;">
+                <button class="close-drawer-btn" onclick="closeSearchModal()">✕</button>
+            </div>
+            
+            <div style="margin-top: 1.25rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.75rem;">
+                    Popular UrduLish Searches
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <button class="filter-chip" onclick="executeModalSearch('eid ke liye lawn suit under 5000')">eid ke liye lawn suit under 5000</button>
+                    <button class="filter-chip" onclick="executeModalSearch('shoes under 3000')">shoes under 3000</button>
+                    <button class="filter-chip" onclick="executeModalSearch('laptop')">laptop for coding</button>
+                    <button class="filter-chip" onclick="executeModalSearch('rose water')">rose water facial mist</button>
+                    <button class="filter-chip" onclick="executeModalSearch('tapal tea')">danedar chai</button>
+                </div>
+
+                <div id="modal-search-results" class="editorial-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Live Search Hits -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3-Step Checkout Modal -->
+    <div class="studio-modal-overlay" id="checkout-modal-overlay" onclick="closeCheckoutModal(event)">
+        <div class="studio-modal" style="max-width: 560px;" onclick="event.stopPropagation()">
+            <div class="studio-header">
+                <h3 style="font-family: var(--font-serif); font-size: 1.35rem;">Complete Your Order</h3>
+                <button class="close-drawer-btn" onclick="closeCheckoutModal()">✕</button>
+            </div>
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 0.35rem;">Full Name</label>
+                        <input type="text" required placeholder="e.g. Ahmed Mirza" style="width:100%; padding:0.75rem; border:1px solid var(--sand); border-radius:8px; font-family:inherit;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 0.35rem;">Mobile Number (For Courier SMS Tracking)</label>
+                        <input type="tel" required placeholder="0300-1234567" style="width:100%; padding:0.75rem; border:1px solid var(--sand); border-radius:8px; font-family:inherit;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 0.35rem;">Shipping Address &amp; City</label>
+                        <textarea required rows="2" placeholder="House #, Street, Area, Lahore / Karachi / Islamabad" style="width:100%; padding:0.75rem; border:1px solid var(--sand); border-radius:8px; font-family:inherit;"></textarea>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 0.35rem;">Payment Method</label>
+                        <select style="width:100%; padding:0.75rem; border:1px solid var(--sand); border-radius:8px; font-family:inherit; background:var(--paper);">
+                            <option>Cash on Delivery (Pay when courier arrives)</option>
+                            <option>JazzCash Direct Wallet</option>
+                            <option>Easypaisa Direct Wallet</option>
+                            <option>Credit / Debit Card (Visa / Mastercard)</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="background: var(--sand-light); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                    <span style="font-weight: 600;">Total Payable:</span>
+                    <span id="checkout-total-payable" style="font-family: var(--font-serif); font-weight: 700; color: var(--terracotta);">PKR 0</span>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                    Confirm &amp; Place Order (COD)
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating UrduLish AI Shopping Concierge -->
+    <button class="concierge-trigger" id="concierge-trigger" onclick="toggleConciergeChat()">
+        <span>💬</span>
+        <span>Need Advice? Ask Concierge</span>
+    </button>
+
+    <div class="concierge-chat-modal" id="concierge-chat-modal">
+        <div class="concierge-header">
+            <div>
+                <h3>ShopKaro Concierge</h3>
+                <span style="font-size: 0.72rem; color: #C3D0C8;">UrduLish Grounded Shopping Assistant</span>
+            </div>
+            <button class="close-drawer-btn" style="color: var(--bone);" onclick="toggleConciergeChat()">✕</button>
+        </div>
+        <div class="concierge-messages" id="concierge-messages">
+            <div class="concierge-bubble assistant">
+                Assalam-o-Alaikum! Main ShopKaro ka AI Concierge hoon. Main aap ko gifts dhoondnay, reviews janchnay aur orders track karnay mein madad de sakta hoon!
+            </div>
+        </div>
+        <div class="concierge-input-bar">
+            <input type="text" id="concierge-input" placeholder="e.g. 'Ammi ke liye Eid gift 3000 tak'...">
+            <button class="btn-primary" id="concierge-send-btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Send</button>
+        </div>
+    </div>
+
+    <!-- Hidden Studio / Platform Insights Drawer (For Judges & Devs) -->
+    <button class="studio-trigger-pill" id="studio-trigger-btn" onclick="toggleStudioModal()">
+        <span>⚙️</span>
+        <span>Studio Insights</span>
+        <span style="opacity: 0.6; font-size: 0.7rem;">(⌘K)</span>
+    </button>
+
+    <div class="studio-modal-overlay" id="studio-modal-overlay" onclick="closeStudioModal(event)">
+        <div class="studio-modal" onclick="event.stopPropagation()">
+            <div class="studio-header">
+                <div>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.5rem;">ShopKaro Intelligence Studio</h3>
+                    <p style="font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.2rem;">Backstage Model Cards, Latency Gauges &amp; Persona Switcher</p>
+                </div>
+                <button class="close-drawer-btn" onclick="toggleStudioModal()">✕</button>
+            </div>
+
+            <!-- Persona Switcher -->
+            <div style="background: var(--rose-clay-light); border: 1px solid var(--rose-clay); padding: 1.25rem; border-radius: 14px; margin-bottom: 2rem;">
+                <label style="font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; color: var(--terracotta); display: block; margin-bottom: 0.5rem;">
+                    👤 "Shop As" Persona Switcher (Live Re-ranking)
+                </label>
+                <select id="persona-select" onchange="handlePersonaChange(this.value)" style="width: 100%; padding: 0.75rem; border: 1px solid var(--sand); border-radius: 8px; font-family: inherit; background: var(--paper); font-weight: 600;">
+                    <option value="USR-00746">Ahmed Mirza — Eid Fashion Shopper (Prefers Kurtas, Lawn & Footwear)</option>
+                    <option value="USR-00042">Sadia Farooqi — Tech & Audio Enthusiast (Prefers Headphones & Gadgets)</option>
+                    <option value="GUEST-COLD-START">New Shopper — Cold-Start Safe Baseline (Popularity & Diversity Filter)</option>
+                </select>
+                <div style="font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.5rem;">
+                    Switching persona re-queries <code>/recommendations/{user_id}</code> and re-ranks the storefront instantly.
+                </div>
+            </div>
+
+            <!-- Live Serving Latency & Cache Stats -->
+            <div class="studio-grid-2">
+                <div class="studio-card">
+                    <h4>⚡ Recommendation Serving Latency</h4>
+                    <div style="font-size: 2.2rem; font-family: var(--font-serif); font-weight: 700; color: var(--forest);" id="studio-latency">
+                        18 ms
+                    </div>
+                    <div style="font-size: 0.8125rem; color: var(--sage); font-weight: 600; margin-top: 0.35rem;">
+                        Target: &lt; 100 ms (Passed with 82% margin)
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.5rem;">
+                        Served via In-Memory LRU + In-Session Click Stream Invalidation
+                    </div>
+                </div>
+
+                <div class="studio-card">
+                    <h4>📊 A/B Experiment Impact (Day 5 Capstone)</h4>
+                    <div style="font-size: 2.2rem; font-family: var(--font-serif); font-weight: 700; color: var(--terracotta);">
+                        +21.1% CVR Lift
+                    </div>
+                    <div style="font-size: 0.8125rem; color: var(--terracotta-deep); font-weight: 600; margin-top: 0.35rem;">
+                        +36.4% Revenue Per Visitor (p &lt; 0.001)
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.5rem;">
+                        Evaluated on 50,000 simulated Pakistani shoppers
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operations & Inventory Radar -->
+            <div class="studio-card" style="margin-bottom: 2rem;">
+                <h4>🏭 Operations &amp; Inventory Signals</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--ink-muted);">Stock-out Risk Alert (Next 14 Days):</span>
+                        <div style="font-weight: 700; color: #DC2626; font-size: 1.1rem;">3,847 SKUs Imminent</div>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.75rem; color: var(--ink-muted);">Overstock Liquidation Candidate:</span>
+                        <div style="font-weight: 700; color: #D97706; font-size: 1.1rem;">40,266 SKUs (Markdown Rec)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keyboard Navigation Cheatsheet -->
+            <div class="studio-card">
+                <h4>⌨️ Power User Keyboard Shortcuts</h4>
+                <div style="display: flex; gap: 1.5rem; font-size: 0.8125rem; font-family: var(--font-mono); color: var(--ink-soft); margin-top: 0.5rem;">
+                    <span><b>j / k</b> : Navigate cards</span>
+                    <span><b>x</b> : Quick add to bag</span>
+                    <span><b>⌘K</b> : Studio Insights</span>
+                    <span><b>Esc</b> : Close any modal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="/static/app.js"></script>
 </body>
 </html>
-

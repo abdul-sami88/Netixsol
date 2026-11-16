@@ -1,0 +1,11 @@
+.venv/
+venv/
+.git/
+.gitignore
+__pycache__/
+*.pyc
+data/raw/
+*.csv
+.pytest_cache/
+.coverage
+

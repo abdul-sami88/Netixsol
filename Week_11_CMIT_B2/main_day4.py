@@ -18,7 +18,7 @@ import shutil
 import duckdb
 import pandas as pd
 
-if hasattr(sys.stdout, "reconfigure"):
+if hasattr(sys.stdout, "reconfigure"): 
     sys.stdout.reconfigure(encoding="utf-8")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

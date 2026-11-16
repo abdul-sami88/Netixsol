@@ -28,3 +28,8 @@ desktop.ini
 .env
 !.env.example
 
+# Large raw datasets (raw CSVs over 100MB GitHub limit)
+data/raw/
+*.csv
+
+
