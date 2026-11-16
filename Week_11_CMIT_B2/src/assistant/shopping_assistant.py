@@ -420,12 +420,16 @@ class UrduLishShoppingAssistant:
             top_k=3
         )
         
-        # If strict search was empty and category had been inferred, try relaxing category filter
+        # If strict search was empty and category had been inferred, try searching core category keywords within SAME category
         if not search_hits and cat:
+            from src.search.query_parser import CATEGORY_KEYWORDS
+            cat_kws = [kw for kw in CATEGORY_KEYWORDS.get(cat, []) if kw in user_message.lower()]
+            kw_query = " ".join(cat_kws) if cat_kws else parsed["clean_query"]
             search_hits = self.tools.search_products(
-                query=parsed["clean_query"],
+                query=kw_query,
                 min_price=min_p,
                 max_price=max_p,
+                category=cat,
                 top_k=3
             )
             

@@ -183,10 +183,10 @@ class QueryUnderstandingEngine:
             max_price = self._convert_value_unit(float(val2), unit2 or unit1)
             return min_price, max_price
 
-        # 2. Look for max price: under X / below X / X tak / X se kam / max X
+        # 2. Look for max price: under X / below X / X tak / X se kam / max X / X ke andar
         max_match = re.search(r'(?:under|below|less than|max|maximum|upto|up to)\s*(?:rs\.?|pkr)?\s*(\d+(?:\.\d+)?)\s*(k|hazaar|hazar|lac|lakh)?', text_lower)
         if not max_match:
-            max_match = re.search(r'(\d+(?:\.\d+)?)\s*(k|hazaar|hazar|lac|lakh)?\s*(?:tak|se kam|budget|maximum|andar)', text_lower)
+            max_match = re.search(r'(\d+(?:\.\d+)?)\s*(k|hazaar|hazar|lac|lakh)?\s*(?:ke\s+|k\s+)?(?:tak|se kam|budget|maximum|andar)', text_lower)
             
         if max_match:
             val, unit = max_match.groups()
@@ -208,13 +208,16 @@ class QueryUnderstandingEngine:
     def _convert_value_unit(self, val: float, unit: Optional[str]) -> float:
         """Converts colloquial unit multipliers into PKR."""
         if not unit:
-            if val < 500: # E.g. "under 50k" or "under 50" (assuming lac if < 10?)
-                pass
             return val
         unit = unit.lower()
         if unit in ["k"]:
+            # If val is already in hundreds/thousands (e.g. 1000, 5000), 'k' is the Roman Urdu preposition 'ke' (of), NOT 1,000!
+            if val >= 500:
+                return val
             return val * 1_000
         elif unit in ["hazaar", "hazar", "thousand"]:
+            if val >= 500:
+                return val
             return val * 1_000
         elif unit in ["lac", "lakh"]:
             return val * 100_000
@@ -253,23 +256,36 @@ class QueryUnderstandingEngine:
             if inferred_category:
                 break
                 
-        # Expanded normalized tokens for search matching
-        FILLER_WORDS = {"dikhao", "dikhayein", "dikhaye", "chahiye", "mil", "sakta", "hai", "kuch", "mujhe", "humein", "wali", "wale", "wala", "plz", "please", "batao", "batayein", "koi", "ka", "ki", "ke", "liye", "aur", "mein"}
+        # Price extraction first so numeric constraints don't pollute lexical query
+        min_p, max_p = self.parse_price(text)
+
+        # Expanded normalized tokens for search matching (comprehensive conversational & Roman Urdu stopwords)
+        FILLER_WORDS = {
+            "dikhao", "dikhayein", "dikhaye", "chahiye", "mil", "sakta", "hai", "hain", "kuch", 
+            "mujhe", "humein", "wali", "wale", "wala", "plz", "please", "batao", "batayein", 
+            "koi", "ka", "ki", "ke", "k", "liye", "aur", "mein", "mai", "me", "budget", 
+            "khareedny", "khareedna", "khareedne", "kharidna", "lena", "lene", "chahye", "andar", 
+            "se", "tak", "under", "below", "above", "rs", "pkr", "hazaar", "hazar", "lac", "lakh"
+        }
         
         expanded_terms = []
         for tok in tokens:
+            # If token is numeric (price/budget), do not pollute product lexical query
+            if tok.isdigit():
+                val = float(tok)
+                if (max_p and val == max_p) or (min_p and val == min_p) or val >= 100:
+                    continue
             if tok in ROMAN_URDU_SYNONYMS:
                 expanded_terms.append(ROMAN_URDU_SYNONYMS[tok])
             elif tok not in FILLER_WORDS:
                 expanded_terms.append(tok)
                 
         if not expanded_terms:
-            expanded_terms = [ROMAN_URDU_SYNONYMS.get(t, t) for t in tokens]
+            expanded_terms = [ROMAN_URDU_SYNONYMS.get(t, t) for t in tokens if not t.isdigit()]
             
-        clean_search_query = " ".join(expanded_terms)
-        
-        # Price extraction
-        min_p, max_p = self.parse_price(text)
+        clean_search_query = " ".join(expanded_terms).strip()
+        if not clean_search_query:
+            clean_search_query = text
         
         return {
             "original_query": text,
