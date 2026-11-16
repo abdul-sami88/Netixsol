@@ -293,8 +293,15 @@ class UrduLishShoppingAssistant:
     def chat(self, user_message: str, user_id: str = "USR-00010") -> str:
         """
         Parses intent, queries grounded tools, and generates natural Roman Urdu response.
-        Guarantees zero-hallucination of product data.
+        Guarantees zero-hallucination of product data and evaluates defensive guardrails.
         """
+        # Execute Defense Guardrails Engine (Injection, PII, Toxicity, Competitors, Off-topic)
+        from src.assistant.guardrails import global_guardrails
+        is_safe, sanitized_text, policy_violation = global_guardrails.check_query(user_message)
+        if not is_safe:
+            return policy_violation
+        user_message = sanitized_text
+
         msg_lower = user_message.lower().strip()
         
         # 1. Greetings, Introductions & Capabilities
