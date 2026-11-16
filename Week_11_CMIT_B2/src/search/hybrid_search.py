@@ -50,17 +50,18 @@ class HybridSearchEngine:
         self.bm25 = None
         self.bm25_corpus = []
         
-        # Semantic vector model
+        # Semantic vector model (Optimized for < 200MB memory footprint)
         self.vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2),
+            ngram_range=(1, 1),
             sublinear_tf=True,
-            max_features=15000,
+            max_features=4000,
             token_pattern=r'(?u)\b\w+\b'
         )
         self.item_vectors = None # (n_items, n_features)
 
     def fit(self, con=None):
         """Builds BM25 index and Semantic Vector matrix across all catalogue products."""
+        import gc
         should_close = False
         if con is None:
             con = duckdb.connect(DB_PATH, read_only=True)
@@ -70,16 +71,14 @@ class HybridSearchEngine:
         self.products_df = con.execute("""
             SELECT 
                 p.product_id,
-                p.sku,
                 p.title,
                 p.category,
                 p.subcategory,
                 p.brand,
                 p.price_pkr,
-                p.cost_pkr,
                 p.stock_quantity,
                 p.rating_avg,
-                p.description,
+                SUBSTRING(p.description, 1, 60) AS description,
                 f.popularity_score
             FROM products p
             LEFT JOIN item_features f ON p.product_id = f.product_id
@@ -93,7 +92,7 @@ class HybridSearchEngine:
         self.pid_to_idx = {pid: i for i, pid in enumerate(self.product_ids)}
         self.idx_to_pid = {i: pid for i, pid in enumerate(self.product_ids)}
         
-        # Build rich searchable document text
+        # Build concise searchable document text
         doc_texts = []
         tokenized_corpus = []
         for row in self.products_df.itertuples(index=False):
@@ -102,15 +101,20 @@ class HybridSearchEngine:
             tokenized_corpus.append(tokenize_corpus(doc))
             
         print("Building BM25 Okapi lexical index...")
-        self.bm25_corpus = tokenized_corpus
-        self.bm25 = BM25Okapi(self.bm25_corpus)
+        self.bm25 = BM25Okapi(tokenized_corpus)
+        del tokenized_corpus
+        gc.collect()
         
-        print("Building Multilingual Semantic Vector index (15,000 features)...")
+        print("Building Multilingual Semantic Vector index (4,000 features)...")
         self.item_vectors = self.vectorizer.fit_transform(doc_texts).tocsr()
+        del doc_texts
+        gc.collect()
+
         # Normalize rows to unit length for fast cosine dot products
         norms = sp.linalg.norm(self.item_vectors, axis=1)
         norms[norms == 0] = 1.0
         self.item_vectors = self.item_vectors.multiply(1.0 / norms[:, None]).tocsr()
+        gc.collect()
         
         print(f"Hybrid Search Engine ready! Indexed {len(self.products_df):,} SKUs.")
         return self

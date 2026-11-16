@@ -7,6 +7,7 @@ Implements Task 2:
 """
 
 import os
+import duckdb
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional
@@ -27,26 +28,27 @@ class PersonalizedSearchEngine:
         else:
             self.user_features = user_features_df
 
-        # Cache user purchased brands
+        # Cache user purchased brands lazily to conserve RAM (<200MB footprint)
         self.user_brand_history = {}
-        if os.path.exists(ORDERS_PATH) and os.path.exists(PRODUCTS_PATH):
-            try:
-                orders_df = pd.read_parquet(ORDERS_PATH)
-                prods_df = pd.read_parquet(PRODUCTS_PATH)[["product_id", "brand"]].set_index("product_id")
-                
-                # Explode items in orders
-                for _, row in orders_df.iterrows():
-                    uid = row["user_id"]
-                    item_ids_str = str(row.get("item_ids", ""))
-                    pids = [p.strip() for p in item_ids_str.split(",") if p.strip()]
-                    if uid not in self.user_brand_history:
-                        self.user_brand_history[uid] = set()
-                    for p in pids:
-                        if p in prods_df.index:
-                            b = prods_df.loc[p, "brand"]
-                            self.user_brand_history[uid].add(b)
-            except Exception:
-                pass
+
+    def get_user_brands(self, user_id: str) -> set:
+        """Lazily extracts past purchased brands for active user."""
+        if user_id in self.user_brand_history:
+            return self.user_brand_history[user_id]
+        brands = set()
+        try:
+            con = duckdb.connect(os.path.join(BASE_DIR, "data", "processed", "shopkaro.duckdb"), read_only=True)
+            res = con.execute("""
+                SELECT DISTINCT p.brand 
+                FROM orders o, products p
+                WHERE o.user_id = ? AND list_contains(string_split(o.item_ids, ','), p.product_id)
+            """, [user_id]).fetchall()
+            brands = {r[0] for r in res if r[0]}
+            con.close()
+        except Exception:
+            brands = set()
+        self.user_brand_history[user_id] = brands
+        return brands
 
     def rerank_for_user(self, user_id: str, search_results: List[Dict[str, Any]], top_k: int = 10) -> List[Dict[str, Any]]:
         """
@@ -63,7 +65,7 @@ class PersonalizedSearchEngine:
         fav_cat = u_prof.get("favourite_category", "General")
         aov = float(u_prof.get("avg_order_value_pkr", 0.0) or 0.0)
         segment = str(u_prof.get("segment_name", "General"))
-        user_brands = self.user_brand_history.get(user_id, set())
+        user_brands = self.get_user_brands(user_id)
         
         personalized_items = []
         for item in search_results:

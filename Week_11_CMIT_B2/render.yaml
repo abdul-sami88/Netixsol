@@ -1,14 +1,18 @@
 # Render Blueprint Specification for ShopKaro AI Platform
-# Allows 1-click cloud deployment on Render (https://render.com)
+# Allows 1-click cloud deployment on Render (https://render.com) using native Python
 services:
   - type: web
     name: shopkaro-ai-platform
-    runtime: docker
+    runtime: python
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn src.serving.api:app --host 0.0.0.0 --port $PORT
     plan: free # Can be upgraded to starter/standard for higher RAM
     region: oregon # or frankfurt, singapore
     healthCheckPath: /health
     autoDeploy: true
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
       - key: ENVIRONMENT
         value: production
       - key: DUCKDB_PATH

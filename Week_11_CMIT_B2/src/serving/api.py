@@ -78,6 +78,12 @@ def startup_event():
         
     print("[STARTUP] Initializing ShopKaro Real-Time Serving Engines...")
     state.db_con = duckdb.connect(DB_PATH, read_only=True)
+    # Cap DuckDB memory & threads to fit cleanly in Render Free Tier (512MB RAM)
+    try:
+        state.db_con.execute("PRAGMA memory_limit='120MB'")
+        state.db_con.execute("PRAGMA threads=1")
+    except Exception:
+        pass
     
     # 1. Initialize Hybrid Search Engine & Personalizer
     state.search_engine = HybridSearchEngine().fit(con=state.db_con)
@@ -106,6 +112,8 @@ def startup_event():
     finally:
         cur.close()
     
+    import gc
+    gc.collect()
     print("[STARTUP] ShopKaro Serving Engine ready to process requests!")
 
 
