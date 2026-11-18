@@ -1,0 +1,1762 @@
+[
+  {
+    "id": "eval_stat_001",
+    "type": "statute",
+    "language": "roman_ur",
+    "query": "Agar consideration unlawful ho to kya contract void hai?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "23",
+    "expected_court": null,
+    "expected_answer": "Agreement is void if consideration or object is unlawful, forbidden by law, or fraudulent.",
+    "target_keywords": [
+      "contract",
+      "section 23"
+    ]
+  },
+  {
+    "id": "eval_stat_002",
+    "type": "statute",
+    "language": "en",
+    "query": "What makes an agreement void for unlawful consideration under Contract Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "23",
+    "expected_court": null,
+    "expected_answer": "Consideration or object is unlawful if forbidden by law, defeats provisions of law, fraudulent, or immoral.",
+    "target_keywords": [
+      "contract",
+      "section 23"
+    ]
+  },
+  {
+    "id": "eval_stat_003",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the effect of coercion, fraud or misrepresentation on a contract?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "19",
+    "expected_court": null,
+    "expected_answer": "Voidable at the option of the party whose consent was so caused.",
+    "target_keywords": [
+      "contract",
+      "section 19"
+    ]
+  },
+  {
+    "id": "eval_stat_004",
+    "type": "statute",
+    "language": "en",
+    "query": "When is compensation payable for breach of contract where penalty is stipulated?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "74",
+    "expected_court": null,
+    "expected_answer": "Party complaining is entitled to receive reasonable compensation not exceeding the penalty stipulated.",
+    "target_keywords": [
+      "contract",
+      "section 74"
+    ]
+  },
+  {
+    "id": "eval_stat_005",
+    "type": "statute",
+    "language": "en",
+    "query": "Is an agreement in restraint of trade void under Pakistani law?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "27",
+    "expected_court": null,
+    "expected_answer": "Every agreement by which anyone is restrained from exercising a lawful profession, trade or business is to that extent void.",
+    "target_keywords": [
+      "contract",
+      "section 27"
+    ]
+  },
+  {
+    "id": "eval_stat_006",
+    "type": "statute",
+    "language": "en",
+    "query": "What happens if an agreement is made without consideration under Contract Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "25",
+    "expected_court": null,
+    "expected_answer": "An agreement made without consideration is void unless expressed in writing and registered or promise to compensate for past voluntary services.",
+    "target_keywords": [
+      "contract",
+      "section 25"
+    ]
+  },
+  {
+    "id": "eval_stat_007",
+    "type": "statute",
+    "language": "en",
+    "query": "What is communication, acceptance and revocation of proposals?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "3",
+    "expected_court": null,
+    "expected_answer": "Communication of proposals, acceptance, and revocation are deemed to be made by any act or omission.",
+    "target_keywords": [
+      "contract",
+      "section 3"
+    ]
+  },
+  {
+    "id": "eval_stat_008",
+    "type": "statute",
+    "language": "en",
+    "query": "Who are the persons competent to contract according to the Contract Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "11",
+    "expected_court": null,
+    "expected_answer": "Every person competent to contract who is of the age of majority, sound mind, and not disqualified from contracting.",
+    "target_keywords": [
+      "contract",
+      "section 11"
+    ]
+  },
+  {
+    "id": "eval_stat_009",
+    "type": "statute",
+    "language": "en",
+    "query": "What is a contingent contract defined under Section 31?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-009",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "31",
+    "expected_court": null,
+    "expected_answer": "A contract to do or not to do something, if some event, collateral to such contract, does or does not happen.",
+    "target_keywords": [
+      "contract",
+      "section 31"
+    ]
+  },
+  {
+    "id": "eval_stat_010",
+    "type": "statute",
+    "language": "en",
+    "query": "When is an agreement void on grounds of impossibility under Contract Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_004",
+    "expected_matter_id": "KA-STAT-004",
+    "expected_act": "Contract Act, 1872",
+    "expected_section": "56",
+    "expected_court": null,
+    "expected_answer": "An agreement to do an act impossible in itself is void; doctrine of frustration.",
+    "target_keywords": [
+      "contract",
+      "section 56"
+    ]
+  },
+  {
+    "id": "eval_stat_011",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the punishment for qatl-i-amd under Section 302 PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-011",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "302",
+    "expected_court": null,
+    "expected_answer": "Qatl-i-amd is punished with death as qisas, death or imprisonment for life as ta'zir, or imprisonment up to 25 years.",
+    "target_keywords": [
+      "pakistan",
+      "section 302"
+    ]
+  },
+  {
+    "id": "eval_stat_012",
+    "type": "statute",
+    "language": "en",
+    "query": "What constitutes the offence of theft under Section 378 of PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-012",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "378",
+    "expected_court": null,
+    "expected_answer": "Whoever intending to take dishonestly any movable property out of the possession of any person without consent.",
+    "target_keywords": [
+      "pakistan",
+      "section 378"
+    ]
+  },
+  {
+    "id": "eval_stat_013",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the definition of criminal conspiracy under Section 120A PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_006",
+    "expected_matter_id": "KA-STAT-006",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "120A",
+    "expected_court": null,
+    "expected_answer": "When two or more persons agree to do or cause to be done an illegal act or an act by illegal means.",
+    "target_keywords": [
+      "pakistan",
+      "section 120a"
+    ]
+  },
+  {
+    "id": "eval_stat_014",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the punishment for cheating under Section 420 PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-014",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "420",
+    "expected_court": null,
+    "expected_answer": "Imprisonment of either description for a term which may extend to seven years, and fine.",
+    "target_keywords": [
+      "pakistan",
+      "section 420"
+    ]
+  },
+  {
+    "id": "eval_stat_015",
+    "type": "statute",
+    "language": "en",
+    "query": "What is defaming a deceased person or imputation of defamation under Section 499?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-015",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "499",
+    "expected_court": null,
+    "expected_answer": "Whoever by words or signs makes or publishes any imputation concerning any person intending to harm reputation.",
+    "target_keywords": [
+      "pakistan",
+      "section 499"
+    ]
+  },
+  {
+    "id": "eval_stat_016",
+    "type": "statute",
+    "language": "en",
+    "query": "Under Section 300 PPC, how is qatl-i-amd defined?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-016",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "300",
+    "expected_court": null,
+    "expected_answer": "Whoever, with the intention of causing death or bodily injury likely to cause death, causes the death of a person.",
+    "target_keywords": [
+      "pakistan",
+      "section 300"
+    ]
+  },
+  {
+    "id": "eval_stat_017",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the punishment for kidnapping or abducting under Section 364A PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_006",
+    "expected_matter_id": "KA-STAT-006",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "364A",
+    "expected_court": null,
+    "expected_answer": "Punished with death or imprisonment for life or rigorous imprisonment up to fourteen years.",
+    "target_keywords": [
+      "pakistan",
+      "section 364a"
+    ]
+  },
+  {
+    "id": "eval_stat_018",
+    "type": "statute",
+    "language": "en",
+    "query": "What is hurt defined under Section 332 of the Pakistan Penal Code?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-018",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "332",
+    "expected_court": null,
+    "expected_answer": "Whoever causes pain, harm, disease, infirmity or injury to any person causes hurt.",
+    "target_keywords": [
+      "pakistan",
+      "section 332"
+    ]
+  },
+  {
+    "id": "eval_stat_019",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the right of private defence of the body under Section 100 PPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-019",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "100",
+    "expected_court": null,
+    "expected_answer": "The right of private defence of the body extends to the voluntary causing of death in cases of reasonable apprehension of death or grievous hurt.",
+    "target_keywords": [
+      "pakistan",
+      "section 100"
+    ]
+  },
+  {
+    "id": "eval_stat_020",
+    "type": "statute",
+    "language": "en",
+    "query": "What is extortion under Section 383 of Pakistan Penal Code?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-020",
+    "expected_act": "Pakistan Penal Code, 1860",
+    "expected_section": "383",
+    "expected_court": null,
+    "expected_answer": "Intentionally putting any person in fear of any injury and dishonestly inducing delivery of property.",
+    "target_keywords": [
+      "pakistan",
+      "section 383"
+    ]
+  },
+  {
+    "id": "eval_stat_021",
+    "type": "statute",
+    "language": "en",
+    "query": "What does Article 25 of the Constitution say about equality of citizens?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "25",
+    "expected_court": null,
+    "expected_answer": "All citizens are equal before law and are entitled to equal protection of law. There shall be no discrimination on basis of sex.",
+    "target_keywords": [
+      "constitution",
+      "section 25"
+    ]
+  },
+  {
+    "id": "eval_stat_022",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the fundamental right to fair trial under Article 10A of the Constitution?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "10A",
+    "expected_court": null,
+    "expected_answer": "For determination of civil rights or in criminal charge, a person shall be entitled to fair trial and due process.",
+    "target_keywords": [
+      "constitution",
+      "section 10a"
+    ]
+  },
+  {
+    "id": "eval_stat_023",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the right to information under Article 19A of the Constitution?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "19A",
+    "expected_court": null,
+    "expected_answer": "Every citizen shall have the right to have access to information in all matters of public importance.",
+    "target_keywords": [
+      "constitution",
+      "section 19a"
+    ]
+  },
+  {
+    "id": "eval_stat_024",
+    "type": "statute",
+    "language": "en",
+    "query": "What protection is granted against retrospective punishment under Article 12?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "12",
+    "expected_court": null,
+    "expected_answer": "No law shall authorize the punishment of a person for an act or omission that was not punishable at the time.",
+    "target_keywords": [
+      "constitution",
+      "section 12"
+    ]
+  },
+  {
+    "id": "eval_stat_025",
+    "type": "statute",
+    "language": "en",
+    "query": "What does Article 9 of the Constitution guarantee regarding security of person?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "9",
+    "expected_court": null,
+    "expected_answer": "No person shall be deprived of life or liberty save in accordance with law.",
+    "target_keywords": [
+      "constitution",
+      "section 9"
+    ]
+  },
+  {
+    "id": "eval_stat_026",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the original jurisdiction of the Supreme Court under Article 184(3)?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-026",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "184",
+    "expected_court": null,
+    "expected_answer": "Supreme Court has jurisdiction in matters of public importance with reference to enforcement of Fundamental Rights.",
+    "target_keywords": [
+      "constitution",
+      "section 184"
+    ]
+  },
+  {
+    "id": "eval_stat_027",
+    "type": "statute",
+    "language": "en",
+    "query": "What does Article 4 guarantee to citizens regarding protection of law?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "4",
+    "expected_court": null,
+    "expected_answer": "To enjoy the protection of law and to be treated in accordance with law is an inalienable right of every citizen.",
+    "target_keywords": [
+      "constitution",
+      "section 4"
+    ]
+  },
+  {
+    "id": "eval_stat_028",
+    "type": "statute",
+    "language": "en",
+    "query": "What does Article 14 guarantee regarding dignity of man and privacy of home?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "14",
+    "expected_court": null,
+    "expected_answer": "The dignity of man and, subject to law, the privacy of home, shall be inviolable.",
+    "target_keywords": [
+      "constitution",
+      "section 14"
+    ]
+  },
+  {
+    "id": "eval_stat_029",
+    "type": "statute",
+    "language": "en",
+    "query": "What is freedom of trade, business or profession under Article 18?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_010",
+    "expected_matter_id": "KA-STAT-010",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "18",
+    "expected_court": null,
+    "expected_answer": "Subject to regulation by licensing, every citizen has the right to enter upon any lawful profession or trade.",
+    "target_keywords": [
+      "constitution",
+      "section 18"
+    ]
+  },
+  {
+    "id": "eval_stat_030",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the appellate jurisdiction of the Supreme Court under Article 185?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-030",
+    "expected_act": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "expected_section": "185",
+    "expected_court": null,
+    "expected_answer": "Supreme Court has jurisdiction to hear and determine appeals from judgments, decrees, final orders or sentences of High Courts.",
+    "target_keywords": [
+      "constitution",
+      "section 185"
+    ]
+  },
+  {
+    "id": "eval_stat_031",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the procedure for recording FIR under Section 154 of CrPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-031",
+    "expected_act": "Code of Criminal Procedure, 1898",
+    "expected_section": "154",
+    "expected_court": null,
+    "expected_answer": "Information relating to commission of a cognizable offence given to an officer in charge of a police station shall be reduced to writing.",
+    "target_keywords": [
+      "code",
+      "section 154"
+    ]
+  },
+  {
+    "id": "eval_stat_032",
+    "type": "statute",
+    "language": "en",
+    "query": "When can police arrest without warrant under Section 54 of CrPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-032",
+    "expected_act": "Code of Criminal Procedure, 1898",
+    "expected_section": "54",
+    "expected_court": null,
+    "expected_answer": "Any police officer may without warrant arrest any person who has been concerned in any cognizable offence.",
+    "target_keywords": [
+      "code",
+      "section 54"
+    ]
+  },
+  {
+    "id": "eval_stat_033",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the provision for grant of bail in non-bailable offences under Section 497 CrPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-033",
+    "expected_act": "Code of Criminal Procedure, 1898",
+    "expected_section": "497",
+    "expected_court": null,
+    "expected_answer": "When any person accused of non-bailable offence is arrested, he may be released on bail unless reasonable grounds to believe guilty of death or imprisonment for life.",
+    "target_keywords": [
+      "code",
+      "section 497"
+    ]
+  },
+  {
+    "id": "eval_stat_034",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the power of the High Court or Sessions Court regarding bail under Section 498 CrPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-034",
+    "expected_act": "Code of Criminal Procedure, 1898",
+    "expected_section": "498",
+    "expected_court": null,
+    "expected_answer": "High Court or Court of Session may direct that any person be admitted to bail or that bail required by police officer or Magistrate be reduced.",
+    "target_keywords": [
+      "code",
+      "section 498"
+    ]
+  },
+  {
+    "id": "eval_stat_035",
+    "type": "statute",
+    "language": "en",
+    "query": "How is search of place entered by person sought to be arrested conducted under Section 47 CrPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-035",
+    "expected_act": "Code of Criminal Procedure, 1898",
+    "expected_section": "47",
+    "expected_court": null,
+    "expected_answer": "Person residing in or in charge of place shall allow ingress and afford reasonable facilities for search.",
+    "target_keywords": [
+      "code",
+      "section 47"
+    ]
+  },
+  {
+    "id": "eval_stat_036",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the principle of res judicata under Section 11 of CPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_003",
+    "expected_matter_id": "KA-STAT-003",
+    "expected_act": "Code of Civil Procedure, 1908",
+    "expected_section": "11",
+    "expected_court": null,
+    "expected_answer": "No Court shall try any suit or issue in which the matter directly and substantially in issue has been directly and substantially in issue in a former suit.",
+    "target_keywords": [
+      "code",
+      "section 11"
+    ]
+  },
+  {
+    "id": "eval_stat_037",
+    "type": "statute",
+    "language": "en",
+    "query": "What suits are barred by jurisdiction under Section 9 of CPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_003",
+    "expected_matter_id": "KA-STAT-003",
+    "expected_act": "Code of Civil Procedure, 1908",
+    "expected_section": "9",
+    "expected_court": null,
+    "expected_answer": "The Courts shall have jurisdiction to try all suits of a civil nature excepting suits of which their cognizance is expressly or impliedly barred.",
+    "target_keywords": [
+      "code",
+      "section 9"
+    ]
+  },
+  {
+    "id": "eval_stat_038",
+    "type": "statute",
+    "language": "en",
+    "query": "What are the powers of court to grant temporary injunction under CPC Section 94 / Order 39?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_003",
+    "expected_matter_id": "KA-STAT-003",
+    "expected_act": "Code of Civil Procedure, 1908",
+    "expected_section": "94",
+    "expected_court": null,
+    "expected_answer": "In order to prevent the ends of justice from being defeated, the Court may grant a temporary injunction.",
+    "target_keywords": [
+      "code",
+      "section 94"
+    ]
+  },
+  {
+    "id": "eval_stat_039",
+    "type": "statute",
+    "language": "en",
+    "query": "What is restitution under Section 144 of the Code of Civil Procedure 1908?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_003",
+    "expected_matter_id": "KA-STAT-003",
+    "expected_act": "Code of Civil Procedure, 1908",
+    "expected_section": "144",
+    "expected_court": null,
+    "expected_answer": "Where decree or order is varied or reversed in appeal or revision, court shall cause restitution to be made.",
+    "target_keywords": [
+      "code",
+      "section 144"
+    ]
+  },
+  {
+    "id": "eval_stat_040",
+    "type": "statute",
+    "language": "en",
+    "query": "What are the inherent powers of civil court saved under Section 151 CPC?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_003",
+    "expected_matter_id": "KA-STAT-003",
+    "expected_act": "Code of Civil Procedure, 1908",
+    "expected_section": "151",
+    "expected_court": null,
+    "expected_answer": "Nothing in this Code shall limit or affect inherent power of Court to make such orders as necessary for ends of justice or to prevent abuse of process.",
+    "target_keywords": [
+      "code",
+      "section 151"
+    ]
+  },
+  {
+    "id": "eval_stat_041",
+    "type": "statute",
+    "language": "en",
+    "query": "Can a suit for recovery of possession of immovable property be filed under Section 9 of Specific Relief Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-041",
+    "expected_act": "Specific Relief Act, 1877",
+    "expected_section": "9",
+    "expected_court": null,
+    "expected_answer": "Person dispossessed without consent of immovable property otherwise than in due course of law may recover possession by suit.",
+    "target_keywords": [
+      "specific",
+      "section 9"
+    ]
+  },
+  {
+    "id": "eval_stat_042",
+    "type": "statute",
+    "language": "en",
+    "query": "Under Section 12 of Specific Relief Act, when is specific performance enforceable?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_008",
+    "expected_matter_id": "KA-STAT-008",
+    "expected_act": "Specific Relief Act, 1877",
+    "expected_section": "12",
+    "expected_court": null,
+    "expected_answer": "Specific performance of contract may be enforced when act agreed to be done is in performance of trust or no standard exists for ascertaining damage.",
+    "target_keywords": [
+      "specific",
+      "section 12"
+    ]
+  },
+  {
+    "id": "eval_stat_043",
+    "type": "statute",
+    "language": "en",
+    "query": "Under Section 21 of Specific Relief Act, what contracts cannot be specifically enforced?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_008",
+    "expected_matter_id": "KA-STAT-008",
+    "expected_act": "Specific Relief Act, 1877",
+    "expected_section": "21",
+    "expected_court": null,
+    "expected_answer": "Contracts for which non-performance compensation in money is an adequate relief or contract running into minute details cannot be specifically enforced.",
+    "target_keywords": [
+      "specific",
+      "section 21"
+    ]
+  },
+  {
+    "id": "eval_stat_044",
+    "type": "statute",
+    "language": "en",
+    "query": "What is a declaratory decree under Section 42 of the Specific Relief Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-044",
+    "expected_act": "Specific Relief Act, 1877",
+    "expected_section": "42",
+    "expected_court": null,
+    "expected_answer": "Any person entitled to any legal character or to any right as to any property may institute a suit for declaration.",
+    "target_keywords": [
+      "specific",
+      "section 42"
+    ]
+  },
+  {
+    "id": "eval_stat_045",
+    "type": "statute",
+    "language": "en",
+    "query": "When is perpetual injunction granted under Section 54 of Specific Relief Act?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_008",
+    "expected_matter_id": "KA-STAT-008",
+    "expected_act": "Specific Relief Act, 1877",
+    "expected_section": "54",
+    "expected_court": null,
+    "expected_answer": "Perpetual injunction may be granted to prevent breach of an obligation existing in favor of applicant.",
+    "target_keywords": [
+      "specific",
+      "section 54"
+    ]
+  },
+  {
+    "id": "eval_stat_046",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the legal procedure for registration of marriages under Section 5 of MFLO 1961?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_009",
+    "expected_matter_id": "KA-STAT-009",
+    "expected_act": "Muslim Family Laws Ordinance, 1961",
+    "expected_section": "5",
+    "expected_court": null,
+    "expected_answer": "Every marriage solemnized under Muslim Law shall be registered in accordance with provisions of this Ordinance.",
+    "target_keywords": [
+      "muslim",
+      "section 5"
+    ]
+  },
+  {
+    "id": "eval_stat_047",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the mandatory procedure for Talaq notice under Section 7 of Muslim Family Laws Ordinance?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_009",
+    "expected_matter_id": "KA-STAT-009",
+    "expected_act": "Muslim Family Laws Ordinance, 1961",
+    "expected_section": "7",
+    "expected_court": null,
+    "expected_answer": "Any man wishing to divorce his wife shall give notice in writing to Chairman of Union Council and supply copy to wife.",
+    "target_keywords": [
+      "muslim",
+      "section 7"
+    ]
+  },
+  {
+    "id": "eval_stat_048",
+    "type": "statute",
+    "language": "en",
+    "query": "Under Section 6 of MFLO, what is required before contracting a polygamous marriage?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_009",
+    "expected_matter_id": "KA-STAT-009",
+    "expected_act": "Muslim Family Laws Ordinance, 1961",
+    "expected_section": "6",
+    "expected_court": null,
+    "expected_answer": "No man shall contract another marriage without previous permission in writing of the Arbitration Council.",
+    "target_keywords": [
+      "muslim",
+      "section 6"
+    ]
+  },
+  {
+    "id": "eval_stat_049",
+    "type": "statute",
+    "language": "en",
+    "query": "What constitutes the offence of money laundering under Section 3 of AML Act 2010?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_001",
+    "expected_matter_id": "KA-STAT-001",
+    "expected_act": "Anti-Money Laundering Act, 2010",
+    "expected_section": "3",
+    "expected_court": null,
+    "expected_answer": "A person is guilty of money laundering if he acquires, converts, conceals or transfers property knowing it is proceeds of crime.",
+    "target_keywords": [
+      "anti-money",
+      "section 3"
+    ]
+  },
+  {
+    "id": "eval_stat_050",
+    "type": "statute",
+    "language": "en",
+    "query": "What is the punishment for money laundering under Section 4 of AML Act 2010?",
+    "is_answerable": true,
+    "expected_doc_id": "stat_unknown",
+    "expected_matter_id": "KA-STAT-050",
+    "expected_act": "Anti-Money Laundering Act, 2010",
+    "expected_section": "4",
+    "expected_court": null,
+    "expected_answer": "Rigorous imprisonment for not less than one year up to ten years, and fine which may extend to five million rupees and forfeiture of property.",
+    "target_keywords": [
+      "anti-money",
+      "section 4"
+    ]
+  },
+  {
+    "id": "eval_case_001",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioner Mst. Saeeda Begum. v. ... Respondents The State and another authored by Dr Qibla Ayaz regarding Offence of Qazf (Enforcement of Hadood) Ord. 1979.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_001",
+    "expected_matter_id": "KA-JUDG-001",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "Offence of Qazf (Enforcement of Hadood) Ord. 1979.pdf",
+    "expected_judge": "Dr Qibla Ayaz",
+    "expected_answer": "In view of the above, we allow this Shariat review petition to the extent that the act of the respondent attracted the rules of qazf, not Wan. However, the proceedings for qazf could not be allowed to continue after the petitioner withdrew from the c",
+    "target_keywords": [
+      "offence of qazf (enforcement of hadood) ord. 1979",
+      "ayaz"
+    ]
+  },
+  {
+    "id": "eval_case_002",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in appellants Muhammad Arshad (deceased) through LRs v. Bashir Ahmad (deceased) through LRs and others Respondents authored by Justice Amin-Ud-Din Khan regarding c.a._138_l_2010.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_002",
+    "expected_matter_id": "KA-JUDG-002",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._138_l_2010.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "3 Civil Appeal Nos. 138-L & 139-L of 2010 paragraph: as period of 30 days from the paragraph is as under:- reported as and other^' (PLD 2017 Supreme Court 674) and quote the relevant “MaHfc Tariq Mahmood and others versus Ghulam Ahmed ‘^Hasnain Nawaz",
+    "target_keywords": [
+      "c.a._138_l_2010",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_003",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Appellant (s) Petitioner (s) v. Haji Muhammad Riaz and others …Respondent(s) authored by Justice Amin-Ud-Din Khan regarding c.a._455_2012.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_003",
+    "expected_matter_id": "KA-JUDG-003",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._455_2012.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "Consequently, the titled Civil Appeal filed by the Appellant is not competent and the titled Civil Petition is without merit. Both the cases stand dismissed. No order as to cost. JUDGE Islamabad, the 23rd December, 2019 ‘APPROVED FOR REPORTING’ Mahta",
+    "target_keywords": [
+      "c.a._455_2012",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_004",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Eden Builders (Pvt) Limited, Lahore Applicant/Petitioner v. Muhammad As lam and others For the applicant/ petitioner: authored by Justice Amin-Ud-Din Khan regarding c.m.a._12587_2021.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_004",
+    "expected_matter_id": "KA-JUDG-004",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.m.a._12587_2021.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "Civil Petition No.5925 of 2021. 3 petitioner was to be accepted and both the learned courts below have ignored the legal position and the learned High Court failed to exercise jurisdiction vested in it by law, therefore, orders are not sustainable an",
+    "target_keywords": [
+      "c.m.a._12587_2021",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_005",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Irfan Azam and others … Petitioner(s) v. Mst. Rabia Rafique and others … Respondent(s) authored by Justice Amin-Ud-Din Khan regarding c.m.a._649_l_2021.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_005",
+    "expected_matter_id": "KA-JUDG-005",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.m.a._649_l_2021.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "Judge Islamabad, the 27.01.2023 Approved for reporting. Mazhar Javed Bhatti/-",
+    "target_keywords": [
+      "c.m.a._649_l_2021",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_006",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Asal Janan & others : ...Petitioner (s) v. Zareef Khan & others ...Respondent(s) For the Petitioner (s)_ : Mr. Abdul Sattar Khan, ASC authored by Justice Amin-Ud-Din Khan regarding c.p._138_p_2015.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_006",
+    "expected_matter_id": "KA-JUDG-006",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._138_p_2015.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "prove the said document. We have noticed that PW-3 is Sanitary Supervisor, DHQ Hospital. He is not holder of the record of birth entries nor did he issue the copy thereof. The alleged certified copy of the Exh. PW-3 is allegedly attested by Executive",
+    "target_keywords": [
+      "c.p._138_p_2015",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_007",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Barkat Ali (decd.) through L.Rs, etc. ...Petitioner(s) v. Tanvir Abbas Tabish, etc. …Respondent(s) authored by Justice Amin-Ud-Din Khan regarding c.p._1676_l_2011.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_007",
+    "expected_matter_id": "KA-JUDG-007",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._1676_l_2011.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "Consequently, this Civil Petition is dismissed and leave declined. JUDGE Lahore, the 28th of February, 2020 ‘NOT APPROVED FOR REPORTING’ Mahtab H. Sheikh/* JUDGE",
+    "target_keywords": [
+      "c.p._1676_l_2011",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_008",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioners v. The President of Pakistan and others (in CRP.296-301, 308, 309 authored by Justice Amin-Ud-Din Khan regarding c.r.p._296_2020_29012022.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_008",
+    "expected_matter_id": "KA-JUDG-008",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.r.p._296_2020_29012022.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "Consequently, all the subsequent proceedings, actions, orders and reports made in pursuance of the said directions are declared to be of no legal effect and/or consequences. Sd/- Judge",
+    "target_keywords": [
+      "c.r.p._296_2020_29012022",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_009",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioners v. Federation of Pakistan through Secretary Ministry of Law and Justice, Islamabad and others authored by Justice Amin-Ud-Din Khan regarding const.p._43_2023.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_009",
+    "expected_matter_id": "KA-JUDG-009",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "const.p._43_2023.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "arguments we heard today and passed the order of impleadment as respondent in these petitions. Photostat copy of the order cited is not applicable to the facts of this case. In these circumstances, the prayer for stay of proceedings before the Suprem",
+    "target_keywords": [
+      "const.p._43_2023",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_010",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Appellants/Applicant v. Imran Ahmed Khan Niazi and others. (in ICA Nos. 2 and 3/2023) authored by Justice Amin-Ud-Din Khan regarding i.c.a._2_2023_30052024.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_010",
+    "expected_matter_id": "KA-JUDG-010",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "i.c.a._2_2023_30052024.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "14. In conclusion, we would like to add that while a request to live broadcast or live-stream may be submitted, and may also be objected to, it is clarified that this, as matters presently stand, is in the exclusive domain of this Court.",
+    "target_keywords": [
+      "i.c.a._2_2023_30052024",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_011",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Muhammad Iqbal ...Petitioner (s) v. The State …Respondent(s) authored by Justice Amin-Ud-Din Khan regarding j.p._516_2018.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_011",
+    "expected_matter_id": "KA-JUDG-011",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "j.p._516_2018.pdf",
+    "expected_judge": "Justice Amin-Ud-Din Khan",
+    "expected_answer": "his sentence, therefore, he be released forthwith if not required in any other case. 3. The Federal Government, under section 5-B (5) of Import and Export (Control) Act, 1950 is directed to pay Mrs. Lina Bomba of JEAD Textile Limited, Sydney, Austral",
+    "target_keywords": [
+      "j.p._516_2018",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_012",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Appellants v. M/s Askari Bank Limited and others authored by Justice Aqeel Ahmed Abbasi regarding c.a._470_2022.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_012",
+    "expected_matter_id": "KA-JUDG-012",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._470_2022.pdf",
+    "expected_judge": "Justice Aqeel Ahmed Abbasi",
+    "expected_answer": "Accordingly, the instant civil appeal is allowed and the impugned judgment dated 16.12.2020 passed by the Peshawar High Court is set aside on the ground of default in payment of rent, and the judgment of the Additional Rent Controller dated 17.10.201",
+    "target_keywords": [
+      "c.a._470_2022",
+      "abbasi"
+    ]
+  },
+  {
+    "id": "eval_case_013",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioner Moiilui Abdul Fateh v. ... Respondents Yar Muhammad and others authored by Justice Aqeel Ahmed Abbasi regarding c.p._259_q_2020.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_013",
+    "expected_matter_id": "KA-JUDG-013",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._259_q_2020.pdf",
+    "expected_judge": "Justice Aqeel Ahmed Abbasi",
+    "expected_answer": "Accordingly, we do not find any factual error or legal 8. infirmity in the impugned judgment passed by the learned Single Judge of the High Court of Balochistan, Sibi Bench, which may require this Court to entertain instant civil petition for leave t",
+    "target_keywords": [
+      "c.p._259_q_2020",
+      "abbasi"
+    ]
+  },
+  {
+    "id": "eval_case_014",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Appellant(s) v. M/s Mia Corporation (Pvt.) Ltd. Islamabad …Respondent(s) authored by Justice Athar Minallah regarding c.a._1080_2011.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_014",
+    "expected_matter_id": "KA-JUDG-014",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._1080_2011.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "Consequently, the impugned judgment is set aside and the reference application shall be treated as pending. The High Court is expected to decide the application on merits subject to affording opportunity of hearing to the parties. Chief Justice Judge",
+    "target_keywords": [
+      "c.a._1080_2011",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_015",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioners v. Shereen Shah and another authored by Justice Athar Minallah regarding c.p._388_p_2016.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_015",
+    "expected_matter_id": "KA-JUDG-015",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._388_p_2016.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "consequently setting aside the impugned judgment. The petitions filed by the Anti-Narcotics Force before the High Court shall be treated as pending and expected to be decided at the earliest. Chief Justice Judge Judge Islamabad, the 10th May, 2023 AP",
+    "target_keywords": [
+      "c.p._388_p_2016",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_016",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioners in all cases v. Riaz Ahmed authored by Justice Athar Minallah regarding c.p.l.a.928_l_2021.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_016",
+    "expected_matter_id": "KA-JUDG-016",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p.l.a.928_l_2021.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "For the foregoing reasons, these petitions are converted into appeals and allowed by setting aside the impugned judgment. ACJ. J. J. Islamabad 19.12.2023 M. Azhar Malik+Rameen Moin/* Approved for reporting.",
+    "target_keywords": [
+      "c.p.l.a.928_l_2021",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_017",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Appellant Hameedullah v. ...Respondent The State authored by Justice Athar Minallah regarding crl.a._238_2021.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_018",
+    "expected_matter_id": "KA-JUDG-018",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "crl.a._238_2021.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "-8- Crl. A. No.238/2021 commotion, someone would not only identify but apprehend another paces. The prosecution was also required to establish that the jacket 8. sent to a notified recognized laboratory Defence, Rawalpindi was an established expert h",
+    "target_keywords": [
+      "crl.a._238_2021",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_018",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Applicant/Petitioner v. Abu Malik Naseem and another authored by Justice Athar Minallah regarding crl.m.a._1566_2016.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_019",
+    "expected_matter_id": "KA-JUDG-019",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "crl.m.a._1566_2016.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "Judge Islamabad the 23rd May 2023 “NOT APPROVED FOR REPORTING” (Aamir Sh.)",
+    "target_keywords": [
+      "crl.m.a._1566_2016",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_019",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioner v. The State authored by Justice Athar Minallah regarding crl.p._786_l_2016.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_020",
+    "expected_matter_id": "KA-JUDG-020",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "crl.p._786_l_2016.pdf",
+    "expected_judge": "Justice Athar Minallah",
+    "expected_answer": "Consequently, his conviction and sentence are set aside. He shall be released forthwith if not required to be incarcerated in any other case.” Judge Judge Judge Islamabad the, 22nd April 2024 ‘APPROVED FOR REPORTING’ (Aamir Sh./Rameen Moin, LC)",
+    "target_keywords": [
+      "crl.p._786_l_2016",
+      "minallah"
+    ]
+  },
+  {
+    "id": "eval_case_020",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Applicants (in all cases) v. Mst. Fatima daughter of Gohar Ali and others authored by Justice Ayesha A. Malik regarding c.a._419_2011.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_022",
+    "expected_matter_id": "KA-JUDG-022",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._419_2011.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "In view of the aforesaid, impugned judgments passed by the High Court do not call for any interference. These Civil Appeals being devoid of merit are dismissed with no order as to costs. CMA No.1839 of 2011 is disposed of.",
+    "target_keywords": [
+      "c.a._419_2011",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_021",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Judgment by Mr. Munir A. Sheikh, J. in WP Nos.5168 & 5169 of 1983, 1221 of 1969 and 1226 of 1967. Ha v. Member (Revenue), Board of Revenue (Reported as 1991 MLD 99). authored by Justice Ayesha A. Malik regarding c.a._936_2012_18092024.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_023",
+    "expected_matter_id": "KA-JUDG-023",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._936_2012_18092024.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "ORDER Of THE BENCH By majority of two to one (Ayesha A. Malik, J. dissenting), Civil Appeal Nos. 936, 937 and 938 of 2012 are dismissed.",
+    "target_keywords": [
+      "c.a._936_2012_18092024",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_022",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioner (s) v. CP.101 of 2020 Yar Muhammad Solangi and others authored by Justice Ayesha A. Malik regarding c.p._101_2020.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_024",
+    "expected_matter_id": "KA-JUDG-024",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._101_2020.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "In view of the above, we find no merit in these Petitions, which are dismissed and Leave to Appeal is refused. CHIEF JUSTICE JUDGE Bench-I Islamabad 29.03.2022 ‘APPROVED FOR REPORTING’ Mahtab H. Sheikh/* JUDGE CPs.101 of 2020, etc. - 6 - Tagline: NAB",
+    "target_keywords": [
+      "c.p._101_2020",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_023",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in CP.323-L of 2014 Collector of Customs, Customs House, Lahore and another v. M/s Wasim Radio Traders, Lahore, etc. authored by Justice Ayesha A. Malik regarding c.p._323_l_2014.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_025",
+    "expected_matter_id": "KA-JUDG-025",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._323_l_2014.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "| assessment under Section 81 of the Act is not possible where",
+    "target_keywords": [
+      "c.p._323_l_2014",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_024",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioners v. The President of Islamic Republic of Pakistan, President House, Islamabad and others authored by Justice Ayesha A. Malik regarding c.r.p._255_2021.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_026",
+    "expected_matter_id": "KA-JUDG-026",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.r.p._255_2021.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "1 Amir Khan v. Controller of Estate Duty (PLD 1962 SC 335 - Per Kaikaus, J); Suba v. Fatima Bibi (1996 SCMR 158); Abdul Ghaffar v. Asghar Ali (PLD 1998 SC 363); Barkat Ali v. Qaim Din (2006 SCMR 562).",
+    "target_keywords": [
+      "c.r.p._255_2021",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_025",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Commissioner Inland Revenue, Zone-III. RTO, Rawalpindi, etc. ...…. Petitioner(s) v. M/s Sarwaq Traders, Rawalpindi, etc. ….Respondent(s) For the Petitioner(s): authored by Justice Ayesha A. Malik regarding c.r.p._275_2022.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_027",
+    "expected_matter_id": "KA-JUDG-027",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.r.p._275_2022.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "In view of the above legal position, I concur with the conclusion arrived at by my learned brother Justice Syed Mansoor Ali Shah and partly allow the Review petition. JUDGE CRP No.275/2022 14 ORDER OF THE BENCH: By majority of two-to-one (Ayesha A. M",
+    "target_keywords": [
+      "c.r.p._275_2022",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_026",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Petitioner(s) v. M/s Labbaik (Pvt) Limited through Executive Admin Bol TV Quetta and others authored by Justice Ayesha A. Malik regarding const.p._10_2020.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_028",
+    "expected_matter_id": "KA-JUDG-028",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "const.p._10_2020.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "Consequently, this petition is dismissed. CHIEF JUSTICE JUDGE Islamabad 06.06.2022 ‘APPROVED FOR REPORTING’ Azmat/*",
+    "target_keywords": [
+      "const.p._10_2020",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_027",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Muhammad Ramzan ...Petitioner(s) v. Khizar Hayat & another ...Respondent(s) authored by Justice Ayesha A. Malik regarding crl.p._887_l_2013_24042024.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_029",
+    "expected_matter_id": "KA-JUDG-029",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "crl.p._887_l_2013_24042024.pdf",
+    "expected_judge": "Justice Ayesha A. Malik",
+    "expected_answer": "accordingly, train specialized officers in this field. 14. In relation to the motive of the crime, the Impugned Judgment did not accept that Respondent No.1 murdered the Deceased because he suspected illicit liaison between the Deceased and his wife",
+    "target_keywords": [
+      "crl.p._887_l_2013_24042024",
+      "malik"
+    ]
+  },
+  {
+    "id": "eval_case_028",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in In CA 837-L/13) …Appellant(s) v. Allied Bank Limited through its President, etc Mst. Shahida Siddiqa authored by Justice Irfan Saadat Khan regarding c.a._836_l_2013.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_030",
+    "expected_matter_id": "KA-JUDG-030",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.a._836_l_2013.pdf",
+    "expected_judge": "Justice Irfan Saadat Khan",
+    "expected_answer": "3 Auditor-General of Pakistan v. Muhammad Ali (2006 SCMR 63) Civil Appeals No.836-L, 837-L/2013",
+    "target_keywords": [
+      "c.a._836_l_2013",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_029",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Mst. Sidra Hameed etc. ...Applicants(s) v. Syed Abdul Mateen ...Respondent(s) For the Applicant(s): Mr. Muhammad Habib Ullah Khan, ASC authored by Justice Irfan Saadat Khan regarding c.m.a._100_2024.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_031",
+    "expected_matter_id": "KA-JUDG-031",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.m.a._100_2024.pdf",
+    "expected_judge": "Justice Irfan Saadat Khan",
+    "expected_answer": "the GWA can the order sought be passed. He lastly submitted that",
+    "target_keywords": [
+      "c.m.a._100_2024",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_case_030",
+    "type": "case_law",
+    "language": "en",
+    "query": "What was held by the Supreme Court in Fazli Akbar Khan and others ‘ ...Petitioners v. Government of Khyber Pakhtunkhwa. through District ...Respondents Collector, Mardan and others authored by Justice Irfan Saadat Khan regarding c.p._14_p_2015.pdf?",
+    "is_answerable": true,
+    "expected_doc_id": "judg_032",
+    "expected_matter_id": "KA-JUDG-032",
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": "Supreme Court of Pakistan",
+    "expected_case": "c.p._14_p_2015.pdf",
+    "expected_judge": "Justice Irfan Saadat Khan",
+    "expected_answer": "Consequently, the Petitioners approached the High Court. However, the Petitioners in the Writ Petition before the High Court did not challenge the aforementioned Order of the Referee Court, dated 22.04.2014, rather they prayed for the Order, dated 02",
+    "target_keywords": [
+      "c.p._14_p_2015",
+      "khan"
+    ]
+  },
+  {
+    "id": "eval_unans_001",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under California Civil Code, what is the statute of limitations for breach of an oral contract?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "us_state_law"
+  },
+  {
+    "id": "eval_unans_002",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What does Article 17 of EU GDPR guarantee regarding the right to erasure?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "eu_data_privacy"
+  },
+  {
+    "id": "eval_unans_003",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What is the exclusion of evidence under the US Fourth Amendment Mapp v. Ohio doctrine?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "us_constitutional_law"
+  },
+  {
+    "id": "eval_unans_004",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under the Indian Bharatiya Sakshya Adhiniyam 2023, how is electronic evidence certified?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "indian_law_2023"
+  },
+  {
+    "id": "eval_unans_005",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What are the criteria for salvage award calculation under Article 13 of the 1989 International Salvage Convention?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "maritime_convention"
+  },
+  {
+    "id": "eval_unans_006",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What is the penalty for failure to file provincial sales tax on services under Sindh Revenue Board Act 2026?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "sindh_tax_2026"
+  },
+  {
+    "id": "eval_unans_007",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "How is vicarious liability applied to autonomous driving systems under German Road Traffic Act (StVG)?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "german_tech_law"
+  },
+  {
+    "id": "eval_unans_008",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under the UK Consumer Rights Act 2015, what is the short-term right to reject faulty goods?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "uk_commercial_law"
+  },
+  {
+    "id": "eval_unans_009",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What is the procedure for recognition of foreign arbitral awards under the Swiss Private International Law Act?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "swiss_arbitration"
+  },
+  {
+    "id": "eval_unans_010",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What constitutes insider trading under Section 10(b) and Rule 10b-5 of the US SEC Act of 1934?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "us_securities_law"
+  },
+  {
+    "id": "eval_unans_011",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under French Civil Code Article 1240, what are the three elements required to establish tortious liability?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "french_tort_law"
+  },
+  {
+    "id": "eval_unans_012",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What is the rule against perpetuities calculation under Ontario Perpetuities Act?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "canadian_property_law"
+  },
+  {
+    "id": "eval_unans_013",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "How does the Australian Consumer Law define misleading or deceptive conduct under Section 18?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "australian_trade_law"
+  },
+  {
+    "id": "eval_unans_014",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under the Singapore Personal Data Protection Act (PDPA), what is the maximum financial penalty for data breach?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "singapore_privacy"
+  },
+  {
+    "id": "eval_unans_015",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What does the International Court of Justice statute Article 38 state regarding sources of international law?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "public_international_law"
+  },
+  {
+    "id": "eval_unans_016",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under Japanese Civil Code Article 709, what is the limitation period for compensation for damages in tort?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "japanese_civil_law"
+  },
+  {
+    "id": "eval_unans_017",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What is the duty of disclosure in marine insurance contracts under the UK Marine Insurance Act 1906?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "uk_marine_insurance"
+  },
+  {
+    "id": "eval_unans_018",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "How is the concept of unconscionability defined under Uniform Commercial Code (UCC) Section 2-302?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "us_ucc_law"
+  },
+  {
+    "id": "eval_unans_019",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "Under South African Protection of Personal Information Act (POPIA), what are the conditions for lawful processing?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "south_africa_privacy"
+  },
+  {
+    "id": "eval_unans_020",
+    "type": "unanswerable",
+    "language": "en",
+    "query": "What constitutes patent infringement under Section 271 of Title 35 of the United States Code?",
+    "is_answerable": false,
+    "expected_doc_id": null,
+    "expected_matter_id": null,
+    "expected_act": null,
+    "expected_section": null,
+    "expected_court": null,
+    "expected_answer": "No sufficient source found",
+    "target_keywords": [
+      "no sufficient source found"
+    ],
+    "domain": "us_patent_law"
+  }
+]

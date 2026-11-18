@@ -1,0 +1,24 @@
+# ==============================================================================
+# Render Infrastructure as Code Blueprint
+# AI Legal Assistant - Khan & Associates
+# ==============================================================================
+
+services:
+  - type: web
+    name: ai-legal-assistant
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: HF_HUB_OFFLINE
+        value: "1"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+

@@ -1,0 +1,73 @@
+{
+  "title": "Master Commercial Contract Comparison (V1 Baseline vs V2 Counterparty Redline)",
+  "total_clauses": 5,
+  "total_modifications": 5,
+  "high_risk_escalations": 5,
+  "comparisons": [
+    {
+      "clause_number": "1.0",
+      "title": "Governing Law and Dispute Resolution",
+      "change_type": "MODIFIED",
+      "original_text": "This Agreement shall be governed by and construed in accordance with the laws of the Islamic Republic of Pakistan. Any dispute, controversy, or claim arising out of or relating to this contract shall be referred to and finally resolved by arbitration in Islamabad in accordance with the Arbitration Act, 1940.",
+      "revised_text": "This Agreement shall be governed exclusively by the laws of the State of Delaware, United States, without regard to conflict of laws principles. The parties irrevocably submit to the exclusive jurisdiction and venue of the state and federal courts located in Wilmington, Delaware, and waive any right to trial by jury.",
+      "diff_tokens": {
+        "removed": "and construed in accordance with Islamic Republic Pakistan. Any dispute, controversy, or claim arising out or relating this contract shall be referred and finally resolved arbitration in Islamabad in accordance with the Arbitration Act, 1940.",
+        "added": "exclusively State Delaware, United States, without regard to conflict laws principles. The parties irrevocably submit the exclusive jurisdiction and venue of the state and federal courts located in Wilmington, Delaware, and waive any right trial jury."
+      },
+      "risk_escalation": "HIGH",
+      "plain_language_legal_impact": "Counterparty stripped Pakistani governing law and arbitration under the Arbitration Act, 1940, replacing it with Delaware state/federal courts and a jury trial waiver. LEGAL IMPACT: Substantially escalates dispute costs; forces our Pakistani client to hire foreign US counsel for any breach, while eliminating the right to enforce arbitral awards easily under the New York Convention."
+    },
+    {
+      "clause_number": "2.0",
+      "title": "Limitation of Liability",
+      "change_type": "MODIFIED",
+      "original_text": "To the maximum extent permitted by applicable law, each party's maximum aggregate liability arising out of or relating to this Agreement shall be mutually capped at the total fees paid or payable by Client in the twelve (12) months preceding the claim. Neither party shall be liable for indirect, punitive, or consequential damages.",
+      "revised_text": "In no event shall Vendor be liable to Client for any indirect, incidental, punitive, or consequential damages. Vendor's total cumulative liability for all claims arising out of this Agreement shall not exceed the fees paid by Client in the one (1) month preceding the incident. Client's liability under this Agreement shall remain uncapped.",
+      "diff_tokens": {
+        "removed": "To the maximum extent permitted by applicable law, each party's maximum aggregate or relating to be mutually capped at total or payable twelve (12) months claim. Neither party be liable for indirect, punitive, or consequential damages.",
+        "added": "In no event shall Vendor be liable to Client for any indirect, incidental, punitive, or consequential damages. Vendor's total cumulative for all claims not exceed one (1) month incident. Client's liability under this Agreement remain uncapped."
+      },
+      "risk_escalation": "HIGH",
+      "plain_language_legal_impact": "Counterparty made liability completely one-sided: Vendor's liability cap was slashed from 12 months to just 1 month of fees, while Client's liability was explicitly made UNCAPPED. LEGAL IMPACT: The client faces unlimited financial exposure for any claim, whereas the vendor's liability is capped at a negligible token sum."
+    },
+    {
+      "clause_number": "3.0",
+      "title": "Indemnification",
+      "change_type": "MODIFIED",
+      "original_text": "Each party agrees to defend, indemnify, and hold harmless the other party, its directors, and employees from and against any third-party claims, damages, liabilities, and legal costs arising from the indemnifying party's gross negligence, willful misconduct, or infringement of intellectual property rights.",
+      "revised_text": "Client shall defend, indemnify, and hold harmless Vendor, its affiliates, agents, and licensors from and against any and all claims, liabilities, losses, judgments, and legal fees arising out of Client's use of the Services, without limitation or cap.",
+      "diff_tokens": {
+        "removed": "Each party agrees to the other party, directors, employees third-party damages, costs from indemnifying party's gross negligence, willful misconduct, infringement of intellectual property rights.",
+        "added": "Client shall Vendor, affiliates, agents, licensors and all losses, judgments, fees out of Client's use of Services, without limitation cap."
+      },
+      "risk_escalation": "HIGH",
+      "plain_language_legal_impact": "Counterparty deleted Vendor's mutual indemnification obligations and imposed an unlimited, unilateral indemnity on the Client. LEGAL IMPACT: Client is forced to insure the vendor against all operational and third-party claims, with zero protection if vendor infringes third-party IP."
+    },
+    {
+      "clause_number": "4.0",
+      "title": "Term and Termination",
+      "change_type": "MODIFIED",
+      "original_text": "Either party may terminate this Agreement for convenience upon providing at least thirty (30) days prior written notice. In the event of a material breach, the non-breaching party may terminate this Agreement if the breaching party fails to cure such breach within thirty (30) days of receipt of written notice.",
+      "revised_text": "Vendor may terminate this Agreement immediately at any time without cause and without prior notice. Client may terminate only upon providing one hundred twenty (120) days prior written notice and payment of an early termination fee. The cure period for any Client breach shall be five (5) business days.",
+      "diff_tokens": {
+        "removed": "Either party for convenience at least thirty (30) notice. In the event a material breach, the non-breaching party may terminate this Agreement if the breaching party fails to such within thirty (30) days of receipt of written notice.",
+        "added": "Vendor immediately at any time without cause and without prior notice. Client may terminate only one hundred twenty (120) notice and payment an early termination fee. The period for any Client shall be five (5) business days."
+      },
+      "risk_escalation": "HIGH",
+      "plain_language_legal_impact": "Counterparty introduced immediate termination rights for Vendor without cause, while locking the Client into 120 days notice plus early termination fees, and shortened the cure period to a predatory 5 days. LEGAL IMPACT: Vendor can abruptly cancel critical services without penalty, while client risks breach due to the unreasonable 5-day cure window."
+    },
+    {
+      "clause_number": "5.0",
+      "title": "Payment Terms and Invoicing",
+      "change_type": "MODIFIED",
+      "original_text": "Client shall pay all undisputed invoice amounts within thirty (30) days of invoice date. Any overdue undisputed amounts shall accrue simple interest at KIBOR plus 1% per annum, compliant with Section 74 of the Contract Act, 1872.",
+      "revised_text": "Client shall pay all invoices within ten (10) calendar days. Overdue balances shall accrue compound interest at the rate of 3% per month (42.6% APR). Vendor reserves the right to immediately suspend all services without liability if payment is overdue by more than three (3) days.",
+      "diff_tokens": {
+        "removed": "undisputed invoice amounts thirty (30) days of invoice date. Any overdue undisputed amounts simple KIBOR plus 1% annum, compliant with Section 74 of Contract Act, 1872.",
+        "added": "invoices ten (10) calendar days. Overdue balances compound the rate of 3% month (42.6% APR). Vendor reserves right to immediately suspend all services without liability if payment is overdue by more than three (3) days."
+      },
+      "risk_escalation": "HIGH",
+      "plain_language_legal_impact": "Counterparty accelerated payment window to 10 days, imposed 3% monthly compound interest (42.6% APR), and claimed immediate service cutoff rights. LEGAL IMPACT: The 42.6% compound interest is an unconscionable penalty clause under Section 74 of the Contract Act, 1872 and unenforceable under Pakistani law. The 3-day cutoff clause exposes client to severe operational disruption."
+    }
+  ]
+}

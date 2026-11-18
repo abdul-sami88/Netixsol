@@ -1,0 +1,5 @@
+Entity / Task,Precision,Recall,F1,TP,FP,FN
+Judge / Justice,0.3654,0.95,0.5278,19,33,1
+Section & Article,0.8636,0.987,0.9212,76,12,1
+Case Citation,0.6848,0.8182,0.7456,63,29,14
+Overall Micro-Avg,0.681,0.908,0.7783,158,74,16

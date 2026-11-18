@@ -1,0 +1,53 @@
+{
+  "firm_name": "Khan & Associates",
+  "jurisdiction": "Pakistan",
+  "version": "2026.1",
+  "rules": {
+    "Governing Law / Dispute Resolution": {
+      "standard": "Must specify the Laws of the Islamic Republic of Pakistan with exclusive jurisdiction in courts of Islamabad, Lahore, or Karachi, or arbitration under Pakistan Arbitration Act, 1940.",
+      "acceptable_indicators": ["laws of pakistan", "pakistan arbitration act", "courts in lahore", "courts in karachi", "courts in islamabad"],
+      "prohibited_indicators": ["laws of new york", "laws of england and wales", "laws of california", "delaware", "exclusive jurisdiction of foreign courts"],
+      "fallback_wording": "This Agreement shall be governed by and construed in accordance with the laws of the Islamic Republic of Pakistan. Any dispute arising out of or in connection with this Agreement shall be referred to and finally resolved by arbitration in Islamabad in accordance with the Arbitration Act, 1940."
+    },
+    "Limitation of Liability": {
+      "standard": "Liability must be mutually capped to an amount not exceeding the total fees paid or payable by Client in the preceding twelve (12) months. Unlimited liability or unilateral vendor liability disclaimers are unacceptable.",
+      "acceptable_indicators": ["aggregate liability shall not exceed", "total fees paid", "twelve (12) months", "capped at"],
+      "prohibited_indicators": ["in no event shall vendor be liable", "unlimited liability", "no cap on liability", "waives all damages"],
+      "fallback_wording": "To the maximum extent permitted by applicable law, each party's total aggregate liability arising out of or related to this Agreement shall be strictly limited to the total fees paid or payable by Client under this Agreement in the twelve (12) months preceding the claim."
+    },
+    "Indemnification": {
+      "standard": "Indemnification must be mutual and capped, limited to third-party claims for gross negligence, willful misconduct, or intellectual property infringement. Unilateral client indemnification is prohibited.",
+      "acceptable_indicators": ["each party shall indemnify", "mutually indemnify", "third-party claims", "gross negligence or willful misconduct"],
+      "prohibited_indicators": ["client shall indemnify and hold harmless vendor from any and all", "sole indemnification", "client agrees to defend"],
+      "fallback_wording": "Each party ('Indemnifying Party') agrees to defend, indemnify, and hold harmless the other party from and against any third-party claims, liabilities, damages, and expenses arising directly from the Indemnifying Party's gross negligence, willful misconduct, or breach of applicable laws."
+    },
+    "Term & Termination": {
+      "standard": "Termination for convenience must be mutual with at least thirty (30) days prior written notice. Immediate termination by counterparty alone without a cure period (minimum 15 days for material breach) is unacceptable.",
+      "acceptable_indicators": ["thirty (30) days prior written notice", "cure period of thirty (30) days", "cure period of 15 days", "either party may terminate"],
+      "prohibited_indicators": ["vendor may terminate immediately", "without cause and without notice", "client shall have no right to terminate"],
+      "fallback_wording": "Either party may terminate this Agreement for convenience upon providing at least thirty (30) days prior written notice. In the event of a material breach, the non-breaching party may terminate this Agreement if the breaching party fails to cure such breach within thirty (30) days of receipt of written notice."
+    },
+    "Confidentiality / NDA": {
+      "standard": "Confidentiality obligations must be mutual and limited to three (3) to five (5) years following termination, with standard carveouts for public knowledge, court orders, and legal disclosures.",
+      "acceptable_indicators": ["three (3) years", "five (5) years", "standard carveouts", "required by court of competent jurisdiction"],
+      "prohibited_indicators": ["perpetual confidentiality without trade secret limitation", "strict liability for breach"],
+      "fallback_wording": "Each party agrees to hold the other party's Confidential Information in confidence for a period of three (3) years following the termination of this Agreement, using the same degree of care it uses for its own confidential information, but not less than reasonable care."
+    },
+    "Payment & Fees": {
+      "standard": "Invoices payable within net thirty (30) days. Disputed invoices must not trigger service suspension. Late payment interest cannot exceed KIBOR + 2% per annum, compliant with Section 74 of the Contract Act, 1872.",
+      "acceptable_indicators": ["net thirty (30) days", "net 30", "good faith dispute", "kibor"],
+      "prohibited_indicators": ["advance payment non-refundable", "immediate penalty of 20%", "compound interest of 2% per month"],
+      "fallback_wording": "Client shall pay all undisputed invoice amounts within thirty (30) days of receipt. In the event of a good faith dispute regarding an invoice, Client shall pay the undisputed portion and notify Vendor in writing within fifteen (15) days."
+    }
+  },
+  "required_mandatory_clauses": [
+    "Governing Law / Dispute Resolution",
+    "Limitation of Liability",
+    "Indemnification",
+    "Term & Termination",
+    "Confidentiality / NDA",
+    "Force Majeure",
+    "Severability"
+  ]
+}
+

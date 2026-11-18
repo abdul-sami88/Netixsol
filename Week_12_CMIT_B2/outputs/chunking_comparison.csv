@@ -1,0 +1,4 @@
+strategy,chunk_count,avg_words,max_words,oversized_gt_500w,boundary_break_pct,bm25_hit_at_5,bm25_mrr_at_5
+"Fixed-Size (220w, 35w overlap)",7929,216.5,220,0,96.3,1.0,1.0
+Section-Level (1 Section/Clause),5508,263.1,38088,243,0.0,1.0,1.0
+Parent-Child (140w child -> full parent),15257,110.5,160,0,0.0,1.0,1.0

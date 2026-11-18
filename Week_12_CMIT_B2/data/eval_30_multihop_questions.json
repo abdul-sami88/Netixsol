@@ -1,0 +1,273 @@
+[
+  {
+    "id": "mh_01",
+    "category": "statutory_precedent_chain",
+    "query": "Which Supreme Court judgments interpreted Section 23 of the Contract Act, and were any of them later overruled?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872", "PLD 1990 SC 48", "1998 SCMR 1120", "2021 SCMR 105"],
+    "requires_overruled_detection": true,
+    "hops": 3
+  },
+  {
+    "id": "mh_02",
+    "category": "negative_treatment_overruling",
+    "query": "Has the Supreme Court decision in 1998 SCMR 1120 been overruled, and by which subsequent bench?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["1998 SCMR 1120", "2021 SCMR 105", "5-Judge Full Bench"],
+    "requires_overruled_detection": true,
+    "hops": 2
+  },
+  {
+    "id": "mh_03",
+    "category": "citation_precedent_chain",
+    "query": "Which cases cite PLD 1990 SC 48 on unlawful consideration and void agreements?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["PLD 1990 SC 48", "1998 SCMR 1120", "2015 SCMR 1423", "2021 SCMR 105"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_04",
+    "category": "judge_jurisprudence",
+    "query": "Which Supreme Court judgments on Contract Act Section 23 were authored by Justice Syed Mansoor Ali Shah?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Justice Syed Mansoor Ali Shah", "2021 SCMR 105", "Section 23"],
+    "requires_overruled_detection": false,
+    "hops": 3
+  },
+  {
+    "id": "mh_05",
+    "category": "judge_jurisprudence",
+    "query": "Find the cases authored by Justice Qazi Faez Isa in the Supreme Court corpus.",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Justice Qazi Faez Isa"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_06",
+    "category": "single_fact_definition",
+    "query": "What is the statutory definition of unlawful consideration under Section 23 of the Contract Act, 1872?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_07",
+    "category": "single_fact_definition",
+    "query": "What punishment is prescribed for qatl-i-amd under Section 302 of the Pakistan Penal Code?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 302", "Pakistan Penal Code, 1860"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_08",
+    "category": "single_fact_definition",
+    "query": "What does Article 25 of the Constitution of Pakistan state regarding equality of citizens?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Article 25", "Constitution of Pakistan"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_09",
+    "category": "single_fact_definition",
+    "query": "What are the powers of the High Court under Section 115 of the Code of Civil Procedure regarding revision?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 115", "Code of Civil Procedure, 1908"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_10",
+    "category": "single_fact_definition",
+    "query": "What grounds of bail in non-bailable offences are provided in Section 497 of the Code of Criminal Procedure?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 497", "Code of Criminal Procedure, 1898"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_11",
+    "category": "hybrid_complex_reasoning",
+    "query": "Can an agreement with partially unlawful consideration be enforced in Pakistan, considering Section 23 and recent Supreme Court precedent?",
+    "expected_route": "HYBRID_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872", "2021 SCMR 105", "1998 SCMR 1120"],
+    "requires_overruled_detection": true,
+    "hops": 3
+  },
+  {
+    "id": "mh_12",
+    "category": "hybrid_complex_reasoning",
+    "query": "How do Pakistani courts treat contract severance when consideration violates public policy under Section 23?",
+    "expected_route": "HYBRID_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872", "2021 SCMR 105"],
+    "requires_overruled_detection": true,
+    "hops": 2
+  },
+  {
+    "id": "mh_13",
+    "category": "citation_precedent_chain",
+    "query": "What is the citation network and PageRank ranking of leading Contract Act decisions in Pakistan?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["PLD 1990 SC 48", "Contract Act, 1872"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_14",
+    "category": "negative_treatment_overruling",
+    "query": "Identify any judgments in the legal corpus that have been overruled by a larger bench of the Supreme Court.",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["1998 SCMR 1120", "2021 SCMR 105"],
+    "requires_overruled_detection": true,
+    "hops": 2
+  },
+  {
+    "id": "mh_15",
+    "category": "bench_composition",
+    "query": "Who were the bench members in the 5-judge Supreme Court bench that decided 2021 SCMR 105?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["2021 SCMR 105", "Justice Gulzar Ahmed", "Justice Umar Ata Bandial", "Justice Qazi Faez Isa", "Justice Syed Mansoor Ali Shah", "Justice Munib Akhtar"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_16",
+    "category": "bench_composition",
+    "query": "Which judges formed the bench in the landmark decision PLD 1990 SC 48?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["PLD 1990 SC 48", "Justice Nasim Hasan Shah", "Justice Shafiur Rahman"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_17",
+    "category": "statutory_precedent_chain",
+    "query": "Which Supreme Court judgments interpreted Section 188 of the Constitution regarding review of Supreme Court judgments?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Article 188", "Constitution of Pakistan"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_18",
+    "category": "statutory_precedent_chain",
+    "query": "Which cases in the corpus cite Section 342 Cr.P.C. regarding examination of the accused?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Section 342", "Code of Criminal Procedure, 1898"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_19",
+    "category": "single_fact_definition",
+    "query": "What is the requirement of free consent under Section 14 of the Contract Act, 1872?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 14", "Contract Act, 1872"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_20",
+    "category": "single_fact_definition",
+    "query": "Under Section 10 of the Contract Act, 1872, what agreements are contracts?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 10", "Contract Act, 1872"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_21",
+    "category": "hybrid_complex_reasoning",
+    "query": "If a commercial contract clause references Section 23 of Contract Act, what risk does it pose if part of consideration is illegal?",
+    "expected_route": "HYBRID_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872", "Clause", "2021 SCMR 105"],
+    "requires_overruled_detection": true,
+    "hops": 3
+  },
+  {
+    "id": "mh_22",
+    "category": "contract_clause_statute",
+    "query": "Which clauses in our 50 contract corpus reference governing law or statutory sections of Pakistan?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Contract", "Clause", "Laws of Pakistan"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_23",
+    "category": "single_fact_definition",
+    "query": "What does Section 9 of the Specific Relief Act, 1877 provide for suit by person dispossessed of immovable property?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 9", "Specific Relief Act, 1877"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_24",
+    "category": "single_fact_definition",
+    "query": "What constitutes an offence of money laundering under Section 3 of Anti-Money Laundering Act, 2010?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Section 3", "Anti-Money Laundering Act, 2010"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  },
+  {
+    "id": "mh_25",
+    "category": "judge_jurisprudence",
+    "query": "List judgments where Justice Umar Ata Bandial was a member of the Supreme Court bench.",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Justice Umar Ata Bandial"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_26",
+    "category": "statutory_precedent_chain",
+    "query": "Find the precedents interpreting Article 199 of the Constitution regarding constitutional writ jurisdiction.",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["Article 199", "Constitution of Pakistan"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_27",
+    "category": "negative_treatment_overruling",
+    "query": "Explain the legal reasoning why 1998 SCMR 1120 was overruled by the Supreme Court.",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["1998 SCMR 1120", "2021 SCMR 105", "Section 23"],
+    "requires_overruled_detection": true,
+    "hops": 2
+  },
+  {
+    "id": "mh_28",
+    "category": "hybrid_complex_reasoning",
+    "query": "Can an aggrieved party seek restitution under a contract declared void ab initio under Section 23 Contract Act?",
+    "expected_route": "HYBRID_RAG",
+    "expected_entities": ["Section 23", "Contract Act, 1872", "PLD 1990 SC 48", "2021 SCMR 105"],
+    "requires_overruled_detection": false,
+    "hops": 3
+  },
+  {
+    "id": "mh_29",
+    "category": "citation_precedent_chain",
+    "query": "Which Supreme Court decision is the most authoritative precedent on Section 23 based on in-degree citations and PageRank?",
+    "expected_route": "GRAPH_RAG",
+    "expected_entities": ["PLD 1990 SC 48", "PageRank", "Section 23"],
+    "requires_overruled_detection": false,
+    "hops": 2
+  },
+  {
+    "id": "mh_30",
+    "category": "single_fact_definition",
+    "query": "What are the rules regarding delivery of possession in mortgage suits under Order XXXIV CPC?",
+    "expected_route": "VECTOR_RAG",
+    "expected_entities": ["Order XXXIV", "Code of Civil Procedure, 1908"],
+    "requires_overruled_detection": false,
+    "hops": 1
+  }
+]
+

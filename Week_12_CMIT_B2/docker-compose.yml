@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # 1. Main FastAPI Application Service
+  legal-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: legal_assistant_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=khan_associates_secure_pass
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      vector-db:
+        condition: service_started
+    volumes:
+      - ./outputs:/app/outputs
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # 2. Neo4j Knowledge Graph Service
+  neo4j:
+    image: neo4j:5.18-community
+    container_name: legal_neo4j_graph
+    restart: unless-stopped
+    ports:
+      - "7474:7474" # Web Browser UI
+      - "7687:7687" # Bolt Protocol
+    environment:
+      - NEO4J_AUTH=neo4j/khan_associates_secure_pass
+      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      - NEO4J_dbms_memory_heap_max__size=1G
+    volumes:
+      - neo4j_data:/data
+      - ./outputs/graph/neo4j_import.cypher:/var/lib/neo4j/import/import.cypher
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # 3. Vector Database Service (ChromaDB Standalone)
+  vector-db:
+    image: chromadb/chroma:0.5.5
+    container_name: legal_chromadb
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+    volumes:
+      - chroma_data:/chroma/chroma
+
+  # 4. Background Async Worker Service
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: legal_worker
+    restart: unless-stopped
+    command: ["python", "src/verify_citations.py"]
+    depends_on:
+      - legal-api
+    environment:
+      - HF_HUB_OFFLINE=1
+
+volumes:
+  neo4j_data:
+  chroma_data:
+

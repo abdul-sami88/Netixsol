@@ -1,0 +1,4 @@
+Engine,MultiHop_Accuracy,Faithfulness,Context_Completeness,Overruled_Case_Accuracy,Avg_Latency_s
+Vector RAG,0.5333,0.8417,0.56,0.0,0.12
+GraphRAG,0.8933,0.9567,0.8733,1.0,0.006
+Hybrid RAG,0.96,0.98,0.95,1.0,0.056

@@ -1,0 +1,10 @@
+Clause_Type,Support,LLM_Precision,LLM_Recall,LLM_F1,LegalBERT_Precision,LegalBERT_Recall,LegalBERT_F1
+Confidentiality / NDA,33,0.9259,0.7576,0.8333,0.8889,0.7273,0.8
+General / Boilerplate,92,0.9041,0.7174,0.8,0.6792,0.7826,0.7273
+Governing Law / Dispute Resolution,29,0.7838,1.0,0.8788,0.9333,0.9655,0.9492
+Indemnification,23,0.8214,1.0,0.902,0.92,1.0,0.9583
+Intellectual Property,4,0.0,0.0,0.0,0.3333,0.75,0.4615
+Limitation of Liability,20,1.0,1.0,1.0,0.0,0.0,0.0
+Payment & Fees,25,0.7742,0.96,0.8571,0.9167,0.88,0.898
+Representations & Warranties,1,0.5,1.0,0.6667,0.0,0.0,0.0
+Term & Termination,29,0.7714,0.931,0.8438,0.7647,0.8966,0.8254

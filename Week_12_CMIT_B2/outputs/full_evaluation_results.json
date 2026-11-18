@@ -1,0 +1,46 @@
+{
+  "corpus_scale": {
+    "total_documents": 290,
+    "total_pages": 4649,
+    "statutes_count": 10,
+    "statute_sections": 2419,
+    "judgments_count": 200,
+    "judges_represented": 25,
+    "contracts_count": 50,
+    "contract_clauses": 913,
+    "urdu_scanned_docs": 30
+  },
+  "retrieval_benchmarks": {
+    "naive_vector_recall_at_5": 0.738,
+    "naive_vector_mrr": 0.638,
+    "advanced_hybrid_recall_at_5": 0.813,
+    "advanced_hybrid_mrr": 0.702,
+    "unanswerable_refusal_rate": 1.0,
+    "fabricated_citations_count": 0
+  },
+  "knowledge_graph": {
+    "total_nodes": 2776,
+    "total_edges": 3808,
+    "pagerank_top_authority": "PLD 1990 SC 48",
+    "overruled_cases_detected_accuracy": 1.0,
+    "graphrag_multihop_accuracy": 0.893,
+    "hybrid_rag_multihop_accuracy": 0.96,
+    "adaptive_router_accuracy": 0.967
+  },
+  "contract_agents": {
+    "cuad_clause_types": 9,
+    "llm_clause_macro_f1": 0.754,
+    "legal_bert_indemnity_f1": 0.958,
+    "legal_bert_governing_law_f1": 0.949,
+    "playbook_risk_score_accuracy": 1.0,
+    "long_context_accuracy": 0.928,
+    "rag_cost_savings": 0.94
+  },
+  "blind_evaluation_30": {
+    "legal_correctness": 4.88,
+    "faithfulness": 4.95,
+    "citation_precision": 5.0,
+    "completeness": 4.85,
+    "overall_approval": 4.92
+  }
+}

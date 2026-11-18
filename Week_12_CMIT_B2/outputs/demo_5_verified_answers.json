@@ -1,0 +1,139 @@
+[
+  {
+    "id": "demo_01",
+    "title": "Scenario 1: Lawyer Contract Question (Roman Urdu)",
+    "query": "Agar consideration unlawful ho to kya contract void hai?",
+    "answer": {
+      "query": "Agar consideration unlawful ho to kya contract void hai?",
+      "is_sufficient_source_found": true,
+      "short_answer": "Under Contract Act, 1872 Section 23, this matter is governed by statutory provisions.",
+      "explanation": "23. What considerations and objects are lawful and what not. The consideration or object of an agreement is lawful, unless—it is forbidden by law; or is of such a nature that, if permitted, it would defeat the provisions of any law ; or is fraudulent ; or involves or implies injury to the person or property of another; or the Court regards it as im",
+      "citation": {
+        "act": "Contract Act, 1872",
+        "section": "23",
+        "court": null
+      },
+      "quoted_source": "23. What considerations and objects are lawful and what not. The consideration or object\nof an agreement is lawful, unless—it is forbidden by law; or\nis of such a nature that, if permitted, it would defeat the provisions",
+      "parent_id": "stat_004_sec_109"
+    },
+    "verification": {
+      "query": "Agar consideration unlawful ho to kya contract void hai?",
+      "status": "VERIFIED",
+      "act_exists": true,
+      "section_exists": true,
+      "case_exists": null,
+      "quote_verified": true,
+      "is_unanswerable_handled": null,
+      "fabricated_elements": []
+    }
+  },
+  {
+    "id": "demo_02",
+    "title": "Scenario 2: Criminal Law Murder & Qisas (PPC)",
+    "query": "What is the punishment for qatl-i-amd under Section 302 PPC?",
+    "answer": {
+      "query": "What is the punishment for qatl-i-amd under Section 302 PPC?",
+      "is_sufficient_source_found": true,
+      "short_answer": "Under Code of Criminal Procedure, 1898 Section 3564, this matter is governed by statutory provisions.",
+      "explanation": "3564. Conditions as to abode of offender.__ (1) The Court, before directing the release of an offender under section 562, 5[sub section (1)], shall be  satisfied that  the  offender or his surety (if any) has a  fixed place of abode or regular occupation in  the place for which the Court acts or in which the offender is likely  to live during the p",
+      "citation": {
+        "act": "Code of Criminal Procedure, 1898",
+        "section": "3564",
+        "court": null
+      },
+      "quoted_source": "3564. Conditions as to abode of offender.__ (1) The Court, before directing the release of an\noffender under section 562, 5[sub section (1)], shall be  satisfied that  the  offender or his surety (if\nany) has a  fixed pl",
+      "parent_id": "stat_005_sec_128"
+    },
+    "verification": {
+      "query": "What is the punishment for qatl-i-amd under Section 302 PPC?",
+      "status": "VERIFIED",
+      "act_exists": true,
+      "section_exists": true,
+      "case_exists": null,
+      "quote_verified": true,
+      "is_unanswerable_handled": null,
+      "fabricated_elements": []
+    }
+  },
+  {
+    "id": "demo_03",
+    "title": "Scenario 3: Constitutional Fundamental Rights",
+    "query": "What does Article 25 of the Constitution say about equality of citizens?",
+    "answer": {
+      "query": "What does Article 25 of the Constitution say about equality of citizens?",
+      "is_sufficient_source_found": true,
+      "short_answer": "Under Constitution of the Islamic Republic of Pakistan, 1973 Section 25, this matter is governed by statutory provisions.",
+      "explanation": "25. Equality of citizens.__ (1) All citizens are equal before law and are entitled to equal protection of law. (2) There shall be no discrimination on the basis of sex 1[*]. (3) Nothing in this Article shall prevent the State from making any special provision for the protection of women and children. 1[25A. Right to education.__ The State shall pro",
+      "citation": {
+        "act": "Constitution of the Islamic Republic of Pakistan, 1973",
+        "section": "25",
+        "court": null
+      },
+      "quoted_source": "25. Equality of citizens.__ (1) All citizens are equal before law and are entitled to equal\nprotection of law.\n(2) There shall be no discrimination on the basis of sex 1[*].\n(3) Nothing in this Article shall prevent the",
+      "parent_id": "stat_010_sec_55"
+    },
+    "verification": {
+      "query": "What does Article 25 of the Constitution say about equality of citizens?",
+      "status": "VERIFIED",
+      "act_exists": true,
+      "section_exists": true,
+      "case_exists": null,
+      "quote_verified": true,
+      "is_unanswerable_handled": null,
+      "fabricated_elements": []
+    }
+  },
+  {
+    "id": "demo_04",
+    "title": "Scenario 4: Supreme Court Case-Law Judgment",
+    "query": "What was held by the Supreme Court in criminal cases regarding sudden provocation and sentence reduction?",
+    "answer": {
+      "query": "What was held by the Supreme Court in criminal cases regarding sudden provocation and sentence reduction?",
+      "is_sufficient_source_found": true,
+      "short_answer": "Under Pakistani Law Section Page 18, this matter is governed by statutory provisions.",
+      "explanation": "Crl.A No.154-L/2013 etc.  18    case against the appellant beyond reasonable doubt, on the basis  of its evidence. We, therefore, revert to the defense plea and the  statement of the appellant made under section 342 Cr.P.C., which  is to be accepted in its entirety without requiring the proof under  Article 121, QSO. The appellant, in his statement",
+      "citation": {
+        "act": null,
+        "section": null,
+        "court": "Supreme Court of Pakistan",
+        "case": "KA-JUDG-175"
+      },
+      "quoted_source": "Crl.A No.154-L/2013 etc. \n18 \n \ncase against the appellant beyond reasonable doubt, on the basis \nof its evidence. We, therefore, revert to the defense plea and the \nstatement of the appellant made under section 342 Cr.P",
+      "parent_id": "judg_175_p18"
+    },
+    "verification": {
+      "query": "What was held by the Supreme Court in criminal cases regarding sudden provocation and sentence reduction?",
+      "status": "VERIFIED",
+      "act_exists": null,
+      "section_exists": null,
+      "case_exists": true,
+      "quote_verified": true,
+      "is_unanswerable_handled": null,
+      "fabricated_elements": []
+    }
+  },
+  {
+    "id": "demo_05",
+    "title": "Scenario 5: Out-of-Corpus Foreign Law (Unanswerable Guardrail)",
+    "query": "Under California Civil Code, what is the statute of limitations for breach of an oral contract?",
+    "answer": {
+      "query": "Under California Civil Code, what is the statute of limitations for breach of an oral contract?",
+      "is_sufficient_source_found": false,
+      "short_answer": "No sufficient source found",
+      "explanation": "The requested topic concerns legal doctrines, foreign jurisdictions, or statutes not present in the Khan & Associates legal corpus.",
+      "citation": null,
+      "quoted_source": null,
+      "parent_id": null
+    },
+    "verification": {
+      "query": "Under California Civil Code, what is the statute of limitations for breach of an oral contract?",
+      "status": "VERIFIED_NO_SOURCE",
+      "act_exists": null,
+      "section_exists": null,
+      "case_exists": null,
+      "quote_verified": null,
+      "is_unanswerable_handled": true,
+      "fabricated_elements": []
+    }
+  }
+]
