@@ -1,0 +1,47 @@
+[
+  {
+    "matter_id": "KA-2026-SNG",
+    "title": "Fatima Fertilizers vs. Sui Northern Gas",
+    "display": "Fatima Fertilizers vs. Sui Northern Gas (KA-2026-SNG)",
+    "client_name": "Fatima Fertilizers Ltd.",
+    "jurisdiction": "Lahore High Court",
+    "practice_area": "Gas Supply Tariffs & Commercial Breach",
+    "status": "ACTIVE"
+  },
+  {
+    "matter_id": "KA-2026-ISB",
+    "title": "Apex Tech vs. PakTelecom",
+    "display": "Apex Tech vs. PakTelecom (KA-2026-ISB)",
+    "client_name": "Apex Technologies (Pvt.) Ltd.",
+    "jurisdiction": "Islamabad High Court",
+    "practice_area": "Corporate Commercial Dispute",
+    "status": "ACTIVE"
+  },
+  {
+    "matter_id": "KA-2026-LHR",
+    "title": "Habib Textiles Commercial Dispute",
+    "display": "Habib Textiles Commercial Dispute (KA-2026-LHR)",
+    "client_name": "Habib Textiles Mills Ltd.",
+    "jurisdiction": "Lahore High Court",
+    "practice_area": "Supply Chain Breach & Damages",
+    "status": "ACTIVE"
+  },
+  {
+    "matter_id": "KA-2026-KHI",
+    "title": "Engro Energy Cross-Border SaaS",
+    "display": "Engro Energy Cross-Border SaaS (KA-2026-KHI)",
+    "client_name": "Engro Energy Solutions",
+    "jurisdiction": "Sindh High Court",
+    "practice_area": "Cross-Border Technology Licensing",
+    "status": "ACTIVE"
+  },
+  {
+    "matter_id": "KA-GEN-01",
+    "title": "General Advisory & Precedent Research",
+    "display": "General Advisory & Precedent Research",
+    "client_name": "Internal Knowledge Base",
+    "jurisdiction": "Supreme Court of Pakistan",
+    "practice_area": "Constitutional & Statutory Advisory",
+    "status": "ACTIVE"
+  }
+]

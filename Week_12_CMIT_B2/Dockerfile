@@ -34,6 +34,7 @@ ENV HF_HUB_OFFLINE=1
 
 # Copy project code and structured data
 COPY src/ /app/src/
+COPY static/ /app/static/
 COPY data/ /app/data/
 COPY outputs/ /app/outputs/
 COPY reports/ /app/reports/

@@ -193,6 +193,124 @@ Clause 8. Liquidated Damages for Delay
     return clauses
 
 
+def draft_commercial_nda() -> str:
+    """Drafts a bilateral Commercial Non-Disclosure Agreement under Pakistani Law."""
+    nda = f"""# BILATERAL COMMERCIAL NON-DISCLOSURE AGREEMENT
+
+{WATERMARK}
+
+**THIS NON-DISCLOSURE AGREEMENT** (the "Agreement") is entered into at Islamabad on this 19th day of November 2026, by and between:
+
+1. **APEX TECHNOLOGIES (PVT.) LIMITED**, a private company incorporated under the Companies Act, 2017, having its principal registered office at Blue Area, Islamabad (hereinafter referred to as the *"Disclosing Party"*); and
+
+2. **PAKISTAN TELECOMMUNICATIONS & LOGISTICS CORP.**, a public statutory company having its corporate headquarters at Sector G-5, Islamabad (hereinafter referred to as the *"Receiving Party"*).
+
+*(The Disclosing Party and Receiving Party are collectively referred to as the "Parties" and individually as a "Party".)*
+
+---
+
+### RECITALS:
+WHEREAS, the Parties wish to explore potential joint technical and commercial collaboration in high-density telecommunication infrastructure (the "Authorized Purpose"); and
+
+WHEREAS, in connection with the Authorized Purpose, the Disclosing Party may disclose proprietary source code, architectural schematics, customer pricing formulas, and business plans (the "Confidential Information").
+
+NOW, THEREFORE, pursuant to the Contract Act, 1872 and prevailing commercial jurisprudence of the Supreme Court of Pakistan, the Parties agree as follows:
+
+---
+
+### CLAUSE 1: DEFINITION OF CONFIDENTIAL INFORMATION
+1.1 "Confidential Information" means all non-public information disclosed directly or indirectly by Disclosing Party to Receiving Party, whether orally, in writing, electronically, or by inspection of tangible objects, which is designated as confidential or which reasonably ought to be understood as confidential given the nature of the information.
+1.2 Exclusions: Confidential Information does not include information that: (a) is or becomes publicly known through no breach of this Agreement; (b) was already in Receiving Party's lawful possession without restriction prior to disclosure; or (c) is independently developed without reference to Disclosing Party's proprietary assets.
+
+---
+
+### CLAUSE 2: OBLIGATIONS OF RECEIVING PARTY
+2.1 Standard of Care: Receiving Party shall protect Confidential Information with the same degree of care it uses for its own confidential assets of like importance, but in no event less than a reasonable standard of care.
+2.2 Non-Disclosure: Receiving Party shall not disclose, publish, or disseminate Confidential Information to any third party without prior written consent, except to its authorized directors, legal counsel, and technical auditors on a strict need-to-know basis who are bound by non-disclosure obligations no less restrictive than this Agreement.
+2.3 Restriction on Use: Receiving Party shall use Confidential Information solely and exclusively for the Authorized Purpose and for no other commercial or competitive purpose whatsoever.
+
+---
+
+### CLAUSE 3: TERM & DURATION OF PROTECTION
+3.1 This Agreement shall remain in effect for three (3) years from the Effective Date.
+3.2 The obligations of confidentiality concerning trade secrets, algorithms, and system blueprints shall survive termination and endure for a period of five (5) years following return of materials.
+
+---
+
+### CLAUSE 4: INJUNCTIVE RELIEF & LIQUIDATED INDEMNITY
+4.1 The Parties acknowledge that any breach of this Agreement causes irreparable injury for which monetary damages alone would be inadequate. Disclosing Party shall be entitled to seek temporary and permanent injunctive relief before the High Court of competent jurisdiction under Section 52 to 54 of the Specific Relief Act, 1877.
+4.2 In addition to injunctive remedies, any unauthorized public disclosure of core proprietary IP shall attract stipulated liquidated compensation of PKR 10,000,000/- (Pakistani Rupees Ten Million) under Section 74 of the Contract Act, 1872, representing a genuine pre-estimate of trade secret dilution.
+
+---
+
+### CLAUSE 5: GOVERNING LAW & ARBITRATION
+5.1 This Agreement shall be governed by and construed in accordance with the substantive laws of the Islamic Republic of Pakistan.
+5.2 All disputes arising under or related to this Agreement shall be referred to sole binding arbitration in Islamabad under the Arbitration Act, 1940. The language of arbitration shall be English.
+
+IN WITNESS WHEREOF, the Parties have caused this Agreement to be duly executed by their authorized signatories as of the date first written above.
+
+**For APEX TECHNOLOGIES (PVT.) LTD.**  
+______________________________  
+Managing Director / Authorized Signatory  
+
+**For PAKISTAN TELECOMMUNICATIONS CORP.**  
+______________________________  
+Executive Vice President / Authorized Signatory  
+"""
+    return nda
+
+
+def draft_employment_noncompete() -> str:
+    """Drafts an Employment Non-Compete, Confidentiality & IP Assignment Agreement under Pakistani Law."""
+    agr = f"""# EMPLOYEE CONFIDENTIALITY, IP ASSIGNMENT & REASONABLE NON-COMPETE AGREEMENT
+
+{WATERMARK}
+
+**THIS EMPLOYEE COVENANT AGREEMENT** is made at Lahore, Pakistan on this 19th day of November 2026, between:
+
+1. **KHAN & ASSOCIATES LEGAL ADVISORY SERVICES (PVT.) LTD.**, having its principal office at Gulberg III, Lahore (the *"Employer"*); and
+
+2. **MR. HAMZA MALIK**, resident of House 12, Phase 5, DHA, Lahore, CNIC No. 35201-9876543-1 (the *"Employee"*).
+
+---
+
+### PREAMBLE & STATUTORY CONTEXT (SECTION 27, CONTRACT ACT, 1872)
+The Parties enter into this Agreement with mutual acknowledgment of Section 27 of the Contract Act, 1872 (agreements in restraint of trade void, save statutory exceptions). The Parties agree that the restrictions herein are reasonable, narrowly tailored to protect legitimate proprietary trade secrets, goodwill, and confidential firm algorithms, and do not unlawfully restrain Employee from lawful livelihood.
+
+---
+
+### CLAUSE 1: INTELLECTUAL PROPERTY WORK-PRODUCT ASSIGNMENT
+1.1 Ownership: All inventions, software scripts, contract automation playbooks, research syntheses, and technical materials authored or developed by Employee during working hours or using Employer resources ("Work Product") shall be the sole and exclusive property of Employer from the moment of creation.
+1.2 Absolute Assignment: Employee hereby irrevocably assigns to Employer all copyrights, patents, and proprietary rights in all Work Product worldwide, waiving any moral rights to the fullest extent permitted by law.
+
+---
+
+### CLAUSE 2: REASONABLE RESTRICTIVE COVENANTS (NON-SOLICITATION & NON-COMPETE)
+2.1 Non-Solicitation of Clients: During the term of employment and for a period of twelve (12) months following separation, Employee shall not directly or indirectly solicit, induce, or divert any client or active account of Employer with whom Employee worked or had access to confidential files during the preceding eighteen (18) months.
+2.2 Non-Solicitation of Personnel: For a period of twelve (12) months after separation, Employee shall not recruit, solicit, or entice away any employee or consultant of Employer.
+2.3 Legitimate Trade Secret Protection: Employee shall not use or disclose Employer's proprietary legal models, customer pricing matrices, or unpublished institutional playbooks to establish or assist a directly competing enterprise within the city of Lahore for a period of six (6) months following departure.
+
+---
+
+### CLAUSE 3: RETURN OF COMPANY PROPERTY & DATA DELETION
+Upon termination of employment for any reason, Employee shall immediately return all laptops, cryptographic tokens, case files, customer lists, and documents, and certify under oath the permanent deletion of all firm data from personal devices and cloud drives.
+
+---
+
+### CLAUSE 4: GOVERNING LAW & JURISDICTION
+This Agreement shall be governed by the laws of Pakistan. Any dispute shall be submitted to the exclusive jurisdiction of the civil courts and High Court of Lahore, Pakistan.
+
+**EMPLOYEE:**  
+______________________________  
+Mr. Hamza Malik (CNIC: 35201-9876543-1)  
+
+**EMPLOYER:**  
+______________________________  
+For Khan & Associates (Pvt.) Ltd.  
+"""
+    return agr
+
+
 def run_drafting_agent():
     print("=" * 60)
     print("TASK 4: LEGAL DRAFTING AGENT (CASE BRIEF, NOTICE, CLAUSES)")
