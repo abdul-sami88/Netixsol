@@ -114,6 +114,26 @@ body {
 .sidebar-header {
   padding: 24px 20px;
   border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.sidebar-close-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .firm-brand {
@@ -284,10 +304,31 @@ body {
   min-height: 100vh;
 }
 
+/* Mobile Drawer Dark Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 14, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.drawer-locked {
+  overflow: hidden !important;
+}
+
 /* Top Navigation Bar */
 .topbar {
   height: var(--header-height);
-  background: rgba(11, 17, 32, 0.8);
+  background: rgba(11, 17, 32, 0.85);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
@@ -303,6 +344,167 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  padding: 8px 7px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.mobile-nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--sapphire-light);
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+.mobile-brand-pill {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-brand-seal {
+  font-size: 18px;
+}
+
+.mobile-brand-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.page-title-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Mobile Quick Navigation Bar (Horizontal Scroller) */
+.mobile-quick-nav {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(11, 17, 32, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: sticky;
+  top: 56px;
+  z-index: 85;
+}
+
+.mobile-quick-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  font-family: var(--font-ui);
+}
+
+.quick-nav-pill.active {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(37, 99, 235, 0.15));
+  border-color: var(--sapphire-light);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive Structural Classes */
+.responsive-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.responsive-two-col.align-start {
+  align-items: start;
+}
+
+.responsive-two-col.gap-14 {
+  gap: 14px;
+}
+
+.responsive-two-col.mb-24 {
+  margin-bottom: 24px;
+}
+
+.card-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.card-action-bar.justify-end {
+  justify-content: flex-end;
+}
+
+.action-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-btn-main {
+  padding: 12px 28px;
+  font-size: 14.5px;
+}
+
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.draft-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.select-instrument {
+  width: 320px;
 }
 
 .page-title {
@@ -1470,18 +1672,371 @@ body {
   margin-bottom: 12px;
 }
 
-/* Responsive Adjustments */
+/* ==========================================================================
+   Complete Responsive Design & Mobile Adaptability
+   ========================================================================== */
+
+/* Universal Mobile Overflow Protection */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.app-container, .main-wrapper {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Tablet & Smaller Screens (<= 1024px) */
 @media (max-width: 1024px) {
+  /* Sidebar Drawer transformation */
   .sidebar {
+    width: 290px;
     transform: translateX(-100%);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
   }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
   .main-wrapper {
     margin-left: 0;
+    width: 100%;
   }
+
+  /* Topbar mobile adjustments */
+  .topbar {
+    padding: 0 18px;
+    height: 62px;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .mobile-quick-nav {
+    display: flex;
+  }
+
+  .page-subtitle {
+    display: none;
+  }
+
+  .active-matter-pill {
+    max-width: 200px;
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .jurisdiction-badge {
+    display: none;
+  }
+
+  .content-area {
+    padding: 20px 16px;
+  }
+
+  /* Layout grids become single column */
+  .responsive-two-col {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
   .redline-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
+
   .risk-gauge-container {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .metrics-strip {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .embed-container {
+    height: 580px;
+  }
+}
+
+/* Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+  .content-area {
+    padding: 14px 10px;
+  }
+
+  .card {
+    padding: 16px 12px;
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .card-title-group h2 {
+    font-size: 16px;
+  }
+
+  .card-title-group p {
+    font-size: 12px;
+  }
+
+  /* Buttons & Action Bars */
+  .card-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .action-bar-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .action-btn-main {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  /* Research Module */
+  .answer-lead {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .parchment-quote {
+    padding: 14px 14px;
+  }
+
+  .parchment-quote-text {
+    font-size: 14px;
+    word-break: break-word;
+  }
+
+  .bad-law-banner {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .research-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .stat-pills {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  /* Playbook Review Module */
+  .upload-dropzone {
+    padding: 24px 14px;
+  }
+
+  .risk-score-dial {
+    padding: 16px;
+  }
+
+  .score-number {
+    font-size: 40px;
+  }
+
+  .risk-verdict-details h3 {
+    font-size: 16px;
+  }
+
+  .clause-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .clause-raw-text {
+    font-size: 13.5px;
+    padding: 10px 12px;
+    word-break: break-word;
+  }
+
+  /* Drafting Studio Module */
+  .draft-controls-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .select-instrument {
+    width: 100% !important;
+  }
+
+  .action-btn-generate {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .editor-toolbar {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .toolbar-group {
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .toolbar-divider {
+    display: none;
+  }
+
+  .document-sheet-wrapper {
+    padding: 12px 4px;
+    min-height: 420px;
+  }
+
+  .document-sheet {
+    padding: 22px 14px;
+    font-size: 14.5px;
+    min-height: 420px;
+    word-break: break-word;
+  }
+
+  .watermark-overlay {
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    white-space: normal;
+    text-align: center;
+    width: 85%;
+  }
+
+  .editor-statusbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  /* Embeds */
+  .embed-container {
+    height: 460px;
+  }
+
+  /* Audit Table */
+  .audit-table-container {
+    border-radius: var(--radius-sm);
+  }
+
+  .audit-table th, .audit-table td {
+    padding: 8px 10px;
+    font-size: 11.5px;
+  }
+
+  /* Modal */
+  .modal-card {
+    max-width: 95vw;
+    margin: 10px;
+    padding: 16px 14px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  /* Toast Notification */
+  .toast-msg {
+    left: 12px;
+    right: 12px;
+    bottom: 14px;
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+}
+
+/* Small Smart Phones (<= 640px) */
+@media (max-width: 640px) {
+  .topbar {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .mobile-quick-nav {
+    top: 56px;
+    padding: 8px 10px;
+  }
+
+  .page-title-box {
+    display: none;
+  }
+
+  .mobile-brand-pill {
+    display: flex;
+  }
+
+  .active-matter-pill {
+    display: none;
+  }
+
+  .status-indicator {
+    padding: 4px 8px;
+    font-size: 10.5px;
+  }
+
+  /* Full-width Stacked Search Input */
+  .query-input-main {
+    padding: 14px 14px;
+    font-size: 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .query-btn-submit {
+    position: static;
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .chips-container {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .query-chip {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .chips-label {
+    width: 100%;
+    margin-bottom: 4px;
   }
 }

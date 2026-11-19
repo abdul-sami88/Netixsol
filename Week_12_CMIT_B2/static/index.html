@@ -19,7 +19,7 @@
     <!-- ====================================================================
          Sidebar Navigation
          ==================================================================== -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar_nav">
       <div class="sidebar-header">
         <div class="firm-brand">
           <div class="firm-seal">⚖️</div>
@@ -28,6 +28,7 @@
             <p>Advocates & Counsel</p>
           </div>
         </div>
+        <button class="sidebar-close-btn" id="sidebar_close_btn" aria-label="Close navigation menu">✕</button>
       </div>
 
       <div class="sidebar-matter">
@@ -101,6 +102,9 @@
       </div>
     </aside>
 
+    <!-- Mobile Drawer Dark Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar_backdrop"></div>
+
     <!-- ====================================================================
          Main Application Wrapper
          ==================================================================== -->
@@ -109,12 +113,25 @@
       <!-- Top Navigation Bar -->
       <header class="topbar">
         <div class="topbar-left">
-          <div class="page-title" id="current_page_title">
-            <span>⚖️</span>
-            <span>Legal Research & Grounded GraphRAG</span>
+          <button class="mobile-nav-toggle" id="mobile_nav_toggle" aria-label="Open navigation menu" title="Open Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
+          <div class="mobile-brand-pill">
+            <span class="mobile-brand-seal">⚖️</span>
+            <span class="mobile-brand-title">Khan &amp; Associates</span>
           </div>
-          <div class="page-subtitle" id="current_page_subtitle">
-            Supreme Court of Pakistan & Statutory Code Verification
+
+          <div class="page-title-box">
+            <div class="page-title" id="current_page_title">
+              <span>⚖️</span>
+              <span>Legal Research & Grounded GraphRAG</span>
+            </div>
+            <div class="page-subtitle" id="current_page_subtitle">
+              Supreme Court of Pakistan & Statutory Code Verification
+            </div>
           </div>
         </div>
 
@@ -133,6 +150,17 @@
           </div>
         </div>
       </header>
+
+      <!-- Mobile Horizontal Quick-Nav Scroller -->
+      <nav class="mobile-quick-nav" id="mobile_quick_nav" aria-label="Quick tab selection">
+        <button class="quick-nav-pill active" data-tab="tab_research">⚖️ Research</button>
+        <button class="quick-nav-pill" data-tab="tab_playbook">📋 Playbook</button>
+        <button class="quick-nav-pill" data-tab="tab_comparison">🔍 Redline</button>
+        <button class="quick-nav-pill" data-tab="tab_drafting">✍️ Drafting</button>
+        <button class="quick-nav-pill" data-tab="tab_graph">🕸️ Graph</button>
+        <button class="quick-nav-pill" data-tab="tab_dashboard">📊 Dashboard</button>
+        <button class="quick-nav-pill" data-tab="tab_security">🛡️ Security</button>
+      </nav>
 
       <!-- Content Area (Tabs) -->
       <main class="content-area">
@@ -266,7 +294,7 @@
             </div>
 
             <!-- Upload or Select Contract Section -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+            <div class="responsive-two-col align-start">
               
               <!-- Option A: File Upload -->
               <div>
@@ -288,8 +316,8 @@
                   <!-- Populated dynamically via JS -->
                 </select>
                 
-                <div style="display: flex; gap: 8px; margin-top: 10px;">
-                  <button id="btn_load_sample_contract" class="btn btn-secondary btn-sm" style="flex: 1;">
+                <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                  <button id="btn_load_sample_contract" class="btn btn-secondary btn-sm" style="flex: 1; min-width: 160px;">
                     ⚡ Load Sample Cloud SaaS Contract
                   </button>
                   <button id="btn_clear_contract" class="btn btn-secondary btn-sm">
@@ -301,13 +329,13 @@
             </div>
 
             <!-- Staged Clauses Info & Action Bar -->
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border-subtle);">
-              <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="card-action-bar">
+              <div class="action-bar-left">
                 <span class="engine-pill" id="staged_contract_pill">Contract: Master Cloud Services Agreement</span>
                 <span style="font-size: 13px; color: var(--text-muted);" id="staged_clauses_count">10 clauses ready for audit</span>
               </div>
               
-              <button id="btn_run_playbook_audit" class="btn btn-primary" style="padding: 12px 28px; font-size: 14.5px;">
+              <button id="btn_run_playbook_audit" class="btn btn-primary action-btn-main">
                 <span>⚖️ Run Automated Playbook Audit</span>
               </button>
             </div>
@@ -434,8 +462,8 @@
             </div>
 
             <!-- Compare Trigger -->
-            <div style="display: flex; justify-content: flex-end;">
-              <button id="btn_run_compare" class="btn btn-primary" style="padding: 12px 28px;">
+            <div class="card-action-bar justify-end">
+              <button id="btn_run_compare" class="btn btn-primary action-btn-main">
                 <span>⚡ Execute Precision Redline Comparison</span>
               </button>
             </div>
@@ -459,7 +487,7 @@
               </div>
 
               <!-- Metrics Strip -->
-              <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+              <div class="metrics-strip">
                 <div style="flex: 1; background: var(--bg-surface); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); text-align: center;">
                   <div style="font-size: 28px; font-weight: 800; color: #ffffff;" id="diff_mod_count">3</div>
                   <div style="font-size: 11.5px; color: var(--text-muted); text-transform: uppercase;">Total Modifications</div>
@@ -498,15 +526,15 @@
               </div>
               
               <!-- Instrument Selector -->
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <select id="draft_type_select" class="select-input" style="width: 320px;">
+              <div class="draft-controls-group">
+                <select id="draft_type_select" class="select-input select-instrument">
                   <option value="legal_notice">Formal Legal Notice (Breach of Contract & Damages)</option>
                   <option value="case_brief">Supreme Court Appellate Case Brief (Contract Validity)</option>
                   <option value="commercial_nda">Commercial Non-Disclosure Agreement (Pakistani Law)</option>
                   <option value="employment_noncompete">Employment Non-Compete & IP Assignment</option>
                   <option value="clauses">Bespoke Contract Clauses (Governing Law & Indemnity)</option>
                 </select>
-                <button id="btn_generate_draft" class="btn btn-primary btn-sm">
+                <button id="btn_generate_draft" class="btn btn-primary btn-sm action-btn-generate">
                   ⚡ Generate Draft
                 </button>
               </div>
@@ -659,7 +687,7 @@
         <section id="tab_security" class="tab-pane">
           
           <!-- Section A: PII Sanitizer & Injection Scanner -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div class="responsive-two-col mb-24">
             
             <!-- Pakistani PII Sanitizer -->
             <div class="card" style="margin-bottom: 0;">
@@ -785,7 +813,7 @@
           <label class="input-label">Dispute / Matter Caption *</label>
           <input type="text" id="new_matter_title" class="text-input" placeholder="e.g. Sui Northern Gas Supply Breach Arbitration">
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="responsive-two-col gap-14">
           <div class="input-group" style="margin-bottom: 0;">
             <label class="input-label">Matter ID / Docket No. *</label>
             <input type="text" id="new_matter_id" class="text-input" placeholder="e.g. KA-2026-SNG">
