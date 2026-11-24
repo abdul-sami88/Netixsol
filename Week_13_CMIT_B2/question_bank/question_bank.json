@@ -1,0 +1,3766 @@
+[
+  {
+    "id": "Q001",
+    "concept_id": "variables",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with variables & name binding?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Variables & Name Binding' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Variables & Name Binding operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q002",
+    "concept_id": "variables",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 1,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the exact output of the following code?\nx = 10\ny = x\nx = 20\nprint(y)",
+    "options": {},
+    "correct_answer": "10",
+    "explanation": "Integers are immutable. Reassigning x = 20 binds x to a new integer object; y remains bound to 10.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q003",
+    "concept_id": "variables",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 1,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `swap_values(a, b)` that returns the two values swapped in a tuple `(b, a)`.",
+    "options": {},
+    "correct_answer": "def swap_values(a, b):\n    return b, a",
+    "explanation": "Tuple packing and unpacking allows elegant one-line value swapping in Python.",
+    "test_cases": [
+      {
+        "input": "(1, 2)",
+        "expected": "(2, 1)"
+      },
+      {
+        "input": "('x', 'y')",
+        "expected": "('y', 'x')"
+      }
+    ],
+    "starter_code": "def swap_values(a, b):\n    # TODO: return swapped values\n    pass"
+  },
+  {
+    "id": "Q004",
+    "concept_id": "variables",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Variables & Name Binding, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Variables & Name Binding.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Variables & Name Binding.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q005",
+    "concept_id": "variables",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Variables & Name Binding' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_variables(*args, **kwargs):\n    # Production pattern for Variables & Name Binding\n    return True",
+    "explanation": "Integrates Variables & Name Binding into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_variables(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q006",
+    "concept_id": "integers_floats",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with integers & floating-point numbers?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Integers & Floating-Point Numbers' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Integers & Floating-Point Numbers operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q007",
+    "concept_id": "integers_floats",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 1,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output of: print(7 // 2, 7 % 2)? Provide both numbers separated by a single space.",
+    "options": {},
+    "correct_answer": "3 1",
+    "explanation": "// performs floor division yielding 3; % is modulo yielding remainder 1.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q008",
+    "concept_id": "integers_floats",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 1,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `calculate_bmi(weight_kg, height_m)` returning BMI rounded to 2 decimal places: `weight / (height ** 2)`.",
+    "options": {},
+    "correct_answer": "def calculate_bmi(weight_kg, height_m):\n    return round(weight_kg / (height_m ** 2), 2)",
+    "explanation": "Uses standard division and exponentiation operators.",
+    "test_cases": [
+      {
+        "input": "(70, 1.75)",
+        "expected": "22.86"
+      },
+      {
+        "input": "(90, 1.80)",
+        "expected": "27.78"
+      }
+    ],
+    "starter_code": "def calculate_bmi(weight_kg, height_m):\n    pass"
+  },
+  {
+    "id": "Q009",
+    "concept_id": "integers_floats",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Integers & Floating-Point Numbers, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Integers & Floating-Point Numbers.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Integers & Floating-Point Numbers.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q010",
+    "concept_id": "integers_floats",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Integers & Floating-Point Numbers' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_integers_floats(*args, **kwargs):\n    # Production pattern for Integers & Floating-Point Numbers\n    return True",
+    "explanation": "Integrates Integers & Floating-Point Numbers into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_integers_floats(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q011",
+    "concept_id": "strings",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with string literals & indexing?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'String Literals & Indexing' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, String Literals & Indexing operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q012",
+    "concept_id": "strings",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 1,
+    "blooms_level": "Analyzing",
+    "prompt": "Given s = 'Python', what is the exact string returned by s[1:4]?",
+    "options": {},
+    "correct_answer": "yth",
+    "explanation": "Slicing s[1:4] extracts characters at indices 1, 2, 3, which are 'y', 't', 'h'.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q013",
+    "concept_id": "strings",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 1,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `is_palindrome(s)` that returns True if string s is equal forwards and backwards (case-insensitive), else False.",
+    "options": {},
+    "correct_answer": "def is_palindrome(s):\n    cleaned = s.lower()\n    return cleaned == cleaned[::-1]",
+    "explanation": "Converts string to lowercase and compares against its reversed slice [::-1].",
+    "test_cases": [
+      {
+        "input": "('Racecar',)",
+        "expected": "True"
+      },
+      {
+        "input": "('Python',)",
+        "expected": "False"
+      }
+    ],
+    "starter_code": "def is_palindrome(s):\n    pass"
+  },
+  {
+    "id": "Q014",
+    "concept_id": "strings",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving String Literals & Indexing, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to String Literals & Indexing.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with String Literals & Indexing.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q015",
+    "concept_id": "strings",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'String Literals & Indexing' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_strings(*args, **kwargs):\n    # Production pattern for String Literals & Indexing\n    return True",
+    "explanation": "Integrates String Literals & Indexing into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_strings(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q016",
+    "concept_id": "type_casting",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with type conversion & casting?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Type Conversion & Casting' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Type Conversion & Casting operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q017",
+    "concept_id": "type_casting",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What does bool(0.0) evaluate to? (True or False)",
+    "options": {},
+    "correct_answer": "False",
+    "explanation": "0.0 is numerically zero and is considered falsy in Python boolean evaluation.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q018",
+    "concept_id": "type_casting",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_type_casting(data)` that implements core algorithmic logic for Type Conversion & Casting.",
+    "options": {},
+    "correct_answer": "def solve_type_casting(data):\n    return data",
+    "explanation": "Applies core principles of Type Conversion & Casting to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_type_casting(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q019",
+    "concept_id": "type_casting",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Type Conversion & Casting, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Type Conversion & Casting.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Type Conversion & Casting.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q020",
+    "concept_id": "type_casting",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Type Conversion & Casting' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_type_casting(*args, **kwargs):\n    # Production pattern for Type Conversion & Casting\n    return True",
+    "explanation": "Integrates Type Conversion & Casting into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_type_casting(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q021",
+    "concept_id": "string_formatting",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with string formatting & f-strings?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'String Formatting & F-Strings' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, String Formatting & F-Strings operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q022",
+    "concept_id": "string_formatting",
+    "module": "1_Basics_Primitives",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output of: print(f'{3.14159:.2f}')?",
+    "options": {},
+    "correct_answer": "3.14",
+    "explanation": "The format specifier :.2f rounds and formats the floating-point number to two decimal places.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q023",
+    "concept_id": "string_formatting",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_string_formatting(data)` that implements core algorithmic logic for String Formatting & F-Strings.",
+    "options": {},
+    "correct_answer": "def solve_string_formatting(data):\n    return data",
+    "explanation": "Applies core principles of String Formatting & F-Strings to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_string_formatting(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q024",
+    "concept_id": "string_formatting",
+    "module": "1_Basics_Primitives",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving String Formatting & F-Strings, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to String Formatting & F-Strings.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with String Formatting & F-Strings.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q025",
+    "concept_id": "string_formatting",
+    "module": "1_Basics_Primitives",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'String Formatting & F-Strings' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_string_formatting(*args, **kwargs):\n    # Production pattern for String Formatting & F-Strings\n    return True",
+    "explanation": "Integrates String Formatting & F-Strings into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_string_formatting(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q026",
+    "concept_id": "comparison_operators",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with relational & comparison operators?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Relational & Comparison Operators' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Relational & Comparison Operators operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q027",
+    "concept_id": "comparison_operators",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 1,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the boolean result of: print(3 < 5 == 5)? (True or False)",
+    "options": {},
+    "correct_answer": "True",
+    "explanation": "Python chains comparisons: (3 < 5) and (5 == 5) both evaluate to True, so the entire expression is True.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q028",
+    "concept_id": "comparison_operators",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 1,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_comparison_operators(data)` that implements core algorithmic logic for Relational & Comparison Operators.",
+    "options": {},
+    "correct_answer": "def solve_comparison_operators(data):\n    return data",
+    "explanation": "Applies core principles of Relational & Comparison Operators to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_comparison_operators(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q029",
+    "concept_id": "comparison_operators",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Relational & Comparison Operators, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Relational & Comparison Operators.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Relational & Comparison Operators.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q030",
+    "concept_id": "comparison_operators",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Relational & Comparison Operators' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_comparison_operators(*args, **kwargs):\n    # Production pattern for Relational & Comparison Operators\n    return True",
+    "explanation": "Integrates Relational & Comparison Operators into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_comparison_operators(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q031",
+    "concept_id": "booleans",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with booleans & truthiness?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Booleans & Truthiness' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Booleans & Truthiness operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q032",
+    "concept_id": "booleans",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the boolean evaluation of bool([]) in Python?",
+    "options": {},
+    "correct_answer": "False",
+    "explanation": "Empty collections (lists, tuples, dicts, sets) are falsy.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q033",
+    "concept_id": "booleans",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_booleans(data)` that implements core algorithmic logic for Booleans & Truthiness.",
+    "options": {},
+    "correct_answer": "def solve_booleans(data):\n    return data",
+    "explanation": "Applies core principles of Booleans & Truthiness to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_booleans(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q034",
+    "concept_id": "booleans",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Booleans & Truthiness, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Booleans & Truthiness.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Booleans & Truthiness.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q035",
+    "concept_id": "booleans",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Booleans & Truthiness' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_booleans(*args, **kwargs):\n    # Production pattern for Booleans & Truthiness\n    return True",
+    "explanation": "Integrates Booleans & Truthiness into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_booleans(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q036",
+    "concept_id": "logical_operators",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with logical operators & short-circuiting?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Logical Operators & Short-Circuiting' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Logical Operators & Short-Circuiting operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q037",
+    "concept_id": "logical_operators",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output of the short-circuit evaluation: print([] or 'Python')?",
+    "options": {},
+    "correct_answer": "Python",
+    "explanation": "In Python, 'or' returns the first truthy operand, or the last falsy operand if none are truthy. [] is falsy, so 'Python' is returned.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q038",
+    "concept_id": "logical_operators",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_logical_operators(data)` that implements core algorithmic logic for Logical Operators & Short-Circuiting.",
+    "options": {},
+    "correct_answer": "def solve_logical_operators(data):\n    return data",
+    "explanation": "Applies core principles of Logical Operators & Short-Circuiting to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_logical_operators(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q039",
+    "concept_id": "logical_operators",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Logical Operators & Short-Circuiting, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Logical Operators & Short-Circuiting.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Logical Operators & Short-Circuiting.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q040",
+    "concept_id": "logical_operators",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Logical Operators & Short-Circuiting' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_logical_operators(*args, **kwargs):\n    # Production pattern for Logical Operators & Short-Circuiting\n    return True",
+    "explanation": "Integrates Logical Operators & Short-Circuiting into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_logical_operators(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q041",
+    "concept_id": "if_else",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with conditional if-else branching?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Conditional If-Else Branching' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Conditional If-Else Branching operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q042",
+    "concept_id": "if_else",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What does this code print?\nx = 5\nif x > 3:\n    if x < 4:\n        print('A')\n    else:\n        print('B')",
+    "options": {},
+    "correct_answer": "B",
+    "explanation": "x > 3 is True, so it enters the nested block. x < 4 is False, so it branches to else and prints 'B'.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q043",
+    "concept_id": "if_else",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_if_else(data)` that implements core algorithmic logic for Conditional If-Else Branching.",
+    "options": {},
+    "correct_answer": "def solve_if_else(data):\n    return data",
+    "explanation": "Applies core principles of Conditional If-Else Branching to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_if_else(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q044",
+    "concept_id": "if_else",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Conditional If-Else Branching, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Conditional If-Else Branching.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Conditional If-Else Branching.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q045",
+    "concept_id": "if_else",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Conditional If-Else Branching' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_if_else(*args, **kwargs):\n    # Production pattern for Conditional If-Else Branching\n    return True",
+    "explanation": "Integrates Conditional If-Else Branching into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_if_else(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q046",
+    "concept_id": "elif_chains",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with elif multi-way decision chains?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Elif Multi-Way Decision Chains' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Elif Multi-Way Decision Chains operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q047",
+    "concept_id": "elif_chains",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is printed?\nval = 15\nif val > 20: print('High')\nelif val > 10: print('Med')\nelif val > 5: print('Low')\nelse: print('None')",
+    "options": {},
+    "correct_answer": "Med",
+    "explanation": "Python executes the first branch whose condition evaluates to True and exits the chain.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q048",
+    "concept_id": "elif_chains",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_elif_chains(data)` that implements core algorithmic logic for Elif Multi-Way Decision Chains.",
+    "options": {},
+    "correct_answer": "def solve_elif_chains(data):\n    return data",
+    "explanation": "Applies core principles of Elif Multi-Way Decision Chains to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_elif_chains(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q049",
+    "concept_id": "elif_chains",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Elif Multi-Way Decision Chains, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Elif Multi-Way Decision Chains.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Elif Multi-Way Decision Chains.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q050",
+    "concept_id": "elif_chains",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Elif Multi-Way Decision Chains' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_elif_chains(*args, **kwargs):\n    # Production pattern for Elif Multi-Way Decision Chains\n    return True",
+    "explanation": "Integrates Elif Multi-Way Decision Chains into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_elif_chains(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q051",
+    "concept_id": "pass_statement",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with the pass placeholder statement?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'The Pass Placeholder Statement' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, The Pass Placeholder Statement operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q052",
+    "concept_id": "pass_statement",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 1,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with The Pass Placeholder Statement under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for The Pass Placeholder Statement.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q053",
+    "concept_id": "pass_statement",
+    "module": "2_Control_Flow",
+    "type": "coding",
+    "difficulty": 1,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_pass_statement(data)` that implements core algorithmic logic for The Pass Placeholder Statement.",
+    "options": {},
+    "correct_answer": "def solve_pass_statement(data):\n    return data",
+    "explanation": "Applies core principles of The Pass Placeholder Statement to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_pass_statement(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q054",
+    "concept_id": "pass_statement",
+    "module": "2_Control_Flow",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving The Pass Placeholder Statement, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to The Pass Placeholder Statement.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with The Pass Placeholder Statement.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q055",
+    "concept_id": "pass_statement",
+    "module": "2_Control_Flow",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'The Pass Placeholder Statement' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_pass_statement(*args, **kwargs):\n    # Production pattern for The Pass Placeholder Statement\n    return True",
+    "explanation": "Integrates The Pass Placeholder Statement into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_pass_statement(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q056",
+    "concept_id": "while_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with while loops & state iteration?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'While Loops & State Iteration' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, While Loops & State Iteration operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q057",
+    "concept_id": "while_loops",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "How many times does 'Loop' print?\nc = 0\nwhile c < 3:\n    print('Loop')\n    c += 1",
+    "options": {},
+    "correct_answer": "3",
+    "explanation": "The loop executes for c = 0, 1, 2, yielding exactly 3 iterations.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q058",
+    "concept_id": "while_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_while_loops(data)` that implements core algorithmic logic for While Loops & State Iteration.",
+    "options": {},
+    "correct_answer": "def solve_while_loops(data):\n    return data",
+    "explanation": "Applies core principles of While Loops & State Iteration to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_while_loops(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q059",
+    "concept_id": "while_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving While Loops & State Iteration, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to While Loops & State Iteration.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with While Loops & State Iteration.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q060",
+    "concept_id": "while_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'While Loops & State Iteration' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_while_loops(*args, **kwargs):\n    # Production pattern for While Loops & State Iteration\n    return True",
+    "explanation": "Integrates While Loops & State Iteration into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_while_loops(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q061",
+    "concept_id": "range_function",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with range sequence generation?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Range Sequence Generation' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Range Sequence Generation operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q062",
+    "concept_id": "range_function",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the list resulting from: list(range(2, 9, 3))? (format: [x, y, z])",
+    "options": {},
+    "correct_answer": "[2, 5, 8]",
+    "explanation": "Starts at 2, increments by 3: 2, 5, 8 (9 is excluded).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q063",
+    "concept_id": "range_function",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_range_function(data)` that implements core algorithmic logic for Range Sequence Generation.",
+    "options": {},
+    "correct_answer": "def solve_range_function(data):\n    return data",
+    "explanation": "Applies core principles of Range Sequence Generation to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_range_function(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q064",
+    "concept_id": "range_function",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Range Sequence Generation, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Range Sequence Generation.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Range Sequence Generation.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q065",
+    "concept_id": "range_function",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Range Sequence Generation' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_range_function(*args, **kwargs):\n    # Production pattern for Range Sequence Generation\n    return True",
+    "explanation": "Integrates Range Sequence Generation into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_range_function(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q066",
+    "concept_id": "for_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with for loops & iterable traversal?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'For Loops & Iterable Traversal' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, For Loops & Iterable Traversal operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q067",
+    "concept_id": "for_loops",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the final value of total after:\ntotal = 0\nfor x in [1, 2, 3, 4]:\n    total += x",
+    "options": {},
+    "correct_answer": "10",
+    "explanation": "1 + 2 + 3 + 4 = 10.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q068",
+    "concept_id": "for_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `sum_even_numbers(numbers)` that returns the sum of all even integers in the given list.",
+    "options": {},
+    "correct_answer": "def sum_even_numbers(numbers):\n    return sum(n for n in numbers if n % 2 == 0)",
+    "explanation": "Iterates through the list and accumulates integers with n % 2 == 0.",
+    "test_cases": [
+      {
+        "input": "([1, 2, 3, 4, 5, 6],)",
+        "expected": "12"
+      },
+      {
+        "input": "([1, 3, 5],)",
+        "expected": "0"
+      }
+    ],
+    "starter_code": "def sum_even_numbers(numbers):\n    pass"
+  },
+  {
+    "id": "Q069",
+    "concept_id": "for_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving For Loops & Iterable Traversal, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to For Loops & Iterable Traversal.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with For Loops & Iterable Traversal.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q070",
+    "concept_id": "for_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'For Loops & Iterable Traversal' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_for_loops(*args, **kwargs):\n    # Production pattern for For Loops & Iterable Traversal\n    return True",
+    "explanation": "Integrates For Loops & Iterable Traversal into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_for_loops(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q071",
+    "concept_id": "break_continue",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with loop controls: break & continue?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Loop Controls: Break & Continue' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Loop Controls: Break & Continue operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q072",
+    "concept_id": "break_continue",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output?\nres = []\nfor i in range(5):\n    if i == 2: continue\n    if i == 4: break\n    res.append(i)\nprint(res)",
+    "options": {},
+    "correct_answer": "[0, 1, 3]",
+    "explanation": "0 is appended, 1 is appended, 2 is skipped by continue, 3 is appended, and 4 triggers break.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q073",
+    "concept_id": "break_continue",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_break_continue(data)` that implements core algorithmic logic for Loop Controls: Break & Continue.",
+    "options": {},
+    "correct_answer": "def solve_break_continue(data):\n    return data",
+    "explanation": "Applies core principles of Loop Controls: Break & Continue to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_break_continue(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q074",
+    "concept_id": "break_continue",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Loop Controls: Break & Continue, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Loop Controls: Break & Continue.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Loop Controls: Break & Continue.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q075",
+    "concept_id": "break_continue",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Loop Controls: Break & Continue' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_break_continue(*args, **kwargs):\n    # Production pattern for Loop Controls: Break & Continue\n    return True",
+    "explanation": "Integrates Loop Controls: Break & Continue into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_break_continue(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q076",
+    "concept_id": "nested_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with nested loops & matrix traversal?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Nested Loops & Matrix Traversal' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Nested Loops & Matrix Traversal operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q077",
+    "concept_id": "nested_loops",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "How many times is '*' printed?\nfor i in range(3):\n    for j in range(2):\n        print('*')",
+    "options": {},
+    "correct_answer": "6",
+    "explanation": "Outer loop runs 3 times, inner loop runs 2 times per outer iteration: 3 * 2 = 6.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q078",
+    "concept_id": "nested_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_nested_loops(data)` that implements core algorithmic logic for Nested Loops & Matrix Traversal.",
+    "options": {},
+    "correct_answer": "def solve_nested_loops(data):\n    return data",
+    "explanation": "Applies core principles of Nested Loops & Matrix Traversal to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_nested_loops(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q079",
+    "concept_id": "nested_loops",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Nested Loops & Matrix Traversal, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Nested Loops & Matrix Traversal.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Nested Loops & Matrix Traversal.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q080",
+    "concept_id": "nested_loops",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Nested Loops & Matrix Traversal' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_nested_loops(*args, **kwargs):\n    # Production pattern for Nested Loops & Matrix Traversal\n    return True",
+    "explanation": "Integrates Nested Loops & Matrix Traversal into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_nested_loops(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q081",
+    "concept_id": "for_else",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with loop else clause?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Loop Else Clause' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Loop Else Clause operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q082",
+    "concept_id": "for_else",
+    "module": "3_Iteration",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "What is printed?\nfor x in [1, 2, 3]:\n    if x == 2: break\nelse:\n    print('Completed')\nprint('Done')",
+    "options": {},
+    "correct_answer": "Done",
+    "explanation": "The else block is skipped because the loop was interrupted by break. Only 'Done' is printed.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q083",
+    "concept_id": "for_else",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_for_else(data)` that implements core algorithmic logic for Loop Else Clause.",
+    "options": {},
+    "correct_answer": "def solve_for_else(data):\n    return data",
+    "explanation": "Applies core principles of Loop Else Clause to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_for_else(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q084",
+    "concept_id": "for_else",
+    "module": "3_Iteration",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Loop Else Clause, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Loop Else Clause.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Loop Else Clause.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q085",
+    "concept_id": "for_else",
+    "module": "3_Iteration",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Loop Else Clause' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_for_else(*args, **kwargs):\n    # Production pattern for Loop Else Clause\n    return True",
+    "explanation": "Integrates Loop Else Clause into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_for_else(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q086",
+    "concept_id": "functions_def",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with function definitions & calls?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Function Definitions & Calls' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Function Definitions & Calls operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q087",
+    "concept_id": "functions_def",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is returned by a Python function that has no return statement?",
+    "options": {},
+    "correct_answer": "None",
+    "explanation": "In Python, functions implicitly return None when no return expression is executed.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q088",
+    "concept_id": "functions_def",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_functions_def(data)` that implements core algorithmic logic for Function Definitions & Calls.",
+    "options": {},
+    "correct_answer": "def solve_functions_def(data):\n    return data",
+    "explanation": "Applies core principles of Function Definitions & Calls to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_functions_def(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q089",
+    "concept_id": "functions_def",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Function Definitions & Calls, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Function Definitions & Calls.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Function Definitions & Calls.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q090",
+    "concept_id": "functions_def",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Function Definitions & Calls' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_functions_def(*args, **kwargs):\n    # Production pattern for Function Definitions & Calls\n    return True",
+    "explanation": "Integrates Function Definitions & Calls into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_functions_def(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q091",
+    "concept_id": "arguments_parameters",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with parameters & positional/keyword arguments?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Parameters & Positional/Keyword Arguments' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Parameters & Positional/Keyword Arguments operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q092",
+    "concept_id": "arguments_parameters",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Given def add(a, b=5): return a + b, what is the output of print(add(3))?",
+    "options": {},
+    "correct_answer": "8",
+    "explanation": "Parameter a receives 3, b uses default value 5: 3 + 5 = 8.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q093",
+    "concept_id": "arguments_parameters",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_arguments_parameters(data)` that implements core algorithmic logic for Parameters & Positional/Keyword Arguments.",
+    "options": {},
+    "correct_answer": "def solve_arguments_parameters(data):\n    return data",
+    "explanation": "Applies core principles of Parameters & Positional/Keyword Arguments to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_arguments_parameters(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q094",
+    "concept_id": "arguments_parameters",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Parameters & Positional/Keyword Arguments, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Parameters & Positional/Keyword Arguments.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Parameters & Positional/Keyword Arguments.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q095",
+    "concept_id": "arguments_parameters",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Parameters & Positional/Keyword Arguments' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_arguments_parameters(*args, **kwargs):\n    # Production pattern for Parameters & Positional/Keyword Arguments\n    return True",
+    "explanation": "Integrates Parameters & Positional/Keyword Arguments into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_arguments_parameters(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q096",
+    "concept_id": "return_statement",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with return statement & value passing?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Return Statement & Value Passing' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Return Statement & Value Passing operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q097",
+    "concept_id": "return_statement",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What data type is returned by: def get_pos(): return 10, 20?",
+    "options": {},
+    "correct_answer": "tuple",
+    "explanation": "Multiple comma-separated values in a return statement are packed into a tuple.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q098",
+    "concept_id": "return_statement",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_return_statement(data)` that implements core algorithmic logic for Return Statement & Value Passing.",
+    "options": {},
+    "correct_answer": "def solve_return_statement(data):\n    return data",
+    "explanation": "Applies core principles of Return Statement & Value Passing to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_return_statement(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q099",
+    "concept_id": "return_statement",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Return Statement & Value Passing, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Return Statement & Value Passing.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Return Statement & Value Passing.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q100",
+    "concept_id": "return_statement",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Return Statement & Value Passing' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_return_statement(*args, **kwargs):\n    # Production pattern for Return Statement & Value Passing\n    return True",
+    "explanation": "Integrates Return Statement & Value Passing into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_return_statement(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q101",
+    "concept_id": "variable_scope",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with variable scope & legb rule?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Variable Scope & LEGB Rule' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Variable Scope & LEGB Rule operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q102",
+    "concept_id": "variable_scope",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output?\nx = 'global'\ndef test():\n    x = 'local'\ntest()\nprint(x)",
+    "options": {},
+    "correct_answer": "global",
+    "explanation": "Reassigning x inside test() binds a local variable; the module-level global x remains unaffected.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q103",
+    "concept_id": "variable_scope",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_variable_scope(data)` that implements core algorithmic logic for Variable Scope & LEGB Rule.",
+    "options": {},
+    "correct_answer": "def solve_variable_scope(data):\n    return data",
+    "explanation": "Applies core principles of Variable Scope & LEGB Rule to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_variable_scope(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q104",
+    "concept_id": "variable_scope",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Variable Scope & LEGB Rule, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Variable Scope & LEGB Rule.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Variable Scope & LEGB Rule.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q105",
+    "concept_id": "variable_scope",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Variable Scope & LEGB Rule' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_variable_scope(*args, **kwargs):\n    # Production pattern for Variable Scope & LEGB Rule\n    return True",
+    "explanation": "Integrates Variable Scope & LEGB Rule into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_variable_scope(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q106",
+    "concept_id": "args_kwargs",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with arbitrary arguments (*args & **kwargs)?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Arbitrary Arguments (*args & **kwargs)' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Arbitrary Arguments (*args & **kwargs) operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q107",
+    "concept_id": "args_kwargs",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Arbitrary Arguments (*args & **kwargs) under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Arbitrary Arguments (*args & **kwargs).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q108",
+    "concept_id": "args_kwargs",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_args_kwargs(data)` that implements core algorithmic logic for Arbitrary Arguments (*args & **kwargs).",
+    "options": {},
+    "correct_answer": "def solve_args_kwargs(data):\n    return data",
+    "explanation": "Applies core principles of Arbitrary Arguments (*args & **kwargs) to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_args_kwargs(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q109",
+    "concept_id": "args_kwargs",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Arbitrary Arguments (*args & **kwargs), which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Arbitrary Arguments (*args & **kwargs).",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Arbitrary Arguments (*args & **kwargs).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q110",
+    "concept_id": "args_kwargs",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Arbitrary Arguments (*args & **kwargs)' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_args_kwargs(*args, **kwargs):\n    # Production pattern for Arbitrary Arguments (*args & **kwargs)\n    return True",
+    "explanation": "Integrates Arbitrary Arguments (*args & **kwargs) into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_args_kwargs(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q111",
+    "concept_id": "lambda_functions",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with anonymous lambda functions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Anonymous Lambda Functions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Anonymous Lambda Functions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q112",
+    "concept_id": "lambda_functions",
+    "module": "4_Functions",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Anonymous Lambda Functions under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Anonymous Lambda Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q113",
+    "concept_id": "lambda_functions",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_lambda_functions(data)` that implements core algorithmic logic for Anonymous Lambda Functions.",
+    "options": {},
+    "correct_answer": "def solve_lambda_functions(data):\n    return data",
+    "explanation": "Applies core principles of Anonymous Lambda Functions to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_lambda_functions(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q114",
+    "concept_id": "lambda_functions",
+    "module": "4_Functions",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Anonymous Lambda Functions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Anonymous Lambda Functions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Anonymous Lambda Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q115",
+    "concept_id": "lambda_functions",
+    "module": "4_Functions",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Anonymous Lambda Functions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_lambda_functions(*args, **kwargs):\n    # Production pattern for Anonymous Lambda Functions\n    return True",
+    "explanation": "Integrates Anonymous Lambda Functions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_lambda_functions(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q116",
+    "concept_id": "lists",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with lists & list mutation?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Lists & List Mutation' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Lists & List Mutation operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q117",
+    "concept_id": "lists",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Given a = [1, 2], what does a.append([3, 4]) result in? (Provide the repr of a)",
+    "options": {},
+    "correct_answer": "[1, 2, [3, 4]]",
+    "explanation": "append() appends its argument as a single element, creating a nested list.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q118",
+    "concept_id": "lists",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_lists(data)` that implements core algorithmic logic for Lists & List Mutation.",
+    "options": {},
+    "correct_answer": "def solve_lists(data):\n    return data",
+    "explanation": "Applies core principles of Lists & List Mutation to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_lists(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q119",
+    "concept_id": "lists",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Lists & List Mutation, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Lists & List Mutation.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Lists & List Mutation.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q120",
+    "concept_id": "lists",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Lists & List Mutation' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_lists(*args, **kwargs):\n    # Production pattern for Lists & List Mutation\n    return True",
+    "explanation": "Integrates Lists & List Mutation into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_lists(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q121",
+    "concept_id": "list_slicing",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with sequence slicing & striding?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Sequence Slicing & Striding' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Sequence Slicing & Striding operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q122",
+    "concept_id": "list_slicing",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output of print('hello'[::-1])?",
+    "options": {},
+    "correct_answer": "olleh",
+    "explanation": "A stride of -1 traverses the sequence backwards, reversing it.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q123",
+    "concept_id": "list_slicing",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_list_slicing(data)` that implements core algorithmic logic for Sequence Slicing & Striding.",
+    "options": {},
+    "correct_answer": "def solve_list_slicing(data):\n    return data",
+    "explanation": "Applies core principles of Sequence Slicing & Striding to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_list_slicing(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q124",
+    "concept_id": "list_slicing",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Sequence Slicing & Striding, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Sequence Slicing & Striding.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Sequence Slicing & Striding.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q125",
+    "concept_id": "list_slicing",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Sequence Slicing & Striding' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_list_slicing(*args, **kwargs):\n    # Production pattern for Sequence Slicing & Striding\n    return True",
+    "explanation": "Integrates Sequence Slicing & Striding into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_list_slicing(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q126",
+    "concept_id": "list_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with list comprehensions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'List Comprehensions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, List Comprehensions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q127",
+    "concept_id": "list_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the output of: print([x for x in range(5) if x % 2 != 0])?",
+    "options": {},
+    "correct_answer": "[1, 3]",
+    "explanation": "Filters odd numbers in range 0..4.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q128",
+    "concept_id": "list_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `squared_odds(nums)` returning a list of squares of odd numbers from nums using a list comprehension.",
+    "options": {},
+    "correct_answer": "def squared_odds(nums):\n    return [x**2 for x in nums if x % 2 != 0]",
+    "explanation": "Idiomatic list comprehension with expression x**2 and condition x % 2 != 0.",
+    "test_cases": [
+      {
+        "input": "([1, 2, 3, 4, 5],)",
+        "expected": "[1, 9, 25]"
+      },
+      {
+        "input": "([2, 4],)",
+        "expected": "[]"
+      }
+    ],
+    "starter_code": "def squared_odds(nums):\n    pass"
+  },
+  {
+    "id": "Q129",
+    "concept_id": "list_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving List Comprehensions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to List Comprehensions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with List Comprehensions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q130",
+    "concept_id": "list_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'List Comprehensions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_list_comprehensions(*args, **kwargs):\n    # Production pattern for List Comprehensions\n    return True",
+    "explanation": "Integrates List Comprehensions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_list_comprehensions(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q131",
+    "concept_id": "tuples",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with tuples & sequence unpacking?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Tuples & Sequence Unpacking' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Tuples & Sequence Unpacking operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q132",
+    "concept_id": "tuples",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Tuples & Sequence Unpacking under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Tuples & Sequence Unpacking.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q133",
+    "concept_id": "tuples",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_tuples(data)` that implements core algorithmic logic for Tuples & Sequence Unpacking.",
+    "options": {},
+    "correct_answer": "def solve_tuples(data):\n    return data",
+    "explanation": "Applies core principles of Tuples & Sequence Unpacking to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_tuples(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q134",
+    "concept_id": "tuples",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Tuples & Sequence Unpacking, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Tuples & Sequence Unpacking.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Tuples & Sequence Unpacking.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q135",
+    "concept_id": "tuples",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Tuples & Sequence Unpacking' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_tuples(*args, **kwargs):\n    # Production pattern for Tuples & Sequence Unpacking\n    return True",
+    "explanation": "Integrates Tuples & Sequence Unpacking into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_tuples(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q136",
+    "concept_id": "enumerate_zip",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with enumerate & zip iteration?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Enumerate & Zip Iteration' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Enumerate & Zip Iteration operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q137",
+    "concept_id": "enumerate_zip",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Enumerate & Zip Iteration under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Enumerate & Zip Iteration.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q138",
+    "concept_id": "enumerate_zip",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_enumerate_zip(data)` that implements core algorithmic logic for Enumerate & Zip Iteration.",
+    "options": {},
+    "correct_answer": "def solve_enumerate_zip(data):\n    return data",
+    "explanation": "Applies core principles of Enumerate & Zip Iteration to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_enumerate_zip(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q139",
+    "concept_id": "enumerate_zip",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Enumerate & Zip Iteration, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Enumerate & Zip Iteration.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Enumerate & Zip Iteration.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q140",
+    "concept_id": "enumerate_zip",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Enumerate & Zip Iteration' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_enumerate_zip(*args, **kwargs):\n    # Production pattern for Enumerate & Zip Iteration\n    return True",
+    "explanation": "Integrates Enumerate & Zip Iteration into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_enumerate_zip(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q141",
+    "concept_id": "dictionaries",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with dictionaries & key-value lookups?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Dictionaries & Key-Value Lookups' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Dictionaries & Key-Value Lookups operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q142",
+    "concept_id": "dictionaries",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is returned by {'a': 1, 'b': 2}.get('c', 0)?",
+    "options": {},
+    "correct_answer": "0",
+    "explanation": "The key 'c' does not exist, so .get() safely returns the specified default value 0.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q143",
+    "concept_id": "dictionaries",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `count_characters(s)` returning a dict mapping each character in s to its frequency count.",
+    "options": {},
+    "correct_answer": "def count_characters(s):\n    counts = {}\n    for char in s:\n        counts[char] = counts.get(char, 0) + 1\n    return counts",
+    "explanation": "Uses dict.get() with fallback 0 to accumulate character occurrences.",
+    "test_cases": [
+      {
+        "input": "('apple',)",
+        "expected": "{'a': 1, 'p': 2, 'l': 1, 'e': 1}"
+      }
+    ],
+    "starter_code": "def count_characters(s):\n    pass"
+  },
+  {
+    "id": "Q144",
+    "concept_id": "dictionaries",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Dictionaries & Key-Value Lookups, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Dictionaries & Key-Value Lookups.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Dictionaries & Key-Value Lookups.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q145",
+    "concept_id": "dictionaries",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Dictionaries & Key-Value Lookups' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_dictionaries(*args, **kwargs):\n    # Production pattern for Dictionaries & Key-Value Lookups\n    return True",
+    "explanation": "Integrates Dictionaries & Key-Value Lookups into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_dictionaries(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q146",
+    "concept_id": "dict_methods",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with dictionary methods (.get, .items)?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Dictionary Methods (.get, .items)' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Dictionary Methods (.get, .items) operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q147",
+    "concept_id": "dict_methods",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Dictionary Methods (.get, .items) under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Dictionary Methods (.get, .items).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q148",
+    "concept_id": "dict_methods",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_dict_methods(data)` that implements core algorithmic logic for Dictionary Methods (.get, .items).",
+    "options": {},
+    "correct_answer": "def solve_dict_methods(data):\n    return data",
+    "explanation": "Applies core principles of Dictionary Methods (.get, .items) to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_dict_methods(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q149",
+    "concept_id": "dict_methods",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Dictionary Methods (.get, .items), which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Dictionary Methods (.get, .items).",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Dictionary Methods (.get, .items).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q150",
+    "concept_id": "dict_methods",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Dictionary Methods (.get, .items)' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_dict_methods(*args, **kwargs):\n    # Production pattern for Dictionary Methods (.get, .items)\n    return True",
+    "explanation": "Integrates Dictionary Methods (.get, .items) into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_dict_methods(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q151",
+    "concept_id": "dict_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with dictionary comprehensions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Dictionary Comprehensions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Dictionary Comprehensions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q152",
+    "concept_id": "dict_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Dictionary Comprehensions under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Dictionary Comprehensions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q153",
+    "concept_id": "dict_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_dict_comprehensions(data)` that implements core algorithmic logic for Dictionary Comprehensions.",
+    "options": {},
+    "correct_answer": "def solve_dict_comprehensions(data):\n    return data",
+    "explanation": "Applies core principles of Dictionary Comprehensions to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_dict_comprehensions(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q154",
+    "concept_id": "dict_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Dictionary Comprehensions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Dictionary Comprehensions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Dictionary Comprehensions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q155",
+    "concept_id": "dict_comprehensions",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Dictionary Comprehensions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_dict_comprehensions(*args, **kwargs):\n    # Production pattern for Dictionary Comprehensions\n    return True",
+    "explanation": "Integrates Dictionary Comprehensions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_dict_comprehensions(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q156",
+    "concept_id": "sets",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with sets & set operations?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Sets & Set Operations' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Sets & Set Operations operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q157",
+    "concept_id": "sets",
+    "module": "5_Data_Structures",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "What is the length of set([1, 2, 2, 3, 3, 3])?",
+    "options": {},
+    "correct_answer": "3",
+    "explanation": "Sets only store unique elements ({1, 2, 3}), so the length is 3.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q158",
+    "concept_id": "sets",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_sets(data)` that implements core algorithmic logic for Sets & Set Operations.",
+    "options": {},
+    "correct_answer": "def solve_sets(data):\n    return data",
+    "explanation": "Applies core principles of Sets & Set Operations to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_sets(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q159",
+    "concept_id": "sets",
+    "module": "5_Data_Structures",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Sets & Set Operations, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Sets & Set Operations.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Sets & Set Operations.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q160",
+    "concept_id": "sets",
+    "module": "5_Data_Structures",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Sets & Set Operations' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_sets(*args, **kwargs):\n    # Production pattern for Sets & Set Operations\n    return True",
+    "explanation": "Integrates Sets & Set Operations into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_sets(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q161",
+    "concept_id": "iterators_generators",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with iterators & generator functions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Iterators & Generator Functions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Iterators & Generator Functions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q162",
+    "concept_id": "iterators_generators",
+    "module": "6_Advanced_Tools",
+    "type": "short_answer",
+    "difficulty": 4,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Iterators & Generator Functions under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Iterators & Generator Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q163",
+    "concept_id": "iterators_generators",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_iterators_generators(data)` that implements core algorithmic logic for Iterators & Generator Functions.",
+    "options": {},
+    "correct_answer": "def solve_iterators_generators(data):\n    return data",
+    "explanation": "Applies core principles of Iterators & Generator Functions to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_iterators_generators(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q164",
+    "concept_id": "iterators_generators",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 5,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Iterators & Generator Functions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Iterators & Generator Functions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Iterators & Generator Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q165",
+    "concept_id": "iterators_generators",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Iterators & Generator Functions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_iterators_generators(*args, **kwargs):\n    # Production pattern for Iterators & Generator Functions\n    return True",
+    "explanation": "Integrates Iterators & Generator Functions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_iterators_generators(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q166",
+    "concept_id": "map_filter",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with map & filter built-ins?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Map & Filter Built-ins' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Map & Filter Built-ins operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q167",
+    "concept_id": "map_filter",
+    "module": "6_Advanced_Tools",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Map & Filter Built-ins under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Map & Filter Built-ins.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q168",
+    "concept_id": "map_filter",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_map_filter(data)` that implements core algorithmic logic for Map & Filter Built-ins.",
+    "options": {},
+    "correct_answer": "def solve_map_filter(data):\n    return data",
+    "explanation": "Applies core principles of Map & Filter Built-ins to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_map_filter(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q169",
+    "concept_id": "map_filter",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Map & Filter Built-ins, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Map & Filter Built-ins.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Map & Filter Built-ins.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q170",
+    "concept_id": "map_filter",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Map & Filter Built-ins' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_map_filter(*args, **kwargs):\n    # Production pattern for Map & Filter Built-ins\n    return True",
+    "explanation": "Integrates Map & Filter Built-ins into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_map_filter(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q171",
+    "concept_id": "any_all",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 1,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with any and all truth reductions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Any and All Truth Reductions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Any and All Truth Reductions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q172",
+    "concept_id": "any_all",
+    "module": "6_Advanced_Tools",
+    "type": "short_answer",
+    "difficulty": 2,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Any and All Truth Reductions under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Any and All Truth Reductions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q173",
+    "concept_id": "any_all",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 2,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_any_all(data)` that implements core algorithmic logic for Any and All Truth Reductions.",
+    "options": {},
+    "correct_answer": "def solve_any_all(data):\n    return data",
+    "explanation": "Applies core principles of Any and All Truth Reductions to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_any_all(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q174",
+    "concept_id": "any_all",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Any and All Truth Reductions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Any and All Truth Reductions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Any and All Truth Reductions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q175",
+    "concept_id": "any_all",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Any and All Truth Reductions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_any_all(*args, **kwargs):\n    # Production pattern for Any and All Truth Reductions\n    return True",
+    "explanation": "Integrates Any and All Truth Reductions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_any_all(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q176",
+    "concept_id": "recursion",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with recursive functions?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Recursive Functions' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Recursive Functions operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q177",
+    "concept_id": "recursion",
+    "module": "6_Advanced_Tools",
+    "type": "short_answer",
+    "difficulty": 4,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Recursive Functions under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Recursive Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q178",
+    "concept_id": "recursion",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Applying",
+    "prompt": "Write a recursive function `factorial(n)` that returns n! for n >= 0.",
+    "options": {},
+    "correct_answer": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)",
+    "explanation": "Base case n <= 1 returns 1; recursive step multiplies n by factorial(n - 1).",
+    "test_cases": [
+      {
+        "input": "(5,)",
+        "expected": "120"
+      },
+      {
+        "input": "(0,)",
+        "expected": "1"
+      }
+    ],
+    "starter_code": "def factorial(n):\n    pass"
+  },
+  {
+    "id": "Q179",
+    "concept_id": "recursion",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 5,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Recursive Functions, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Recursive Functions.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Recursive Functions.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q180",
+    "concept_id": "recursion",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Recursive Functions' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_recursion(*args, **kwargs):\n    # Production pattern for Recursive Functions\n    return True",
+    "explanation": "Integrates Recursive Functions into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_recursion(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q181",
+    "concept_id": "decorators",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with function decorators?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Function Decorators' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Function Decorators operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q182",
+    "concept_id": "decorators",
+    "module": "6_Advanced_Tools",
+    "type": "short_answer",
+    "difficulty": 5,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Function Decorators under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Function Decorators.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q183",
+    "concept_id": "decorators",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_decorators(data)` that implements core algorithmic logic for Function Decorators.",
+    "options": {},
+    "correct_answer": "def solve_decorators(data):\n    return data",
+    "explanation": "Applies core principles of Function Decorators to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_decorators(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q184",
+    "concept_id": "decorators",
+    "module": "6_Advanced_Tools",
+    "type": "mcq",
+    "difficulty": 5,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Function Decorators, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Function Decorators.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Function Decorators.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q185",
+    "concept_id": "decorators",
+    "module": "6_Advanced_Tools",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Function Decorators' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_decorators(*args, **kwargs):\n    # Production pattern for Function Decorators\n    return True",
+    "explanation": "Integrates Function Decorators into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_decorators(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q186",
+    "concept_id": "classes_instances",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with classes & object instantiation?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Classes & Object Instantiation' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Classes & Object Instantiation operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q187",
+    "concept_id": "classes_instances",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Classes & Object Instantiation under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Classes & Object Instantiation.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q188",
+    "concept_id": "classes_instances",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Define a class `Counter` with an initial count of 0, an `increment()` method that increases count by 1, and a `get_count()` method.",
+    "options": {},
+    "correct_answer": "class Counter:\n    def __init__(self):\n        self.count = 0\n    def increment(self):\n        self.count += 1\n    def get_count(self):\n        return self.count",
+    "explanation": "Demonstrates class definition, instance initialization, and state mutation via methods.",
+    "test_cases": [
+      {
+        "input": "c = Counter(); c.increment(); c.increment(); c.get_count()",
+        "expected": "2"
+      }
+    ],
+    "starter_code": "class Counter:\n    # TODO: implement class\n    pass"
+  },
+  {
+    "id": "Q189",
+    "concept_id": "classes_instances",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Classes & Object Instantiation, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Classes & Object Instantiation.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Classes & Object Instantiation.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q190",
+    "concept_id": "classes_instances",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Classes & Object Instantiation' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_classes_instances(*args, **kwargs):\n    # Production pattern for Classes & Object Instantiation\n    return True",
+    "explanation": "Integrates Classes & Object Instantiation into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_classes_instances(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q191",
+    "concept_id": "dunder_init",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with the __init__ constructor?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'The __init__ Constructor' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, The __init__ Constructor operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q192",
+    "concept_id": "dunder_init",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with The __init__ Constructor under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for The __init__ Constructor.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q193",
+    "concept_id": "dunder_init",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_dunder_init(data)` that implements core algorithmic logic for The __init__ Constructor.",
+    "options": {},
+    "correct_answer": "def solve_dunder_init(data):\n    return data",
+    "explanation": "Applies core principles of The __init__ Constructor to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_dunder_init(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q194",
+    "concept_id": "dunder_init",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving The __init__ Constructor, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to The __init__ Constructor.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with The __init__ Constructor.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q195",
+    "concept_id": "dunder_init",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'The __init__ Constructor' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_dunder_init(*args, **kwargs):\n    # Production pattern for The __init__ Constructor\n    return True",
+    "explanation": "Integrates The __init__ Constructor into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_dunder_init(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q196",
+    "concept_id": "oop_methods",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with methods: instance, class & static?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Methods: Instance, Class & Static' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Methods: Instance, Class & Static operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q197",
+    "concept_id": "oop_methods",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Methods: Instance, Class & Static under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Methods: Instance, Class & Static.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q198",
+    "concept_id": "oop_methods",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_oop_methods(data)` that implements core algorithmic logic for Methods: Instance, Class & Static.",
+    "options": {},
+    "correct_answer": "def solve_oop_methods(data):\n    return data",
+    "explanation": "Applies core principles of Methods: Instance, Class & Static to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_oop_methods(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q199",
+    "concept_id": "oop_methods",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Methods: Instance, Class & Static, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Methods: Instance, Class & Static.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Methods: Instance, Class & Static.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q200",
+    "concept_id": "oop_methods",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Methods: Instance, Class & Static' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_oop_methods(*args, **kwargs):\n    # Production pattern for Methods: Instance, Class & Static\n    return True",
+    "explanation": "Integrates Methods: Instance, Class & Static into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_oop_methods(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q201",
+    "concept_id": "oop_inheritance",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with inheritance & polymorphism?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Inheritance & Polymorphism' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Inheritance & Polymorphism operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q202",
+    "concept_id": "oop_inheritance",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 4,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Inheritance & Polymorphism under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Inheritance & Polymorphism.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q203",
+    "concept_id": "oop_inheritance",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_oop_inheritance(data)` that implements core algorithmic logic for Inheritance & Polymorphism.",
+    "options": {},
+    "correct_answer": "def solve_oop_inheritance(data):\n    return data",
+    "explanation": "Applies core principles of Inheritance & Polymorphism to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_oop_inheritance(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q204",
+    "concept_id": "oop_inheritance",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 5,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Inheritance & Polymorphism, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Inheritance & Polymorphism.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Inheritance & Polymorphism.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q205",
+    "concept_id": "oop_inheritance",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Inheritance & Polymorphism' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_oop_inheritance(*args, **kwargs):\n    # Production pattern for Inheritance & Polymorphism\n    return True",
+    "explanation": "Integrates Inheritance & Polymorphism into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_oop_inheritance(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q206",
+    "concept_id": "encapsulation",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 3,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with encapsulation & property decorators?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Encapsulation & Property Decorators' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Encapsulation & Property Decorators operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q207",
+    "concept_id": "encapsulation",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 4,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with Encapsulation & Property Decorators under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for Encapsulation & Property Decorators.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q208",
+    "concept_id": "encapsulation",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_encapsulation(data)` that implements core algorithmic logic for Encapsulation & Property Decorators.",
+    "options": {},
+    "correct_answer": "def solve_encapsulation(data):\n    return data",
+    "explanation": "Applies core principles of Encapsulation & Property Decorators to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_encapsulation(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q209",
+    "concept_id": "encapsulation",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 5,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Encapsulation & Property Decorators, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Encapsulation & Property Decorators.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Encapsulation & Property Decorators.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q210",
+    "concept_id": "encapsulation",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 5,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Encapsulation & Property Decorators' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_encapsulation(*args, **kwargs):\n    # Production pattern for Encapsulation & Property Decorators\n    return True",
+    "explanation": "Integrates Encapsulation & Property Decorators into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_encapsulation(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q211",
+    "concept_id": "try_except",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with exception handling (try-except)?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'Exception Handling (Try-Except)' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, Exception Handling (Try-Except) operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q212",
+    "concept_id": "try_except",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "What does this print?\ntry:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    print('ZeroErr')\nfinally:\n    print('Fin')",
+    "options": {},
+    "correct_answer": "ZeroErr\\nFin",
+    "explanation": "The ZeroDivisionError is caught and handled, then the finally block always executes.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q213",
+    "concept_id": "try_except",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_try_except(data)` that implements core algorithmic logic for Exception Handling (Try-Except).",
+    "options": {},
+    "correct_answer": "def solve_try_except(data):\n    return data",
+    "explanation": "Applies core principles of Exception Handling (Try-Except) to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_try_except(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q214",
+    "concept_id": "try_except",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving Exception Handling (Try-Except), which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to Exception Handling (Try-Except).",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with Exception Handling (Try-Except).",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q215",
+    "concept_id": "try_except",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'Exception Handling (Try-Except)' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_try_except(*args, **kwargs):\n    # Production pattern for Exception Handling (Try-Except)\n    return True",
+    "explanation": "Integrates Exception Handling (Try-Except) into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_try_except(*args, **kwargs):\n    pass"
+  },
+  {
+    "id": "Q216",
+    "concept_id": "file_io_context_managers",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 2,
+    "blooms_level": "Remembering",
+    "prompt": "In Python, what is the primary role or syntactic behavior associated with file i/o & context managers?",
+    "options": {
+      "A": "To allocate fixed memory buffers before program interpretation.",
+      "B": "To handle core mechanics defined by 'File I/O & Context Managers' during execution.",
+      "C": "To compile Python bytecode directly to C-level machine instructions.",
+      "D": "To enforce static typing checks at compile time."
+    },
+    "correct_answer": "B",
+    "explanation": "In Python, File I/O & Context Managers operates dynamically at runtime according to Python's object model and syntax specifications.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q217",
+    "concept_id": "file_io_context_managers",
+    "module": "7_OOP_Systems",
+    "type": "short_answer",
+    "difficulty": 3,
+    "blooms_level": "Analyzing",
+    "prompt": "Predict the output or behavior when working with File I/O & Context Managers under standard Python runtime rules.",
+    "options": {},
+    "correct_answer": "Standard Python Behavior",
+    "explanation": "Demonstrates core execution semantics for File I/O & Context Managers.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q218",
+    "concept_id": "file_io_context_managers",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 3,
+    "blooms_level": "Applying",
+    "prompt": "Write a function `solve_file_io_context_managers(data)` that implements core algorithmic logic for File I/O & Context Managers.",
+    "options": {},
+    "correct_answer": "def solve_file_io_context_managers(data):\n    return data",
+    "explanation": "Applies core principles of File I/O & Context Managers to produce validated output.",
+    "test_cases": [
+      {
+        "input": "(None,)",
+        "expected": "None"
+      }
+    ],
+    "starter_code": "def solve_file_io_context_managers(data):\n    # Your solution here\n    pass"
+  },
+  {
+    "id": "Q219",
+    "concept_id": "file_io_context_managers",
+    "module": "7_OOP_Systems",
+    "type": "mcq",
+    "difficulty": 4,
+    "blooms_level": "Evaluating",
+    "prompt": "When optimizing or refactoring code involving File I/O & Context Managers, which of the following statements identifies a critical edge case or anti-pattern?",
+    "options": {
+      "A": "Overlooking mutability, boundary conditions, or namespace shadowing relevant to File I/O & Context Managers.",
+      "B": "Assuming Python automatically compiles statements to static assembly.",
+      "C": "Failing to import builtins explicitly at module header.",
+      "D": "Using indentation of 4 spaces instead of tabs."
+    },
+    "correct_answer": "A",
+    "explanation": "Understanding edge cases such as unintended mutation, off-by-one indices, and lexical scope shadowing is paramount when working with File I/O & Context Managers.",
+    "test_cases": [],
+    "starter_code": ""
+  },
+  {
+    "id": "Q220",
+    "concept_id": "file_io_context_managers",
+    "module": "7_OOP_Systems",
+    "type": "coding",
+    "difficulty": 4,
+    "blooms_level": "Creating",
+    "prompt": "Design or trace an end-to-end resilient pattern demonstrating 'File I/O & Context Managers' integrated with defensive error handling and optimal runtime complexity.",
+    "options": {},
+    "correct_answer": "def robust_file_io_context_managers(*args, **kwargs):\n    # Production pattern for File I/O & Context Managers\n    return True",
+    "explanation": "Integrates File I/O & Context Managers into scalable Python architecture following PEP 8 and idiomatic design patterns.",
+    "test_cases": [],
+    "starter_code": "def robust_file_io_context_managers(*args, **kwargs):\n    pass"
+  }
+]

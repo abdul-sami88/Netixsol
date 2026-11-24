@@ -1,0 +1,1328 @@
+{
+  "metadata": {
+    "total_concepts": 44,
+    "total_prerequisite_edges": 63,
+    "is_dag": true,
+    "cycles_detected": 0,
+    "max_depth": 14,
+    "topological_sort": [
+      "variables",
+      "integers_floats",
+      "strings",
+      "comparison_operators",
+      "type_casting",
+      "booleans",
+      "string_formatting",
+      "logical_operators",
+      "if_else",
+      "elif_chains",
+      "pass_statement",
+      "while_loops",
+      "functions_def",
+      "range_function",
+      "arguments_parameters",
+      "return_statement",
+      "lambda_functions",
+      "recursion",
+      "try_except",
+      "for_loops",
+      "args_kwargs",
+      "variable_scope",
+      "file_io_context_managers",
+      "break_continue",
+      "nested_loops",
+      "lists",
+      "iterators_generators",
+      "decorators",
+      "for_else",
+      "list_slicing",
+      "list_comprehensions",
+      "tuples",
+      "sets",
+      "map_filter",
+      "any_all",
+      "enumerate_zip",
+      "dictionaries",
+      "dict_methods",
+      "dict_comprehensions",
+      "classes_instances",
+      "dunder_init",
+      "oop_methods",
+      "encapsulation",
+      "oop_inheritance"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "variables",
+      "name": "Variables & Name Binding",
+      "module": "1_Basics_Primitives",
+      "description": "Variable assignment, identifier naming rules, dynamic references in memory.",
+      "difficulty": 1,
+      "estimated_minutes": 20,
+      "bloom_target": "Remembering",
+      "prerequisites": [],
+      "depth": 0,
+      "in_degree": 0,
+      "out_degree": 4
+    },
+    {
+      "id": "integers_floats",
+      "name": "Integers & Floating-Point Numbers",
+      "module": "1_Basics_Primitives",
+      "description": "Arithmetic operations (+, -, *, /, //, %, **), numeric precision, IEEE 754 floats.",
+      "difficulty": 1,
+      "estimated_minutes": 25,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "variables"
+      ],
+      "depth": 1,
+      "in_degree": 1,
+      "out_degree": 3
+    },
+    {
+      "id": "strings",
+      "name": "String Literals & Indexing",
+      "module": "1_Basics_Primitives",
+      "description": "Single/double/triple quotes, string length len(), zero-based character indexing.",
+      "difficulty": 1,
+      "estimated_minutes": 25,
+      "bloom_target": "Remembering",
+      "prerequisites": [
+        "variables"
+      ],
+      "depth": 1,
+      "in_degree": 1,
+      "out_degree": 3
+    },
+    {
+      "id": "type_casting",
+      "name": "Type Conversion & Casting",
+      "module": "1_Basics_Primitives",
+      "description": "Explicit conversion between int, float, str, and handling TypeError on incompatible operations.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "variables",
+        "integers_floats",
+        "strings"
+      ],
+      "depth": 2,
+      "in_degree": 3,
+      "out_degree": 1
+    },
+    {
+      "id": "string_formatting",
+      "name": "String Formatting & F-Strings",
+      "module": "1_Basics_Primitives",
+      "description": "Interpolating expressions in f-strings, format specifiers (.2f, :>10), str.format().",
+      "difficulty": 2,
+      "estimated_minutes": 25,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "strings",
+        "type_casting"
+      ],
+      "depth": 3,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "comparison_operators",
+      "name": "Relational & Comparison Operators",
+      "module": "2_Control_Flow",
+      "description": "Evaluating expressions with ==, !=, <, <=, >, >=, and chained comparisons (0 < x < 10).",
+      "difficulty": 1,
+      "estimated_minutes": 20,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "integers_floats"
+      ],
+      "depth": 2,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "booleans",
+      "name": "Booleans & Truthiness",
+      "module": "2_Control_Flow",
+      "description": "Boolean values True/False, truth value testing of numbers, strings, and empty objects.",
+      "difficulty": 2,
+      "estimated_minutes": 25,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "comparison_operators"
+      ],
+      "depth": 3,
+      "in_degree": 1,
+      "out_degree": 2
+    },
+    {
+      "id": "logical_operators",
+      "name": "Logical Operators & Short-Circuiting",
+      "module": "2_Control_Flow",
+      "description": "Combining conditions with 'and', 'or', 'not', truth tables, short-circuit evaluation semantics.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "booleans"
+      ],
+      "depth": 4,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "if_else",
+      "name": "Conditional If-Else Branching",
+      "module": "2_Control_Flow",
+      "description": "Binary decision branches, block indentation syntax, conditional execution paths.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "logical_operators"
+      ],
+      "depth": 5,
+      "in_degree": 1,
+      "out_degree": 6
+    },
+    {
+      "id": "elif_chains",
+      "name": "Elif Multi-Way Decision Chains",
+      "module": "2_Control_Flow",
+      "description": "Cascading branches with elif, sequential condition checking, mutually exclusive execution.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "if_else"
+      ],
+      "depth": 6,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "pass_statement",
+      "name": "The Pass Placeholder Statement",
+      "module": "2_Control_Flow",
+      "description": "Syntactic no-op statement for unwritten branch stubs and empty class/function scaffolds.",
+      "difficulty": 1,
+      "estimated_minutes": 15,
+      "bloom_target": "Remembering",
+      "prerequisites": [
+        "if_else"
+      ],
+      "depth": 6,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "while_loops",
+      "name": "While Loops & State Iteration",
+      "module": "3_Iteration",
+      "description": "Repeating execution while condition holds true, loop counters, avoiding infinite loops.",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "if_else"
+      ],
+      "depth": 6,
+      "in_degree": 1,
+      "out_degree": 2
+    },
+    {
+      "id": "range_function",
+      "name": "Range Sequence Generation",
+      "module": "3_Iteration",
+      "description": "Arithmetic progression generation using range(start, stop, step), memory-efficient lazy sequences.",
+      "difficulty": 2,
+      "estimated_minutes": 25,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "integers_floats",
+        "while_loops"
+      ],
+      "depth": 7,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "for_loops",
+      "name": "For Loops & Iterable Traversal",
+      "module": "3_Iteration",
+      "description": "Definite iteration over sequences, strings, and range objects using the for-in syntax.",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "range_function"
+      ],
+      "depth": 8,
+      "in_degree": 1,
+      "out_degree": 7
+    },
+    {
+      "id": "break_continue",
+      "name": "Loop Controls: Break & Continue",
+      "module": "3_Iteration",
+      "description": "Premature termination with break, skipping remaining statements in pass with continue.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "while_loops",
+        "for_loops"
+      ],
+      "depth": 9,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "nested_loops",
+      "name": "Nested Loops & Matrix Traversal",
+      "module": "3_Iteration",
+      "description": "Hierarchical iteration (outer and inner loops), 2D grid processing, algorithmic complexity O(n^2).",
+      "difficulty": 3,
+      "estimated_minutes": 45,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "for_loops"
+      ],
+      "depth": 9,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "for_else",
+      "name": "Loop Else Clause",
+      "module": "3_Iteration",
+      "description": "The for-else construct executing only when a loop completes without hitting a break statement.",
+      "difficulty": 3,
+      "estimated_minutes": 25,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "break_continue"
+      ],
+      "depth": 10,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "functions_def",
+      "name": "Function Definitions & Calls",
+      "module": "4_Functions",
+      "description": "Encapsulating logic using def, function signature, calling syntax, docstrings.",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "if_else",
+        "variables"
+      ],
+      "depth": 6,
+      "in_degree": 2,
+      "out_degree": 9
+    },
+    {
+      "id": "arguments_parameters",
+      "name": "Parameters & Positional/Keyword Arguments",
+      "module": "4_Functions",
+      "description": "Formal parameters vs actual arguments, keyword arguments, default parameters.",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "functions_def"
+      ],
+      "depth": 7,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "return_statement",
+      "name": "Return Statement & Value Passing",
+      "module": "4_Functions",
+      "description": "Passing computed results to caller vs printing to stdout, multiple return values, None return.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "functions_def"
+      ],
+      "depth": 7,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "variable_scope",
+      "name": "Variable Scope & LEGB Rule",
+      "module": "4_Functions",
+      "description": "Local, Enclosing, Global, Built-in namespaces, lifetime of local variables, global keyword.",
+      "difficulty": 3,
+      "estimated_minutes": 40,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "functions_def",
+        "return_statement"
+      ],
+      "depth": 8,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "args_kwargs",
+      "name": "Arbitrary Arguments (*args & **kwargs)",
+      "module": "4_Functions",
+      "description": "Variadic positional arguments (*args tuple) and keyword arguments (**kwargs dictionary).",
+      "difficulty": 3,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "arguments_parameters"
+      ],
+      "depth": 8,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "lambda_functions",
+      "name": "Anonymous Lambda Functions",
+      "module": "4_Functions",
+      "description": "Single-expression inline functions using lambda, use cases in sorting keys and functional utilities.",
+      "difficulty": 3,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "functions_def"
+      ],
+      "depth": 7,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "lists",
+      "name": "Lists & List Mutation",
+      "module": "5_Data_Structures",
+      "description": "Dynamic ordered arrays, index mutation, append(), extend(), insert(), pop(), remove().",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "for_loops"
+      ],
+      "depth": 9,
+      "in_degree": 1,
+      "out_degree": 7
+    },
+    {
+      "id": "list_slicing",
+      "name": "Sequence Slicing & Striding",
+      "module": "5_Data_Structures",
+      "description": "Extracting sub-sequences with [start:stop:step], negative steps, reversing sequences.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "lists"
+      ],
+      "depth": 10,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "list_comprehensions",
+      "name": "List Comprehensions",
+      "module": "5_Data_Structures",
+      "description": "Declarative syntax [expr for x in seq if cond], replacing map/filter loops pythonically.",
+      "difficulty": 3,
+      "estimated_minutes": 40,
+      "bloom_target": "Creating",
+      "prerequisites": [
+        "lists",
+        "for_loops"
+      ],
+      "depth": 10,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "tuples",
+      "name": "Tuples & Sequence Unpacking",
+      "module": "5_Data_Structures",
+      "description": "Immutable sequences, parenthesized tuples, tuple unpacking a, b = b, a, memory efficiency.",
+      "difficulty": 2,
+      "estimated_minutes": 25,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "lists"
+      ],
+      "depth": 10,
+      "in_degree": 1,
+      "out_degree": 2
+    },
+    {
+      "id": "enumerate_zip",
+      "name": "Enumerate & Zip Iteration",
+      "module": "5_Data_Structures",
+      "description": "Pairing indices with items via enumerate(), parallel sequence traversal with zip().",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "for_loops",
+        "tuples"
+      ],
+      "depth": 11,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "dictionaries",
+      "name": "Dictionaries & Key-Value Lookups",
+      "module": "5_Data_Structures",
+      "description": "Hash maps with unique hashable keys, O(1) average lookup, key-value mutations.",
+      "difficulty": 2,
+      "estimated_minutes": 35,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "lists",
+        "tuples"
+      ],
+      "depth": 11,
+      "in_degree": 2,
+      "out_degree": 3
+    },
+    {
+      "id": "dict_methods",
+      "name": "Dictionary Methods (.get, .items)",
+      "module": "5_Data_Structures",
+      "description": "Safe access with .get(key, default), iterating with .items(), .keys(), .values(), .update().",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "dictionaries"
+      ],
+      "depth": 12,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "dict_comprehensions",
+      "name": "Dictionary Comprehensions",
+      "module": "5_Data_Structures",
+      "description": "Constructing and transforming dictionaries declaratively: {k: v for k, v in iterable}.",
+      "difficulty": 3,
+      "estimated_minutes": 35,
+      "bloom_target": "Creating",
+      "prerequisites": [
+        "dictionaries",
+        "for_loops"
+      ],
+      "depth": 12,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "sets",
+      "name": "Sets & Set Operations",
+      "module": "5_Data_Structures",
+      "description": "Unordered unique element collections, fast membership testing, union, intersection, difference.",
+      "difficulty": 2,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "lists"
+      ],
+      "depth": 10,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "iterators_generators",
+      "name": "Iterators & Generator Functions",
+      "module": "6_Advanced_Tools",
+      "description": "The iterator protocol (iter(), next()), lazy evaluation, yield statement, generator expressions.",
+      "difficulty": 4,
+      "estimated_minutes": 50,
+      "bloom_target": "Evaluating",
+      "prerequisites": [
+        "functions_def",
+        "for_loops"
+      ],
+      "depth": 9,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "map_filter",
+      "name": "Map & Filter Built-ins",
+      "module": "6_Advanced_Tools",
+      "description": "Functional sequence processing: map(fn, seq) and filter(pred, seq) returning lazy iterators.",
+      "difficulty": 3,
+      "estimated_minutes": 30,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "lambda_functions",
+        "lists"
+      ],
+      "depth": 10,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "any_all",
+      "name": "Any and All Truth Reductions",
+      "module": "6_Advanced_Tools",
+      "description": "Evaluating collection-wide truthiness: any() for existential and all() for universal checks.",
+      "difficulty": 2,
+      "estimated_minutes": 20,
+      "bloom_target": "Understanding",
+      "prerequisites": [
+        "booleans",
+        "lists"
+      ],
+      "depth": 10,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "recursion",
+      "name": "Recursive Functions",
+      "module": "6_Advanced_Tools",
+      "description": "Self-referencing function execution, base cases, recursion stack, maximum recursion depth.",
+      "difficulty": 4,
+      "estimated_minutes": 50,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "functions_def",
+        "if_else"
+      ],
+      "depth": 7,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "decorators",
+      "name": "Function Decorators",
+      "module": "6_Advanced_Tools",
+      "description": "Higher-order functions wrapping behavior, @decorator syntactic sugar, functools.wraps.",
+      "difficulty": 5,
+      "estimated_minutes": 60,
+      "bloom_target": "Creating",
+      "prerequisites": [
+        "functions_def",
+        "args_kwargs"
+      ],
+      "depth": 9,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "classes_instances",
+      "name": "Classes & Object Instantiation",
+      "module": "7_OOP_Systems",
+      "description": "Class blueprints, object instances, the self reference binding methods to state.",
+      "difficulty": 3,
+      "estimated_minutes": 45,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "functions_def",
+        "dictionaries"
+      ],
+      "depth": 12,
+      "in_degree": 2,
+      "out_degree": 4
+    },
+    {
+      "id": "dunder_init",
+      "name": "The __init__ Constructor",
+      "module": "7_OOP_Systems",
+      "description": "Initializing object state on creation, instance attributes vs class attributes.",
+      "difficulty": 3,
+      "estimated_minutes": 40,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "classes_instances"
+      ],
+      "depth": 13,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "oop_methods",
+      "name": "Methods: Instance, Class & Static",
+      "module": "7_OOP_Systems",
+      "description": "Differentiating instance methods (self), class methods (@classmethod cls), and static methods (@staticmethod).",
+      "difficulty": 3,
+      "estimated_minutes": 45,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "classes_instances"
+      ],
+      "depth": 13,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "oop_inheritance",
+      "name": "Inheritance & Polymorphism",
+      "module": "7_OOP_Systems",
+      "description": "Subclassing, method overriding, super() delegation to parent classes, polymorphic dispatch.",
+      "difficulty": 4,
+      "estimated_minutes": 55,
+      "bloom_target": "Creating",
+      "prerequisites": [
+        "classes_instances",
+        "dunder_init"
+      ],
+      "depth": 14,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "encapsulation",
+      "name": "Encapsulation & Property Decorators",
+      "module": "7_OOP_Systems",
+      "description": "Information hiding conventions (_protected, __private name mangling), @property getters and setters.",
+      "difficulty": 4,
+      "estimated_minutes": 45,
+      "bloom_target": "Analyzing",
+      "prerequisites": [
+        "classes_instances"
+      ],
+      "depth": 13,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "try_except",
+      "name": "Exception Handling (Try-Except)",
+      "module": "7_OOP_Systems",
+      "description": "Catching exceptions, specific error handling (ValueError, KeyError), else and finally blocks.",
+      "difficulty": 3,
+      "estimated_minutes": 40,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "if_else",
+        "functions_def"
+      ],
+      "depth": 7,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "file_io_context_managers",
+      "name": "File I/O & Context Managers",
+      "module": "7_OOP_Systems",
+      "description": "Reading and writing files with open(), automatic resource cleanup using 'with' statement.",
+      "difficulty": 3,
+      "estimated_minutes": 40,
+      "bloom_target": "Applying",
+      "prerequisites": [
+        "try_except",
+        "strings"
+      ],
+      "depth": 8,
+      "in_degree": 2,
+      "out_degree": 0
+    }
+  ],
+  "edges": [
+    {
+      "source": "variables",
+      "target": "integers_floats",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "strings",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "type_casting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "variables",
+      "target": "functions_def",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "type_casting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "comparison_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "integers_floats",
+      "target": "range_function",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "type_casting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "string_formatting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "strings",
+      "target": "file_io_context_managers",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "type_casting",
+      "target": "string_formatting",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "comparison_operators",
+      "target": "booleans",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "logical_operators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "booleans",
+      "target": "any_all",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "logical_operators",
+      "target": "if_else",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "elif_chains",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "pass_statement",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "while_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "functions_def",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "if_else",
+      "target": "try_except",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "range_function",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "while_loops",
+      "target": "break_continue",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "range_function",
+      "target": "for_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "break_continue",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "nested_loops",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "lists",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "enumerate_zip",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "for_loops",
+      "target": "iterators_generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "break_continue",
+      "target": "for_else",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "arguments_parameters",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "return_statement",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "variable_scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "lambda_functions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "iterators_generators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "recursion",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "classes_instances",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "functions_def",
+      "target": "try_except",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "arguments_parameters",
+      "target": "args_kwargs",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "return_statement",
+      "target": "variable_scope",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "args_kwargs",
+      "target": "decorators",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lambda_functions",
+      "target": "map_filter",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_slicing",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "list_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "tuples",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "sets",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "map_filter",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "lists",
+      "target": "any_all",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "enumerate_zip",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "tuples",
+      "target": "dictionaries",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "dict_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "dict_comprehensions",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dictionaries",
+      "target": "classes_instances",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes_instances",
+      "target": "dunder_init",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes_instances",
+      "target": "oop_methods",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes_instances",
+      "target": "oop_inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "classes_instances",
+      "target": "encapsulation",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "dunder_init",
+      "target": "oop_inheritance",
+      "type": "prerequisite_of"
+    },
+    {
+      "source": "try_except",
+      "target": "file_io_context_managers",
+      "type": "prerequisite_of"
+    }
+  ],
+  "lesson_mapping": {
+    "L01": [
+      "variables",
+      "integers_floats",
+      "strings",
+      "booleans",
+      "type_casting",
+      "string_formatting"
+    ],
+    "L02": [
+      "comparison_operators",
+      "booleans",
+      "logical_operators",
+      "if_else",
+      "elif_chains"
+    ],
+    "L03": [
+      "while_loops",
+      "for_loops",
+      "range_function",
+      "break_continue"
+    ],
+    "L04": [
+      "functions_def",
+      "arguments_parameters",
+      "return_statement",
+      "variable_scope"
+    ],
+    "L05": [
+      "lists",
+      "list_slicing",
+      "list_comprehensions",
+      "tuples",
+      "enumerate_zip"
+    ],
+    "L06": [
+      "dictionaries",
+      "sets",
+      "dict_methods",
+      "dict_comprehensions"
+    ],
+    "L07": [
+      "classes_instances",
+      "dunder_init",
+      "oop_methods",
+      "oop_inheritance"
+    ],
+    "L08": [
+      "try_except",
+      "file_io_context_managers",
+      "iterators_generators",
+      "recursion"
+    ]
+  },
+  "question_mapping": {
+    "Q001": "variables",
+    "Q002": "variables",
+    "Q003": "variables",
+    "Q004": "variables",
+    "Q005": "variables",
+    "Q006": "integers_floats",
+    "Q007": "integers_floats",
+    "Q008": "integers_floats",
+    "Q009": "integers_floats",
+    "Q010": "integers_floats",
+    "Q011": "strings",
+    "Q012": "strings",
+    "Q013": "strings",
+    "Q014": "strings",
+    "Q015": "strings",
+    "Q016": "type_casting",
+    "Q017": "type_casting",
+    "Q018": "type_casting",
+    "Q019": "type_casting",
+    "Q020": "type_casting",
+    "Q021": "string_formatting",
+    "Q022": "string_formatting",
+    "Q023": "string_formatting",
+    "Q024": "string_formatting",
+    "Q025": "string_formatting",
+    "Q026": "comparison_operators",
+    "Q027": "comparison_operators",
+    "Q028": "comparison_operators",
+    "Q029": "comparison_operators",
+    "Q030": "comparison_operators",
+    "Q031": "booleans",
+    "Q032": "booleans",
+    "Q033": "booleans",
+    "Q034": "booleans",
+    "Q035": "booleans",
+    "Q036": "logical_operators",
+    "Q037": "logical_operators",
+    "Q038": "logical_operators",
+    "Q039": "logical_operators",
+    "Q040": "logical_operators",
+    "Q041": "if_else",
+    "Q042": "if_else",
+    "Q043": "if_else",
+    "Q044": "if_else",
+    "Q045": "if_else",
+    "Q046": "elif_chains",
+    "Q047": "elif_chains",
+    "Q048": "elif_chains",
+    "Q049": "elif_chains",
+    "Q050": "elif_chains",
+    "Q051": "pass_statement",
+    "Q052": "pass_statement",
+    "Q053": "pass_statement",
+    "Q054": "pass_statement",
+    "Q055": "pass_statement",
+    "Q056": "while_loops",
+    "Q057": "while_loops",
+    "Q058": "while_loops",
+    "Q059": "while_loops",
+    "Q060": "while_loops",
+    "Q061": "range_function",
+    "Q062": "range_function",
+    "Q063": "range_function",
+    "Q064": "range_function",
+    "Q065": "range_function",
+    "Q066": "for_loops",
+    "Q067": "for_loops",
+    "Q068": "for_loops",
+    "Q069": "for_loops",
+    "Q070": "for_loops",
+    "Q071": "break_continue",
+    "Q072": "break_continue",
+    "Q073": "break_continue",
+    "Q074": "break_continue",
+    "Q075": "break_continue",
+    "Q076": "nested_loops",
+    "Q077": "nested_loops",
+    "Q078": "nested_loops",
+    "Q079": "nested_loops",
+    "Q080": "nested_loops",
+    "Q081": "for_else",
+    "Q082": "for_else",
+    "Q083": "for_else",
+    "Q084": "for_else",
+    "Q085": "for_else",
+    "Q086": "functions_def",
+    "Q087": "functions_def",
+    "Q088": "functions_def",
+    "Q089": "functions_def",
+    "Q090": "functions_def",
+    "Q091": "arguments_parameters",
+    "Q092": "arguments_parameters",
+    "Q093": "arguments_parameters",
+    "Q094": "arguments_parameters",
+    "Q095": "arguments_parameters",
+    "Q096": "return_statement",
+    "Q097": "return_statement",
+    "Q098": "return_statement",
+    "Q099": "return_statement",
+    "Q100": "return_statement",
+    "Q101": "variable_scope",
+    "Q102": "variable_scope",
+    "Q103": "variable_scope",
+    "Q104": "variable_scope",
+    "Q105": "variable_scope",
+    "Q106": "args_kwargs",
+    "Q107": "args_kwargs",
+    "Q108": "args_kwargs",
+    "Q109": "args_kwargs",
+    "Q110": "args_kwargs",
+    "Q111": "lambda_functions",
+    "Q112": "lambda_functions",
+    "Q113": "lambda_functions",
+    "Q114": "lambda_functions",
+    "Q115": "lambda_functions",
+    "Q116": "lists",
+    "Q117": "lists",
+    "Q118": "lists",
+    "Q119": "lists",
+    "Q120": "lists",
+    "Q121": "list_slicing",
+    "Q122": "list_slicing",
+    "Q123": "list_slicing",
+    "Q124": "list_slicing",
+    "Q125": "list_slicing",
+    "Q126": "list_comprehensions",
+    "Q127": "list_comprehensions",
+    "Q128": "list_comprehensions",
+    "Q129": "list_comprehensions",
+    "Q130": "list_comprehensions",
+    "Q131": "tuples",
+    "Q132": "tuples",
+    "Q133": "tuples",
+    "Q134": "tuples",
+    "Q135": "tuples",
+    "Q136": "enumerate_zip",
+    "Q137": "enumerate_zip",
+    "Q138": "enumerate_zip",
+    "Q139": "enumerate_zip",
+    "Q140": "enumerate_zip",
+    "Q141": "dictionaries",
+    "Q142": "dictionaries",
+    "Q143": "dictionaries",
+    "Q144": "dictionaries",
+    "Q145": "dictionaries",
+    "Q146": "dict_methods",
+    "Q147": "dict_methods",
+    "Q148": "dict_methods",
+    "Q149": "dict_methods",
+    "Q150": "dict_methods",
+    "Q151": "dict_comprehensions",
+    "Q152": "dict_comprehensions",
+    "Q153": "dict_comprehensions",
+    "Q154": "dict_comprehensions",
+    "Q155": "dict_comprehensions",
+    "Q156": "sets",
+    "Q157": "sets",
+    "Q158": "sets",
+    "Q159": "sets",
+    "Q160": "sets",
+    "Q161": "iterators_generators",
+    "Q162": "iterators_generators",
+    "Q163": "iterators_generators",
+    "Q164": "iterators_generators",
+    "Q165": "iterators_generators",
+    "Q166": "map_filter",
+    "Q167": "map_filter",
+    "Q168": "map_filter",
+    "Q169": "map_filter",
+    "Q170": "map_filter",
+    "Q171": "any_all",
+    "Q172": "any_all",
+    "Q173": "any_all",
+    "Q174": "any_all",
+    "Q175": "any_all",
+    "Q176": "recursion",
+    "Q177": "recursion",
+    "Q178": "recursion",
+    "Q179": "recursion",
+    "Q180": "recursion",
+    "Q181": "decorators",
+    "Q182": "decorators",
+    "Q183": "decorators",
+    "Q184": "decorators",
+    "Q185": "decorators",
+    "Q186": "classes_instances",
+    "Q187": "classes_instances",
+    "Q188": "classes_instances",
+    "Q189": "classes_instances",
+    "Q190": "classes_instances",
+    "Q191": "dunder_init",
+    "Q192": "dunder_init",
+    "Q193": "dunder_init",
+    "Q194": "dunder_init",
+    "Q195": "dunder_init",
+    "Q196": "oop_methods",
+    "Q197": "oop_methods",
+    "Q198": "oop_methods",
+    "Q199": "oop_methods",
+    "Q200": "oop_methods",
+    "Q201": "oop_inheritance",
+    "Q202": "oop_inheritance",
+    "Q203": "oop_inheritance",
+    "Q204": "oop_inheritance",
+    "Q205": "oop_inheritance",
+    "Q206": "encapsulation",
+    "Q207": "encapsulation",
+    "Q208": "encapsulation",
+    "Q209": "encapsulation",
+    "Q210": "encapsulation",
+    "Q211": "try_except",
+    "Q212": "try_except",
+    "Q213": "try_except",
+    "Q214": "try_except",
+    "Q215": "try_except",
+    "Q216": "file_io_context_managers",
+    "Q217": "file_io_context_managers",
+    "Q218": "file_io_context_managers",
+    "Q219": "file_io_context_managers",
+    "Q220": "file_io_context_managers"
+  }
+}

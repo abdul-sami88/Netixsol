@@ -1,0 +1,28 @@
+{
+  "load_test_profile": {
+    "total_requests": 500,
+    "target_window": "10 minutes",
+    "concurrency_workers": 10,
+    "actual_wall_clock_sec": 51.75
+  },
+  "performance_metrics": {
+    "throughput_req_per_sec": 9.66,
+    "throughput_req_per_min": 579.7,
+    "latency_mean_sec": 1.0159,
+    "latency_p50_sec": 0.7709,
+    "latency_p90_sec": 2.1248,
+    "latency_p95_sec": 2.2004,
+    "latency_p99_sec": 2.4989,
+    "latency_max_sec": 3.235,
+    "error_rate_pct": 0.0,
+    "errors_count": 0
+  },
+  "verdict_distribution": {
+    "ACCEPTED": 158,
+    "PARTIAL_CREDIT": 140,
+    "WRONG_ANSWER": 40,
+    "SECURITY_VIOLATION": 50,
+    "SYNTAX_ERROR": 0,
+    "RUNTIME_ERROR": 0
+  }
+}

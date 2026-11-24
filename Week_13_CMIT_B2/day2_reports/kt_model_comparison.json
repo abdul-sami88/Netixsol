@@ -1,0 +1,26 @@
+[
+  {
+    "Model":"Baseline (Empirical Bayes)",
+    "ROC_AUC":0.6041,
+    "Accuracy":0.6206,
+    "RMSE":0.4797
+  },
+  {
+    "Model":"BKT (Bayesian Knowledge Tracing)",
+    "ROC_AUC":0.608,
+    "Accuracy":0.6292,
+    "RMSE":0.4792
+  },
+  {
+    "Model":"PFA (Performance Factors Analysis)",
+    "ROC_AUC":0.6581,
+    "Accuracy":0.6465,
+    "RMSE":0.4697
+  },
+  {
+    "Model":"DKT\/SAKT (Self-Attentive Neural KT)",
+    "ROC_AUC":0.7197,
+    "Accuracy":0.6823,
+    "RMSE":0.4522
+  }
+]

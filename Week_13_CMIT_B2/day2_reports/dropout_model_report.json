@@ -1,0 +1,112 @@
+{
+  "metrics": {
+    "ROC_AUC": 0.9582,
+    "PR_AUC": 0.923,
+    "Baseline_Positive_Rate": 0.445,
+    "Precision_At_Risk": 0.8969,
+    "Recall_At_Risk": 0.9775,
+    "F1_Score": 0.9355,
+    "Accuracy": 0.94,
+    "Confusion_Matrix": [
+      [
+        101,
+        10
+      ],
+      [
+        2,
+        87
+      ]
+    ],
+    "Test_Set_Size": 200
+  },
+  "global_shap_importance": [
+    {
+      "feature": "avg_attempts_per_question",
+      "display_name": "Retries per Question",
+      "shap_importance": -0.0043,
+      "shap_std": 0.0117
+    },
+    {
+      "feature": "speed_factor",
+      "display_name": "Learner Pace Factor",
+      "shap_importance": -0.0012,
+      "shap_std": 0.0127
+    },
+    {
+      "feature": "max_consecutive_failures",
+      "display_name": "Max Consecutive Failures (Frustration)",
+      "shap_importance": 0.001,
+      "shap_std": 0.0013
+    },
+    {
+      "feature": "avg_hints_used",
+      "display_name": "Scaffold Hint Dependency",
+      "shap_importance": 0.0045,
+      "shap_std": 0.0072
+    },
+    {
+      "feature": "early_accuracy",
+      "display_name": "Week 1 & 2 Accuracy",
+      "shap_importance": 0.0094,
+      "shap_std": 0.0054
+    },
+    {
+      "feature": "avg_response_time_sec",
+      "display_name": "Avg Response Time (Struggle Friction)",
+      "shap_importance": 0.0122,
+      "shap_std": 0.0163
+    },
+    {
+      "feature": "accuracy_trend",
+      "display_name": "Accuracy Trend (W1 -> W2 Slope)",
+      "shap_importance": 0.0179,
+      "shap_std": 0.0036
+    },
+    {
+      "feature": "slip_rate",
+      "display_name": "Careless Slip Rate",
+      "shap_importance": 0.0385,
+      "shap_std": 0.0222
+    },
+    {
+      "feature": "initial_ability",
+      "display_name": "Latent Initial Ability (\u03b8)",
+      "shap_importance": 0.2042,
+      "shap_std": 0.0287
+    }
+  ],
+  "intervention_policies": [
+    {
+      "risk_tier": "LOW",
+      "probability_range": "0% - 25%",
+      "status_label": "Low Risk (Normal Flow)",
+      "prescribed_actions": [
+        "Proceed with standard adaptive learning path targeting 70% ZPD.",
+        "Offer optional high-challenge coding puzzles to maintain high engagement.",
+        "Deliver UrduLish praise nudge celebrating progress."
+      ]
+    },
+    {
+      "risk_tier": "MEDIUM",
+      "probability_range": "25% - 60%",
+      "status_label": "Medium Risk (Early Warning Triggered)",
+      "prescribed_actions": [
+        "Shift ZPD target from 0.70 to 0.80 (easier success probability) on 'loops_or_conditionals' to rebuild confidence.",
+        "Activate interactive micro-hints ladder and provide structured starter code.",
+        "Dispatch Vector DB video jump link: review 60-second lecture clip explaining 'loops_or_conditionals'.",
+        "Reduce daily assessment workload from 6 questions to 3 bite-sized practice problems."
+      ]
+    },
+    {
+      "risk_tier": "HIGH",
+      "probability_range": "60% - 100%",
+      "status_label": "High Risk (Critical Churn Imminent)",
+      "prescribed_actions": [
+        "IMMEDIATE FREEZE: Halt progression to new modules; enforce prerequisite remediation on fundamental concepts.",
+        "Dispatch high-priority alert to Ilm Academy TA/Mentor for proactive 1-on-1 outreach.",
+        "Deliver empathetic UrduLish reset message acknowledging struggle and removing penalty stress.",
+        "Replace formal quizzes with guided interactive code-along walkthroughs with instant feedback."
+      ]
+    }
+  ]
+}

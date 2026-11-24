@@ -1,0 +1,129 @@
+{
+  "total_items_audited": 220,
+  "retained_active_items": 213,
+  "retired_items_count": 7,
+  "retirement_rate_pct": 3.2,
+  "retired_questions": [
+    {
+      "question_id": "Q103",
+      "concept_id": "variable_scope",
+      "blooms_level": "Applying",
+      "type": "coding",
+      "predicted_b": 0.81,
+      "measured_b": -1.151,
+      "residual_error": -1.961,
+      "abs_residual": 1.961,
+      "discrimination_a": 0.214,
+      "accuracy_pct": 59.2,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Substandard discrimination (a=0.21 < 0.25). Provides little diagnostic value."
+      ],
+      "remediation_plan": "Rewrite options to target explicit student mental models and diagnostic misconceptions."
+    },
+    {
+      "question_id": "Q088",
+      "concept_id": "functions_def",
+      "blooms_level": "Applying",
+      "type": "coding",
+      "predicted_b": 0.53,
+      "measured_b": -2.017,
+      "residual_error": -2.547,
+      "abs_residual": 2.547,
+      "discrimination_a": 0.637,
+      "accuracy_pct": 83.3,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Severe calibration failure: residual=2.55. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Calibrate cognitive complexity to target intermediate Bloom's tier."
+    },
+    {
+      "question_id": "Q146",
+      "concept_id": "dict_methods",
+      "blooms_level": "Remembering",
+      "type": "mcq",
+      "predicted_b": -0.74,
+      "measured_b": 4.0,
+      "residual_error": 4.74,
+      "abs_residual": 4.74,
+      "discrimination_a": -0.198,
+      "accuracy_pct": 89.9,
+      "miscalibration_type": "Underestimated",
+      "retirement_reasons": [
+        "Critical: Inverted discrimination (a < 0). Proficient students fail more frequently.",
+        "Severe floor effect: accuracy=89.9%, difficulty=4.00. Causes high dropout.",
+        "Severe calibration failure: residual=4.74. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Re-author question: audit answer key for false keys; eliminate deceptive trick options."
+    },
+    {
+      "question_id": "Q147",
+      "concept_id": "dict_methods",
+      "blooms_level": "Analyzing",
+      "type": "short_answer",
+      "predicted_b": 0.505,
+      "measured_b": -1.548,
+      "residual_error": -2.053,
+      "abs_residual": 2.053,
+      "discrimination_a": 0.826,
+      "accuracy_pct": 83.1,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Severe calibration failure: residual=2.05. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Calibrate cognitive complexity to target intermediate Bloom's tier."
+    },
+    {
+      "question_id": "Q132",
+      "concept_id": "tuples",
+      "blooms_level": "Analyzing",
+      "type": "short_answer",
+      "predicted_b": 0.505,
+      "measured_b": -1.685,
+      "residual_error": -2.19,
+      "abs_residual": 2.19,
+      "discrimination_a": 0.714,
+      "accuracy_pct": 82.5,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Severe calibration failure: residual=2.19. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Calibrate cognitive complexity to target intermediate Bloom's tier."
+    },
+    {
+      "question_id": "Q157",
+      "concept_id": "sets",
+      "blooms_level": "Analyzing",
+      "type": "short_answer",
+      "predicted_b": 0.505,
+      "measured_b": -2.158,
+      "residual_error": -2.663,
+      "abs_residual": 2.663,
+      "discrimination_a": 0.723,
+      "accuracy_pct": 86.1,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Severe calibration failure: residual=2.66. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Calibrate cognitive complexity to target intermediate Bloom's tier."
+    },
+    {
+      "question_id": "Q121",
+      "concept_id": "list_slicing",
+      "blooms_level": "Remembering",
+      "type": "mcq",
+      "predicted_b": -0.74,
+      "measured_b": -4.0,
+      "residual_error": -3.26,
+      "abs_residual": 3.26,
+      "discrimination_a": 0.467,
+      "accuracy_pct": 90.0,
+      "miscalibration_type": "Overestimated",
+      "retirement_reasons": [
+        "Severe calibration failure: residual=3.26. Item behaves unpredictably."
+      ],
+      "remediation_plan": "Calibrate cognitive complexity to target intermediate Bloom's tier."
+    }
+  ]
+}

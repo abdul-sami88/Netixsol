@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # 1. Main Application & API Server (FastAPI + Gunicorn)
+  api:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile.api
+    container_name: ilm-academy-api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - DATABASE_URL=postgresql://ilm_user:ilm_secure_pass@db:5432/ilm_academy_db
+      - REDIS_URL=redis://redis:6379/0
+      - JWT_SECRET=ilm_academy_super_secret_jwt_key_2026
+      - SANDBOX_URL=http://sandbox:5000
+    depends_on:
+      - db
+      - redis
+      - sandbox
+    networks:
+      - ilm-internal-net
+      - ilm-public-net
+
+  # 2. Secure Code Execution Sandbox (Air-Gapped Worker)
+  sandbox:
+    build:
+      context: ../grading_sandbox
+      dockerfile: Dockerfile
+    container_name: ilm-secure-sandbox
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 512M
+    networks:
+      - ilm-internal-net
+    # Zero external internet access for sandbox isolation
+    cap_drop:
+      - ALL
+
+  # 3. Relational Database (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: ilm-postgres-db
+    restart: always
+    environment:
+      - POSTGRES_USER=ilm_user
+      - POSTGRES_PASSWORD=ilm_secure_pass
+      - POSTGRES_DB=ilm_academy_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - ilm-internal-net
+
+  # 4. In-Memory Task Queue & Caching (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: ilm-redis-cache
+    restart: always
+    networks:
+      - ilm-internal-net
+
+  # 5. Prometheus Telemetry & Load Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ilm-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    networks:
+      - ilm-internal-net
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  ilm-internal-net:
+    internal: true
+  ilm-public-net:
+    driver: bridge

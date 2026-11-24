@@ -1,0 +1,128 @@
+{
+  "total_feedback_samples": 5,
+  "solution_leakage_count": 0,
+  "solution_leakage_rate_pct": 0.0,
+  "pedagogical_safety_verdict": "PASSED: Zero solution code leaked. All feedback strictly Socratic & actionable.",
+  "samples": [
+    {
+      "submission_id": "SUB-01",
+      "student_id": "STU-1001",
+      "autograder_score": 100.0,
+      "verdict": "ACCEPTED",
+      "diagnosis": "All test cases passed! Your implementation correctly satisfied all functional edge cases and time complexity requirements.",
+      "code_quality": {
+        "cyclomatic_complexity": 3,
+        "complexity_rating": "A (Low Complexity / Clean)",
+        "maintainability_index": 64.5,
+        "loc": 8,
+        "max_nesting_depth": 2,
+        "style_warnings": []
+      },
+      "single_actionable_improvement": "Add a concise docstring specifying the expected argument types, time complexity O(N), and return value.",
+      "lesson_citation": {
+        "concept": "C09: Dictionaries & Hash Maps",
+        "lesson": "Lesson 09: Fast Key-Value Lookups and Complement Searching",
+        "video_timestamp": "14:20",
+        "notes_link": "course_materials/week2/dictionaries_hashmaps.pdf#page=4"
+      },
+      "solution_leakage_detected": false,
+      "feedback_markdown": "### [PASS] Automated Code Review Feedback\n\n**Student:** `STU-1001` | **Score:** `100.0/100` | **Status:** `ACCEPTED`\n\n---\n\n#### 1. Test Diagnostic\nAll test cases passed! Your implementation correctly satisfied all functional edge cases and time complexity requirements.\n\n#### 2. Code Quality & Maintainability\n- **Cyclomatic Complexity:** `3` \u2014 Rating: **A (Low Complexity / Clean)**\n- **Maintainability Index:** `64.5/100`\n- **Lines of Code (LOC):** `8` (Max Nesting Depth: `2`)\n\n#### 3. Key Actionable Improvement (Priority #1)\n> [!TIP]\n> **Add a concise docstring specifying the expected argument types, time complexity O(N), and return value.**\n\n#### 4. Recommended Course Materials\n- **Concept:** `C09: Dictionaries & Hash Maps`\n- **Lesson:** *Lesson 09: Fast Key-Value Lookups and Complement Searching*\n- **Video Timestamp:** [Watch clip at 14:20](https://ilm-academy.org/lectures/c09#14:20)\n- **Course Notes:** `course_materials/week2/dictionaries_hashmaps.pdf#page=4`\n"
+    },
+    {
+      "submission_id": "SUB-16",
+      "student_id": "STU-1016",
+      "autograder_score": 70.0,
+      "verdict": "PARTIAL_CREDIT",
+      "diagnosis": "Your algorithm succeeded on small inputs but exceeded the linear time threshold on large arrays (12,000+ elements). Using nested loops forces the processor to make up to N*(N-1)/2 comparisons.",
+      "code_quality": {
+        "cyclomatic_complexity": 4,
+        "complexity_rating": "A (Low Complexity / Clean)",
+        "maintainability_index": 65.3,
+        "loc": 7,
+        "max_nesting_depth": 3,
+        "style_warnings": []
+      },
+      "single_actionable_improvement": "Replace the nested loop with a hash map (Python dict): as you iterate through the list, compute `target - num` and look it up in O(1) average time instead of scanning the rest of the list.",
+      "lesson_citation": {
+        "concept": "C09: Dictionaries & Hash Maps",
+        "lesson": "Lesson 09: Fast Key-Value Lookups and Complement Searching",
+        "video_timestamp": "14:20",
+        "notes_link": "course_materials/week2/dictionaries_hashmaps.pdf#page=4"
+      },
+      "solution_leakage_detected": false,
+      "feedback_markdown": "### [PARTIAL] Automated Code Review Feedback\n\n**Student:** `STU-1016` | **Score:** `70.0/100` | **Status:** `PARTIAL_CREDIT`\n\n---\n\n#### 1. Test Diagnostic\nYour algorithm succeeded on small inputs but exceeded the linear time threshold on large arrays (12,000+ elements). Using nested loops forces the processor to make up to N*(N-1)/2 comparisons.\n\n#### 2. Code Quality & Maintainability\n- **Cyclomatic Complexity:** `4` \u2014 Rating: **A (Low Complexity / Clean)**\n- **Maintainability Index:** `65.3/100`\n- **Lines of Code (LOC):** `7` (Max Nesting Depth: `3`)\n\n#### 3. Key Actionable Improvement (Priority #1)\n> [!TIP]\n> **Replace the nested loop with a hash map (Python dict): as you iterate through the list, compute `target - num` and look it up in O(1) average time instead of scanning the rest of the list.**\n\n#### 4. Recommended Course Materials\n- **Concept:** `C09: Dictionaries & Hash Maps`\n- **Lesson:** *Lesson 09: Fast Key-Value Lookups and Complement Searching*\n- **Video Timestamp:** [Watch clip at 14:20](https://ilm-academy.org/lectures/c09#14:20)\n- **Course Notes:** `course_materials/week2/dictionaries_hashmaps.pdf#page=4`\n"
+    },
+    {
+      "submission_id": "SUB-26",
+      "student_id": "STU-1026",
+      "autograder_score": 30.0,
+      "verdict": "PARTIAL_CREDIT",
+      "diagnosis": "Your solution appears to pair an element with itself or return identical indices when the target equals twice an element's value. Remember: each index must be distinct.",
+      "code_quality": {
+        "cyclomatic_complexity": 3,
+        "complexity_rating": "A (Low Complexity / Clean)",
+        "maintainability_index": 68.1,
+        "loc": 6,
+        "max_nesting_depth": 2,
+        "style_warnings": []
+      },
+      "single_actionable_improvement": "Before saving an element to your hash map or returning indices, ensure that the current index `i` is not equal to the stored complement index.",
+      "lesson_citation": {
+        "concept": "C09: Dictionaries & Hash Maps",
+        "lesson": "Lesson 09: Fast Key-Value Lookups and Complement Searching",
+        "video_timestamp": "14:20",
+        "notes_link": "course_materials/week2/dictionaries_hashmaps.pdf#page=4"
+      },
+      "solution_leakage_detected": false,
+      "feedback_markdown": "### [PARTIAL] Automated Code Review Feedback\n\n**Student:** `STU-1026` | **Score:** `30.0/100` | **Status:** `PARTIAL_CREDIT`\n\n---\n\n#### 1. Test Diagnostic\nYour solution appears to pair an element with itself or return identical indices when the target equals twice an element's value. Remember: each index must be distinct.\n\n#### 2. Code Quality & Maintainability\n- **Cyclomatic Complexity:** `3` \u2014 Rating: **A (Low Complexity / Clean)**\n- **Maintainability Index:** `68.1/100`\n- **Lines of Code (LOC):** `6` (Max Nesting Depth: `2`)\n\n#### 3. Key Actionable Improvement (Priority #1)\n> [!TIP]\n> **Before saving an element to your hash map or returning indices, ensure that the current index `i` is not equal to the stored complement index.**\n\n#### 4. Recommended Course Materials\n- **Concept:** `C09: Dictionaries & Hash Maps`\n- **Lesson:** *Lesson 09: Fast Key-Value Lookups and Complement Searching*\n- **Video Timestamp:** [Watch clip at 14:20](https://ilm-academy.org/lectures/c09#14:20)\n- **Course Notes:** `course_materials/week2/dictionaries_hashmaps.pdf#page=4`\n"
+    },
+    {
+      "submission_id": "SUB-34",
+      "student_id": "STU-1034",
+      "autograder_score": 80.0,
+      "verdict": "PARTIAL_CREDIT",
+      "diagnosis": "Your logic produced unexpected outputs when handling negative values or subtracting numbers. Verify how your formula computes the needed complement for negative integers.",
+      "code_quality": {
+        "cyclomatic_complexity": 4,
+        "complexity_rating": "A (Low Complexity / Clean)",
+        "maintainability_index": 63.7,
+        "loc": 8,
+        "max_nesting_depth": 2,
+        "style_warnings": []
+      },
+      "single_actionable_improvement": "Carefully trace how your complement is computed for negative numbers: avoid filtering out values where x < 0 or assuming elements are positive.",
+      "lesson_citation": {
+        "concept": "C09: Dictionaries & Hash Maps",
+        "lesson": "Lesson 09: Fast Key-Value Lookups and Complement Searching",
+        "video_timestamp": "14:20",
+        "notes_link": "course_materials/week2/dictionaries_hashmaps.pdf#page=4"
+      },
+      "solution_leakage_detected": false,
+      "feedback_markdown": "### [PARTIAL] Automated Code Review Feedback\n\n**Student:** `STU-1034` | **Score:** `80.0/100` | **Status:** `PARTIAL_CREDIT`\n\n---\n\n#### 1. Test Diagnostic\nYour logic produced unexpected outputs when handling negative values or subtracting numbers. Verify how your formula computes the needed complement for negative integers.\n\n#### 2. Code Quality & Maintainability\n- **Cyclomatic Complexity:** `4` \u2014 Rating: **A (Low Complexity / Clean)**\n- **Maintainability Index:** `63.7/100`\n- **Lines of Code (LOC):** `8` (Max Nesting Depth: `2`)\n\n#### 3. Key Actionable Improvement (Priority #1)\n> [!TIP]\n> **Carefully trace how your complement is computed for negative numbers: avoid filtering out values where x < 0 or assuming elements are positive.**\n\n#### 4. Recommended Course Materials\n- **Concept:** `C09: Dictionaries & Hash Maps`\n- **Lesson:** *Lesson 09: Fast Key-Value Lookups and Complement Searching*\n- **Video Timestamp:** [Watch clip at 14:20](https://ilm-academy.org/lectures/c09#14:20)\n- **Course Notes:** `course_materials/week2/dictionaries_hashmaps.pdf#page=4`\n"
+    },
+    {
+      "submission_id": "SUB-41",
+      "student_id": "STU-1041",
+      "autograder_score": 50.0,
+      "verdict": "PARTIAL_CREDIT",
+      "diagnosis": "An IndexError occurred. Your loop attempted to access an array index that was out of bounds (such as index `i + 1` at the final element).",
+      "code_quality": {
+        "cyclomatic_complexity": 3,
+        "complexity_rating": "A (Low Complexity / Clean)",
+        "maintainability_index": 70.3,
+        "loc": 5,
+        "max_nesting_depth": 2,
+        "style_warnings": []
+      },
+      "single_actionable_improvement": "Check your loop upper bound: accessing `nums[i + 1]` requires the range to stop at `len(nums) - 1`.",
+      "lesson_citation": {
+        "concept": "C09: Dictionaries & Hash Maps",
+        "lesson": "Lesson 09: Fast Key-Value Lookups and Complement Searching",
+        "video_timestamp": "14:20",
+        "notes_link": "course_materials/week2/dictionaries_hashmaps.pdf#page=4"
+      },
+      "solution_leakage_detected": false,
+      "feedback_markdown": "### [PARTIAL] Automated Code Review Feedback\n\n**Student:** `STU-1041` | **Score:** `50.0/100` | **Status:** `PARTIAL_CREDIT`\n\n---\n\n#### 1. Test Diagnostic\nAn IndexError occurred. Your loop attempted to access an array index that was out of bounds (such as index `i + 1` at the final element).\n\n#### 2. Code Quality & Maintainability\n- **Cyclomatic Complexity:** `3` \u2014 Rating: **A (Low Complexity / Clean)**\n- **Maintainability Index:** `70.3/100`\n- **Lines of Code (LOC):** `5` (Max Nesting Depth: `2`)\n\n#### 3. Key Actionable Improvement (Priority #1)\n> [!TIP]\n> **Check your loop upper bound: accessing `nums[i + 1]` requires the range to stop at `len(nums) - 1`.**\n\n#### 4. Recommended Course Materials\n- **Concept:** `C09: Dictionaries & Hash Maps`\n- **Lesson:** *Lesson 09: Fast Key-Value Lookups and Complement Searching*\n- **Video Timestamp:** [Watch clip at 14:20](https://ilm-academy.org/lectures/c09#14:20)\n- **Course Notes:** `course_materials/week2/dictionaries_hashmaps.pdf#page=4`\n"
+    }
+  ]
+}

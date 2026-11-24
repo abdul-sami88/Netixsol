@@ -1,0 +1,110 @@
+{
+  "total_attacks_tested": 8,
+  "attacks_contained": 8,
+  "containment_rate_pct": 100.0,
+  "sandbox_policy": {
+    "wall_clock_timeout_sec": 2.0,
+    "environment_isolation": "Sanitized Minimal Subprocess (-I mode)",
+    "network_egress": "Disabled",
+    "ast_security_screening": "Active (banned modules, builtins, dunder attributes)"
+  },
+  "attack_results": [
+    {
+      "attack_id": "ATK-01",
+      "name": "Infinite CPU Loop",
+      "category": "Resource Exhaustion (CPU)",
+      "expected_defense": "Wall-Clock Process Timeout (2.0s limit)",
+      "verdict": "TIME_LIMIT_EXCEEDED",
+      "execution_time_sec": 2.013,
+      "is_contained": true,
+      "details": [
+        "CPU timeout exceeded"
+      ]
+    },
+    {
+      "attack_id": "ATK-02",
+      "name": "Memory Allocation Bomb",
+      "category": "Resource Exhaustion (RAM)",
+      "expected_defense": "Memory Limit / Process Timeout Containment",
+      "verdict": "TIME_LIMIT_EXCEEDED",
+      "execution_time_sec": 2.035,
+      "is_contained": true,
+      "details": [
+        "CPU timeout exceeded"
+      ]
+    },
+    {
+      "attack_id": "ATK-03",
+      "name": "Process Fork Bomb",
+      "category": "Process Exhaustion",
+      "expected_defense": "AST Security Screening (Banned module 'os')",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Import of banned module 'os'"
+      ]
+    },
+    {
+      "attack_id": "ATK-04",
+      "name": "Environment Variable Harvesting",
+      "category": "Credential Exfiltration",
+      "expected_defense": "AST Security Screening & Sanitized Minimal Subprocess Environment",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Import of banned module 'os'"
+      ]
+    },
+    {
+      "attack_id": "ATK-05",
+      "name": "Host Filesystem Overwrite",
+      "category": "Filesystem Tampering",
+      "expected_defense": "AST Security Screening (Banned builtin 'open()')",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Direct invocation of banned built-in 'open()'"
+      ]
+    },
+    {
+      "attack_id": "ATK-06",
+      "name": "Network Socket Exfiltration",
+      "category": "Network Egress",
+      "expected_defense": "AST Security Screening (Banned module 'socket') & No-network policy",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Import of banned module 'socket'"
+      ]
+    },
+    {
+      "attack_id": "ATK-07",
+      "name": "Metaprogramming / Reflection Escape",
+      "category": "Sandbox Escape",
+      "expected_defense": "AST Security Screening (Banned dunders '__bases__', '__subclasses__')",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Reflection escape via dunder attribute '__subclasses__'",
+        "Security Violation: Reflection escape via dunder attribute '__bases__'"
+      ]
+    },
+    {
+      "attack_id": "ATK-08",
+      "name": "Dynamic Builtin Eval/Exec",
+      "category": "Arbitrary Code Execution",
+      "expected_defense": "AST Security Screening (Banned builtin 'eval()')",
+      "verdict": "SECURITY_VIOLATION",
+      "execution_time_sec": 0.0,
+      "is_contained": true,
+      "details": [
+        "Security Violation: Direct invocation of banned built-in 'eval()'"
+      ]
+    }
+  ]
+}

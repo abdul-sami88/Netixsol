@@ -1,0 +1,55 @@
+{
+  "sample_size": {
+    "control_n": 1000,
+    "treatment_n": 1000,
+    "total_simulated_students": 2000
+  },
+  "metrics_comparison": {
+    "normalized_learning_gain": {
+      "control_mean": 0.194,
+      "control_std": 0.174,
+      "treatment_mean": 0.569,
+      "treatment_std": 0.247,
+      "welchs_t_stat": 39.24,
+      "p_value": "< 1e-15",
+      "cohens_d_effect_size": 1.75,
+      "gain_multiplier": 2.93
+    },
+    "time_to_mastery": {
+      "control_mean_hours": 32.1,
+      "treatment_mean_hours": 18.0,
+      "hours_saved_per_student": 14.1,
+      "percentage_time_saved": 44.0
+    },
+    "dropout_rates": {
+      "pre_week_4_control_pct": 50.6,
+      "pre_week_4_treatment_pct": 18.0,
+      "pre_week_4_relative_reduction_pct": 64.4,
+      "week_8_control_pct": 58.0,
+      "week_8_treatment_pct": 25.4
+    },
+    "teacher_hours_saved": {
+      "fixed_hours_per_week": 280.0,
+      "adaptive_hours_per_week": 24.0,
+      "net_hours_saved_weekly": 256.0,
+      "percentage_reduction": 91.4,
+      "annual_teacher_hours_saved": 12800.0
+    }
+  },
+  "formal_ab_test_design": {
+    "hypotheses": {
+      "H1_learning_gain": "Adaptive platform increases normalized learning gain g by at least +0.25 (p < 0.05).",
+      "H2_dropout": "Adaptive platform reduces Week 4 dropout rate from 45% to below 25% (p < 0.05).",
+      "H3_teacher_time": "Automated code autograder & Socratic tutor reduce grading hours by >80%."
+    },
+    "power_analysis": {
+      "alpha_significance": 0.05,
+      "target_power_1_minus_beta": 0.8,
+      "minimum_detectable_effect_size_d": 0.2,
+      "minimum_sample_per_variant": 394,
+      "achieved_power_at_n_1000": "> 0.999"
+    },
+    "randomization_strategy": "Stratified Block Randomization (blocked on baseline diagnostic pre-test ability into 4 strata)",
+    "spillover_prevention": "Separate platform URLs, distinct discussion forum partitions, and randomized question parameter seeds."
+  }
+}

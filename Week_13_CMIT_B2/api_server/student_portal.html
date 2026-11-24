@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilm Academy — Student Adaptive Learning Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+    <!-- Student Header -->
+    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-white shadow">
+                IA
+            </div>
+            <div>
+                <h1 class="font-bold text-white text-base">Ilm Academy — Student Portal</h1>
+                <p class="text-xs text-slate-400">Welcome, Ali Raza (STU-1001) | Intermediate Cohort</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="px-3 py-1 bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-semibold rounded-full">
+                <i class="fa-solid fa-bullseye mr-1"></i> Target ZPD: 68% Success
+            </span>
+            <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs rounded-full border border-slate-700">
+                Course: Python Mastery
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left Column: Adaptive Learning Path & Motivational Nudge -->
+        <div class="space-y-6 lg:col-span-1">
+            <!-- Motivational Nudge Card -->
+            <div class="bg-gradient-to-br from-emerald-900/40 via-slate-900 to-slate-900 border border-emerald-800/60 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center space-x-2 text-emerald-400 font-bold text-sm mb-2">
+                    <i class="fa-solid fa-heart text-rose-500"></i>
+                    <span>Tutor Ka Paigham (UrduLish)</span>
+                </div>
+                <p class="text-sm text-slate-200 leading-relaxed italic">
+                    "Ali bhai, aap loops bohot achay se samajhtay hain! Aaj functions ke local scope aur return values ko connect karein ge. Step by step chalain ge, tension nahi leni!"
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-xs text-slate-400">
+                    <span>Target: <strong>C14: Functions</strong></span>
+                    <span>Est. Time: <strong>35 mins</strong></span>
+                </div>
+            </div>
+
+            <!-- Socratic Tutor Chat Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow flex flex-col h-[460px]">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                    <h2 class="font-bold text-sm text-white flex items-center">
+                        <i class="fa-solid fa-robot text-cyan-400 mr-2"></i>
+                        Socratic AI Tutor (24/7)
+                    </h2>
+                    <span class="text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
+                        Zero Answer Leakage
+                    </span>
+                </div>
+
+                <!-- Chat History Window -->
+                <div class="flex-1 overflow-y-auto space-y-3 pr-2 text-xs">
+                    <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-slate-300">
+                        <span class="font-bold text-cyan-400 block mb-1">AI Tutor:</span>
+                        As-salamu alaykum Ali! Main aap ko direct solution nahi doon ga, balkay sawaalat se guide karoon ga. Aap kis line par stuck hain?
+                    </div>
+                    <div class="bg-emerald-950/60 p-3 rounded-xl border border-emerald-800/60 text-emerald-200 ml-4">
+                        <span class="font-bold text-emerald-400 block mb-1">You:</span>
+                        Mujhe factorial function mein recursion ka base case samajh nahi aa raha. Code infinite loop mein chala jata hai.
+                    </div>
+                    <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-slate-300">
+                        <span class="font-bold text-cyan-400 block mb-1">AI Tutor [Hint Step 1]:</span>
+                        Sochiye ke recursive call ko ruknay ke liye kis condition ki zaroorat hoti hai? Agar n ghata-tay ghata-tay 1 par pohanch jaye, toh factorial(1) ka answer kya hona chahiye?
+                    </div>
+                </div>
+
+                <!-- Input Box -->
+                <div class="mt-3 pt-3 border-t border-slate-800 flex space-x-2">
+                    <input type="text" placeholder="Apna sawaal likhein..." class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <button class="bg-cyan-600 hover:bg-cyan-500 px-3 py-2 rounded-lg text-xs font-bold transition">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Code Editor & Auto-Grading Workspace -->
+        <div class="space-y-6 lg:col-span-2">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                    <div>
+                        <h2 class="font-bold text-base text-white">Challenge: Two Sum (Hash Map Optimization)</h2>
+                        <p class="text-xs text-slate-400">Implement two_sum(nums, target) in O(N) linear time and space.</p>
+                    </div>
+                    <button class="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-bold transition shadow-lg flex items-center">
+                        <i class="fa-solid fa-play mr-2"></i> Submit to Sandbox
+                    </button>
+                </div>
+
+                <!-- Code Editor Frame -->
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-400 leading-relaxed shadow-inner">
+<pre>def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        comp = target - num
+        if comp in seen:
+            return [seen[comp], i]
+        seen[num] = i
+    return []</pre>
+                </div>
+
+                <!-- Instant Autograder Telemetry Card -->
+                <div class="mt-6 bg-slate-950/70 border border-slate-800 rounded-xl p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Autograder Result:</span>
+                        <span class="px-2.5 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-extrabold rounded-lg">
+                            ACCEPTED — 100/100 Points
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 text-center py-3 bg-slate-900/60 rounded-lg border border-slate-800 text-xs">
+                        <div>
+                            <span class="text-slate-400 block text-[11px]">Execution Time</span>
+                            <span class="text-white font-mono font-bold">0.0021s</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block text-[11px]">Cyclomatic Complexity</span>
+                            <span class="text-emerald-400 font-bold">3 (Tier A: Clean)</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block text-[11px]">Maintainability Index</span>
+                            <span class="text-cyan-400 font-bold">64.5 / 100</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-emerald-950/30 border border-emerald-800/40 rounded-lg text-xs text-slate-300">
+                        <span class="font-bold text-emerald-400 block mb-1"><i class="fa-solid fa-circle-check mr-1"></i> Formative Actionable Nudge:</span>
+                        Add a concise docstring specifying the expected argument types, time complexity O(N), and return value to elevate to production code standards.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

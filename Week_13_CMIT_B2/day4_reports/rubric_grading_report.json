@@ -1,0 +1,673 @@
+{
+  "total_essays": 30,
+  "inter_rater_agreement": {
+    "pearson_r_llm_vs_human_avg": 0.8415,
+    "pearson_r_h1_vs_h2": 0.9911,
+    "quadratic_weighted_kappa_llm_h1": 0.6419,
+    "quadratic_weighted_kappa_llm_h2": 0.6557,
+    "quadratic_weighted_kappa_h1_h2": 0.9899,
+    "cohens_kappa_binned_llm_h1": 0.1241,
+    "cohens_kappa_binned_llm_h2": 0.1163,
+    "fleiss_kappa_all_raters": 0.3578
+  },
+  "bias_audit": {
+    "word_count_vs_llm_score_r": 0.6403,
+    "word_count_vs_teacher_score_r": 0.6102,
+    "verbose_fluff_llm_avg_score": 0.33,
+    "verbose_fluff_teacher_avg_score": 2.83,
+    "bias_verdict": "PASSED: LLM correctly rejects superficial jargon and pseudo-technical padding without score inflation."
+  },
+  "essay_evaluations": [
+    {
+      "id": "RESP-01",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2001",
+      "type": "Exemplary",
+      "word_count": 81,
+      "llm_score": 10,
+      "human_1_score": 10,
+      "human_2_score": 10,
+      "human_avg_score": 10.0,
+      "score_diff_llm_vs_h_avg": 0.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 3.0,
+        "terminology": 3.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Exemplary response: covers technical mechanisms, edge cases, and precise terminology accurately."
+    },
+    {
+      "id": "RESP-02",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2002",
+      "type": "Solid",
+      "word_count": 45,
+      "llm_score": 6,
+      "human_1_score": 9,
+      "human_2_score": 9,
+      "human_avg_score": 9.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 3.5,
+        "edge_cases": 0.0,
+        "terminology": 2.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-03",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2003",
+      "type": "Basic Correct",
+      "word_count": 28,
+      "llm_score": 1,
+      "human_1_score": 7,
+      "human_2_score": 7,
+      "human_avg_score": 7.0,
+      "score_diff_llm_vs_h_avg": -6.0,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-04",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2004",
+      "type": "Superficial",
+      "word_count": 31,
+      "llm_score": 1,
+      "human_1_score": 6,
+      "human_2_score": 5,
+      "human_avg_score": 5.5,
+      "score_diff_llm_vs_h_avg": -4.5,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-05",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2005",
+      "type": "Verbose Fluff / Pseudo-technical",
+      "word_count": 46,
+      "llm_score": 0,
+      "human_1_score": 2,
+      "human_2_score": 3,
+      "human_avg_score": 2.5,
+      "score_diff_llm_vs_h_avg": -2.5,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 2.0
+      },
+      "violations": [
+        "Pseudo-technical verbosity / unsupported jargon detected"
+      ],
+      "feedback": "Contains significant factual misconceptions: Pseudo-technical verbosity / unsupported jargon detected."
+    },
+    {
+      "id": "RESP-06",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2006",
+      "type": "Ultra-brief",
+      "word_count": 14,
+      "llm_score": 1,
+      "human_1_score": 4,
+      "human_2_score": 4,
+      "human_avg_score": 4.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-07",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2007",
+      "type": "Misconception (Heap vs Stack)",
+      "word_count": 30,
+      "llm_score": 0,
+      "human_1_score": 2,
+      "human_2_score": 2,
+      "human_avg_score": 2.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 3.5
+      },
+      "violations": [
+        "Confused call stack with heap allocation",
+        "Irrelevant garbage collection reference"
+      ],
+      "feedback": "Contains significant factual misconceptions: Confused call stack with heap allocation; Irrelevant garbage collection reference."
+    },
+    {
+      "id": "RESP-08",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2008",
+      "type": "Exemplary with Edge Case",
+      "word_count": 59,
+      "llm_score": 8,
+      "human_1_score": 10,
+      "human_2_score": 9,
+      "human_avg_score": 9.5,
+      "score_diff_llm_vs_h_avg": -1.5,
+      "rubric_breakdown": {
+        "correctness": 3.5,
+        "edge_cases": 1.5,
+        "terminology": 2.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Solid response: sound core explanation, though some edge cases or theoretical constraints could be expanded."
+    },
+    {
+      "id": "RESP-09",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2009",
+      "type": "Completely Incorrect",
+      "word_count": 16,
+      "llm_score": 0,
+      "human_1_score": 1,
+      "human_2_score": 0,
+      "human_avg_score": 0.5,
+      "score_diff_llm_vs_h_avg": -0.5,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 3.0
+      },
+      "violations": [
+        "Confused RecursionError with syntax error"
+      ],
+      "feedback": "Contains significant factual misconceptions: Confused RecursionError with syntax error."
+    },
+    {
+      "id": "RESP-10",
+      "question_id": "Q1",
+      "concept": "C17: Recursion & Call Stack",
+      "student_id": "STU-2010",
+      "type": "Good Concise",
+      "word_count": 24,
+      "llm_score": 4,
+      "human_1_score": 8,
+      "human_2_score": 8,
+      "human_avg_score": 8.0,
+      "score_diff_llm_vs_h_avg": -4.0,
+      "rubric_breakdown": {
+        "correctness": 1.0,
+        "edge_cases": 3.0,
+        "terminology": 1.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-11",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2011",
+      "type": "Exemplary with Trade-off",
+      "word_count": 91,
+      "llm_score": 8,
+      "human_1_score": 10,
+      "human_2_score": 10,
+      "human_avg_score": 10.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 2.0,
+        "terminology": 2.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Solid response: sound core explanation, though some edge cases or theoretical constraints could be expanded."
+    },
+    {
+      "id": "RESP-12",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2012",
+      "type": "Solid",
+      "word_count": 42,
+      "llm_score": 5,
+      "human_1_score": 9,
+      "human_2_score": 9,
+      "human_avg_score": 9.0,
+      "score_diff_llm_vs_h_avg": -4.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-13",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2013",
+      "type": "Basic Correct",
+      "word_count": 20,
+      "llm_score": 4,
+      "human_1_score": 7,
+      "human_2_score": 7,
+      "human_avg_score": 7.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 2.5,
+        "edge_cases": 0.5,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-14",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2014",
+      "type": "Verbose Fluff / Pseudo-technical",
+      "word_count": 41,
+      "llm_score": 0,
+      "human_1_score": 3,
+      "human_2_score": 3,
+      "human_avg_score": 3.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 1.0,
+        "edge_cases": 0.0,
+        "terminology": 0.5,
+        "penalties": 2.0
+      },
+      "violations": [
+        "Pseudo-technical verbosity / unsupported jargon detected"
+      ],
+      "feedback": "Contains significant factual misconceptions: Pseudo-technical verbosity / unsupported jargon detected."
+    },
+    {
+      "id": "RESP-15",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2015",
+      "type": "Inverted Complexity Error",
+      "word_count": 21,
+      "llm_score": 6,
+      "human_1_score": 2,
+      "human_2_score": 2,
+      "human_avg_score": 2.0,
+      "score_diff_llm_vs_h_avg": 4.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 1.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-16",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2016",
+      "type": "Ultra-brief Accurate",
+      "word_count": 17,
+      "llm_score": 6,
+      "human_1_score": 8,
+      "human_2_score": 8,
+      "human_avg_score": 8.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 2.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-17",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2017",
+      "type": "Partial Misconception",
+      "word_count": 25,
+      "llm_score": 1,
+      "human_1_score": 4,
+      "human_2_score": 4,
+      "human_avg_score": 4.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 2.5,
+        "edge_cases": 0.0,
+        "terminology": 0.5,
+        "penalties": 2.0
+      },
+      "violations": [
+        "Asserted nested loops sort the list first"
+      ],
+      "feedback": "Contains significant factual misconceptions: Asserted nested loops sort the list first."
+    },
+    {
+      "id": "RESP-18",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2018",
+      "type": "Exemplary with System Context",
+      "word_count": 64,
+      "llm_score": 7,
+      "human_1_score": 10,
+      "human_2_score": 10,
+      "human_avg_score": 10.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 2.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Solid response: sound core explanation, though some edge cases or theoretical constraints could be expanded."
+    },
+    {
+      "id": "RESP-19",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2019",
+      "type": "Incorrect",
+      "word_count": 19,
+      "llm_score": 0,
+      "human_1_score": 2,
+      "human_2_score": 1,
+      "human_avg_score": 1.5,
+      "score_diff_llm_vs_h_avg": -1.5,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 0.0,
+        "terminology": 1.0,
+        "penalties": 4.0
+      },
+      "violations": [
+        "Claimed nested loops and hash set have identical time complexity"
+      ],
+      "feedback": "Contains significant factual misconceptions: Claimed nested loops and hash set have identical time complexity."
+    },
+    {
+      "id": "RESP-20",
+      "question_id": "Q2",
+      "concept": "C21: Complexity & Hash Sets",
+      "student_id": "STU-2020",
+      "type": "Good Concise",
+      "word_count": 36,
+      "llm_score": 6,
+      "human_1_score": 9,
+      "human_2_score": 8,
+      "human_avg_score": 8.5,
+      "score_diff_llm_vs_h_avg": -2.5,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 1.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-21",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2021",
+      "type": "Exemplary",
+      "word_count": 72,
+      "llm_score": 7,
+      "human_1_score": 10,
+      "human_2_score": 10,
+      "human_avg_score": 10.0,
+      "score_diff_llm_vs_h_avg": -3.0,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 1.5,
+        "terminology": 1.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Solid response: sound core explanation, though some edge cases or theoretical constraints could be expanded."
+    },
+    {
+      "id": "RESP-22",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2022",
+      "type": "Solid",
+      "word_count": 36,
+      "llm_score": 6,
+      "human_1_score": 9,
+      "human_2_score": 8,
+      "human_avg_score": 8.5,
+      "score_diff_llm_vs_h_avg": -2.5,
+      "rubric_breakdown": {
+        "correctness": 4.0,
+        "edge_cases": 1.0,
+        "terminology": 1.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-23",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2023",
+      "type": "Basic Correct",
+      "word_count": 19,
+      "llm_score": 2,
+      "human_1_score": 6,
+      "human_2_score": 6,
+      "human_avg_score": 6.0,
+      "score_diff_llm_vs_h_avg": -4.0,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 0.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    },
+    {
+      "id": "RESP-24",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2024",
+      "type": "Verbose Fluff / Pseudo-technical",
+      "word_count": 36,
+      "llm_score": 1,
+      "human_1_score": 3,
+      "human_2_score": 3,
+      "human_avg_score": 3.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 1.0,
+        "terminology": 0.5,
+        "penalties": 2.0
+      },
+      "violations": [
+        "Pseudo-technical verbosity / unsupported jargon detected"
+      ],
+      "feedback": "Contains significant factual misconceptions: Pseudo-technical verbosity / unsupported jargon detected."
+    },
+    {
+      "id": "RESP-25",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2025",
+      "type": "Completely Inverted",
+      "word_count": 17,
+      "llm_score": 0,
+      "human_1_score": 0,
+      "human_2_score": 0,
+      "human_avg_score": 0.0,
+      "score_diff_llm_vs_h_avg": 0.0,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 0.0,
+        "terminology": 0.5,
+        "penalties": 4.0
+      },
+      "violations": [
+        "Claimed tuples are mutable"
+      ],
+      "feedback": "Contains significant factual misconceptions: Claimed tuples are mutable."
+    },
+    {
+      "id": "RESP-26",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2026",
+      "type": "Good Concise",
+      "word_count": 17,
+      "llm_score": 6,
+      "human_1_score": 8,
+      "human_2_score": 8,
+      "human_avg_score": 8.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 3.0,
+        "edge_cases": 2.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-27",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2027",
+      "type": "Absurd Misconception",
+      "word_count": 26,
+      "llm_score": 0,
+      "human_1_score": 1,
+      "human_2_score": 1,
+      "human_avg_score": 1.0,
+      "score_diff_llm_vs_h_avg": -1.0,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 1.0,
+        "terminology": 0.5,
+        "penalties": 4.0
+      },
+      "violations": [
+        "Claimed tuples are stored on hard drive"
+      ],
+      "feedback": "Contains significant factual misconceptions: Claimed tuples are stored on hard drive."
+    },
+    {
+      "id": "RESP-28",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2028",
+      "type": "Exemplary with Memory Detail",
+      "word_count": 58,
+      "llm_score": 5,
+      "human_1_score": 10,
+      "human_2_score": 10,
+      "human_avg_score": 10.0,
+      "score_diff_llm_vs_h_avg": -5.0,
+      "rubric_breakdown": {
+        "correctness": 1.5,
+        "edge_cases": 1.5,
+        "terminology": 2.0,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Basic conceptual understanding demonstrated, but lacks technical depth or specific terminology."
+    },
+    {
+      "id": "RESP-29",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2029",
+      "type": "Superficial",
+      "word_count": 14,
+      "llm_score": 0,
+      "human_1_score": 2,
+      "human_2_score": 2,
+      "human_avg_score": 2.0,
+      "score_diff_llm_vs_h_avg": -2.0,
+      "rubric_breakdown": {
+        "correctness": 0.0,
+        "edge_cases": 0.0,
+        "terminology": 0.0,
+        "penalties": 2.0
+      },
+      "violations": [
+        "Claimed brackets are the only difference"
+      ],
+      "feedback": "Contains significant factual misconceptions: Claimed brackets are the only difference."
+    },
+    {
+      "id": "RESP-30",
+      "question_id": "Q3",
+      "concept": "C08: Tuples & Immutability",
+      "student_id": "STU-2030",
+      "type": "Solid",
+      "word_count": 28,
+      "llm_score": 4,
+      "human_1_score": 9,
+      "human_2_score": 9,
+      "human_avg_score": 9.0,
+      "score_diff_llm_vs_h_avg": -5.0,
+      "rubric_breakdown": {
+        "correctness": 3.0,
+        "edge_cases": 0.0,
+        "terminology": 0.5,
+        "penalties": 0.0
+      },
+      "violations": [],
+      "feedback": "Incomplete or inaccurate explanation. Key architectural mechanisms were omitted."
+    }
+  ]
+}
