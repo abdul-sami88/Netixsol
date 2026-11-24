@@ -25,7 +25,11 @@
                 <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
                 Autograder Online (0.18s Latency)
             </span>
-            <span class="text-xs text-slate-400 font-mono">Students Active: 6,840 / 8,000</span>
+            <span class="text-xs text-slate-400 font-mono hidden md:inline">Students Active: 6,840 / 8,000</span>
+            <a href="javascript:void(0)" onclick="goToStudentPortal()" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow transition">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Student Portal</span>
+            </a>
         </div>
     </header>
 
@@ -160,6 +164,10 @@
 
     <!-- Chart.js Scripts -->
     <script>
+        function goToStudentPortal() {
+            window.location.href = window.location.origin.includes("http") ? "/student" : "../api_server/student_portal.html";
+        }
+
         // Mastery Donut Chart
         const ctxM = document.getElementById('masteryChart').getContext('2d');
         new Chart(ctxM, {
